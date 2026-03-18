@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BumpHunter · Iris Hsieh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #f0ebe2;
+      --bg-card:  #fffefb;
+      --border:   #dbd4c9;
+      --text:     #2b2520;
+      --muted:    #8c8079;
+      --accent:   #e8623a;
+    }
+
+    html, body {
+      font-family: 'Noto Sans', 'Barlow', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.4;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; }
+
+    /* ── NAV ──────────────────────────────────────── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(240,235,226,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(43,37,32,0.08);
+      padding: 16px 60px;
+      display: flex; align-items: center;
+    }
+    .nav-back {
+      font-size: 13px; font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      font-family: 'Barlow', sans-serif;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text); }
+    .nav-anchors {
+      display: flex; align-items: center; gap: 0;
+      margin-left: auto;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-anchors::-webkit-scrollbar { display: none; }
+    .nav-anchor {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--muted);
+      padding: 4px 9px;
+      border-radius: 6px;
+      white-space: nowrap;
+      font-family: 'IBM Plex Mono', monospace;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-anchor:hover { color: var(--text); }
+    .nav-anchor.active {
+      color: var(--text);
+      background: rgba(43,37,32,0.07);
+    }
+
+    /* ── SECTION WRAPPERS ─────────────────────────── */
+    .sec {
+      width: 100%;
+      padding: 120px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .sec.white { background: var(--bg-card); }
+    .sec.cream { background: var(--bg); }
+    .sec-inner {
+      width: 100%; max-width: 1400px;
+      display: flex; flex-direction: column; gap: 48px;
+    }
+
+    /* ── SECTION HEADING ──────────────────────────── */
+    .sec-head {
+      display: flex; gap: 28px; align-items: flex-start;
+      font-size: 32px; font-weight: 800; font-family: 'Barlow', sans-serif; line-height: 1.1;
+      letter-spacing: -0.02em; text-transform: uppercase;
+    }
+    .sec-num { white-space: nowrap; flex-shrink: 0; }
+    .sec-title { flex: 1; }
+
+    /* ── TYPE SCALE ───────────────────────────────── */
+    .h3 {
+      font-size: 11px; font-weight: 700; line-height: 1.2;
+      letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Barlow', sans-serif;
+    }
+    .body {
+      font-size: 14px; font-weight: 400; line-height: 1.75;
+      letter-spacing: 0em; font-family: 'Noto Sans', sans-serif;
+    }
+    .body-med {
+      font-size: 14px; font-weight: 600; line-height: 1.5;
+      letter-spacing: 0em; font-family: 'Noto Sans', sans-serif;
+    }
+    .body-sm {
+      font-size: 13px; font-weight: 400; line-height: 1.65;
+      letter-spacing: 0em; font-family: 'Noto Sans', sans-serif;
+    }
+    .caption {
+      font-size: 10px; font-weight: 400; line-height: 1.4;
+      letter-spacing: 0.06em; font-family: 'IBM Plex Mono', monospace;
+    }
+    .text-block { display: flex; flex-direction: column; gap: 8px; }
+
+    /* ── TITLE BAR ────────────────────────────────── */
+    .title-bar {
+      width: 100%; background: var(--bg);
+      padding: 28px 60px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .title-bar-inner {
+      width: 100%; max-width: 1400px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+
+    /* ── INTRO SPLIT CARD ─────────────────────────── */
+    .intro-card {
+      width: 100%; border-radius: 20px; overflow: hidden;
+      display: flex; align-items: stretch; min-height: 440px;
+    }
+    .intro-photo {
+      flex: 1; position: relative; min-height: 320px;
+    }
+    .intro-photo img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 35%;
+    }
+    .intro-copy {
+      flex: 1; background: var(--bg-card);
+      padding: 24px 40px;
+      display: flex; flex-direction: column; gap: 16px;
+      justify-content: center;
+    }
+
+    /* ── CHAT BUBBLES ─────────────────────────────── */
+    .chat-wrap {
+      display: flex; flex-direction: column; gap: 24px;
+      align-items: flex-end; width: 100%;
+    }
+    .bubble-wide {
+      background: var(--bg-card);
+      border-radius: 20px 20px 8px 20px;
+      padding: 16px 24px;
+      width: 100%;
+      max-width: 900px;
+      align-self: stretch;
+    }
+    .bubble-narrow-row {
+      display: flex; align-items: flex-end; gap: 16px;
+      align-self: flex-end;
+    }
+    .bubble-narrow {
+      background: var(--bg-card);
+      border-radius: 20px 20px 8px 20px;
+      padding: 16px 24px;
+      max-width: 500px;
+    }
+    .bubble-char { width: 158px; flex-shrink: 0; }
+    .bubble-char img { width: 100%; }
+
+    /* ── SPLIT ROW ────────────────────────────────── */
+    .split-row {
+      display: flex; gap: 40px; align-items: center;
+      width: 100%;
+    }
+    .split-photo {
+      width: 520px; flex-shrink: 0;
+      border-radius: 20px; overflow: hidden;
+    }
+    .split-photo img { width: 100%; display: block; }
+    .split-copy {
+      flex: 1;
+      display: flex; flex-direction: column; gap: 28px;
+    }
+
+    /* ── QUOTE ROWS ───────────────────────────────── */
+    .quote-list { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+    .quote-row {
+      display: flex; gap: 24px; align-items: center;
+      padding: 8px 0;
+    }
+    .quote-avatar {
+      width: 88px; height: 88px; flex-shrink: 0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .quote-avatar img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center 15%; }
+    .quote-text {
+      flex: 1;
+      font-size: 14px; line-height: 1.7;
+      font-family: 'Noto Sans', sans-serif;
+      color: var(--text);
+    }
+
+    /* ── PERSONA TABLE ────────────────────────────── */
+    .persona-wrap {
+      background: var(--bg-card); border-radius: 10px;
+      overflow: hidden; padding: 12px; width: 100%;
+    }
+    .ptable { width: 100%; border-collapse: collapse; }
+    .ptable-wrap { width: 100%; }
+    .ptable .p-header-row td {
+      padding: 12px; border-bottom: 1.5px solid var(--text);
+      vertical-align: middle;
+      font-size: 13px; font-weight: 700;
+      font-family: 'Barlow', sans-serif;
+      letter-spacing: 0.04em; text-align: left;
+    }
+    .ptable .p-header-row td:first-child { width: 113px; }
+    .ptable .p-data-row td {
+      padding: 12px; border-bottom: 1px solid var(--border);
+      font-size: 13px; font-weight: 400; line-height: 1.3;
+      letter-spacing: -0.01em; vertical-align: top; font-family: 'Noto Sans', sans-serif;
+    }
+    .ptable .p-data-row td:first-child { width: 113px; color: var(--text); }
+    .ptable .p-data-row:last-child td { border-bottom: none; }
+
+    /* ── FULL-WIDTH IMAGE ─────────────────────────── */
+    .full-img { width: 100%; border-radius: 10px; object-fit: cover; }
+
+    /* ── FEATURE HEADING ──────────────────────────── */
+    .feature-title {
+      font-size: 24px; font-weight: 800; line-height: 1.15;
+      letter-spacing: -0.01em; text-transform: uppercase; font-family: 'Barlow', sans-serif;
+    }
+
+    /* ── SOLUTION FEATURE ROW ─────────────────────── */
+    .feature-row {
+      display: flex; gap: 40px; align-items: flex-start;
+      width: 100%;
+    }
+    .feature-copy {
+      width: 340px; flex-shrink: 0;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .feature-img-wrap {
+      flex: 1; border-radius: 14px; overflow: hidden;
+      background: var(--bg); border: 1px solid var(--border);
+      min-height: 240px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .feature-img-wrap img {
+      width: 100%; display: block;
+    }
+    .feature-img-placeholder {
+      width: 100%; min-height: 240px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); font-size: 12px;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* ── BLUEPRINT BOX ────────────────────────────── */
+    .blueprint-box {
+      background: var(--bg); border-radius: 20px;
+      padding: 24px;
+      width: 100%;
+    }
+    .blueprint-box img { width: 100%; border-radius: 10px; }
+
+    /* ── TEAM PHOTOS ROW ──────────────────────────── */
+    .team-photos-row {
+      display: flex; gap: 24px; align-items: stretch;
+      width: 100%;
+    }
+    .team-photo {
+      flex: 1; border-radius: 10px; overflow: hidden;
+    }
+    .team-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+
+    /* ── NUM LIST ─────────────────────────────────── */
+    .num-list { padding-left: 28px; display: flex; flex-direction: column; gap: 6px; }
+    .num-list li { font-size: 14px; font-weight: 500; line-height: 1.65; font-family: 'Noto Sans', sans-serif; }
+    .bull-list { padding-left: 28px; display: flex; flex-direction: column; gap: 4px; }
+    .bull-list li { font-size: 14px; line-height: 1.75; font-family: 'Noto Sans', sans-serif; }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    .footer {
+      background: var(--text); color: rgba(255,255,255,0.4);
+      padding: 48px 60px 40px;
+      display: flex; flex-direction: column; align-items: center; gap: 28px;
+      font-size: 13px; letter-spacing: 0.04em; font-family: 'IBM Plex Mono', monospace;
+    }
+    .footer-back {
+      font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.35);
+      letter-spacing: 0.06em; font-family: 'IBM Plex Mono', monospace;
+      transition: color 0.15s;
+    }
+    .footer-back:hover { color: rgba(255,255,255,0.7); }
+    .footer-contact {
+      display: flex; align-items: center; gap: 0;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .footer-item { display: flex; align-items: center; gap: 0; }
+    .footer-item a, .footer-item span {
+      font-size: 11px; font-weight: 400;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.02em;
+      font-family: 'IBM Plex Mono', monospace;
+      transition: color 0.15s;
+      white-space: nowrap;
+      padding: 0 14px;
+    }
+    .footer-item a:hover { color: rgba(255,255,255,0.9); }
+    .footer-sep {
+      width: 1px; height: 12px;
+      background: rgba(255,255,255,0.12);
+      flex-shrink: 0;
+    }
+    .footer-sep:first-child, .footer-sep:last-child { display: none; }
+
+    /* ── RESPONSIVE ───────────────────────────────── */
+    @media (max-width: 900px) {
+      .sec { padding: 28px 24px; }
+      .title-bar { padding: 20px 24px; }
+      .nav { padding: 14px 24px; }
+      .footer { padding: 32px 24px; }
+      .intro-card { flex-direction: column; }
+      .intro-photo { height: 280px; position: relative; }
+      .intro-photo img { position: absolute; }
+      .split-row { flex-direction: column !important; }
+      .split-photo { width: 100%; }
+      .feature-row { flex-direction: column; }
+      .feature-copy { width: 100%; }
+      .sec-head { font-size: 22px; }
+      .feature-title { font-size: 20px; }
+      .team-photos-row { flex-direction: column; }
+    }
+
+    @media (max-width: 640px) {
+      .nav { padding: 12px 16px; gap: 12px; }
+      .nav-back { font-size: 11px; }
+      .nav-anchor { font-size: 10px; padding: 3px 7px; }
+      .title-bar { padding: 28px 20px 20px; }
+      .sec { padding: 20px 20px; }
+      .sec-head { font-size: 20px; }
+      .bubble-narrow-row { flex-direction: column; align-items: flex-end; gap: 8px; }
+      .bubble-char { display: none; }
+      .quote-avatar { width: 48px; height: 48px; }
+      .ptable-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .ptable { min-width: 480px; }
+      .title-main-heading { font-size: 22px !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ────────────────────────────────────────── -->
+<nav class="nav">
+  <a class="nav-back" href="/">← Iris Hsieh</a>
+  <div class="nav-anchors">
+    <a class="nav-anchor" href="#intro">.Intro</a>
+    <a class="nav-anchor" href="#s01">01.Start</a>
+    <a class="nav-anchor" href="#s02">02.What Was Broken</a>
+    <a class="nav-anchor" href="#s03">03.Our Solution</a>
+    <a class="nav-anchor" href="#s04">04.Cool Parts</a>
+  </div>
+</nav>
+
+<!-- ── TITLE BAR ──────────────────────────────────── -->
+<div class="title-bar">
+  <div class="title-bar-inner">
+    <div class="title-main-heading" style="font-size:36px;font-weight:800;line-height:1.1;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;">AI Bicycle Lane Maintenance Tool</div>
+    <div style="font-size:14px;font-weight:500;line-height:1.5;font-family:'Noto Sans',sans-serif;">Collecting and analyzing Hamburg citizen reports to improve cycling infrastructure</div>
+  </div>
+</div>
+
+<!-- ── INTRO ──────────────────────────────────────── -->
+<div id="intro" class="sec cream" style="padding-top:0;padding-bottom:0;">
+  <div class="sec-inner" style="max-width:100%;padding:0;">
+    <div class="intro-card">
+      <div class="intro-photo">
+        <img src="https://www.figma.com/api/mcp/asset/12ecafe6-1c2f-4254-975c-44288f5a2462" alt="BumpHunter field work" />
+      </div>
+      <div class="intro-copy">
+        <div class="text-block">
+          <p class="h3">Quick Product Intro:</p>
+          <p class="body">BumpHunter is an AI-powered tool for Landesbetrieb Straßen, Brücken und Gewässer (LSBG) that collects and analyzes citizen feedback on bicycle lane conditions and maintenance needs. It leverages Google Maps, Strava cycling activity data, and city weather information to provide automated visualizations—enabling engineers to detect issues, prioritize repairs, and enhance cycling infrastructure with greater precision.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3">My Role:</p>
+          <p class="body">As the Interaction Designer, I planned two preliminary research studies covering both the citizen side and the bicycle engineer side, and facilitated over 20 cross-cultural interviews. Throughout development, I conducted rolling studies to ensure insights were translated into concrete, effective design decisions, and created high-fidelity prototypes to validate functionality and usability. I worked closely with team members from Mexico, India, Turkey, Germany, and Russia, aligning stakeholders on interaction patterns to ensure the final experience met the cultural and environmental needs of the city of Hamburg.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3">TimeFrame:</p>
+          <p class="body">2023 · UnternehmerTUM, Munich</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 0. BEFORE WE BEGIN ─────────────────────────── -->
+<div class="sec cream" style="padding-top:120px;padding-bottom:120px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">0.</span>
+      <span class="sec-title">Before we begin,<br>a fun fact about Bicycle Lane Engineers…</span>
+    </div>
+    <div class="chat-wrap">
+      <div class="bubble-wide">
+        <p class="body">In winter, bicycle lane engineers' worst nightmare isn't paperwork — it's trudging out in −10°C weather to check if the bike paths are buried under snow… and realizing they are.</p>
+      </div>
+      <div class="bubble-narrow-row">
+        <div class="bubble-narrow">
+          <p class="body-med">SO, HOW MIGHT WE GIVE ENGINEERS UP-TO-DATE BIKE LANE DATA SO THEY CAN SKIP MOST FREEZING SITE VISITS?</p>
+        </div>
+        <div class="bubble-char">
+          <img src="https://www.figma.com/api/mcp/asset/d36e7eea-317b-45d5-bbcd-2627ad40a654" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 01. WHERE WE STARTED ───────────────────────── -->
+<div id="s01" class="sec white" style="padding-top:120px;padding-bottom:140px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">01.</span>
+      <span class="sec-title">Where We Started</span>
+    </div>
+    <div class="split-row">
+      <div class="split-photo">
+        <img src="https://www.figma.com/api/mcp/asset/31bcbac9-0d9a-428b-9b00-2a756d044993" alt="Bicycle lane in Hamburg" />
+      </div>
+      <div class="split-copy">
+        <div class="text-block">
+          <p class="h3">Project Background:</p>
+          <p class="body">Inspection, maintenance, and planning of bicycle lanes require coordination across multiple government departments and inspection agencies. Although citizens can report issues, many still come through traditional channels like email, resulting in fragmented and hard-to-use information. Drone-based solutions can help in some situations, but their effectiveness drops significantly during winter.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3">Our Goal:</p>
+          <p class="body">Develop a lightweight solution that delivers timely, organized updates on bicycle lane conditions — allowing engineers to cut down on on-site inspections, work more efficiently with other departments, and target repairs where they're needed most, even in challenging winter conditions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 02. INVESTIGATE WHAT WAS BROKEN ───────────── -->
+<div id="s02" class="sec cream" style="padding-top:120px;padding-bottom:140px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">02.</span>
+      <span class="sec-title">Investigate What Was Broken</span>
+    </div>
+
+    <!-- Preliminary Research -->
+    <div class="text-block">
+      <p class="h3">Preliminary Research:</p>
+      <p class="body">We conducted research combining secondary sources and primary data collection to understand the challenges and opportunities in bicycle lane planning and inspection.</p>
+      <p class="body">Secondary research referenced literature on European bicycle lane infrastructure, including planning processes and inspection checkpoints (e.g., snow-related maintenance). Internal system operation documents from LSBG were also reviewed.</p>
+      <p class="body">Primary research involved interviews with bicycle lane experts, engineers, and cycling enthusiasts, as well as focus groups and on-site observations.</p>
+      <p class="body" style="margin-top:4px;">Here are some key quotes from our interviews:</p>
+    </div>
+
+    <!-- Interview Quotes -->
+    <div class="quote-list">
+      <div class="quote-row">
+        <div class="quote-avatar">
+          <img src="https://www.figma.com/api/mcp/asset/12e500dd-8c62-447a-8f6e-3b6028ec43fb" alt="Professor Chris Brunlett" />
+        </div>
+        <p class="quote-text">"The success of the Netherlands in creating a comprehensive network of dedicated cycle paths." — <strong>Professor Chris Brunlett</strong></p>
+      </div>
+      <div class="quote-row">
+        <div class="quote-avatar">
+          <img src="https://www.figma.com/api/mcp/asset/cbaf5115-761c-432e-a9e7-fddfadb4f025" alt="LSBG Engineer" />
+        </div>
+        <p class="quote-text">"What is currently lacking is the feedback from citizens regarding their riding experiences on bicycle paths." — <strong>LSBG Bike Lane Engineer</strong></p>
+      </div>
+      <div class="quote-row">
+        <div class="quote-avatar">
+          <img src="https://www.figma.com/api/mcp/asset/0987be6b-4d4e-4f5b-af2c-240cf51e7f5a" alt="Citizen" />
+        </div>
+        <p class="quote-text">"If my contributions truly help improve my neighborhood, I would be more willing to report." — <strong>Citizen</strong></p>
+      </div>
+    </div>
+
+    <!-- Key Insights -->
+    <div class="text-block">
+      <p class="h3">Key Insights:</p>
+      <p class="body">Our reports showed that engineers lack detailed information on which road segments matter most to citizens and the feedback from their riding experiences. At the same time, citizens are eager for their reports to be acknowledged by the government, which could drive a more proactive approach to inspections.</p>
+    </div>
+
+    <!-- Persona -->
+    <div>
+      <div class="text-block" style="margin-bottom:16px;">
+        <p class="h3">Persona:</p>
+        <p class="body">Our research revealed 2 key roles shaping the bicycle lane planning and inspection process: the Citizen and the Engineer.</p>
+      </div>
+      <div class="persona-wrap">
+        <div class="ptable-wrap">
+          <table class="ptable">
+            <tbody>
+              <tr class="p-header-row">
+                <td></td>
+                <td>Bicycle Lane / Road Engineer</td>
+                <td>Resident / Cyclist</td>
+              </tr>
+              <tr class="p-data-row">
+                <td>Key Focus</td>
+                <td>Maintenance and inspection efficiency</td>
+                <td>Reporting road conditions, improving neighborhoods</td>
+              </tr>
+              <tr class="p-data-row">
+                <td>Key Features</td>
+                <td>Technical inspection, data analysis</td>
+                <td>Submitting reports, tracking responses</td>
+              </tr>
+              <tr class="p-data-row">
+                <td>Needs</td>
+                <td>Clear citizen feedback on road quality and priority segments</td>
+                <td>Assurance that feedback is heard and acted on</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="body" style="margin-top:16px;">While their perspectives differ — from lived riding experiences to technical maintenance priorities — both face similar challenges, including insufficient communication, incomplete data, and the absence of an effective channel that enables their needs and perspectives to be exchanged in both directions and meaningfully influence planning decisions.</p>
+    </div>
+
+    <!-- Language Barrier tip -->
+    <div class="text-block">
+      <p class="h3">Tips: How to Solve Language Barrier with AI Tools</p>
+      <ul class="bull-list">
+        <li><strong>Transcribe fast</strong> — Used Descript to turn German interviews into text.</li>
+        <li><strong>Summarize smart</strong> — Let Hypotenuse pull out key points with prompt-based summaries.</li>
+        <li><strong>Translate quickly</strong> — Ran outputs through online tools for English context.</li>
+        <li><strong>Visualize instantly</strong> — Used QoQo.ai in Figma to map personas &amp; journeys.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ── 03. OUR SOLUTION ───────────────────────────── -->
+<div id="s03" class="sec white" style="padding-top:120px;padding-bottom:140px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">03.</span>
+      <span class="sec-title">Our Solution</span>
+    </div>
+
+    <!-- Service Blueprint -->
+    <div>
+      <div class="text-block" style="margin-bottom:16px;">
+        <p class="h3">Service Blueprint:</p>
+        <p class="body">Engineers often struggled with bicycle lane maintenance: they didn't know which areas to fix first, and citizen reports were scattered and inconsistent. To close this gap, we designed a two-way loop. Engineers could spot damage and traffic flow on maps, then send specific "missions" to riders. Citizens responded with locations, photos, and riding feedback, turning fragmented reports into clear, actionable data. What was once guesswork became a data-driven system for timely inspections and smarter maintenance.</p>
+      </div>
+      <div class="blueprint-box">
+        <img src="https://www.figma.com/api/mcp/asset/2d138f8e-d3d9-4867-9059-df95a6ab7668" alt="Service blueprint diagram" />
+      </div>
+    </div>
+
+    <p class="body">Next, let's take a closer look at how this tool enables engineers to assess priority areas for bicycle lane maintenance through maps, and request specific bicycle lane information from citizens based on their needs:</p>
+
+    <!-- Two styles of visualization -->
+    <div>
+      <p class="feature-title" style="margin-bottom:24px;">Two Styles of Information Visualization:</p>
+
+      <div style="display:flex;flex-direction:column;gap:40px;">
+        <!-- Map View -->
+        <div class="feature-row">
+          <div class="feature-copy">
+            <p class="h3">Map View:</p>
+            <p class="body">Map View enables engineers to quickly pinpoint priority areas for bicycle lane maintenance by visualizing damage severity, report density, and traffic levels. Color-coded markers make it easy to distinguish between extremely dangerous, dangerous, and minor issues, while traffic overlays reveal usage intensity. This combination helps engineers decide not just where intervention is most urgent, but also where repairs will have the greatest impact.</p>
+          </div>
+          <div class="feature-img-wrap">
+            <div class="feature-img-placeholder">[ Map View screen recording ]</div>
+          </div>
+        </div>
+
+        <!-- Report View -->
+        <div class="feature-row">
+          <div class="feature-copy">
+            <p class="h3">Report View:</p>
+            <p class="body">Report View transforms citizen feedback into structured, actionable data, presenting an at-a-glance summary of bicycle lane conditions by district. For example, in Bergstedt, the Uncomfortable rate is 60% and the Dangerous rate is 70%, with key issues including low road traction, numerous potholes, and hazardous obstacles like tree branches. The view also shows report counts and traffic demand distribution (High 30.5%, Medium 4.5%, Low 65%), enabling engineers to quickly gauge both usage and risk levels.</p>
+          </div>
+          <div class="feature-img-wrap">
+            <div class="feature-img-placeholder">[ Report View screen recording ]</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Send Mission -->
+    <div>
+      <p class="feature-title" style="margin-bottom:24px;">Get Road Usage Information from Citizens:</p>
+      <div class="feature-row">
+        <div class="feature-copy">
+          <p class="h3">Send Mission:</p>
+          <p class="body">When engineers need more context to assess a specific area, they can use Send Mission to directly engage local residents. This feature sends targeted requests to citizens in the program, asking them to capture photos, record observations, and provide detailed feedback about the road segment in question. By gathering on-the-ground insights from actual users, engineers can validate existing data, fill in missing details, and make more accurate maintenance or planning decisions.</p>
+        </div>
+        <div class="feature-img-wrap">
+          <div class="feature-img-placeholder">[ Send Mission screen recording ]</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Citizen Reporting -->
+    <div>
+      <p class="feature-title" style="margin-bottom:24px;">Citizen-Assisted Reporting of Bicycle Routes:</p>
+      <div class="feature-row">
+        <div class="feature-copy">
+          <div class="text-block">
+            <p class="h3">Capture cycling experience with simple clicks:</p>
+            <p class="body">Hamburg residents can play an active role in improving local cycling infrastructure by sharing real-world road usage feedback via the Road Usage Reporting Website. Each submission helps engineers better understand on-the-ground conditions and prioritize repairs that matter most to the community.</p>
+          </div>
+          <div class="text-block" style="margin-top:12px;">
+            <p class="h3">How it works:</p>
+            <ol class="num-list">
+              <li>Enter the address of the damaged area</li>
+              <li>Adjust the map pin for accuracy</li>
+              <li>Upload photos of the issue</li>
+              <li>Indicate the level of danger and discomfort</li>
+            </ol>
+            <p class="body" style="margin-top:8px;">With just a few steps, residents can transform their daily riding experiences into actionable insights, directly influencing maintenance priorities and ensuring safer, more comfortable bike lanes.</p>
+          </div>
+        </div>
+        <div class="feature-img-wrap" style="max-width:340px;">
+          <div class="feature-img-placeholder" style="min-height:400px;">[ Citizen reporting app prototype ]</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── 04. COOL PARTS ─────────────────────────────── -->
+<div id="s04" class="sec cream" style="padding-top:120px;padding-bottom:140px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">04.</span>
+      <span class="sec-title">What's the Cool Parts in This Project?</span>
+    </div>
+
+    <!-- Dev group & workflow -->
+    <div class="text-block">
+      <p class="h3">Dev Group &amp; Work Flow</p>
+      <p class="body">We ran Agile sprints with weekly showcases and testing, using story mapping to stay on track. Most collaboration happened in Figma, while Adobe tools filled the gaps. To accelerate, I brought in AI — generating landing pages and even a comic in just one day — turning experiments into shared guides that kept the team aligned.</p>
+    </div>
+
+    <img src="https://www.figma.com/api/mcp/asset/71aa4ec9-ccd9-4052-b634-12712040f240" alt="Team workflow photo strip" class="full-img" />
+
+    <!-- Testing, iterating -->
+    <div class="text-block">
+      <p class="h3">Testing, Iterating, Failing, Partnering</p>
+      <p class="body">The most memorable part of this project was immersing myself in Munich and Hamburg's cycling ecosystems, so different from what I knew. I once suggested posting flyers on utility poles, only to learn Munich had long buried its cables (a humbling moment). Working with such a diverse team felt like unearthing design gems: spotting blind spots together, embracing feedback, and refining ideas. From it, I grew to value my role not just as a designer, but as a collaborator — building with others across cultures, tackling challenges, and finding solutions side by side.</p>
+    </div>
+
+    <!-- Team photos -->
+    <div class="team-photos-row">
+      <div class="team-photo" style="min-height:220px;">
+        <img src="https://www.figma.com/api/mcp/asset/e3a7e411-f981-4be7-b2da-1affb4779d9f" alt="Team photo 1" />
+      </div>
+      <div class="team-photo" style="min-height:220px;">
+        <img src="https://www.figma.com/api/mcp/asset/745352c9-5c63-4b70-ace2-8fb6a137a086" alt="Team photo 2" />
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<div class="footer">
+  <div class="footer-contact">
+    <div class="footer-item"><span>WeChat: ralinzain</span></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.instagram.com/ralinzain" target="_blank" rel="noreferrer">Instagram</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.linkedin.com/in/ming-hsi-h-b59182158/" target="_blank" rel="noreferrer">LinkedIn</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://wa.me/886975573947">WhatsApp: +886 975 573 947</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="mailto:ralinzain@gmail.com">ralinzain@gmail.com</a></div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const anchors = document.querySelectorAll('.nav-anchor');
+    const sectionIds = ['intro','s01','s02','s03','s04'];
+    const sections = sectionIds.map(id => document.getElementById(id));
+    const navEl = document.querySelector('.nav');
+
+    function update() {
+      const navH = navEl ? navEl.offsetHeight : 57;
+      const scrollY = window.scrollY + navH + 40;
+      let active = sections[0];
+      sections.forEach(sec => { if (sec && sec.offsetTop <= scrollY) active = sec; });
+      anchors.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + (active ? active.id : ''));
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+
+</body>
+</html>

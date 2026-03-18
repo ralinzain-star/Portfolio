@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Notification Framework · Iris Hsieh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #f0ebe2;
+      --bg-card:  #fffefb;
+      --border:   #dbd4c9;
+      --text:     #2b2520;
+      --muted:    #8c8079;
+      --accent:   #5b7fa6;
+    }
+
+    html, body {
+      font-family: 'Noto Sans', 'Barlow', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.4;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; }
+
+    /* ── NAV ──────────────────────────────────────── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(240,235,226,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(43,37,32,0.08);
+      padding: 16px 60px;
+      display: flex; align-items: center;
+    }
+    .nav-back {
+      font-size: 13px; font-weight: 600;
+      color: var(--muted); letter-spacing: 0.04em;
+      font-family: 'Barlow', sans-serif;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text); }
+    .nav-anchors {
+      display: flex; align-items: center; gap: 0;
+      margin-left: auto; overflow-x: auto; scrollbar-width: none;
+    }
+    .nav-anchors::-webkit-scrollbar { display: none; }
+    .nav-anchor {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.01em;
+      color: var(--muted); padding: 4px 9px; border-radius: 6px;
+      white-space: nowrap; font-family: 'IBM Plex Mono', monospace;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-anchor:hover { color: var(--text); }
+    .nav-anchor.active { color: var(--text); background: rgba(43,37,32,0.07); }
+
+    /* ── SECTION WRAPPERS ─────────────────────────── */
+    .sec {
+      width: 100%; padding: 120px 60px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .sec.white { background: var(--bg-card); }
+    .sec.cream { background: var(--bg); }
+    .sec-inner { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 48px; }
+
+    /* ── SECTION HEADING ──────────────────────────── */
+    .sec-head {
+      display: flex; gap: 28px; align-items: flex-start;
+      font-size: 32px; font-weight: 800; font-family: 'Barlow', sans-serif;
+      line-height: 1.1; letter-spacing: -0.02em; text-transform: uppercase;
+    }
+    .sec-num { white-space: nowrap; flex-shrink: 0; }
+    .sec-title { flex: 1; }
+
+    /* ── TYPE SCALE ───────────────────────────────── */
+    .h3 { font-size: 11px; font-weight: 700; line-height: 1.2; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Barlow', sans-serif; }
+    .body { font-size: 14px; font-weight: 400; line-height: 1.75; font-family: 'Noto Sans', sans-serif; }
+    .body-med { font-size: 14px; font-weight: 600; line-height: 1.5; font-family: 'Noto Sans', sans-serif; }
+    .text-block { display: flex; flex-direction: column; gap: 8px; }
+
+    /* ── TITLE BAR ────────────────────────────────── */
+    .title-bar {
+      width: 100%; background: var(--bg); padding: 28px 60px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .title-bar-inner { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 12px; }
+
+    /* ── INTRO SPLIT CARD ─────────────────────────── */
+    .intro-card { width: 100%; border-radius: 20px; overflow: hidden; display: flex; align-items: stretch; min-height: 440px; }
+    .intro-photo { flex: 1; position: relative; min-height: 320px; }
+    .intro-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .intro-copy {
+      flex: 1; background: var(--bg-card); padding: 24px 40px;
+      display: flex; flex-direction: column; gap: 16px; justify-content: center;
+    }
+
+    /* ── CHAT BUBBLES ─────────────────────────────── */
+    .chat-wrap { display: flex; flex-direction: column; gap: 24px; align-items: flex-end; width: 100%; }
+    .bubble-wide { background: var(--bg-card); border-radius: 20px 20px 8px 20px; padding: 16px 24px; width: 100%; align-self: stretch; }
+    .bubble-narrow-row { display: flex; align-items: flex-end; gap: 16px; align-self: flex-end; }
+    .bubble-narrow { background: var(--bg-card); border-radius: 20px 20px 8px 20px; padding: 16px 24px; max-width: 500px; }
+    .bubble-char { width: 158px; flex-shrink: 0; }
+    .bubble-char img { width: 100%; }
+
+    /* ── SPLIT ROW ────────────────────────────────── */
+    .split-row { display: flex; gap: 40px; align-items: flex-start; width: 100%; }
+    .split-photo { width: 300px; flex-shrink: 0; border-radius: 20px; overflow: hidden; background: #fff0d8; }
+    .split-photo img { width: 100%; display: block; }
+    .split-copy { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+
+    /* ── ICON LIST ROW ────────────────────────────── */
+    .icon-row { display: flex; gap: 32px; align-items: flex-start; width: 100%; }
+    .icon-thumb { width: 110px; flex-shrink: 0; border-radius: 16px; overflow: hidden; }
+    .icon-thumb img { width: 100%; display: block; }
+    .icon-copy { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+
+    /* ── NUMBERED STEP LIST ───────────────────────── */
+    .step-list { display: flex; flex-direction: column; gap: 32px; }
+    .step-row { display: flex; gap: 24px; align-items: flex-start; }
+    .step-num {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background: #f8d08c; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; font-family: 'Barlow', sans-serif;
+    }
+    .step-copy { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+
+    /* ── BULL LIST ────────────────────────────────── */
+    .bull-list { padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+    .bull-list li { font-size: 14px; line-height: 1.75; font-family: 'Noto Sans', sans-serif; }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    .footer { width: 100%; padding: 40px 60px; background: var(--text); color: #fffefb; display: flex; justify-content: center; }
+    .footer-contact { display: flex; align-items: center; gap: 0; flex-wrap: wrap; justify-content: center; }
+    .footer-item { font-size: 12px; font-family: 'IBM Plex Mono', monospace; padding: 4px 16px; }
+    .footer-item a { color: inherit; }
+    .footer-item a:hover { text-decoration: underline; }
+    .footer-sep { width: 1px; height: 14px; background: rgba(255,255,255,0.2); }
+
+    /* ── RESPONSIVE ───────────────────────────────── */
+    @media (max-width: 900px) {
+      .nav { padding: 12px 20px; }
+      .title-bar { padding: 28px 20px 20px; }
+      .sec { padding: 60px 20px; }
+      .sec-head { font-size: 20px; }
+      .intro-card { flex-direction: column; }
+      .intro-photo { min-height: 260px; }
+      .split-row { flex-direction: column; }
+      .split-photo { width: 100%; }
+      .icon-row { flex-direction: column; }
+      .bubble-narrow-row { flex-direction: column; align-items: flex-end; gap: 8px; }
+      .bubble-char { display: none; }
+      .footer { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ────────────────────────────────────────── -->
+<nav class="nav">
+  <a class="nav-back" href="/">← Iris Hsieh</a>
+  <div class="nav-anchors">
+    <a class="nav-anchor" href="#intro">.Intro</a>
+    <a class="nav-anchor" href="#s01">01.Where We Started</a>
+    <a class="nav-anchor" href="#s02">02.Our Process</a>
+    <a class="nav-anchor" href="#s03">03.What We Built</a>
+    <a class="nav-anchor" href="#s04">04.Designing the Prompt</a>
+    <a class="nav-anchor" href="#s05">05.Impact</a>
+  </div>
+</nav>
+
+<!-- ── TITLE BAR ──────────────────────────────────── -->
+<div class="title-bar">
+  <div class="title-bar-inner">
+    <div style="font-size:36px;font-weight:800;line-height:1.1;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;">Notification Framework</div>
+    <div style="font-size:16px;font-weight:500;line-height:1.4;font-family:'Noto Sans',sans-serif;color:var(--muted);">Turning scattered alerts into a unified, review-ready notification framework.</div>
+  </div>
+</div>
+
+<!-- ── INTRO ──────────────────────────────────────── -->
+<div id="intro" class="sec cream" style="padding-top:0;padding-bottom:0;">
+  <div class="sec-inner" style="max-width:100%;padding:0;">
+    <div class="intro-card">
+      <div class="intro-photo">
+        <img src="https://www.figma.com/api/mcp/asset/6cc41637-96a0-4975-b93e-25d57d2f2284" alt="Notification Framework" />
+      </div>
+      <div class="intro-copy">
+        <div class="text-block">
+          <p class="h3">Quick Product Intro:</p>
+          <p class="body">The Notification Framework is a unified system that helps teams align on how notifications are created, classified, and delivered. It ensures messages across features are intentional, consistent, and user-centered.</p>
+          <p class="body">The framework introduces structured rules, expands categories to fit product needs, and defines frequency types and priority levels. A supporting tool was also developed to help plan and validate notification strategies — reducing redundancy, preventing conflicts, and improving overall experience.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3">My Role:</p>
+          <p class="body">As the Interaction Designer, I audited and classified notifications, then co-developed rules like a classification tree and frequency types to guide design decisions. I aligned cross-functional teams on shared standards, collaborated on a supporting tool that reviews mockups and flags duplicates, and documented best practices to scale the framework.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3">Company &amp; Timeframe:</p>
+          <p class="body">Google Pixel · 2025</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 0. BEHIND THE SCENES ───────────────────────── -->
+<div class="sec cream" style="padding-top:120px;padding-bottom:120px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">0.</span>
+      <span class="sec-title">Here's a Little Behind-the-Scenes</span>
+    </div>
+    <div class="chat-wrap">
+      <div class="bubble-wide">
+        <p class="body-med">Our team kept running into the same issue: every feature was sending their own notifications, and without context, things got messy. Duplicates, gaps… everyone agreed this was a big problem.</p>
+      </div>
+      <div class="bubble-narrow-row">
+        <div class="bubble-narrow">
+          <p class="body-med">SO, HOW MIGHT WE BUILD A FRAMEWORK THAT HELPS EVERYONE DECIDE WHAT TO SEND, WHEN, AND WHY?</p>
+        </div>
+        <div class="bubble-char">
+          <img src="https://www.figma.com/api/mcp/asset/be4377b6-e9a7-4d37-ad55-d3317762b560" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 01. WHERE WE STARTED ───────────────────────── -->
+<div id="s01" class="sec white" style="padding-top:120px;padding-bottom:140px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">01.</span>
+      <span class="sec-title">Where We Started</span>
+    </div>
+    <div class="split-row">
+      <div class="split-photo">
+        <img src="https://www.figma.com/api/mcp/asset/649b5065-879a-4ecf-90fc-940aaf4e85d4" alt="Notification audit reference" />
+      </div>
+      <div class="split-copy">
+        <div class="text-block">
+          <p class="h3">Project Background:</p>
+          <p class="body">Notifications across different features were scattered in separate design files, making it difficult for designers and PMs to get a holistic view. Without visibility, teams couldn't easily tell if a similar notification already existed or how others were triggered.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3">Our Goal:</p>
+          <p class="body">We set out to build a shared notification framework that:</p>
+          <ul class="bull-list" style="margin-top:4px;">
+            <li>Aligns designers and PMs on what to send, when, and why.</li>
+            <li>Reduces redundancy while preserving important alerts.</li>
+            <li>Turns fragmented guidelines into a single source of truth for planning and design.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 02. OUR PROCESS ────────────────────────────── -->
+<div id="s02" class="sec cream" style="padding-top:120px;padding-bottom:140px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">02.</span>
+      <span class="sec-title">Our Process</span>
+    </div>
+    <p class="body">We knew the framework couldn't be built overnight. To make it reliable, we broke the work down into simple steps — auditing what already existed, creating rules to classify them, and refining those rules into a structure the whole team could use.</p>
+    <div style="display:flex;flex-direction:column;gap:32px;">
+      <div class="text-block">
+        <p class="h3">Step 1 — Notification Audit</p>
+        <p class="body">We started by auditing six core features, collecting all existing notifications into a single database. Each one was mapped by trigger, urgency, and frequency, then translated into flowcharts to reconstruct the end-to-end user journey.</p>
+      </div>
+      <div class="text-block">
+        <p class="h3">Step 2 — Classification &amp; Rules</p>
+        <p class="body">From the audit, we designed a classification tree that asked simple but systematic questions: Is this user-initiated? Is it a device health warning? Is it contextual? Each answer led to a category, a frequency type, and an importance level.</p>
+      </div>
+      <div class="text-block">
+        <p class="h3">Step 3 — Alignment Efforts</p>
+        <p class="body">We partnered closely with PMs and engineers, running design reviews and scenario testing to pressure-test the framework against real use cases. These sessions revealed where redundancy was most painful and where consistency mattered most — shaping the framework into something practical, not just theoretical.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 03. WHAT WE BUILT ──────────────────────────── -->
+<div id="s03" class="sec white" style="padding-top:120px;padding-bottom:140px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">03.</span>
+      <span class="sec-title">What We Built</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:40px;">
+      <div class="icon-row">
+        <div class="icon-thumb"><img src="https://www.figma.com/api/mcp/asset/e28893d9-abad-4663-8a28-a7fc0c656a62" alt="" /></div>
+        <div class="icon-copy">
+          <p class="h3">Categorization &amp; Usage Guidelines</p>
+          <p class="body">Expanded from Android guidelines, we defined 8 categories (e.g., Critical Device Health Warning, Security &amp; Privacy, Background Actions, Contextual Insights). This gave teams a vocabulary to consistently describe what kind of message they were sending.</p>
+        </div>
+      </div>
+      <div class="icon-row">
+        <div class="icon-thumb"><img src="https://www.figma.com/api/mcp/asset/d6a8c911-35dc-46c3-937b-ea276b9222a5" alt="" /></div>
+        <div class="icon-copy">
+          <p class="h3">Frequency Types Guidelines</p>
+          <p class="body">We outlined 4 main delivery types: One-time, Reappearing, Regular Delivery, and Ongoing. Each had clear rules on urgency, when it should disappear, and how often it could reappear. This directly reduced over-notification fatigue.</p>
+        </div>
+      </div>
+      <div class="icon-row">
+        <div class="icon-thumb"><img src="https://www.figma.com/api/mcp/asset/7d6c0669-41b4-47f5-8ca2-dd2ce8c9acc2" alt="" /></div>
+        <div class="icon-copy">
+          <p class="h3">Ranking &amp; Priority Guidelines</p>
+          <p class="body">Borrowing from Android's urgency heuristics, we mapped notifications to importance levels (Urgent, High, Medium, Low). This ensured both consistency in tone and alignment with system behaviors (sound, vibration, heads-up, etc.).</p>
+        </div>
+      </div>
+      <div class="icon-row">
+        <div class="icon-thumb"><img src="https://www.figma.com/api/mcp/asset/b86c1e9e-7577-4004-9125-602639c4937a" alt="" /></div>
+        <div class="icon-copy">
+          <p class="h3">Notification Helper Tool</p>
+          <p class="body">A static framework alone wasn't enough — we needed a way for teams to actually use it in daily workflows. To solve this, I designed the Notification Classifier Bot Prompt, a structured system that turned design rules into actionable outputs across different input types (PRDs, mocks, screenshots, flowcharts).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 04. HOW I DESIGNED THE PROMPT ─────────────── -->
+<div id="s04" class="sec cream" style="padding-top:120px;padding-bottom:140px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">04.</span>
+      <span class="sec-title" style="display:flex;align-items:center;gap:12px;">
+        How I Designed the Prompt
+        <img src="https://www.figma.com/api/mcp/asset/cfcd3e56-be0d-4150-90af-b7e38daada7a" alt="" style="width:40px;height:40px;display:inline-block;" />
+      </span>
+    </div>
+    <div class="step-list">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-copy">
+          <p class="h3">Defining the Role &amp; Modes</p>
+          <p class="body">I set a clear role for the model ("Notification Classifier Bot") and introduced input-driven mode switching. Depending on whether the input was text, planning documents, or flow diagrams, the bot automatically applied the right logic. This reduced ambiguity and ensured each context was handled appropriately.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-copy">
+          <p class="h3">Standardized Review Table</p>
+          <p class="body">To make outputs directly usable, I created a fixed review table with fields: Feature, Trigger, Category, Frequency, Importance, Priority, Disappear Conditions, Layouts/Actions, and Display. Any inferred data had to be flagged as (Gemini's Addition), making results traceable, auditable, and review-ready.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-copy">
+          <p class="h3">Anchoring to Core Documents</p>
+          <p class="body">The bot was anchored to three authoritative sources — Categories &amp; Usage, Frequency Types, and the Decision Tree. Each classification referenced these definitions and included a summary, ensuring consistency with the framework instead of language-based guesswork.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-copy">
+          <p class="h3">Handling Complex Inputs</p>
+          <p class="body">I wrote strict rules for flowchart reviews, where noise is common. Only yellow cards were processed, one per row, ignoring non-notification elements. Even identical texts with different triggers became separate entries, keeping discussions strictly focused on notifications.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">5</div>
+        <div class="step-copy">
+          <p class="h3">Explainable Rules &amp; Feedback Loop</p>
+          <p class="body">Importance and priority were derived through explainable rules (Category → Frequency → System Behavior). Subjective scoring was replaced with logic teams could debate. I also embedded a feedback loop: if a classification was challenged, the bot suggested alternatives, recalculated values, and checked against Notification Overview for duplicates.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 05. IMPACT ─────────────────────────────────── -->
+<div id="s05" class="sec white" style="padding-top:120px;padding-bottom:140px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">05.</span>
+      <span class="sec-title">What Impact Did We Create?</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:32px;">
+      <div class="text-block">
+        <p class="h3">Build the Foundation</p>
+        <ul class="bull-list" style="margin-top:4px;">
+          <li><strong>Goal:</strong> Establish a unified notification framework to give the team a consistent way to classify and govern notifications.</li>
+          <li><strong>Impact:</strong> By grounding the work in three core documents — Categories, Frequency Types, and Decision Tree — and standardizing outputs into review tables, the team gained a shared language. Discussions shifted from individual interpretations to collective review.</li>
+        </ul>
+      </div>
+      <div class="text-block">
+        <p class="h3">Ensure Consistency</p>
+        <ul class="bull-list" style="margin-top:4px;">
+          <li><strong>Goal:</strong> Prevent users from receiving duplicate or conflicting messages, improving overall experience consistency.</li>
+          <li><strong>Impact:</strong> Structured rules made de-duplication part of the workflow. The Classifier Bot automatically checked triggers for overlap and flagged inferred fields, reducing both omissions and disputes.</li>
+        </ul>
+      </div>
+      <div class="text-block">
+        <p class="h3">Enable Better Work</p>
+        <ul class="bull-list" style="margin-top:4px;">
+          <li><strong>Goal:</strong> Help designers and PMs make clearer decisions earlier in the process.</li>
+          <li><strong>Impact:</strong> The prompt included MVP/Long-term splits, explainable importance/priority rules, and alternative suggestions, giving product planning more focus and grounding discussions in evidence.</li>
+        </ul>
+      </div>
+      <p class="body">In the end, this framework didn't just organize notifications — it gave the team a common ground to design, debate, and decide. It turned a scattered problem into a repeatable process, ensuring every notification now carries clear purpose and shared accountability.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<div class="footer">
+  <div class="footer-contact">
+    <div class="footer-item"><span>WeChat: ralinzain</span></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.instagram.com/ralinzain" target="_blank" rel="noreferrer">Instagram</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.linkedin.com/in/ming-hsi-h-b59182158/" target="_blank" rel="noreferrer">LinkedIn</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://wa.me/886975573947">WhatsApp: +886 975 573 947</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="mailto:ralinzain@gmail.com">ralinzain@gmail.com</a></div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const anchors = document.querySelectorAll('.nav-anchor');
+    const sectionIds = ['intro','s01','s02','s03','s04','s05'];
+    const sections = sectionIds.map(id => document.getElementById(id));
+    const navEl = document.querySelector('.nav');
+    function update() {
+      const navH = navEl ? navEl.offsetHeight : 57;
+      const scrollY = window.scrollY + navH + 40;
+      let active = sections[0];
+      sections.forEach(sec => { if (sec && sec.offsetTop <= scrollY) active = sec; });
+      anchors.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + (active ? active.id : ''));
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+
+</body>
+</html>
