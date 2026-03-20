@@ -167,7 +167,7 @@
     /* ── ICON LIST ────────────────────────────────── */
     .icon-list { display: flex; flex-direction: column; gap: 12px; }
     .icon-item { display: flex; gap: 12px; align-items: flex-start; }
-    .icon-item img { width: 24px; height: 24px; flex-shrink: 0; margin-top: 3px; }
+    .icon-item img { width: 24px; height: 24px; flex-shrink: 0; margin-top: 0; object-fit: contain; }
 
     /* ── CHECK LIST ───────────────────────────────── */
     .check-list { display: flex; flex-direction: column; gap: 12px; }
@@ -367,6 +367,276 @@
       .feature-title { font-size: 20px; }
     }
 
+    /* ── CJM: Animated User Journey Map ─────────────────── */
+    .cjm-wrap { width: 100%; display: flex; flex-direction: column; }
+    .cjm-chart {
+      position: relative; width: 100%;
+      background: var(--bg-card); border-radius: 16px 16px 0 0;
+      padding: 12px 12px 8px 48px;
+    }
+    .cjm-y-axis {
+      position: absolute; left: 0; top: 0; bottom: 0; width: 48px;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 6px; padding: 12px 0;
+      overflow: hidden;
+    }
+    .cjm-y-emoji { font-size: 16px; line-height: 1; }
+    .cjm-y-text {
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase;
+      font-family: 'IBM Plex Mono', monospace; color: var(--muted);
+    }
+    .cjm-svg-wrap { position: relative; width: 100%; aspect-ratio: 900 / 240; }
+    .cjm-svg-wrap svg { width: 100%; height: 100%; }
+    .cjm-midline { stroke: rgba(43,37,32,0.1); stroke-width: 1; stroke-dasharray: 5 5; fill: none; }
+    .cjm-fill { fill: url(#cjm-grad); opacity: 0; transition: opacity 0.9s 0.5s ease; }
+    .cjm-wrap.in-view .cjm-fill { opacity: 1; }
+    .cjm-line {
+      stroke: #575c87; stroke-width: 2.5; fill: none; stroke-linecap: round;
+      stroke-dasharray: 2200; stroke-dashoffset: 2200;
+      transition: stroke-dashoffset 1.8s cubic-bezier(0.4,0,0.2,1);
+    }
+    .cjm-wrap.in-view .cjm-line { stroke-dashoffset: 0; }
+    .cjm-dot {
+      fill: white; stroke: #575c87; stroke-width: 2;
+      transform-box: fill-box; transform-origin: center; transform: scale(0);
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      pointer-events: none;
+    }
+    .cjm-dot.active { stroke-width: 3; fill: #e8eaf6; }
+    .cjm-dot-hit {
+      fill: transparent; cursor: pointer;
+    }
+    .cjm-wrap.in-view .cjm-dot:nth-of-type(1) { transition-delay: 0.5s; transform: scale(1); }
+    .cjm-wrap.in-view .cjm-dot:nth-of-type(2) { transition-delay: 0.7s; transform: scale(1); }
+    .cjm-wrap.in-view .cjm-dot:nth-of-type(3) { transition-delay: 0.9s; transform: scale(1); }
+    .cjm-wrap.in-view .cjm-dot:nth-of-type(4) { transition-delay: 1.1s; transform: scale(1); }
+    .cjm-wrap.in-view .cjm-dot:nth-of-type(5) { transition-delay: 1.3s; transform: scale(1); }
+    .cjm-wrap.in-view .cjm-dot:nth-of-type(6) { transition-delay: 1.5s; transform: scale(1); }
+    .cjm-bubble {
+      position: absolute; background: white; border: 1.5px solid #fdc437;
+      border-radius: 10px; padding: 8px 10px;
+      font-size: 10.5px; line-height: 1.55; font-family: 'Noto Sans', sans-serif;
+      color: var(--text); max-width: 148px;
+      box-shadow: 1px 2px 6px rgba(43,37,32,0.08);
+      opacity: 0; transform: translateY(5px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      z-index: 2; pointer-events: none;
+    }
+    .cjm-bubble.takeshi { border-color: #aaa; }
+    .cjm-speaker {
+      font-size: 9px; color: var(--muted); letter-spacing: 0.03em;
+      font-family: 'IBM Plex Mono', monospace; margin-bottom: 3px;
+    }
+    .cjm-bubble.visible { opacity: 1; transform: translateY(0); }
+    .cjm-stages-row { position: relative; background: var(--bg-card); padding: 0 12px 0 48px; }
+    .cjm-steps-lbl {
+      position: absolute; left: 0; width: 48px; top: 0; bottom: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase;
+      font-family: 'IBM Plex Mono', monospace; color: var(--muted);
+      writing-mode: vertical-rl; transform: rotate(180deg);
+    }
+    .cjm-stages { display: flex; gap: 0; }
+    .cjm-stage {
+      flex: 1; background: #575c87; color: white;
+      padding: 8px 4px; font-size: 10px; text-align: center;
+      font-family: 'Barlow', sans-serif; font-weight: 600;
+      letter-spacing: 0.01em; line-height: 1.3;
+      border-right: 3px solid var(--bg-card);
+    }
+    .cjm-stage:first-child { border-radius: 4px 0 0 4px; }
+    .cjm-stage:last-child { border-radius: 0 4px 4px 0; border-right: none; }
+    .cjm-actions-wrap {
+      background: var(--bg-card); border-radius: 0 0 16px 16px;
+      padding: 14px 12px 20px 48px; position: relative;
+    }
+    .cjm-actions-lbl {
+      position: absolute; left: 0; width: 48px; top: 14px; bottom: 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase;
+      font-family: 'IBM Plex Mono', monospace; color: var(--muted);
+      writing-mode: vertical-rl; transform: rotate(180deg);
+    }
+    .cjm-actions { display: flex; gap: 0; }
+    .cjm-col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; padding: 0 8px; align-items: center; }
+    .cjm-col:first-child { padding-left: 0; }
+    .cjm-col:last-child { padding-right: 0; }
+    .cjm-persona-block { display: flex; flex-direction: column; gap: 3px; align-items: center; text-align: center; }
+    .cjm-persona-tag {
+      font-size: 9px; color: var(--muted); font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.02em; text-align: center;
+    }
+    .cjm-persona-tag strong {
+      display: block; font-size: 10.5px; font-weight: 600;
+      color: var(--text); font-family: 'Noto Sans', sans-serif; letter-spacing: 0;
+    }
+    .cjm-blist { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; align-items: center; }
+    .cjm-blist li {
+      font-size: 10.5px; color: var(--text); line-height: 1.4;
+      font-family: 'Noto Sans', sans-serif; text-align: center;
+    }
+    .cjm-col-div { height: 1px; background: var(--border); margin: 2px 0; }
+
+    /* CJM horizontal scroll wrapper */
+    .cjm-outer {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .cjm-wrap { min-width: 680px; }
+
+    /* ── PPO: Pain Points & Opportunities ─────────────── */
+    .ppo-outer { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .ppo-wrap { min-width: 680px; display: flex; flex-direction: column; }
+    .ppo-chart {
+      position: relative; width: 100%;
+      background: var(--bg-card); border-radius: 16px 16px 0 0;
+      padding: 12px 12px 8px 48px;
+    }
+    .ppo-svg-wrap { position: relative; width: 100%; aspect-ratio: 900 / 240; }
+    .ppo-svg-wrap svg { width: 100%; height: 100%; }
+    .ppo-row {
+      background: var(--bg-card);
+      padding: 14px 12px 14px 48px;
+      position: relative;
+      display: flex;
+    }
+    .ppo-row:last-child { border-radius: 0 0 16px 16px; padding-bottom: 20px; }
+    .ppo-row-lbl {
+      position: absolute; left: 0; width: 48px; top: 14px; bottom: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase;
+      font-family: 'IBM Plex Mono', monospace; color: var(--muted);
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      gap: 3px;
+    }
+    .ppo-row-icon { font-size: 11px; font-style: normal; }
+    .ppo-row-body { flex: 1; display: flex; gap: 0; }
+    .ppo-s0 { flex: 1; }
+    .ppo-z1 { flex: 2; padding: 0 10px 0 0; }
+    .ppo-gap-col { flex: 1; }
+    .ppo-z2 { flex: 2; padding: 0 0 0 10px; }
+    .ppo-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: 5px;
+    }
+    .ppo-list li {
+      font-size: 10.5px; color: var(--text); line-height: 1.5;
+      font-family: 'Noto Sans', sans-serif;
+      padding-left: 10px; position: relative;
+    }
+    .ppo-list li::before { content: '·'; position: absolute; left: 0; color: var(--muted); }
+    .ppo-list li { cursor: default; }
+
+    /* ── PPO Ideation Tooltip ──────────────────────── */
+    #ppo-tooltip {
+      position: fixed; pointer-events: none; z-index: 999;
+      background: var(--text); color: #fff;
+      border-radius: 10px; padding: 10px 13px;
+      font-size: 11px; line-height: 1.6;
+      font-family: 'Noto Sans', sans-serif;
+      max-width: 230px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+      opacity: 0; transform: translateY(4px);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+    #ppo-tooltip.visible { opacity: 1; transform: translateY(0); }
+    #ppo-tip-product {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.75);
+      margin-bottom: 4px;
+    }
+    #ppo-tip-product::before { content: 'Use case: '; }
+    #ppo-tip-body { color: #fff; }
+
+    /* ── Stat Highlight ────────────────────────────── */
+    .stat-hi {
+      background: rgba(253,196,55,0.35);
+      padding: 1px 4px; border-radius: 4px; font-weight: 600;
+    }
+
+    /* ── Where We Started Animation ─────────────────── */
+    .wws-anim {
+      position: absolute; inset: 0;
+      background: var(--bg-card); border-radius: 16px;
+      padding: 28px 24px;
+      display: flex; flex-direction: column;
+      justify-content: center; gap: 20px; overflow: hidden;
+    }
+    .wws-head {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+    }
+    .wws-bars { display: flex; flex-direction: column; gap: 13px; }
+    .wws-row { display: flex; align-items: center; gap: 10px; }
+    .wws-lbl {
+      font-size: 11px; font-family: 'IBM Plex Mono', monospace;
+      color: var(--muted); width: 64px; flex-shrink: 0; text-align: right;
+    }
+    .wws-track {
+      flex: 1; height: 8px; background: rgba(43,37,32,0.07);
+      border-radius: 4px; overflow: hidden;
+    }
+    .wws-fill {
+      height: 100%; border-radius: 4px; background: #575c87;
+      transform-origin: left; transform: scaleX(0);
+    }
+    .wws-pct {
+      font-size: 11px; font-family: 'IBM Plex Mono', monospace;
+      color: var(--text); width: 34px; opacity: 0;
+    }
+    .wws-red { color: #d34c4c; }
+    .wws-f1 { width: 100%; }
+    .wws-f2 { width: 82%; }
+    .wws-f3 { width: 65%; }
+    .wws-f4 { width: 50%; }
+    .wws-f5 { width: 40%; background: #d34c4c; }
+    /* Triggered by IntersectionObserver — play once, stop at result */
+    .wws-anim.triggered .wws-f1 { animation: wwsBarFill 0.7s 0.0s ease forwards; }
+    .wws-anim.triggered .wws-f2 { animation: wwsBarFill 0.7s 0.7s ease forwards; }
+    .wws-anim.triggered .wws-f3 { animation: wwsBarFill 0.7s 1.4s ease forwards; }
+    .wws-anim.triggered .wws-f4 { animation: wwsBarFill 0.7s 2.1s ease forwards; }
+    .wws-anim.triggered .wws-f5 { animation: wwsBarFill 0.7s 2.8s ease forwards; }
+    .wws-anim.triggered .wws-p1 { animation: wwsPctShow 0.3s 0.8s ease forwards; }
+    .wws-anim.triggered .wws-p2 { animation: wwsPctShow 0.3s 1.5s ease forwards; }
+    .wws-anim.triggered .wws-p3 { animation: wwsPctShow 0.3s 2.2s ease forwards; }
+    .wws-anim.triggered .wws-p4 { animation: wwsPctShow 0.3s 2.9s ease forwards; }
+    .wws-anim.triggered .wws-p5 { animation: wwsPctShow 0.3s 3.6s ease forwards; }
+    .wws-anim.triggered .wws-note { animation: wwsNoteShow 0.5s 4.1s ease forwards; }
+    @keyframes wwsBarFill {
+      0%   { transform: scaleX(0); }
+      100% { transform: scaleX(1); }
+    }
+    @keyframes wwsPctShow {
+      0%   { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    .wws-note {
+      padding-top: 14px; border-top: 1px solid var(--border);
+      font-size: 11px; font-family: 'Noto Sans', sans-serif; color: var(--muted);
+      opacity: 0;
+    }
+    .wws-stat-num { font-family: 'IBM Plex Mono', monospace; color: var(--text); font-weight: 600; }
+    @keyframes wwsNoteShow {
+      0%   { opacity: 0; transform: translateY(4px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── PPO Example Tag ───────────────────────────── */
+    .ppo-eg-tag {
+      display: inline-block; margin-left: 5px;
+      font-size: 8px; font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 1px 5px; border-radius: 3px;
+      border: 1px solid var(--border); color: var(--muted);
+      vertical-align: middle; cursor: default;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+    .ppo-ideation-li:hover .ppo-eg-tag {
+      border-color: var(--text); color: var(--text);
+    }
+
     @media (max-width: 640px) {
       /* Nav */
       .nav { padding: 12px 16px; gap: 12px; }
@@ -449,11 +719,10 @@
   <div class="nav-anchors">
     <a class="nav-anchor" href="#intro" data-i18n="nav.intro">.Intro</a>
     <a class="nav-anchor" href="#s01" data-i18n="nav.s01">01.Achievement</a>
-    <a class="nav-anchor" href="#s02" data-i18n="nav.s02">02.Start</a>
+    <a class="nav-anchor" href="#s02" data-i18n="nav.s02">02.Context</a>
     <a class="nav-anchor" href="#s03" data-i18n="nav.s03">03.Investigate</a>
-    <a class="nav-anchor" href="#s04" data-i18n="nav.s04">04.Iteration</a>
-    <a class="nav-anchor" href="#s05" data-i18n="nav.s05">05.Our Solution</a>
-    <a class="nav-anchor" href="#s06" data-i18n="nav.s06">06.Results</a>
+    <a class="nav-anchor" href="#s04" data-i18n="nav.s04">04.Solution</a>
+    <a class="nav-anchor" href="#s05" data-i18n="nav.s05">05.Results</a>
   </div>
 </nav>
 
@@ -461,7 +730,7 @@
 <div class="title-bar">
   <div class="title-bar-inner">
     <div class="title-main-heading" data-i18n="page.title" style="font-size:36px;font-weight:800;line-height:1.1;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;">KKday Rezio SaaS Service</div>
-    <div data-i18n="page.subtitle" style="font-size:14px;font-weight:500;line-height:1.5;letter-spacing:0em;font-family:'Noto Sans',sans-serif;">Revamping OTA (Online travel agency) Product Listing Journey</div>
+    <div data-i18n="page.subtitle" style="font-size:14px;font-weight:500;line-height:1.5;letter-spacing:0em;font-family:'Noto Sans',sans-serif;">Redesigning the OTA product listing experience</div>
   </div>
 </div>
 
@@ -474,15 +743,15 @@
       </div>
       <div class="intro-copy">
         <div class="text-block">
-          <p class="h3" data-i18n="intro.h3.product">Quick Product intro:</p>
-          <p class="body" data-i18n="intro.product.body">KKday-Rezio is a booking and management system for the travel industry, covering product listing, payment, and order management. It integrates with GetYourGuide, Viator, KKday, and Activity Japan to boost exposure and streamline operations.</p>
+          <p class="h3" data-i18n="intro.h3.product">Product overview</p>
+          <p class="body" data-i18n="intro.product.body">KKday Rezio is a B2B booking and operations platform for travel businesses, covering product listing, payments, and order management. It integrates with channels such as GetYourGuide, Viator, KKday, and Activity Japan to expand distribution and streamline operations.</p>
         </div>
         <div class="text-block">
           <p class="h3" data-i18n="intro.h3.role">My Role:</p>
-          <p class="body" data-i18n="intro.role.body">As lead Interaction Designer, I redesigned the end-to-end product listing journey — restructuring the information architecture, rebuilding the design system, and driving cross-functional alignment through user research. The result: setup time cut 38% (45 → 28 min), SUS score of 80.3 (above the industry "Good" threshold), and an estimated ~30% reduction in support ticket volume.</p>
+          <p class="body" data-i18n="intro.role.body">As the lead interaction designer, I redesigned the end-to-end product listing experience by restructuring the information architecture, rebuilding the design system, and aligning teams around research findings. The redesign reduced setup time by <span class="stat-hi">38% (45 → 28 min)</span>, achieved a SUS score of <span class="stat-hi">80.3</span>, and contributed to an estimated <span class="stat-hi">~30%</span> reduction in support ticket volume.</p>
         </div>
         <div class="text-block">
-          <p class="h3" data-i18n="intro.h3.time">TimeFrame:</p>
+          <p class="h3" data-i18n="intro.h3.time">Timeline</p>
           <p class="body">2024–2025</p>
         </div>
       </div>
@@ -490,28 +759,6 @@
   </div>
 </div>
 
-<!-- ── 0. BEFORE WE BEGIN ───────────────────────────── -->
-<div class="sec cream" style="padding-top:40px;padding-bottom:40px;">
-  <div class="sec-inner">
-    <div class="sec-head">
-      <span class="sec-num">0.</span>
-      <span class="sec-title" data-i18n="s0.title">Before we begin,<br>a fun fact about our product...</span>
-    </div>
-    <div class="chat-wrap">
-      <div class="bubble-wide">
-        <p class="body" data-i18n="s0.bubble1">Nearly 60% of new users couldn't complete setup independently — forcing support teams to manually guide every onboarding session. One user put it plainly: "It's a SaaS tool… but bring a buddy." That gap between promise and reality defined the problem we set out to solve.</p>
-      </div>
-      <div class="bubble-narrow-row">
-        <div class="bubble-narrow">
-          <p class="body-med" data-i18n="s0.bubble2">SO, HOW MIGHT WE ENABLE USERS TO PUBLISH THEIR TRAVEL PRODUCTS SEAMLESSLY AND INDEPENDENTLY?</p>
-        </div>
-        <div class="bubble-char">
-          <img src="https://www.figma.com/api/mcp/asset/687cb5d7-dd97-4884-b34d-c60cf508a4e2" alt="" />
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- ── 01. ACHIEVEMENT ───────────────────────────────── -->
 <div id="s01" class="sec white" style="padding-top:32px;padding-bottom:60px;">
@@ -528,18 +775,18 @@
       </div>
       <div style="flex:1;display:flex;flex-direction:column;gap:24px;justify-content:center;">
         <div class="text-block">
-          <p class="h3" data-i18n="s01.h3.product">For Product</p>
+          <p class="h3" data-i18n="s01.h3.product">Product outcomes</p>
           <ol class="num-list">
-            <li data-i18n="s01.product.li1">Setup time cut 38% (45 → 28 min), enabling independent onboarding without support intervention</li>
-            <li data-i18n="s01.product.li2">SUS score 80.3 — rated "Good" on the industry scale, indicating measurably clearer, learnable flows</li>
-            <li data-i18n="s01.product.li3">~30% reduction in support ticket volume, cutting operational costs without adding headcount</li>
+            <li data-i18n="s01.product.li1">Reduced setup time by 38% (45 → 28 min), enabling more independent onboarding without support intervention</li>
+            <li data-i18n="s01.product.li2">Achieved a SUS score of 80.3, indicating a significantly clearer and more learnable setup flow</li>
+            <li data-i18n="s01.product.li3">Contributed to an estimated ~30% reduction in support ticket volume without adding headcount</li>
           </ol>
         </div>
         <div class="text-block">
-          <p class="h3" data-i18n="s01.h3.team">For Our Team</p>
+          <p class="h3" data-i18n="s01.h3.team">Team outcomes</p>
           <ol class="num-list">
-            <li data-i18n="s01.team.li1">Compressed 3-month iteration cycles using AI prototyping, validating hypotheses before committing to development</li>
-            <li data-i18n="s01.team.li2">Eliminated recurring design–dev handoff gaps with a shared component system and version-controlled design guidelines</li>
+            <li data-i18n="s01.team.li1">Compressed a three-month iteration cycle through AI-assisted prototyping, validating hypotheses before development</li>
+            <li data-i18n="s01.team.li2">Reduced recurring design-dev handoff friction with a shared component system and version-controlled guidelines</li>
           </ol>
         </div>
       </div>
@@ -555,19 +802,49 @@
       <span class="sec-title" data-i18n="s02.title">Where We Started</span>
     </div>
     <div class="split-img-row" style="display:flex;gap:40px;align-items:flex-start;">
-      <div style="flex-shrink:0;width:307px;position:relative;align-self:stretch;min-height:200px;">
-        <img src="https://www.figma.com/api/mcp/asset/83709639-58f0-4fad-a7c3-cb1ded1609a8"
-          alt="Where we started"
-          style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;" />
+      <div style="flex-shrink:0;width:340px;position:relative;align-self:stretch;min-height:220px;">
+        <div class="wws-anim" aria-hidden="true">
+          <div class="wws-head">Setup Completion Rate</div>
+          <div class="wws-bars">
+            <div class="wws-row">
+              <span class="wws-lbl">Started</span>
+              <div class="wws-track"><div class="wws-fill wws-f1"></div></div>
+              <span class="wws-pct wws-p1">100%</span>
+            </div>
+            <div class="wws-row">
+              <span class="wws-lbl">Step 1</span>
+              <div class="wws-track"><div class="wws-fill wws-f2"></div></div>
+              <span class="wws-pct wws-p2">82%</span>
+            </div>
+            <div class="wws-row">
+              <span class="wws-lbl">Step 2</span>
+              <div class="wws-track"><div class="wws-fill wws-f3"></div></div>
+              <span class="wws-pct wws-p3">65%</span>
+            </div>
+            <div class="wws-row">
+              <span class="wws-lbl">Step 3</span>
+              <div class="wws-track"><div class="wws-fill wws-f4"></div></div>
+              <span class="wws-pct wws-p4">50%</span>
+            </div>
+            <div class="wws-row">
+              <span class="wws-lbl">Finished</span>
+              <div class="wws-track"><div class="wws-fill wws-f5"></div></div>
+              <span class="wws-pct wws-p5 wws-red">40%</span>
+            </div>
+          </div>
+          <div class="wws-note">
+            <span class="wws-stat-num">60%</span> needed support &nbsp;·&nbsp; avg <span class="wws-stat-num">45 min</span>
+          </div>
+        </div>
       </div>
       <div style="flex:1;display:flex;flex-direction:column;gap:28px;justify-content:center;">
         <div class="text-block">
           <p class="h3" data-i18n="s02.h3.bg">Project Background:</p>
-          <p class="body" data-i18n="s02.bg.body">Built for a single industry vertical, the product struggled to scale as user complexity grew. The "Getting Started" section alone drove 36% of all Help Article views — a clear signal of deep friction. What was marketed as a 10-minute setup routinely took 45–50 minutes, with 60% of users unable to complete it without support.</p>
+          <p class="body" data-i18n="s02.bg.body">Originally built for a narrower user group, the product struggled as operational complexity grew. The "Getting Started" section alone drove 36% of all help article views, signaling deep setup friction. What was framed as a 10-minute setup routinely took 45-50 minutes, and 60% of users could not complete it without support.</p>
         </div>
         <div class="text-block">
           <p class="h3" data-i18n="s02.h3.goal">Our Goal:</p>
-          <p class="body" data-i18n="s02.goal.body">We redesigned the product listing journey to match users' mental models — restructuring flows, rewriting labels, and surfacing guidance contextually — so users could complete setup confidently without support intervention.</p>
+          <p class="body" data-i18n="s02.goal.body">We redesigned the product listing experience to better match users' mental models by restructuring flows, rewriting labels, and surfacing guidance contextually, so users could complete setup with less confusion and less dependence on support.</p>
         </div>
       </div>
     </div>
@@ -579,13 +856,13 @@
   <div class="sec-inner">
     <div class="sec-head">
       <span class="sec-num">03.</span>
-      <span class="sec-title" data-i18n="s03.title">Investigate What Was Broken</span>
+      <span class="sec-title" data-i18n="s03.title">Research and Problem Framing</span>
     </div>
 
     <!-- Preliminary Research -->
     <div class="text-block">
       <p class="h3" data-i18n="s03.h3.research">Preliminary research:</p>
-      <p class="body" data-i18n="s03.research.body1">We interviewed users and frontline staff to map how products were actually listed in practice. One charter business owner shared: "I miss the instant replies on Line. With the new system, responses take much longer."</p>
+      <p class="body" data-i18n="s03.research.body1">We interviewed users and frontline staff to map how products were actually listed in practice. One charter business owner shared: "I miss the instant replies on LINE. With the new system, responses take much longer."</p>
       <p class="body" data-i18n="s03.research.body2">The pattern was consistent across interviews — system complexity had created a dependency on real-time support that neither users nor the support team could sustain.</p>
     </div>
 
@@ -650,7 +927,177 @@
         <p class="h3" data-i18n="s03.h3.journey">User Journey Map:</p>
         <p class="body" data-i18n="s03.journey.body">We mapped emotional engagement across six stages — from first adoption through potential cancellation. Mari's journey surfaced friction concentrated in daily task execution; Takeshi's revealed risk aversion at strategic decision points. Both paths converged on the same two critical drop-off zones.</p>
       </div>
-      <img class="full-img" src="https://www.figma.com/api/mcp/asset/2fc8c263-da1a-4e5b-b2ed-ef65a50d9089" alt="User journey map" />
+      <div class="cjm-outer">
+      <div class="cjm-wrap">
+        <!-- Chart -->
+        <div class="cjm-chart">
+          <div class="cjm-y-axis">
+            <span class="cjm-y-emoji">😊</span>
+            <span class="cjm-y-text">Feelings &amp; Thoughts</span>
+            <span class="cjm-y-emoji">😞</span>
+          </div>
+          <div class="cjm-svg-wrap">
+            <svg viewBox="0 0 900 240" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="cjm-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#575c87" stop-opacity="0.22"/>
+                  <stop offset="100%" stop-color="#575c87" stop-opacity="0.02"/>
+                </linearGradient>
+              </defs>
+              <!-- Neutral sentiment midline -->
+              <line class="cjm-midline" x1="40" y1="120" x2="860" y2="120"/>
+              <!-- Filled area under arc -->
+              <path class="cjm-fill" d="M 75,170 C 150,170 150,120 225,120 C 300,120 300,68 375,68 C 450,68 450,50 525,50 C 600,50 600,142 675,142 C 750,142 750,184 825,184 L 825,240 L 75,240 Z"/>
+              <!-- Animated arc line -->
+              <path class="cjm-line" d="M 75,170 C 150,170 150,120 225,120 C 300,120 300,68 375,68 C 450,68 450,50 525,50 C 600,50 600,142 675,142 C 750,142 750,184 825,184"/>
+              <!-- Stage dots -->
+              <circle class="cjm-dot" data-stage="0" cx="75"  cy="170" r="6"/>
+              <circle class="cjm-dot" data-stage="1" cx="225" cy="120" r="6"/>
+              <circle class="cjm-dot" data-stage="2" cx="375" cy="68"  r="6"/>
+              <circle class="cjm-dot" data-stage="3" cx="525" cy="50"  r="6"/>
+              <circle class="cjm-dot" data-stage="4" cx="675" cy="142" r="6"/>
+              <circle class="cjm-dot" data-stage="5" cx="825" cy="184" r="6"/>
+              <!-- Invisible hit areas for hover -->
+              <circle class="cjm-dot-hit" data-stage="0" cx="75"  cy="170" r="22"/>
+              <circle class="cjm-dot-hit" data-stage="1" cx="225" cy="120" r="22"/>
+              <circle class="cjm-dot-hit" data-stage="2" cx="375" cy="68"  r="22"/>
+              <circle class="cjm-dot-hit" data-stage="3" cx="525" cy="50"  r="22"/>
+              <circle class="cjm-dot-hit" data-stage="4" cx="675" cy="142" r="22"/>
+              <circle class="cjm-dot-hit" data-stage="5" cx="825" cy="184" r="22"/>
+            </svg>
+            <!-- Quote bubbles (% of svg-wrap, aspect-ratio 900:240) -->
+            <div class="cjm-bubble" data-stage="0" style="left:0%;top:44%;">
+              <div class="cjm-speaker">Mari Yamaguchi</div>
+              "Bookings pile up and I'm scared of making mistakes."
+            </div>
+            <div class="cjm-bubble" data-stage="1" style="left:14%;top:56%;">
+              <div class="cjm-speaker">Mari Yamaguchi</div>
+              "Finally someone's helping. I hope this fixes the chaos."
+            </div>
+            <div class="cjm-bubble takeshi" data-stage="2" style="left:30%;top:0%;">
+              <div class="cjm-speaker">Takeshi Tanaka</div>
+              "System aligned with our processes — promising start."
+            </div>
+            <div class="cjm-bubble" data-stage="2" style="left:30%;top:36%;">
+              <div class="cjm-speaker">Mari Yamaguchi</div>
+              "First tour published. Step-by-step made it stress-free."
+            </div>
+            <div class="cjm-bubble takeshi" data-stage="3" style="left:46%;top:0%;">
+              <div class="cjm-speaker">Takeshi Tanaka</div>
+              "Sales clear. I can adjust strategy without guesswork."
+            </div>
+            <div class="cjm-bubble" data-stage="3" style="left:46%;top:36%;">
+              <div class="cjm-speaker">Mari Yamaguchi</div>
+              "Automated emails save me daily. Far fewer mistakes."
+            </div>
+            <div class="cjm-bubble" data-stage="4" style="left:63%;top:38%;">
+              <div class="cjm-speaker">Mari Yamaguchi</div>
+              "Fixing errors wasn't straightforward — always had to call support."
+            </div>
+            <div class="cjm-bubble takeshi" data-stage="5" style="right:7%;top:51%;">
+              <div class="cjm-speaker">Takeshi Tanaka</div>
+              "Impact was more limited than expected. Decided not to renew."
+            </div>
+          </div>
+        </div>
+        <!-- Steps bar -->
+        <div class="cjm-stages-row">
+          <div class="cjm-steps-lbl">Steps</div>
+          <div class="cjm-stages">
+            <div class="cjm-stage">Before using Rezio</div>
+            <div class="cjm-stage">Subscribed to Rezio</div>
+            <div class="cjm-stage">Uploading Itinerary</div>
+            <div class="cjm-stage">Selling Itinerary</div>
+            <div class="cjm-stage">Adjusting after Launch</div>
+            <div class="cjm-stage">Unsubscribing</div>
+          </div>
+        </div>
+        <!-- Actions -->
+        <div class="cjm-actions-wrap">
+          <div class="cjm-actions-lbl">Actions</div>
+          <div class="cjm-actions">
+            <div class="cjm-col">
+              <div class="cjm-persona-block">
+                <div class="cjm-persona-tag">Daily Operator<strong>Mari Yamaguchi</strong></div>
+                <ul class="cjm-blist">
+                  <li>Consolidate bookings</li>
+                  <li>Track schedules</li>
+                  <li>Send emails manually</li>
+                </ul>
+              </div>
+            </div>
+            <div class="cjm-col">
+              <div class="cjm-persona-block">
+                <div class="cjm-persona-tag">Daily Operator<strong>Mari Yamaguchi</strong></div>
+                <ul class="cjm-blist">
+                  <li>Onboarding call</li>
+                  <li>Activate trial</li>
+                </ul>
+              </div>
+            </div>
+            <div class="cjm-col">
+              <div class="cjm-persona-block">
+                <div class="cjm-persona-tag">Decision Maker<strong>Takeshi Tanaka</strong></div>
+                <ul class="cjm-blist">
+                  <li>Sign contract</li>
+                  <li>Begin training</li>
+                </ul>
+              </div>
+              <div class="cjm-col-div"></div>
+              <div class="cjm-persona-block">
+                <div class="cjm-persona-tag">Daily Operator<strong>Mari Yamaguchi</strong></div>
+                <ul class="cjm-blist">
+                  <li>Publish first tour</li>
+                  <li>Align team on process</li>
+                </ul>
+              </div>
+            </div>
+            <div class="cjm-col">
+              <div class="cjm-persona-block">
+                <div class="cjm-persona-tag">Decision Maker<strong>Takeshi Tanaka</strong></div>
+                <ul class="cjm-blist">
+                  <li>View sales reports</li>
+                  <li>Manage orders</li>
+                </ul>
+              </div>
+              <div class="cjm-col-div"></div>
+              <div class="cjm-persona-block">
+                <div class="cjm-persona-tag">Daily Operator<strong>Mari Yamaguchi</strong></div>
+                <ul class="cjm-blist">
+                  <li>Send vouchers</li>
+                  <li>Monitor capacities</li>
+                </ul>
+              </div>
+            </div>
+            <div class="cjm-col">
+              <div class="cjm-persona-block">
+                <div class="cjm-persona-tag">Decision Maker<strong>Takeshi Tanaka</strong></div>
+                <ul class="cjm-blist">
+                  <li>Update pricing</li>
+                  <li>Adjust tours</li>
+                </ul>
+              </div>
+              <div class="cjm-col-div"></div>
+              <div class="cjm-persona-block">
+                <div class="cjm-persona-tag">Daily Operator<strong>Mari Yamaguchi</strong></div>
+                <ul class="cjm-blist">
+                  <li>Handle invalid orders</li>
+                  <li>Contact support</li>
+                </ul>
+              </div>
+            </div>
+            <div class="cjm-col">
+              <div class="cjm-persona-block">
+                <div class="cjm-persona-tag">Decision Maker<strong>Takeshi Tanaka</strong></div>
+                <ul class="cjm-blist">
+                  <li>Decide not to renew</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
     </div>
 
     <!-- Pain Points -->
@@ -665,17 +1112,93 @@
           </ul>
         </div>
       </div>
-      <img class="full-img" src="https://www.figma.com/api/mcp/asset/e7422719-654c-4ce0-8f07-9dea34b2b6f5" alt="Pain points and opportunities" />
-    </div>
-  </div>
-</div>
-
-<!-- ── 04. ITERATION ─────────────────────────────────── -->
-<div id="s04" class="sec white" style="padding-top:32px;padding-bottom:48px;">
-  <div class="sec-inner">
-    <div class="sec-head">
-      <span class="sec-num">04.</span>
-      <span class="sec-title" data-i18n="s04.title">Iteration</span>
+      <div class="ppo-outer"><div class="ppo-wrap">
+        <!-- Chart with drop zones -->
+        <div class="ppo-chart">
+          <div class="cjm-y-axis">
+            <span class="cjm-y-emoji">😊</span>
+            <span class="cjm-y-text">Feelings &amp; Thoughts</span>
+            <span class="cjm-y-emoji">😞</span>
+          </div>
+          <div class="ppo-svg-wrap">
+            <svg viewBox="0 0 900 240" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="ppo-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#575c87" stop-opacity="0.18"/>
+                  <stop offset="100%" stop-color="#575c87" stop-opacity="0.02"/>
+                </linearGradient>
+              </defs>
+              <!-- Drop zone fills: stage 1–2 (x=150–450) and stage 4–5 (x=600–900) -->
+              <rect x="150" y="0" width="300" height="240" fill="rgba(211,76,76,0.09)"/>
+              <rect x="600" y="0" width="300" height="240" fill="rgba(211,76,76,0.09)"/>
+              <!-- Neutral midline -->
+              <line class="cjm-midline" x1="40" y1="120" x2="860" y2="120"/>
+              <!-- Curve fill -->
+              <path fill="url(#ppo-grad)" d="M 75,170 C 150,170 150,120 225,120 C 300,120 300,68 375,68 C 450,68 450,50 525,50 C 600,50 600,142 675,142 C 750,142 750,184 825,184 L 825,240 L 75,240 Z"/>
+              <!-- Curve line -->
+              <path stroke="#575c87" stroke-width="2.5" fill="none" stroke-linecap="round" d="M 75,170 C 150,170 150,120 225,120 C 300,120 300,68 375,68 C 450,68 450,50 525,50 C 600,50 600,142 675,142 C 750,142 750,184 825,184"/>
+            </svg>
+          </div>
+        </div>
+        <!-- Stage labels (reuse CJM classes) -->
+        <div class="cjm-stages-row">
+          <div class="cjm-steps-lbl">Steps</div>
+          <div class="cjm-stages">
+            <div class="cjm-stage">Before using Rezio</div>
+            <div class="cjm-stage">Subscribed to Rezio</div>
+            <div class="cjm-stage">Uploading Itinerary</div>
+            <div class="cjm-stage">Selling Itinerary</div>
+            <div class="cjm-stage">Adjusting after Launch</div>
+            <div class="cjm-stage">Unsubscribing</div>
+          </div>
+        </div>
+        <!-- Pain Points row -->
+        <div class="ppo-row">
+          <div class="ppo-row-lbl"><span class="ppo-row-icon">♥</span>Pain Points</div>
+          <div class="ppo-row-body">
+            <div class="ppo-s0"></div>
+            <div class="ppo-z1">
+              <ul class="ppo-list">
+                <li><strong>Onboarding uncertainty</strong> — Users were unsure whether the system could truly resolve their existing operational chaos.</li>
+                <li><strong>High onboarding cost</strong> — Significant time and internal training were required.</li>
+              </ul>
+            </div>
+            <div class="ppo-gap-col"></div>
+            <div class="ppo-z2">
+              <ul class="ppo-list">
+                <li><strong>Chain reactions after updates</strong> — Complicated update processes frequently triggered downstream errors.</li>
+                <li><strong>Heavy reliance on support</strong> — Workflows for updating pricing or tour details were too complex, making it easy for staff to make mistakes.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Opportunities row -->
+        <div class="ppo-row">
+          <div class="ppo-row-lbl"><span class="ppo-row-icon">✦</span>Ideation</div>
+          <div class="ppo-row-body">
+            <div class="ppo-s0"></div>
+            <div class="ppo-z1">
+              <ul class="ppo-list">
+                <li class="ppo-ideation-li" data-tip-product="Shopify" data-tip-domain="shopify.com" data-tip="Setup checklist surfaces only 3 core tasks at launch — hiding complexity behind progressive disclosure.">Build early trust and reduce onboarding friction <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-tip-product="HubSpot" data-tip-domain="hubspot.com" data-tip="Asks 'What brings you here?' at sign-up and tailors the entire onboarding path to the user's role.">Role-based interactive onboarding flows <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-tip-product="Notion" data-tip-domain="notion.so" data-tip="Template gallery lets users start from real examples, dramatically reducing blank-page anxiety and time-to-value.">Example templates, Success Showcases <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-tip-product="Linear" data-tip-domain="linear.app" data-tip="Persistent progress checklist guides new teams through workspace setup, making completion feel achievable.">Guided setup checklist <span class="ppo-eg-tag">Example</span></li>
+              </ul>
+            </div>
+            <div class="ppo-gap-col"></div>
+            <div class="ppo-z2">
+              <ul class="ppo-list">
+                <li class="ppo-ideation-li" data-tip-product="Shopify" data-tip-domain="shopify.com" data-tip="'Save as draft' vs 'Publish' separates editing from going live, preventing accidental changes to active listings.">Simplify update workflows and reduce errors <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-tip-product="Webflow" data-tip-domain="webflow.com" data-tip="Live preview mode shows a split view so users verify exactly how changes look before committing.">Preview-before-publish <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-tip-product="Stripe" data-tip-domain="stripe.com" data-tip="Real-time field validation catches mistakes instantly and surfaces blockers before form submission.">Auto-validation and error detection <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-tip-product="Figma" data-tip-domain="figma.com" data-tip="Named version history lets teams experiment freely, knowing any saved state can be restored in one click.">Version history with rollback <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-tip-product="Intercom" data-tip-domain="intercom.com" data-tip="Contextual help panel surfaces relevant docs based on the current page, reducing support volume without UI clutter.">Self-serve help panel with step-by-step guidance and FAQs <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-tip-product="Notion AI" data-tip-domain="notion.so" data-tip="Suggests content and next actions based on cursor context, turning the blank-page problem into a guided start.">AI-powered assistant <span class="ppo-eg-tag">Example</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div></div>
     </div>
 
     <!-- Revealing Gaps -->
@@ -708,11 +1231,30 @@
           <p class="body-med" data-i18n="s04.finding.f4">Inconsistent interaction patterns — Without a unified design language, users couldn't build reliable expectations as they moved through the interface.</p>
         </div>
       </div>
-      <a href="https://www.figma.com/design/zWK7t4abYZj1MUb6woqlV3?node-id=8332-6787"
-        target="_blank" rel="noopener"
-        style="font-size:13px;font-weight:500;line-height:1.65;letter-spacing:0em;text-decoration:underline;color:var(--text);font-family:'Noto Sans',sans-serif;">
-        Here is a more detailed write-up on how we built our design system.
-      </a>
+    </div>
+
+    <!-- Fail Fast -->
+    <div class="text-block">
+      <p class="h3" data-i18n="s04.h3.fail">Fail Fast, Succeed Faster:</p>
+      <p class="body" data-i18n="s04.fail.body">In 3 months, we ran 5+ rounds of rolling research — advancing from concept sketches to a testable prototype. Each sprint was scoped to a specific hypothesis, ensuring every design change addressed a confirmed user finding rather than an assumption.</p>
+    </div>
+
+    <!-- UI Mocks -->
+    <div style="display:flex;flex-direction:column;gap:32px;">
+      <div class="text-block">
+        <p class="h3" data-i18n="s04.h3.ui">UI Mockups and Prototyping:</p>
+        <p class="body" data-i18n="s04.ui.body">At each design review, we built prototypes — using AI generation or Figma — to test specific hypotheses before committing to development. The interactive prototype below covers the pricing flow: follow the green cursor to explore the interaction model.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 04. OUR SOLUTION ──────────────────────────────── -->
+<div id="s04" class="sec cream" style="padding-top:32px;padding-bottom:48px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">04.</span>
+      <span class="sec-title" data-i18n="s05.title">Our Solution</span>
     </div>
 
     <!-- New Proposal -->
@@ -761,41 +1303,10 @@
       </div>
     </div>
 
-    <!-- Fail Fast -->
-    <div class="text-block">
-      <p class="h3" data-i18n="s04.h3.fail">Fail Fast, Succeed Faster:</p>
-      <p class="body" data-i18n="s04.fail.body">In 3 months, we ran 5+ rounds of rolling research — advancing from concept sketches to a testable prototype. Each sprint was scoped to a specific hypothesis, ensuring every design change addressed a confirmed user finding rather than an assumption.</p>
-    </div>
-
-    <!-- UI Mocks -->
-    <div style="display:flex;flex-direction:column;gap:32px;">
-      <div class="text-block">
-        <p class="h3" data-i18n="s04.h3.ui">UI Mocks And Prototyping:</p>
-        <p class="body" data-i18n="s04.ui.body">At each design review, we built prototypes — using AI generation or Figma — to test specific hypotheses before committing to development. The interactive prototype below covers the pricing flow: follow the green cursor to explore the interaction model.</p>
-      </div>
-      <div class="video-box">
-        <iframe
-          src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2FzWK7t4abYZj1MUb6woqlV3%3Fnode-id%3D8332-6787"
-          allowfullscreen
-          title="Figma prototype – pricing flow">
-        </iframe>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ── 05. OUR SOLUTION ──────────────────────────────── -->
-<div id="s05" class="sec cream" style="padding-top:32px;padding-bottom:48px;">
-  <div class="sec-inner">
-    <div class="sec-head">
-      <span class="sec-num">05.</span>
-      <span class="sec-title" data-i18n="s05.title">Our Solution</span>
-    </div>
-
     <!-- Feature 1 -->
     <div class="feature-block">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <p class="feature-title" data-i18n="s05.feat1.title">Reduce High Onboarding Cost by Quick User Profiling Questionnaire</p>
+        <p class="feature-title" data-i18n="s05.feat1.title">Lowering Onboarding Cost with a Short Profiling Questionnaire</p>
         <p class="body" data-i18n="s05.feat1.body">A short upfront questionnaire captures itinerary type, dynamically suppressing irrelevant fields throughout the flow. In usability testing, the questionnaire achieved 96% profiling accuracy — enabling users to complete setup end-to-end without backtracking or contacting support. The approach also reduced onboarding training time for the sales team.</p>
       </div>
       <div class="video-box" style="min-height:340px;">
@@ -806,7 +1317,7 @@
     <!-- Feature 2 -->
     <div class="feature-block">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <p class="feature-title" data-i18n="s05.feat2.title">Reduce Customer Support Dependency with Self‑Serve Help Panel:</p>
+        <p class="feature-title" data-i18n="s05.feat2.title">Reducing Support Dependency with a Contextual Help Panel</p>
         <p class="body" data-i18n="s05.feat2.body">The self-serve help panel surfaces contextual guidance at the exact point of friction — enabling users to resolve issues without contacting support. Estimated impact: ~30% reduction in support ticket volume and faster average resolution time, directly reducing operational cost.</p>
       </div>
       <div class="video-box" style="min-height:400px;">
@@ -817,7 +1328,7 @@
     <!-- Feature 3 -->
     <div class="feature-block">
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <p class="feature-title" data-i18n="s05.feat3.title">Reduce Errors with Preview‑Before‑Publish:</p>
+        <p class="feature-title" data-i18n="s05.feat3.title">Reducing Errors with Preview Before Publish</p>
         <div class="preview-intro-row">
           <img class="preview-thumb" src="https://www.figma.com/api/mcp/asset/85ba3f6b-ab3e-4981-9ffb-9e9fba8779f5" alt="Preview icon" />
           <p class="body" data-i18n="s05.feat3.body">We replaced the single-column form with a dual-column interface: settings on the left, real-time product preview on the right. Every field change renders instantly — letting users validate their input before publishing and catching errors that previously required post-launch corrections.</p>
@@ -833,7 +1344,7 @@
 
     <!-- Feature 4 -->
     <div style="display:flex;flex-direction:column;gap:8px;">
-      <p class="feature-title" data-i18n="s05.feat4.title">Create a More Conversational UX Copy System:</p>
+      <p class="feature-title" data-i18n="s05.feat4.title">Creating a More Conversational UX Copy System</p>
       <p class="body" data-i18n="s05.feat4.body">We replaced isolated field labels with sentence-based inputs — embedding context directly into the form structure. Instead of interpreting a label in isolation, users read a complete sentence and fill in the blanks. Testing showed faster task completion and fewer misconfigurations, contributing directly to the overall SUS score of 80.3.</p>
       <div class="conv-row" style="padding-top:12px;">
         <div class="conv-card">
@@ -846,10 +1357,10 @@
           <div class="conv-card-body">
             <div style="font-size:14px;font-weight:500;margin-bottom:4px;">Reservation Quantity Settings<span class="req-star">*</span></div>
             <div class="conv-sentence">
-              <span>Ordering</span> <span class="input-mock">1</span> <span>adult will deducts</span> <span class="input-mock">1</span> <span>from the available quantity.</span>
+              <span>Ordering</span> <span class="input-mock">1</span> <span>adult will deduct</span> <span class="input-mock">1</span> <span>from the available quantity.</span>
             </div>
             <div class="conv-sentence">
-              <span>Ordering</span> <span class="input-mock">1</span> <span>child will deducts</span> <span class="input-mock">1</span> <span>from the available quantity.</span>
+              <span>Ordering</span> <span class="input-mock">1</span> <span>child will deduct</span> <span class="input-mock">1</span> <span>from the available quantity.</span>
             </div>
           </div>
         </div>
@@ -875,11 +1386,11 @@
   </div>
 </div>
 
-<!-- ── 06. RESULTS ────────────────────────────────────── -->
-<div id="s06" class="sec cream" style="padding-top:32px;padding-bottom:60px;">
+<!-- ── 05. RESULTS ────────────────────────────────────── -->
+<div id="s05" class="sec cream" style="padding-top:32px;padding-bottom:60px;">
   <div class="sec-inner">
     <div class="sec-head">
-      <span class="sec-num">06.</span>
+      <span class="sec-num">05.</span>
       <span class="sec-title" data-i18n="s06.title">Results</span>
     </div>
     <div class="results-row">
@@ -887,9 +1398,9 @@
         src="https://www.figma.com/api/mcp/asset/4dac7b4a-922a-4171-b9b2-e85baa4c3738"
         alt="KKday team photo" />
       <div class="results-copy">
-        <p class="body" data-i18n="s06.body1">The redesign delivered measurable impact across all three goals: setup time cut from 45 to 28 minutes (–38%), a SUS score of 80.3, and an estimated ~30% reduction in support ticket volume — without adding headcount.</p>
-        <p class="body" data-i18n="s06.body2">AI-assisted prototyping compressed the iteration cycle, and a shared design system eliminated recurring handoff friction between design and engineering — changes that outlasted the project itself.</p>
-        <p class="body" data-i18n="s06.body3">Given more time, I'd embed users earlier in the stakeholder alignment phase — earlier data creates faster consensus and reduces rework. That said, the team we built through this process was the real deliverable: after I left, they called me back in for the team photo.</p>
+        <p class="body" data-i18n="s06.body1">The redesign delivered measurable progress against all three goals: setup time dropped from 45 to 28 minutes (–38%), SUS reached 80.3, and support ticket volume was estimated to decrease by ~30% without additional headcount.</p>
+        <p class="body" data-i18n="s06.body2">AI-assisted prototyping shortened the iteration cycle, while the shared design system reduced recurring handoff friction between design and engineering — improvements that continued beyond the project itself.</p>
+        <p class="body" data-i18n="s06.body3">With more time, I would involve users earlier in stakeholder alignment so evidence could shape consensus sooner and reduce rework. Even so, one of the strongest outcomes was the team capability built through the process itself.</p>
       </div>
     </div>
   </div>
@@ -913,7 +1424,7 @@
 <script>
   (function() {
     const anchors = document.querySelectorAll('.nav-anchor');
-    const sections = ['intro','s01','s02','s03','s04','s05','s06'].map(id => document.getElementById(id));
+    const sections = ['intro','s01','s02','s03','s04','s05'].map(id => document.getElementById(id));
     const navH = document.querySelector('.nav').offsetHeight;
 
     function update() {
@@ -950,38 +1461,37 @@
       en: {}, // English = use existing HTML content (no override needed)
       ja: {
         'page.title': 'KKday Rezio SaaS サービス',
-        'page.subtitle': 'OTA 商品登録フローの刷新',
+        'page.subtitle': 'OTA 商品登録体験の再設計',
         'nav.intro': '.イントロ',
         'nav.s01': '01.成果',
         'nav.s02': '02.出発点',
         'nav.s03': '03.調査',
-        'nav.s04': '04.反復',
-        'nav.s05': '05.解決策',
-        'nav.s06': '06.結果',
+        'nav.s04': '04.解決策',
+        'nav.s05': '05.結果',
         'intro.h3.product': '製品概要',
         'intro.h3.role': '担当役割',
-        'intro.h3.time': '期間',
-        'intro.product.body': 'KKday Rezio は旅行業界向けの予約・管理システムで、商品登録、決済、注文管理をカバーしています。GetYourGuide、Viator、KKday、Activity Japan と連携し、露出拡大と業務効率化を実現します。',
-        'intro.role.body': 'リードインタラクションデザイナーとして、商品登録フローをエンドツーエンドで再設計しました。情報アーキテクチャの再構築、デザインシステムの刷新、ユーザーリサーチを通じた部門横断の連携推進を担当。成果：設定時間 38% 削減（45 → 28 分）、SUS スコア 80.3（業界「良好」基準超え）、サポートチケット数 約 30% 削減。',
+        'intro.h3.time': 'プロジェクト期間',
+        'intro.product.body': 'KKday Rezio は、旅行事業者向けの B2B 予約・運用プラットフォームです。商品登録、決済、注文管理をカバーし、GetYourGuide、Viator、KKday、Activity Japan などのチャネルと連携して販路拡大と業務効率化を支えます。',
+        'intro.role.body': 'リードインタラクションデザイナーとして、商品登録体験をエンドツーエンドで再設計しました。情報アーキテクチャの再構築、デザインシステムの刷新、リサーチ知見を軸にした部門横断の合意形成を推進。結果として、設定時間を 38% 短縮（45 → 28 分）し、SUS 80.3 を達成、さらにサポートチケット数は推定で約 30% 減少しました。',
         's0.title': '始める前に、\n製品にまつわる小話を……',
         's0.bubble1': '新規ユーザーの約 60% が独力で設定を完了できず、サポートチームが毎回のオンボーディングを手動でガイドしていました。あるユーザーは率直に言いました：「SaaS ツールなのに……付き添いが必要だ。」約束と現実のギャップが、私たちが解決すべき問題を定義しました。',
-        's0.bubble2': 'では、ユーザーが旅行商品をスムーズかつ独立してを公開できるようにするには？',
+        's0.bubble2': 'では、ユーザーが旅行商品をスムーズかつ独立して公開できるようにするには？',
         's01.title': '成果',
-        's01.h3.product': 'プロダクト面',
-        's01.h3.team': 'チーム面',
-        's01.product.li1': '設定時間 38% 削減（45 → 28 分）、サポート不要の独立したオンボーディングを実現',
-        's01.product.li2': 'SUS スコア 80.3 — 業界「良好」評価を達成、より明確で学習しやすいフローを実証',
-        's01.product.li3': 'サポートチケット数 約 30% 削減、人員増加なしで運営コストを削減',
-        's01.team.li1': 'AI プロトタイピングで 3 ヶ月の反復サイクルを短縮、開発着手前に仮説を検証',
-        's01.team.li2': '共有コンポーネントシステムとバージョン管理されたデザインガイドラインにより、デザインと開発間の引き渡しの摩擦を解消',
+        's01.h3.product': 'プロダクト成果',
+        's01.h3.team': 'チーム成果',
+        's01.product.li1': '設定時間を 38% 短縮（45 → 28 分）し、より自走可能なオンボーディングを実現',
+        's01.product.li2': 'SUS 80.3 を達成し、セットアップフローの分かりやすさと学習しやすさを改善',
+        's01.product.li3': 'サポートチケット数を推定で約 30% 削減し、人員増加なしで運営負荷を低減',
+        's01.team.li1': 'AI 支援プロトタイピングにより 3 ヶ月の反復サイクルを圧縮し、開発前に仮説を検証',
+        's01.team.li2': '共有コンポーネントシステムとバージョン管理されたガイドラインにより、デザインと開発の引き継ぎ摩擦を軽減',
         's02.title': '出発点',
         's02.h3.bg': 'プロジェクト背景',
         's02.h3.goal': '目標',
-        's02.bg.body': '単一の業界垂直市場向けに開発されたこの製品は、ユーザーの複雑さが増すにつれスケールが困難になっていました。「はじめに」セクションだけでヘルプ記事閲覧数の 36% を占め、深刻な摩擦の明確なシグナルとなっていました。10 分で完了するはずのセットアップが実際には 45〜50 分かかり、60% のユーザーがサポートなしでは完了できませんでした。',
-        's02.goal.body': 'ユーザーのメンタルモデルに沿うよう商品登録フローを再設計しました。フローの再構築、ラベルの書き直し、文脈に応じたガイダンスの提示により、ユーザーがサポート不要で自信を持って設定を完了できるようにしました。',
-        's03.title': '問題の特定',
+        's02.bg.body': 'もともと限定的なユーザー像を前提に設計されていたため、運用の複雑さが増すにつれてスケールしにくくなっていました。「はじめに」セクションだけでヘルプ記事閲覧数の 36% を占め、設定時の深い摩擦を示していました。10 分で完了する想定のセットアップは実際には 45〜50 分かかり、60% のユーザーがサポートなしでは完了できませんでした。',
+        's02.goal.body': '商品登録体験をユーザーのメンタルモデルに近づけるため、フローの再構築、ラベルの書き直し、文脈に応じたガイダンスの提示を行い、サポートへの依存を減らしながら設定を完了できる状態を目指しました。',
+        's03.title': '調査と課題整理',
         's03.h3.research': '予備調査',
-        's03.research.body1': 'ユーザーと現場スタッフにインタビューし、実際の商品登録の実態を把握しました。あるチャーター会社のオーナーは語りました：「Line のリアルタイム返信が懐かしい。新システムだと応答に時間がかかりすぎる。」',
+        's03.research.body1': 'ユーザーと現場スタッフにインタビューし、実際の商品登録の実態を把握しました。あるチャーター会社のオーナーは語りました：「LINE のリアルタイム返信が懐かしい。新システムだと応答に時間がかかりすぎる。」',
         's03.research.body2': 'この傾向はインタビュー全体を通じて一貫していました——システムの複雑さがリアルタイムサポートへの依存を生み出しており、ユーザーにとってもサポートチームにとっても持続不可能な状況でした。',
         's03.h3.persona': 'ペルソナ',
         's03.persona.body': '調査から 2 つの異なるユーザータイプが浮かび上がりました：収益とチャネル統合を重視する意思決定者の田中武、そして注文と予約管理を担う日常オペレーターの山口真理。目標は異なりますが、両者は同じ壁にぶつかっていました——設定の複雑さが進捗を阻み、システムへの信頼を損なっていました。',
@@ -1007,53 +1517,52 @@
         's04.h3.ui': 'UI モックとプロトタイピング',
         's04.ui.body': '各デザインレビューでは、開発着手前に特定の仮説をテストするためにプロトタイプを作成しました（AI 生成または Figma を使用）。下のインタラクティブプロトタイプは価格設定フローをカバーしています：グリーンカーソルに従ってインタラクションモデルを探索してください。',
         's05.title': '解決策',
-        's05.feat1.title': 'ユーザープロファイリング問診票で高い導入コストを削減',
+        's05.feat1.title': '短いプロファイル設問でオンボーディング負荷を下げる',
         's05.feat1.body': '事前の短い問診票で旅程タイプを把握し、フロー全体で無関係なフィールドを動的に非表示にします。ユーザビリティテストでは問診票が 96% のプロファイリング精度を達成 — ユーザーはバックトラックやサポート連絡なしでエンドツーエンドの設定を完了できました。このアプローチにより営業チームの導入研修時間も短縮されました。',
         's05.feat2.title': 'セルフサービスヘルプパネルでカスタマーサポート依存を削減',
         's05.feat2.body': 'セルフサービスヘルプパネルは摩擦が生じる正確なポイントで文脈的なガイダンスを提供し、ユーザーがサポートに連絡せずに問題を解決できるようにします。推定効果：サポートチケット数 約 30% 削減、平均解決時間の短縮、運営コストの直接削減。',
-        's05.feat3.title': 'プレビュー公開機能でエラーを削減',
+        's05.feat3.title': '公開前プレビューで入力ミスを減らす',
         's05.feat3.body': '単一カラムのフォームを二列インターフェースに置き換えました：左側に設定、右側にリアルタイム商品プレビュー。フィールドの変更は即座に反映され、公開前に入力を検証でき、公開後の修正が必要だったエラーを事前に防げます。',
         's05.feat4.title': 'より会話的な UX コピーシステムの構築',
         's05.feat4.body': '孤立したフィールドラベルを文章ベースの入力に置き換え、コンテキストをフォーム構造に直接埋め込みました。孤立したラベルを解釈する代わりに、ユーザーは完全な文章を読んで空欄を埋めます。テストではタスク完了速度の向上と誤設定の減少が示され、全体の SUS スコア 80.3 に直接貢献しました。',
         's06.title': '結果',
-        's06.body1': 'リデザインは 3 つの目標すべてで測定可能な影響をもたらしました：設定時間 45 分から 28 分へ短縮（–38%）、SUS スコア 80.3、サポートチケット数 約 30% 削減 — 人員増加なしで達成。',
-        's06.body2': 'AI 支援プロトタイピングにより反復サイクルが短縮され、共有デザインシステムがデザインとエンジニアリング間の繰り返される引き渡しの摩擦を解消しました — これらの変化はプロジェクト終了後も持続しました。',
-        's06.body3': 'より時間があれば、ステークホルダーの合意形成段階でより早くユーザーを巻き込んでいたでしょう — 早期のデータが合意を加速し、手戻りを減らします。とはいえ、このプロセスを通じて築いたチームが本当の成果でした：私が退職した後も、チームが集合写真に呼んでくれました。',
+        's06.body1': 'リデザインにより 3 つの目標すべてで測定可能な前進が見られました。設定時間は 45 分から 28 分へ短縮（–38%）、SUS は 80.3 に到達し、サポートチケット数も追加人員なしで推定約 30% 減少しました。',
+        's06.body2': 'AI 支援プロトタイピングは反復サイクルを短縮し、共有デザインシステムはデザインとエンジニアリングの引き継ぎ摩擦を継続的に減らしました。これらの改善はプロジェクト後も機能し続けました。',
+        's06.body3': 'より時間があれば、ステークホルダーの合意形成にもっと早い段階でユーザーを巻き込み、エビデンスによって議論を前倒しで整えたかったと思います。それでも、このプロセスを通じてチームに残せた実践知そのものが大きな成果でした。',
       },
       'zh-tw': {
         'page.title': 'KKday Rezio SaaS 服務',
-        'page.subtitle': '重新設計 OTA 商品上架流程',
+        'page.subtitle': '重新設計 OTA 商品上架體驗',
         'nav.intro': '.介紹',
         'nav.s01': '01.成果',
         'nav.s02': '02.起點',
         'nav.s03': '03.調查',
-        'nav.s04': '04.迭代',
-        'nav.s05': '05.解決方案',
-        'nav.s06': '06.結果',
-        'intro.h3.product': '產品簡介',
+        'nav.s04': '04.解決方案',
+        'nav.s05': '05.結果',
+        'intro.h3.product': '產品概覽',
         'intro.h3.role': '我的角色',
-        'intro.h3.time': '時間範圍',
-        'intro.product.body': 'KKday Rezio 是專為旅遊產業設計的預訂與管理系統，涵蓋商品上架、付款及訂單管理，整合 GetYourGuide、Viator、KKday 及 Activity Japan，提升曝光率並優化營運效率。',
-        'intro.role.body': '擔任首席互動設計師，我重新設計了端到端的商品上架流程——重構資訊架構、重建設計系統，並透過用戶研究推動跨部門協作。成果：設定時間縮短 38%（45 → 28 分鐘）、SUS 分數達 80.3（超過業界「良好」門檻），支援票量估計減少 30%。',
+        'intro.h3.time': '專案期間',
+        'intro.product.body': 'KKday Rezio 是面向旅遊業者的 B2B 預訂與營運平台，涵蓋商品上架、付款與訂單管理，並整合 GetYourGuide、Viator、KKday 與 Activity Japan 等通路，以擴大銷售面並提升營運效率。',
+        'intro.role.body': '身為 lead interaction designer，我重新設計了端到端的商品上架體驗，包含重構資訊架構、重建設計系統，以及以研究洞察推動跨部門對齊。這次改版讓設定時間縮短 38%（45 → 28 分鐘）、SUS 達到 80.3，並帶來支援工單量估計約 30% 的下降。',
         's0.title': '在開始之前，\n分享一個關於產品的趣聞……',
         's0.bubble1': '近 60% 的新用戶無法獨立完成設定——迫使客服人員手動引導每次導入過程。一位用戶直白地說：「這是 SaaS 工具……但要找人陪。」承諾與現實之間的落差，定義了我們要解決的問題。',
         's0.bubble2': '那麼，我們如何讓用戶能夠順暢、獨立地上架旅遊商品？',
         's01.title': '成果',
-        's01.h3.product': '產品面',
-        's01.h3.team': '團隊面',
-        's01.product.li1': '設定時間縮短 38%（45 → 28 分鐘），實現無需支援介入的獨立導入',
-        's01.product.li2': 'SUS 分數 80.3，達到業界「良好」評級，顯示流程更清晰、更易學',
-        's01.product.li3': '支援票量估計減少 30%，無需增加人力即可降低營運成本',
-        's01.team.li1': '運用 AI 原型工具壓縮三個月的迭代週期，在正式開發前驗證假設',
-        's01.team.li2': '透過共用元件系統與版本控管的設計規範，消除設計與開發之間的交付落差',
+        's01.h3.product': '產品成果',
+        's01.h3.team': '團隊成果',
+        's01.product.li1': '設定時間縮短 38%（45 → 28 分鐘），讓更多用戶能在較少支援介入下完成導入',
+        's01.product.li2': 'SUS 達到 80.3，顯示整體設定流程在清晰度與可學習性上明顯改善',
+        's01.product.li3': '支援工單量估計減少約 30%，在不增加人力的情況下降低營運負擔',
+        's01.team.li1': '透過 AI 輔助原型製作壓縮三個月的迭代週期，在正式開發前驗證假設',
+        's01.team.li2': '以共用元件系統與版本控管規範降低設計與工程之間反覆的交付摩擦',
         's02.title': '我們的起點',
         's02.h3.bg': '專案背景',
         's02.h3.goal': '我們的目標',
-        's02.bg.body': '這款產品最初僅針對單一產業垂直市場開發，隨著用戶複雜度提升而難以擴展。「入門」區塊佔所有說明文章瀏覽量的 36%——嚴重摩擦的明確訊號。對外宣稱 10 分鐘即可完成的設定，實際往往需要 45 至 50 分鐘，且 60% 的用戶無法在無支援下獨立完成。',
-        's02.goal.body': '我們重新設計了商品上架流程，使其符合用戶的心智模型——重構流程、改寫標籤，並在情境中呈現引導說明——讓用戶能夠在無需支援介入的情況下，自信地完成設定。',
-        's03.title': '找出問題所在',
+        's02.bg.body': '這個產品原先是為較單一的用戶情境設計，隨著營運複雜度提高，擴展性開始出現瓶頸。「入門」區塊佔所有說明文章瀏覽量的 36%，清楚反映出設定流程中的深層摩擦。原本被包裝為 10 分鐘可完成的設定，實際上往往需要 45 到 50 分鐘，且 60% 的用戶無法在沒有支援的情況下完成。',
+        's02.goal.body': '我們重新設計商品上架體驗，讓流程更貼近用戶的心智模型，透過重構步驟、改寫標籤與情境式引導，降低困惑與對支援的依賴。',
+        's03.title': '研究與問題定義',
         's03.h3.research': '初步研究',
-        's03.research.body1': '我們訪談用戶與第一線員工，實際了解商品上架的操作方式。一位包船業者分享：「我很懷念 Line 上的即時回覆，新系統的回應時間慢了很多。」',
+        's03.research.body1': '我們訪談用戶與第一線員工，實際了解商品上架的操作方式。一位包船業者分享：「我很懷念 LINE 上的即時回覆，新系統的回應時間慢了很多。」',
         's03.research.body2': '這個現象在訪談中反覆出現——系統複雜度讓用戶高度依賴即時支援，而這對用戶和客服團隊雙方都難以為繼。',
         's03.h3.persona': '用戶人物誌',
         's03.persona.body': '研究中浮現出兩種截然不同的用戶類型：以營收與通路整合為優先的決策者田中武（Takeshi Tanaka），以及負責日常訂單與預訂管理的操作員山口真理（Mari Yamaguchi）。儘管目標不同，兩者都面臨同一道牆——複雜的設定流程讓進度停滯，並侵蝕了對系統的信任。',
@@ -1079,53 +1588,52 @@
         's04.h3.ui': 'UI 模型與原型',
         's04.ui.body': '在每次設計評審中，我們都會建立原型——使用 AI 生成或 Figma——在正式開發前測試特定假設。下方的互動原型涵蓋定價流程：跟隨綠色游標探索互動模型。',
         's05.title': '我們的解決方案',
-        's05.feat1.title': '透過快速用戶分析問卷，降低高昂的導入成本',
+        's05.feat1.title': '以簡短分群問卷降低導入成本',
         's05.feat1.body': '前置的簡短問卷收集行程類型，在整個流程中動態隱藏無關欄位。在易用性測試中，問卷達到 96% 的分析準確率——讓用戶能夠端到端完成設定，無需回頭或聯繫客服。此方案也縮短了銷售團隊的導入培訓時間。',
         's05.feat2.title': '透過自助服務說明面板，降低對客服的依賴',
-        's05.feat2.body': '自助服務說明面板在摩擦點即時提供情境引導——讓用戶無需聯繫客服即可解決問題。預估影響：支援票量減少約 30%，平均解決時間縮短，直接降低營運成本。',
+        's05.feat2.body': '自助服務說明面板在摩擦點即時提供情境引導——讓用戶無需聯繫客服即可解決問題。預估影響：支援工單量減少約 30%，平均解決時間縮短，直接降低營運成本。',
         's05.feat3.title': '透過「發布前預覽」降低錯誤率',
         's05.feat3.body': '我們將單欄表單替換為雙欄介面：左側設定，右側即時商品預覽。每個欄位的變更即時渲染——讓用戶在發布前驗證輸入，避免需要上線後修正的錯誤。',
         's05.feat4.title': '打造更具對話感的 UX 文案系統',
         's05.feat4.body': '我們將孤立的欄位標籤替換為句式輸入——將情境直接嵌入表單結構中。用戶不再需要孤立地解讀標籤，而是閱讀完整句子後填入空格。測試顯示任務完成速度更快、錯誤設定更少，直接促成了 SUS 分數 80.3 的達成。',
         's06.title': '結果',
-        's06.body1': '重新設計在三個目標上均帶來了可衡量的影響：設定時間從 45 分鐘縮短至 28 分鐘（–38%）、SUS 分數達 80.3，以及支援票量估計減少約 30%——且未增加任何人力。',
-        's06.body2': 'AI 輔助原型製作壓縮了迭代週期，共享設計系統消除了設計與工程之間反覆的交付摩擦——這些改變在專案結束後依然持續發揮作用。',
-        's06.body3': '如果有更多時間，我會在利害關係人對齊階段更早引入用戶——更早的數據能加速共識、減少返工。話雖如此，我們透過這個過程建立的團隊才是真正的成果：在我離職後，他們還邀請我回來拍團隊照。',
+        's06.body1': '這次改版在三個目標上都帶來了可衡量的進展：設定時間從 45 分鐘縮短至 28 分鐘（–38%）、SUS 達到 80.3，支援工單量也在未增加人力的情況下估計下降約 30%。',
+        's06.body2': 'AI 輔助原型製作縮短了迭代週期，而共享設計系統則持續降低設計與工程之間的交付摩擦，讓這些改善在專案結束後仍能延續。',
+        's06.body3': '如果有更多時間，我會在利害關係人對齊的更早階段納入用戶，讓證據更早進入討論、減少返工。不過，這個過程中累積下來的團隊能力，本身也是非常重要的成果。',
       },
       'zh-cn': {
         'page.title': 'KKday Rezio SaaS 服务',
-        'page.subtitle': '重新设计 OTA 商品上架流程',
+        'page.subtitle': '重新设计 OTA 商品上架体验',
         'nav.intro': '.简介',
         'nav.s01': '01.成果',
         'nav.s02': '02.起点',
         'nav.s03': '03.调研',
-        'nav.s04': '04.迭代',
-        'nav.s05': '05.解决方案',
-        'nav.s06': '06.结果',
-        'intro.h3.product': '产品简介',
+        'nav.s04': '04.解决方案',
+        'nav.s05': '05.结果',
+        'intro.h3.product': '产品概览',
         'intro.h3.role': '我的角色',
-        'intro.h3.time': '时间范围',
-        'intro.product.body': 'KKday Rezio 是专为旅游行业设计的预订与管理系统，涵盖商品上架、付款及订单管理，整合 GetYourGuide、Viator、KKday 及 Activity Japan，提升曝光率并优化运营效率。',
-        'intro.role.body': '担任首席交互设计师，我重新设计了端到端的商品上架流程——重构信息架构、重建设计系统，并通过用户研究推动跨部门协作。成果：设定时间缩短 38%（45 → 28 分钟）、SUS 分数达 80.3（超过业界「良好」门槛），支持工单量估计减少 30%。',
+        'intro.h3.time': '项目周期',
+        'intro.product.body': 'KKday Rezio 是面向旅游业者的 B2B 预订与运营平台，覆盖商品上架、付款与订单管理，并整合 GetYourGuide、Viator、KKday 与 Activity Japan 等渠道，以扩大分销并提升运营效率。',
+        'intro.role.body': '作为 lead interaction designer，我重新设计了端到端的商品上架体验，包括重构信息架构、重建设计系统，并以研究洞察推动跨团队对齐。这次改版将设定时间缩短了 38%（45 → 28 分钟），SUS 达到 80.3，并带来支持工单量估计约 30% 的下降。',
         's0.title': '在开始之前，\n分享一个关于产品的趣事……',
         's0.bubble1': '近 60% 的新用户无法独立完成设定——迫使客服人员手动引导每次导入过程。一位用户直白地说：「这是 SaaS 工具……但要找人陪。」承诺与现实之间的落差，定义了我们要解决的问题。',
         's0.bubble2': '那么，我们如何让用户能够顺畅、独立地上架旅游商品？',
         's01.title': '成果',
         's01.h3.product': '产品层面',
         's01.h3.team': '团队层面',
-        's01.product.li1': '设定时间缩短 38%（45 → 28 分钟），实现无需支持介入的独立导入',
-        's01.product.li2': 'SUS 分数 80.3，达到业界「良好」评级，显示流程更清晰、更易学',
-        's01.product.li3': '支持工单量估计减少 30%，无需增加人力即可降低运营成本',
-        's01.team.li1': '运用 AI 原型工具压缩三个月的迭代周期，在正式开发前验证假设',
-        's01.team.li2': '通过共用组件系统与版本管理的设计规范，消除设计与开发之间的交付落差',
+        's01.product.li1': '设定时间缩短 38%（45 → 28 分钟），让更多用户能在更少支持介入下完成导入',
+        's01.product.li2': 'SUS 达到 80.3，说明整体设定流程在清晰度与可学习性上显著提升',
+        's01.product.li3': '支持工单量估计减少约 30%，在不增加人力的情况下减轻运营负担',
+        's01.team.li1': '通过 AI 辅助原型制作压缩三个月的迭代周期，在正式开发前验证假设',
+        's01.team.li2': '以共享组件系统与版本管理规范降低设计与工程之间反复出现的交付摩擦',
         's02.title': '我们的起点',
         's02.h3.bg': '项目背景',
         's02.h3.goal': '我们的目标',
-        's02.bg.body': '这款产品最初仅针对单一行业垂直市场开发，随着用户复杂度提升而难以扩展。「入门」区块占所有帮助文章浏览量的 36%——严重摩擦的明确信号。对外宣称 10 分钟即可完成的设定，实际往往需要 45 至 50 分钟，且 60% 的用户无法在无支持下独立完成。',
-        's02.goal.body': '我们重新设计了商品上架流程，使其符合用户的心智模型——重构流程、改写标签，并在情境中呈现引导说明——让用户能够在无需支持介入的情况下，自信地完成设定。',
-        's03.title': '找出问题所在',
+        's02.bg.body': '这款产品最初是为相对单一的用户情境设计的，随着运营复杂度提升，扩展性开始受到限制。「入门」区块占所有帮助文章浏览量的 36%，清楚反映出设定流程中的深层摩擦。原本被描述为 10 分钟即可完成的设定，实际往往需要 45 到 50 分钟，而且 60% 的用户无法在没有支持的情况下完成。',
+        's02.goal.body': '我们重新设计商品上架体验，让流程更贴近用户的心智模型，通过重构步骤、改写标签和情境式引导，降低困惑与对支持的依赖。',
+        's03.title': '研究与问题定义',
         's03.h3.research': '初步调研',
-        's03.research.body1': '我们访谈用户与一线员工，实际了解商品上架的操作方式。一位包船业者分享：「我很怀念 Line 上的实时回复，新系统的响应时间慢了很多。」',
+        's03.research.body1': '我们访谈用户与一线员工，实际了解商品上架的操作方式。一位包船业者分享：「我很怀念 LINE 上的实时回复，新系统的响应时间慢了很多。」',
         's03.research.body2': '这一现象在访谈中反复出现——系统复杂度让用户高度依赖实时支持，而这对用户和客服团队双方都难以为继。',
         's03.h3.persona': '用户人物画像',
         's03.persona.body': '调研中浮现出两种截然不同的用户类型：以营收与渠道整合为优先的决策者田中武（Takeshi Tanaka），以及负责日常订单与预订管理的操作员山口真理（Mari Yamaguchi）。尽管目标不同，两者都面临同一道墙——复杂的设定流程让进度停滞，并侵蚀了对系统的信任。',
@@ -1151,18 +1659,18 @@
         's04.h3.ui': 'UI 模型与原型',
         's04.ui.body': '在每次设计评审中，我们都会创建原型——使用 AI 生成或 Figma——在正式开发前测试特定假设。下方的交互原型涵盖定价流程：跟随绿色光标探索交互模型。',
         's05.title': '我们的解决方案',
-        's05.feat1.title': '通过快速用户分析问卷，降低高昂的导入成本',
+        's05.feat1.title': '通过简短画像问卷降低导入成本',
         's05.feat1.body': '前置的简短问卷收集行程类型，在整个流程中动态隐藏无关字段。在易用性测试中，问卷达到 96% 的分析准确率——让用户能够端到端完成设定，无需回头或联系客服。此方案也缩短了销售团队的导入培训时间。',
         's05.feat2.title': '通过自助服务帮助面板，降低对客服的依赖',
         's05.feat2.body': '自助服务帮助面板在摩擦点即时提供情境引导——让用户无需联系客服即可解决问题。预估影响：支持工单量减少约 30%，平均解决时间缩短，直接降低运营成本。',
         's05.feat3.title': '通过「发布前预览」降低错误率',
-        's05.feat3.body': '我们将单列表单替换为双列界面：左侧设定，右侧实时商品预览。每个字段的变更即时渲染——让用户在发布前验证输入，避免需要上线后修正的错误。',
+        's05.feat3.body': '我们将单栏表单替换为双栏界面：左侧设定，右侧实时商品预览。每个字段的变更即时渲染——让用户在发布前验证输入，避免需要上线后修正的错误。',
         's05.feat4.title': '打造更具对话感的 UX 文案系统',
         's05.feat4.body': '我们将孤立的字段标签替换为句式输入——将情境直接嵌入表单结构中。用户不再需要孤立地解读标签，而是阅读完整句子后填入空格。测试显示任务完成速度更快、错误设定更少，直接促成了 SUS 分数 80.3 的达成。',
         's06.title': '结果',
-        's06.body1': '重新设计在三个目标上均带来了可衡量的影响：设定时间从 45 分钟缩短至 28 分钟（–38%）、SUS 分数达 80.3，以及支持工单量估计减少约 30%——且未增加任何人力。',
-        's06.body2': 'AI 辅助原型制作压缩了迭代周期，共享设计系统消除了设计与工程之间反复的交付摩擦——这些改变在项目结束后依然持续发挥作用。',
-        's06.body3': '如果有更多时间，我会在利益相关者对齐阶段更早引入用户——更早的数据能加速共识、减少返工。话虽如此，我们通过这个过程建立的团队才是真正的成果：在我离职后，他们还邀请我回来拍团队照。',
+        's06.body1': '这次改版在三个目标上都带来了可衡量的进展：设定时间从 45 分钟缩短至 28 分钟（–38%）、SUS 达到 80.3，支持工单量也在未增加人力的情况下估计下降约 30%。',
+        's06.body2': 'AI 辅助原型制作缩短了迭代周期，而共享设计系统则持续降低了设计与工程之间的交付摩擦，让这些改进在项目结束后依然发挥作用。',
+        's06.body3': '如果有更多时间，我会在利益相关者对齐的更早阶段引入用户，让证据更早进入讨论并减少返工。不过，这个过程中沉淀下来的团队能力，本身也是一项重要成果。',
       }
     };
 
@@ -1210,6 +1718,146 @@
       const saved = localStorage.getItem('portfolio-lang');
       if (saved && saved !== 'en') applyRezioLang(saved);
     } catch(e) {}
+  })();
+
+  // ── CJM Animated Journey Map ──────────────────────────
+  (() => {
+    const wrap = document.querySelector('.cjm-wrap');
+    if (!wrap) return;
+
+    const dots = wrap.querySelectorAll('.cjm-dot');
+    const hits = wrap.querySelectorAll('.cjm-dot-hit');
+    const bubbles = wrap.querySelectorAll('.cjm-bubble');
+
+    // Dot appear delays: timed after each dot's CSS animation
+    const dotDelays = [500, 700, 900, 1100, 1300, 1500];
+    const SHOW_DUR = 900; // how long each bubble stays visible during auto-sequence
+    const hoveredStages = new Set();
+
+    function showBubblesForStage(stage) {
+      bubbles.forEach(b => { if (b.dataset.stage === String(stage)) b.classList.add('visible'); });
+    }
+    function hideBubblesForStage(stage) {
+      if (hoveredStages.has(String(stage))) return; // don't hide if currently hovered
+      bubbles.forEach(b => { if (b.dataset.stage === String(stage)) b.classList.remove('visible'); });
+    }
+
+    const isMobile = () => window.innerWidth <= 640;
+
+    // Mobile: show bubbles only for the dot closest to the centre of the scroll container
+    function updateMobileBubbles() {
+      const outer = wrap.closest('.cjm-outer');
+      if (!outer) return;
+      const maxScroll = outer.scrollWidth - outer.clientWidth;
+      let closestStage;
+      if (outer.scrollLeft <= 8) {
+        closestStage = '0';
+      } else if (outer.scrollLeft >= maxScroll - 8) {
+        closestStage = String(dots.length - 1);
+      } else {
+        const outerRect = outer.getBoundingClientRect();
+        const viewCenterX = outerRect.left + outerRect.width / 2;
+        let minDist = Infinity;
+        dots.forEach(dot => {
+          const dotRect = dot.getBoundingClientRect();
+          const dotCenterX = dotRect.left + dotRect.width / 2;
+          const dist = Math.abs(dotCenterX - viewCenterX);
+          if (dist < minDist) { minDist = dist; closestStage = dot.dataset.stage; }
+        });
+      }
+      bubbles.forEach(b => {
+        if (b.dataset.stage === closestStage) b.classList.add('visible');
+        else b.classList.remove('visible');
+      });
+    }
+
+    // On scroll into view: line + dots animate
+    const obs = new IntersectionObserver(entries => {
+      if (!entries[0].isIntersecting) return;
+      wrap.classList.add('in-view');
+      if (isMobile()) {
+        // Show bubbles for initially visible stages, then track scroll
+        setTimeout(updateMobileBubbles, 500); // wait for dot animation to start
+        const outer = wrap.closest('.cjm-outer');
+        if (outer) outer.addEventListener('scroll', updateMobileBubbles, { passive: true });
+      } else {
+        dotDelays.forEach((delay, stage) => {
+          setTimeout(() => { showBubblesForStage(stage); }, delay + 300);
+          setTimeout(() => { hideBubblesForStage(stage); }, delay + 300 + SHOW_DUR);
+        });
+      }
+      obs.disconnect();
+    }, { threshold: 0.15 });
+    obs.observe(wrap);
+
+    // Dot hover → show bubble, hide on leave (desktop only)
+    if (!isMobile()) {
+      hits.forEach(hit => {
+        const stage = hit.dataset.stage;
+        hit.addEventListener('mouseenter', () => {
+          hoveredStages.add(stage);
+          showBubblesForStage(stage);
+          dots.forEach(d => { if (d.dataset.stage === stage) d.classList.add('active'); });
+        });
+        hit.addEventListener('mouseleave', () => {
+          hoveredStages.delete(stage);
+          hideBubblesForStage(stage);
+          dots.forEach(d => { if (d.dataset.stage === stage) d.classList.remove('active'); });
+        });
+      });
+    }
+  })();
+</script>
+
+<!-- PPO Ideation Tooltip -->
+<div id="ppo-tooltip" style="display:none;">
+  <div id="ppo-tip-product"></div>
+  <div id="ppo-tip-body"></div>
+</div>
+
+<script>
+  // WWSanim — trigger once on scroll into view
+  (() => {
+    const wwsEl = document.querySelector('.wws-anim');
+    if (wwsEl) {
+      const obs = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          wwsEl.classList.add('triggered');
+          obs.unobserve(wwsEl);
+        }
+      }, { threshold: 0.4 });
+      obs.observe(wwsEl);
+    }
+  })();
+
+  (() => {
+    const tooltip = document.getElementById('ppo-tooltip');
+    const tipProduct = document.getElementById('ppo-tip-product');
+    const tipBody = document.getElementById('ppo-tip-body');
+    let hideTimer;
+
+    document.querySelectorAll('.ppo-ideation-li').forEach(li => {
+      li.addEventListener('mouseenter', () => {
+        clearTimeout(hideTimer);
+        tipProduct.textContent = li.dataset.tipProduct;
+        tipBody.textContent = li.dataset.tip;
+        tooltip.style.display = 'block';
+        const rect = li.getBoundingClientRect();
+        const tipH = tooltip.offsetHeight || 60;
+        const tipW = tooltip.offsetWidth || 220;
+        let top = rect.top - tipH - 8;
+        let left = rect.left;
+        if (top < 8) top = rect.bottom + 8;
+        if (left + tipW > window.innerWidth - 8) left = window.innerWidth - tipW - 8;
+        tooltip.style.top = top + 'px';
+        tooltip.style.left = left + 'px';
+        requestAnimationFrame(() => tooltip.classList.add('visible'));
+      });
+      li.addEventListener('mouseleave', () => {
+        tooltip.classList.remove('visible');
+        hideTimer = setTimeout(() => { tooltip.style.display = 'none'; }, 160);
+      });
+    });
   })();
 </script>
 </body>
