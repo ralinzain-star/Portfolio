@@ -54,6 +54,18 @@
       scrollbar-width: none;
     }
     .nav-anchors::-webkit-scrollbar { display: none; }
+    .nav-lang {
+      margin-left: 20px; flex-shrink: 0;
+      appearance: none; -webkit-appearance: none;
+      background: transparent; border: 1px solid rgba(43,37,32,0.2);
+      border-radius: 6px; padding: 3px 22px 3px 8px;
+      font-size: 11px; font-weight: 600; font-family: 'Barlow', sans-serif;
+      color: var(--muted); cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 6px center;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .nav-lang:hover { border-color: rgba(43,37,32,0.45); color: var(--text); }
     .nav-anchor {
       font-size: 11px; font-weight: 500;
       letter-spacing: 0.01em;
@@ -73,7 +85,7 @@
     /* ── SECTION WRAPPERS ─────────────────────────── */
     .sec {
       width: 100%;
-      padding: 120px 60px;
+      padding: 32px 60px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -82,7 +94,7 @@
     .sec.cream { background: var(--bg); }
     .sec-inner {
       width: 100%; max-width: 1400px;
-      display: flex; flex-direction: column; gap: 48px;
+      display: flex; flex-direction: column; gap: 32px;
     }
 
     /* ── SECTION HEADING ──────────────────────────── */
@@ -147,6 +159,8 @@
       display: flex; flex-direction: column; gap: 16px;
       justify-content: center;
     }
+
+    .stat-hi { background: #ffe033; padding: 1px 4px; border-radius: 4px; font-weight: 600; }
 
     /* ── CHAT BUBBLES ─────────────────────────────── */
     .chat-wrap {
@@ -255,8 +269,8 @@
       min-height: 240px;
       display: flex; align-items: center; justify-content: center;
     }
-    .feature-img-wrap img {
-      width: 100%; display: block;
+    .feature-img-wrap img, .feature-img-wrap video {
+      width: 100%; display: block; border-radius: 10px;
     }
     .feature-img-placeholder {
       width: 100%; min-height: 240px;
@@ -276,7 +290,7 @@
     /* ── TEAM PHOTOS ROW ──────────────────────────── */
     .team-photos-row {
       display: flex; gap: 24px; align-items: stretch;
-      width: 100%;
+      width: 100%; height: 340px;
     }
     .team-photo {
       flex: 1; border-radius: 10px; overflow: hidden;
@@ -365,7 +379,7 @@
 
 <!-- ── NAV ────────────────────────────────────────── -->
 <nav class="nav">
-  <a class="nav-back" href="/">← Iris Hsieh</a>
+  <a class="nav-back" href="/#work">← Iris Hsieh</a>
   <div class="nav-anchors">
     <a class="nav-anchor" href="#intro">.Intro</a>
     <a class="nav-anchor" href="#s01">01.Start</a>
@@ -373,6 +387,12 @@
     <a class="nav-anchor" href="#s03">03.Our Solution</a>
     <a class="nav-anchor" href="#s04">04.Cool Parts</a>
   </div>
+  <select class="nav-lang" id="nav-lang-select">
+    <option value="en">EN</option>
+    <option value="ja">JA</option>
+    <option value="zh-tw">繁</option>
+    <option value="zh-cn">简</option>
+  </select>
 </nav>
 
 <!-- ── TITLE BAR ──────────────────────────────────── -->
@@ -388,7 +408,7 @@
   <div class="sec-inner" style="max-width:100%;padding:0;">
     <div class="intro-card">
       <div class="intro-photo">
-        <img src="https://www.figma.com/api/mcp/asset/12ecafe6-1c2f-4254-975c-44288f5a2462" alt="BumpHunter field work" />
+        <img src="/assets/lsbg/field-work.png" alt="BumpHunter field work" />
       </div>
       <div class="intro-copy">
         <div class="text-block">
@@ -397,7 +417,7 @@
         </div>
         <div class="text-block">
           <p class="h3">My Role:</p>
-          <p class="body">As the interaction designer, I scoped two research tracks covering both residents and bicycle lane engineers, and facilitated more than 20 cross-cultural interviews. Throughout the project, I translated findings into design principles, built high-fidelity prototypes, and used rolling research to validate functionality and usability. I also aligned a highly international team around interaction patterns that fit Hamburg's local context.</p>
+          <p class="body">As the interaction designer, I scoped <span class="stat-hi">two research tracks</span> covering both residents and bicycle lane engineers, and facilitated <span class="stat-hi">20+ cross-cultural interviews</span>. Throughout the project, I translated findings into design principles, built high-fidelity prototypes, and used rolling research to validate functionality and usability. I also aligned a highly international team around interaction patterns that fit Hamburg's local context.</p>
         </div>
         <div class="text-block">
           <p class="h3">Timeline:</p>
@@ -408,31 +428,9 @@
   </div>
 </div>
 
-<!-- ── 0. BEFORE WE BEGIN ─────────────────────────── -->
-<div class="sec cream" style="padding-top:120px;padding-bottom:120px;">
-  <div class="sec-inner">
-    <div class="sec-head">
-      <span class="sec-num">0.</span>
-      <span class="sec-title">Field Reality for Bicycle Lane Engineers</span>
-    </div>
-    <div class="chat-wrap">
-      <div class="bubble-wide">
-        <p class="body">In winter, bicycle lane engineers still have to inspect conditions on site, often in freezing weather, just to confirm whether paths are blocked or unsafe.</p>
-      </div>
-      <div class="bubble-narrow-row">
-        <div class="bubble-narrow">
-          <p class="body-med">HOW MIGHT WE GIVE ENGINEERS TIMELY BIKE LANE DATA SO THEY CAN REDUCE UNNECESSARY SITE VISITS?</p>
-        </div>
-        <div class="bubble-char">
-          <img src="https://www.figma.com/api/mcp/asset/d36e7eea-317b-45d5-bbcd-2627ad40a654" alt="" />
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- ── 01. WHERE WE STARTED ───────────────────────── -->
-<div id="s01" class="sec white" style="padding-top:120px;padding-bottom:140px;">
+<div id="s01" class="sec white">
   <div class="sec-inner">
     <div class="sec-head">
       <span class="sec-num">01.</span>
@@ -440,16 +438,16 @@
     </div>
     <div class="split-row">
       <div class="split-photo">
-        <img src="https://www.figma.com/api/mcp/asset/31bcbac9-0d9a-428b-9b00-2a756d044993" alt="Bicycle lane in Hamburg" />
+        <img src="/assets/lsbg/bike-lane.png" alt="Bicycle lane in Hamburg" />
       </div>
       <div class="split-copy">
         <div class="text-block">
           <p class="h3">Project Background:</p>
-          <p class="body">Inspection, maintenance, and planning of bicycle lanes require coordination across multiple government departments and inspection agencies. Although citizens can report issues, many still rely on traditional channels like email, resulting in fragmented information that is difficult to act on. Drone-based solutions can help in some situations, but their effectiveness drops significantly during winter.</p>
+          <p class="body">Inspection, maintenance, and planning of bicycle lanes require coordination across multiple government departments and inspection agencies. Although citizens can report issues, many still rely on traditional channels like email, resulting in <span class="stat-hi">fragmented information that is difficult to act on</span>. Drone-based solutions can help in some situations, but their effectiveness drops significantly during winter.</p>
         </div>
         <div class="text-block">
           <p class="h3">Our Goal:</p>
-          <p class="body">Design a lightweight system that turns scattered signals into timely, actionable updates on bicycle lane conditions, so engineers can reduce on-site inspections, coordinate more effectively across departments, and focus repairs where they matter most.</p>
+          <p class="body">Design a lightweight system that turns scattered signals into timely, actionable updates on bicycle lane conditions, so engineers can <span class="stat-hi">reduce on-site inspections</span>, coordinate more effectively across departments, and focus repairs where they matter most.</p>
         </div>
       </div>
     </div>
@@ -457,7 +455,7 @@
 </div>
 
 <!-- ── 02. INVESTIGATE WHAT WAS BROKEN ───────────── -->
-<div id="s02" class="sec cream" style="padding-top:120px;padding-bottom:140px;">
+<div id="s02" class="sec cream">
   <div class="sec-inner">
     <div class="sec-head">
       <span class="sec-num">02.</span>
@@ -477,19 +475,19 @@
     <div class="quote-list">
       <div class="quote-row">
         <div class="quote-avatar">
-          <img src="https://www.figma.com/api/mcp/asset/12e500dd-8c62-447a-8f6e-3b6028ec43fb" alt="Professor Chris Brunlett" />
+          <img src="/assets/lsbg/avatar-professor.png" alt="Professor Chris Brunlett" />
         </div>
         <p class="quote-text">"The Netherlands succeeded by building a comprehensive network of dedicated cycle paths." — <strong>Professor Chris Brunlett</strong></p>
       </div>
       <div class="quote-row">
         <div class="quote-avatar">
-          <img src="https://www.figma.com/api/mcp/asset/cbaf5115-761c-432e-a9e7-fddfadb4f025" alt="LSBG Engineer" />
+          <img src="/assets/lsbg/avatar-engineer.png" alt="LSBG Engineer" />
         </div>
         <p class="quote-text">"What is currently lacking is the feedback from citizens regarding their riding experiences on bicycle paths." — <strong>LSBG Bike Lane Engineer</strong></p>
       </div>
       <div class="quote-row">
         <div class="quote-avatar">
-          <img src="https://www.figma.com/api/mcp/asset/0987be6b-4d4e-4f5b-af2c-240cf51e7f5a" alt="Citizen" />
+          <img src="/assets/lsbg/avatar-citizen.png" alt="Citizen" />
         </div>
         <p class="quote-text">"If my contributions truly help improve my neighborhood, I would be more willing to report." — <strong>Citizen</strong></p>
       </div>
@@ -498,7 +496,7 @@
     <!-- Key Insights -->
     <div class="text-block">
       <p class="h3">Key Insights:</p>
-      <p class="body">Research showed that engineers lacked detailed information about which road segments mattered most to citizens and how riders actually experienced them. At the same time, citizens wanted their reports to be acknowledged, creating an opportunity for a more proactive inspection process.</p>
+      <p class="body">Research showed that <span class="stat-hi">engineers lacked detailed information about which road segments mattered most</span> to citizens and how riders actually experienced them. At the same time, citizens wanted their reports to be acknowledged, creating an opportunity for a more proactive inspection process.</p>
     </div>
 
     <!-- Persona -->
@@ -552,7 +550,7 @@
 </div>
 
 <!-- ── 03. OUR SOLUTION ───────────────────────────── -->
-<div id="s03" class="sec white" style="padding-top:120px;padding-bottom:140px;">
+<div id="s03" class="sec white">
   <div class="sec-inner">
     <div class="sec-head">
       <span class="sec-num">03.</span>
@@ -563,10 +561,7 @@
     <div>
       <div class="text-block" style="margin-bottom:16px;">
         <p class="h3">Service Blueprint:</p>
-        <p class="body">The service blueprint reframed maintenance as a two-way loop between engineers and residents. Engineers used maps to identify risk, traffic patterns, and likely maintenance priorities; citizens responded with location-specific reports, photos, and riding feedback. Together, these inputs turned scattered observations into a clearer basis for inspection and repair decisions.</p>
-      </div>
-      <div class="blueprint-box">
-        <img src="https://www.figma.com/api/mcp/asset/2d138f8e-d3d9-4867-9059-df95a6ab7668" alt="Service blueprint diagram" />
+        <p class="body">The service blueprint reframed maintenance as a <span class="stat-hi">two-way loop between engineers and residents</span>. Engineers used maps to identify risk, traffic patterns, and likely maintenance priorities; citizens responded with location-specific reports, photos, and riding feedback. Together, these inputs turned scattered observations into a clearer basis for inspection and repair decisions.</p>
       </div>
     </div>
 
@@ -584,7 +579,7 @@
             <p class="body">Map View enables engineers to quickly pinpoint priority areas for bicycle lane maintenance by visualizing damage severity, report density, and traffic levels. Color-coded markers make it easy to distinguish between extremely dangerous, dangerous, and minor issues, while traffic overlays reveal usage intensity. This combination helps engineers decide not just where intervention is most urgent, but also where repairs will have the greatest impact.</p>
           </div>
           <div class="feature-img-wrap">
-            <div class="feature-img-placeholder">[ Map View screen recording ]</div>
+            <video src="assets/lsbg/demo-1.mp4" autoplay loop muted playsinline></video>
           </div>
         </div>
 
@@ -592,10 +587,10 @@
         <div class="feature-row">
           <div class="feature-copy">
             <p class="h3">Report View:</p>
-            <p class="body">Report View transforms citizen feedback into structured, actionable data, presenting an at-a-glance summary of bicycle lane conditions by district. For example, in Bergstedt, the Uncomfortable rate is 60% and the Dangerous rate is 70%, with key issues including low road traction, numerous potholes, and hazardous obstacles like tree branches. The view also shows report counts and traffic demand distribution (High 30.5%, Medium 4.5%, Low 65%), enabling engineers to quickly gauge both usage and risk levels.</p>
+            <p class="body">Report View transforms citizen feedback into structured, actionable data, presenting an at-a-glance summary of bicycle lane conditions by district. For example, in Bergstedt, the <span class="stat-hi">Uncomfortable rate is 60% and the Dangerous rate is 70%</span>, with key issues including low road traction, numerous potholes, and hazardous obstacles like tree branches. The view also shows report counts and traffic demand distribution (High 30.5%, Medium 4.5%, Low 65%), enabling engineers to quickly gauge both usage and risk levels.</p>
           </div>
           <div class="feature-img-wrap">
-            <div class="feature-img-placeholder">[ Report View screen recording ]</div>
+            <video src="assets/lsbg/demo-2.mp4" autoplay loop muted playsinline></video>
           </div>
         </div>
       </div>
@@ -607,10 +602,10 @@
       <div class="feature-row">
         <div class="feature-copy">
           <p class="h3">Send Mission:</p>
-          <p class="body">When engineers need more context to assess a specific area, they can use Send Mission to directly engage local residents. This feature sends targeted requests to citizens in the program, asking them to capture photos, record observations, and provide detailed feedback about the road segment in question. By gathering on-the-ground insights from actual users, engineers can validate existing data, fill in missing details, and make more accurate maintenance or planning decisions.</p>
+          <p class="body">When engineers need more context to assess a specific area, they can use Send Mission to <span class="stat-hi">directly engage local residents</span>. This feature sends targeted requests to citizens in the program, asking them to capture photos, record observations, and provide detailed feedback about the road segment in question. By gathering on-the-ground insights from actual users, engineers can validate existing data, fill in missing details, and make more accurate maintenance or planning decisions.</p>
         </div>
         <div class="feature-img-wrap">
-          <div class="feature-img-placeholder">[ Send Mission screen recording ]</div>
+          <video src="assets/lsbg/demo-3.mp4" autoplay loop muted playsinline></video>
         </div>
       </div>
     </div>
@@ -618,8 +613,8 @@
     <!-- Citizen Reporting -->
     <div>
       <p class="feature-title" style="margin-bottom:24px;">Citizen-Assisted Reporting of Bicycle Routes:</p>
-      <div class="feature-row">
-        <div class="feature-copy">
+      <div style="display:flex;gap:24px;align-items:flex-end;width:100%;">
+        <div style="flex:1;display:flex;flex-direction:column;gap:8px;">
           <div class="text-block">
             <p class="h3">Capture cycling experience with simple clicks:</p>
             <p class="body">Hamburg residents can play an active role in improving local cycling infrastructure by sharing real-world road usage feedback via the Road Usage Reporting Website. Each submission helps engineers better understand on-the-ground conditions and prioritize repairs that matter most to the community.</p>
@@ -632,11 +627,11 @@
               <li>Upload photos of the issue</li>
               <li>Indicate the level of danger and discomfort</li>
             </ol>
-            <p class="body" style="margin-top:8px;">With just a few steps, residents can transform their daily riding experiences into actionable insights, directly influencing maintenance priorities and ensuring safer, more comfortable bike lanes.</p>
+            <p class="body" style="margin-top:8px;">With just a few steps, residents can <span class="stat-hi">transform their daily riding experiences into actionable insights</span>, directly influencing maintenance priorities and ensuring safer, more comfortable bike lanes.</p>
           </div>
         </div>
-        <div class="feature-img-wrap" style="max-width:340px;">
-          <div class="feature-img-placeholder" style="min-height:400px;">[ Citizen reporting app prototype ]</div>
+        <div style="width:160px;flex-shrink:0;">
+          <video src="assets/lsbg/demo-4.mp4" autoplay loop muted playsinline style="width:100%;display:block;border-radius:20px;"></video>
         </div>
       </div>
     </div>
@@ -645,7 +640,7 @@
 </div>
 
 <!-- ── 04. COOL PARTS ─────────────────────────────── -->
-<div id="s04" class="sec cream" style="padding-top:120px;padding-bottom:140px;">
+<div id="s04" class="sec cream">
   <div class="sec-inner">
     <div class="sec-head">
       <span class="sec-num">04.</span>
@@ -655,24 +650,24 @@
     <!-- Dev group & workflow -->
     <div class="text-block">
       <p class="h3">Team Collaboration &amp; Workflow</p>
-      <p class="body">We ran Agile sprints with weekly showcases and testing, using story mapping to keep the work grounded. Most collaboration happened in Figma, with Adobe tools supporting production details. I also brought AI into the workflow to accelerate early communication artifacts and keep experiments legible to the wider team.</p>
+      <p class="body">We ran <span class="stat-hi">Agile sprints with weekly showcases and testing</span>, using story mapping to keep the work grounded. Most collaboration happened in Figma, with Adobe tools supporting production details. I also brought AI into the workflow to accelerate early communication artifacts and keep experiments legible to the wider team.</p>
     </div>
 
-    <img src="https://www.figma.com/api/mcp/asset/71aa4ec9-ccd9-4052-b634-12712040f240" alt="Team workflow photo strip" class="full-img" />
+    <img src="/assets/lsbg/workflow.png" alt="Team workflow photo strip" class="full-img" />
 
     <!-- Testing, iterating -->
     <div class="text-block">
       <p class="h3">Testing, Iterating, Failing, Partnering</p>
-      <p class="body">The most memorable part of this project was learning how differently Munich and Hamburg approached cycling infrastructure from the contexts I already knew. I once suggested posting flyers on utility poles, only to learn Munich had long buried its cables. That moment stayed with me. Working with such a diverse team sharpened my ability to spot blind spots, absorb feedback quickly, and refine ideas collaboratively across cultures.</p>
+      <p class="body">The most memorable part of this project was learning how differently Munich and Hamburg approached cycling infrastructure from the contexts I already knew. I once suggested posting flyers on utility poles, only to learn Munich had long buried its cables. That moment stayed with me. Working with such a diverse team sharpened my ability to spot blind spots, absorb feedback quickly, and <span class="stat-hi">refine ideas collaboratively across cultures</span>.</p>
     </div>
 
     <!-- Team photos -->
     <div class="team-photos-row">
       <div class="team-photo" style="min-height:220px;">
-        <img src="https://www.figma.com/api/mcp/asset/e3a7e411-f981-4be7-b2da-1affb4779d9f" alt="Team photo 1" />
+        <img src="assets/lsbg/team-photo.png" alt="Team photo 1" />
       </div>
       <div class="team-photo" style="min-height:220px;">
-        <img src="https://www.figma.com/api/mcp/asset/745352c9-5c63-4b70-ace2-8fb6a137a086" alt="Team photo 2" />
+        <img src="assets/lsbg/field-work.png" alt="Team photo 2" />
       </div>
     </div>
 
@@ -712,6 +707,19 @@
     }
     window.addEventListener('scroll', update, { passive: true });
     update();
+  })();
+
+  // ── Language switcher ──
+  (function() {
+    const sel = document.getElementById('nav-lang-select');
+    if (!sel) return;
+    try {
+      const saved = localStorage.getItem('portfolio-lang');
+      if (saved) sel.value = saved;
+    } catch(e) {}
+    sel.addEventListener('change', () => {
+      try { localStorage.setItem('portfolio-lang', sel.value); } catch(e) {}
+    });
   })();
 </script>
 

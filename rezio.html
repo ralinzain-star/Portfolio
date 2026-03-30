@@ -285,9 +285,9 @@
     .accordion-arrow { font-size: 22px; padding-top: 4px; flex-shrink: 0; }
 
     /* ── RESULTS ──────────────────────────────────── */
-    .results-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: flex-start; }
-    .results-img { width: 100%; border-radius: 20px; object-fit: cover; }
-    .results-copy { display: flex; flex-direction: column; gap: 12px; }
+    .results-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; }
+    .results-img { width: 100%; height: 100%; border-radius: 20px; object-fit: cover; }
+    .results-copy { display: flex; flex-direction: column; gap: 12px; justify-content: center; }
 
     /* ── NAV ANCHORS ──────────────────────────────────── */
     .nav-anchors {
@@ -297,6 +297,18 @@
       scrollbar-width: none;
     }
     .nav-anchors::-webkit-scrollbar { display: none; }
+    .nav-lang {
+      margin-left: 20px; flex-shrink: 0;
+      appearance: none; -webkit-appearance: none;
+      background: transparent; border: 1px solid rgba(43,37,32,0.2);
+      border-radius: 6px; padding: 3px 22px 3px 8px;
+      font-size: 11px; font-weight: 600; font-family: 'Barlow', sans-serif;
+      color: var(--muted); cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 6px center;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .nav-lang:hover { border-color: rgba(43,37,32,0.45); color: var(--text); }
     .nav-anchor {
       font-size: 11px; font-weight: 500;
       letter-spacing: 0.01em;
@@ -312,6 +324,14 @@
       color: var(--text);
       background: rgba(43,37,32,0.07);
     }
+    .intro-link {
+      color: var(--text); text-decoration: none;
+      font-size: 13px; font-family: 'IBM Plex Mono', monospace;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1px;
+      transition: border-color 0.15s;
+    }
+    .intro-link:hover { border-color: var(--text); }
 
     /* ── FOOTER ───────────────────────────────────── */
     .footer {
@@ -550,10 +570,11 @@
     #ppo-tip-product::before { content: 'Use case: '; }
     #ppo-tip-body { color: #fff; }
 
-    /* ── Stat Highlight ────────────────────────────── */
+    /* ── Stat Highlight · yellow marker pen ────────── */
     .stat-hi {
-      background: rgba(253,196,55,0.35);
-      padding: 1px 4px; border-radius: 4px; font-weight: 600;
+      background: #ffe033;
+      padding: 0px 3px 1px; border-radius: 2px; font-weight: 700;
+      color: #1a1208;
     }
 
     /* ── Where We Started Animation ─────────────────── */
@@ -592,7 +613,7 @@
     .wws-f3 { width: 65%; }
     .wws-f4 { width: 50%; }
     .wws-f5 { width: 40%; background: #d34c4c; }
-    /* Triggered by IntersectionObserver — play once, stop at result */
+    /* Triggered by IntersectionObserver · play once, stop at result */
     .wws-anim.triggered .wws-f1 { animation: wwsBarFill 0.7s 0.0s ease forwards; }
     .wws-anim.triggered .wws-f2 { animation: wwsBarFill 0.7s 0.7s ease forwards; }
     .wws-anim.triggered .wws-f3 { animation: wwsBarFill 0.7s 1.4s ease forwards; }
@@ -613,14 +634,569 @@
       100% { opacity: 1; }
     }
     .wws-note {
-      padding-top: 14px; border-top: 1px solid var(--border);
-      font-size: 11px; font-family: 'Noto Sans', sans-serif; color: var(--muted);
+      padding-top: 16px; margin-top: 6px; border-top: 1px solid var(--border);
+      display: flex; gap: 24px;
       opacity: 0;
     }
-    .wws-stat-num { font-family: 'IBM Plex Mono', monospace; color: var(--text); font-weight: 600; }
+    .wws-note-item {
+      display: flex; flex-direction: row; align-items: baseline; gap: 6px;
+      white-space: nowrap;
+    }
+    .wws-note-lbl {
+      font-size: 10px; font-family: 'IBM Plex Mono', monospace;
+      color: var(--muted); letter-spacing: 0.04em;
+    }
+    .wws-stat-num { font-family: 'IBM Plex Mono', monospace; color: var(--text); font-weight: 600; font-size: 14px; }
     @keyframes wwsNoteShow {
       0%   { opacity: 0; transform: translateY(4px); }
       100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Old Flow Section · story layout ───────────── */
+    .ofs-intro { max-width: 100%; }
+
+    /* Vertical story spine */
+    .ofs-story { display: flex; flex-direction: column; }
+    .ofs-chapter {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 0 20px;
+    }
+    /* Left: badge + connector line */
+    .ofs-spine {
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .ofs-badge {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--bg); border: 1.5px solid var(--border);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px; font-weight: 600; color: var(--muted);
+      z-index: 1;
+    }
+    .ofs-spine-line {
+      width: 1.5px; flex: 1; min-height: 20px;
+      background: var(--border); margin: 4px 0 0;
+    }
+
+    /* Right: content */
+    .ofs-body { padding-bottom: 36px; }
+    .ofs-chapter-title {
+      font-size: 15px; font-weight: 700; color: var(--text);
+      line-height: 1.3; padding-top: 6px; margin-bottom: 10px;
+    }
+    .ofs-chapter-story {
+      font-size: 13px; color: var(--text); line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .ofs-chapter-story.dim { color: var(--muted); }
+
+    /* ── s03b scroll-reveal ─────────────────────────── */
+    #s03b .ofs-intro {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    #s03b .ofs-intro.ofs-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    #s03b .ofs-chapter {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    #s03b .ofs-chapter.ofs-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    #s03b .ofs-badge {
+      transform: scale(0.65);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.12s;
+    }
+    #s03b .ofs-chapter.ofs-visible .ofs-badge {
+      transform: scale(1);
+    }
+    #s03b .ofs-spine-line {
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.7s ease 0.28s;
+    }
+    #s03b .ofs-chapter.ofs-visible .ofs-spine-line {
+      transform: scaleY(1);
+    }
+
+    /* Product structure diagram · flowchart style */
+    .prd-tree {
+      margin: 12px 0 40px;
+      overflow-x: auto;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .prd-tree.ofs-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .prd-tree-intro {
+      font-size: 13px;
+      color: var(--text);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    /* Canvas · warm gray like diagram whiteboard */
+    .prd-card {
+      background: var(--bg);
+      border-radius: 16px;
+      padding: 28px 24px 32px;
+      min-width: max-content;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    /* Stagger reveal · each direct child fades in left→right */
+    .prd-card > * {
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .prd-card.prd-anim > *:nth-child(1) { opacity:1; transform:none; transition-delay:0.05s; }
+    .prd-card.prd-anim > *:nth-child(2) { opacity:1; transform:none; transition-delay:0.22s; }
+    .prd-card.prd-anim > *:nth-child(3) { opacity:1; transform:none; transition-delay:0.38s; }
+    .prd-card.prd-anim > *:nth-child(4) { opacity:1; transform:none; transition-delay:0.50s; }
+    .prd-card.prd-anim > *:nth-child(5) { opacity:1; transform:none; transition-delay:0.65s; }
+    /* Dark node base */
+    .prd-node {
+      background: var(--text);
+      color: #fffefb;
+      border-radius: 12px;
+      padding: 12px 20px;
+      text-align: center;
+      flex-shrink: 0;
+      max-width: 150px;
+    }
+    .prd-node-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.45;
+      margin-bottom: 3px;
+    }
+    .prd-node-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+    /* Info node · same style as prd-field / ofs-kv */
+    .prd-node-info {
+      background: var(--bg-card);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 12px;
+      max-width: 150px;
+    }
+    .prd-node-info-title {
+      font-size: 9px;
+      font-weight: 400;
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .prd-node-info-sub {
+      font-size: 11px;
+      line-height: 1.4;
+      color: var(--text);
+    }
+    /* Horizontal connector · plain line */
+    .prd-hline {
+      width: 24px;
+      min-width: 24px;
+      height: 1px;
+      background: #b0a090;
+      flex-shrink: 0;
+      margin-top: 36px;
+    }
+    /* Right column · packages stacked, connected via left border as fork */
+    .prd-col-pkgs {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-left: 24px;
+      border-left: 1px solid #b0a090;
+      position: relative;
+      flex: 1;
+      min-width: 0;
+    }
+    /* Each package row */
+    .prd-pkg-h {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 12px;
+      position: relative;
+      min-width: 0;
+    }
+    /* Horizontal arm from fork to each package node */
+    .prd-pkg-h::before {
+      content: '';
+      position: absolute;
+      left: -24px;
+      top: 20px;
+      width: 24px;
+      height: 1px;
+      background: #b0a090;
+    }
+    /* Package node */
+    .prd-node-pkg {
+      border-radius: 10px;
+      padding: 10px 16px;
+      flex-shrink: 0;
+      max-width: 160px;
+    }
+    .prd-node-pkg-label {
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .prd-node-pkg-sub {
+      font-size: 11px;
+      opacity: 0.6;
+      line-height: 1.4;
+    }
+    /* Field pills beside each package node */
+    .prd-fields-h {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding-left: 12px;
+      border-left: 1px solid var(--border);
+      flex: 1;
+      min-width: 0;
+      justify-content: center;
+    }
+    .prd-field {
+      background: var(--bg-card);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 11px;
+      color: var(--text);
+      line-height: 1.4;
+      min-width: 0;
+    }
+    .prd-field-label {
+      font-size: 9px;
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .prd-field s {
+      opacity: 0.4;
+      font-size: 10px;
+    }
+
+    /* Diagram hint label */
+    .diagram-ref {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; font-family: 'IBM Plex Mono', monospace;
+      color: var(--muted); letter-spacing: 0.04em;
+      margin-bottom: 12px; opacity: 0.75;
+    }
+    .diagram-ref svg { flex-shrink: 0; }
+
+    /* Chapter screenshots */
+    .ofs-screenshot {
+      width: 100%; margin-bottom: 14px;
+      border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--rule);
+    }
+    .ofs-screenshot img {
+      width: 100%; display: block;
+    }
+
+    /* Edge-case scenario cards */
+    .edge-cases {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .edge-case {
+      background: var(--bg); border-radius: 10px;
+      padding: 14px 16px; display: flex; flex-direction: column; gap: 6px;
+    }
+    .edge-case-tag {
+      font-size: 9px; font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #9a7a3a; font-weight: 600;
+    }
+    .edge-case-title {
+      font-size: 13px; font-weight: 600; color: var(--text);
+    }
+    .edge-case-body {
+      font-size: 12px; color: var(--text); line-height: 1.6;
+    }
+    .edge-case-cost {
+      font-size: 11px; color: var(--muted); margin-top: 2px;
+    }
+    .edge-case-cost strong { color: var(--text); }
+
+    /* Overlap calendar visualization */
+    .overlap-section {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .overlap-head {
+      font-size: 9px; font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #c94c4c; font-weight: 600;
+    }
+    .overlap-title {
+      font-size: 13px; font-weight: 600; color: var(--text);
+    }
+    .overlap-body {
+      font-size: 12px; color: var(--text); line-height: 1.6;
+    }
+    .cal-wrap {
+      background: var(--bg); border-radius: 10px;
+      padding: 14px 16px; display: flex; flex-direction: column; gap: 6px;
+    }
+    .cal-days {
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+      margin-bottom: 4px;
+    }
+    .cal-day {
+      font-size: 9px; font-family: 'IBM Plex Mono', monospace;
+      text-align: center; color: var(--muted); letter-spacing: 0.04em;
+    }
+    .cal-day.warn { color: #c94c4c; font-weight: 700; }
+    .cal-bars { display: flex; flex-direction: column; gap: 5px; }
+    .cal-bar-row {
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+    }
+    .cal-block {
+      height: 22px; border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; letter-spacing: 0.04em;
+    }
+    .cal-block.rule-a { background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.35); color: #2563eb; font-weight: 600; }
+    .cal-block.rule-b { background: rgba(201,76,76,0.1); border: 1px solid rgba(201,76,76,0.45); color: #c94c4c; font-weight: 600; }
+    .cal-block.overlap-block {
+      background: repeating-linear-gradient(
+        45deg, rgba(201,76,76,0.15) 0px, rgba(201,76,76,0.15) 4px, rgba(201,76,76,0.04) 4px, rgba(201,76,76,0.04) 8px
+      );
+      border: 1.5px solid #c94c4c; color: #c94c4c; font-weight: 700;
+    }
+    .cal-block.empty { background: transparent; border: none; }
+    .cal-legend { display: flex; gap: 16px; margin-top: 4px; }
+    .cal-legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text); }
+    .cal-legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+    .cal-legend-dot.a { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.4); }
+    .cal-legend-dot.b { background: rgba(201,76,76,0.2); border: 1px solid rgba(201,76,76,0.5); }
+    .cal-legend-dot.overlap { background: repeating-linear-gradient(45deg, rgba(201,76,76,0.2) 0, rgba(201,76,76,0.2) 3px, transparent 3px, transparent 6px); border: 1px solid #c94c4c; }
+
+    /* Bound-eq 4-layer column reveal: head → number → item1 → item2, then next column */
+    .bound-factor > *,
+    .bound-op,
+    .bound-result-n,
+    .bound-result-unit,
+    .bound-result-item {
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity 0.38s ease, transform 0.38s ease;
+    }
+    /* Factor 1 · Package */
+    .bound-eq.bound-anim > :nth-child(1) > :nth-child(1) { opacity:1; transform:none; transition-delay:0.05s; }
+    .bound-eq.bound-anim > :nth-child(1) > :nth-child(2) { opacity:1; transform:none; transition-delay:0.18s; }
+    .bound-eq.bound-anim > :nth-child(1) > :nth-child(3) { opacity:1; transform:none; transition-delay:0.31s; }
+    .bound-eq.bound-anim > :nth-child(1) > :nth-child(4) { opacity:1; transform:none; transition-delay:0.44s; }
+    /* × */
+    .bound-eq.bound-anim > :nth-child(2) { opacity:1; transform:none; transition-delay:0.44s; }
+    /* Factor 2 · Price tier */
+    .bound-eq.bound-anim > :nth-child(3) > :nth-child(1) { opacity:1; transform:none; transition-delay:0.56s; }
+    .bound-eq.bound-anim > :nth-child(3) > :nth-child(2) { opacity:1; transform:none; transition-delay:0.69s; }
+    .bound-eq.bound-anim > :nth-child(3) > :nth-child(3) { opacity:1; transform:none; transition-delay:0.82s; }
+    .bound-eq.bound-anim > :nth-child(3) > :nth-child(4) { opacity:1; transform:none; transition-delay:0.95s; }
+    /* × */
+    .bound-eq.bound-anim > :nth-child(4) { opacity:1; transform:none; transition-delay:0.95s; }
+    /* Factor 3 · Time window */
+    .bound-eq.bound-anim > :nth-child(5) > :nth-child(1) { opacity:1; transform:none; transition-delay:1.07s; }
+    .bound-eq.bound-anim > :nth-child(5) > :nth-child(2) { opacity:1; transform:none; transition-delay:1.20s; }
+    .bound-eq.bound-anim > :nth-child(5) > :nth-child(3) { opacity:1; transform:none; transition-delay:1.33s; }
+    .bound-eq.bound-anim > :nth-child(5) > :nth-child(4) { opacity:1; transform:none; transition-delay:1.46s; }
+    /* = */
+    .bound-eq.bound-anim > :nth-child(6) { opacity:1; transform:none; transition-delay:1.46s; }
+    /* Result */
+    .bound-eq.bound-anim .bound-result-n    { opacity:1; transform:none; transition-delay:1.58s; }
+    .bound-eq.bound-anim .bound-result-unit { opacity:1; transform:none; transition-delay:1.68s; }
+    .bound-eq.bound-anim .bound-result-item:nth-child(1) { opacity:1; transform:none; transition-delay:1.78s; }
+    .bound-eq.bound-anim .bound-result-item:nth-child(2) { opacity:1; transform:none; transition-delay:1.88s; }
+    .bound-eq.bound-anim .bound-result-item:nth-child(3) { opacity:1; transform:none; transition-delay:1.98s; }
+    .bound-eq.bound-anim .bound-result-item:nth-child(4) { opacity:1; transform:none; transition-delay:2.08s; }
+
+    /* Bound-rules multiplication diagram */
+    .bound-eq-wrap {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 24px 28px 28px;
+      overflow-x: auto;
+      margin-top: 4px;
+    }
+    .bound-eq {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 12px;
+      min-width: 560px;
+    }
+    .bound-factor {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+    .bound-factor-head {
+      font-size: 9px;
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #7a7570;
+      margin-bottom: 2px;
+    }
+    .bound-factor-n {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .bound-factor-item {
+      font-size: 11px;
+      color: var(--text);
+      background: var(--bg-card);
+      border-radius: 6px;
+      padding: 5px 10px;
+      line-height: 1.4;
+    }
+    .bound-op {
+      font-size: 22px;
+      font-weight: 300;
+      color: #9a9590;
+      padding-top: 38px;
+      flex-shrink: 0;
+      align-self: flex-start;
+    }
+    .bound-result {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+      min-width: 90px;
+    }
+    .bound-result-n {
+      font-size: 40px;
+      font-weight: 800;
+      color: #c94c4c;
+      line-height: 1;
+    }
+    .bound-result-unit {
+      font-size: 11px;
+      color: #7a7570;
+      text-align: center;
+      line-height: 1.4;
+    }
+    .bound-result-items {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 100%;
+    }
+    .bound-result-item {
+      font-size: 10px;
+      color: #c94c4c;
+      background: rgba(201,76,76,0.1);
+      border-radius: 6px;
+      padding: 4px 8px;
+      line-height: 1.4;
+      border: 1px solid rgba(201,76,76,0.45);
+    }
+
+    /* Key/value mini-table */
+    .ofs-kv {
+      background: var(--bg); border-radius: 8px;
+      padding: 10px 14px; margin-bottom: 14px;
+      display: flex; flex-direction: column; gap: 5px;
+    }
+    .ofs-kv-row { display: flex; gap: 10px; font-size: 12px; }
+    .ofs-kv-key {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+      color: var(--muted); min-width: 80px; padding-top: 1px;
+      flex-shrink: 0;
+    }
+    .ofs-kv-val { color: var(--text); line-height: 1.5; }
+
+    /* Pain callout */
+    .ofs-pain {
+      background: rgba(211,76,76,0.05);
+      border-left: 3px solid rgba(211,76,76,0.4);
+      border-radius: 0 6px 6px 0;
+      padding: 8px 12px; margin-bottom: 8px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .ofs-pain-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: rgba(170,55,55,0.75);
+    }
+    .ofs-pain p { font-size: 12px; color: var(--text); line-height: 1.55; }
+
+    /* Speech quote */
+    .ofs-speech {
+      font-size: 12px; font-style: italic;
+      color: var(--muted); line-height: 1.6;
+      padding: 6px 0 6px 12px;
+      border-left: 2px solid rgba(211,76,76,0.25);
+      margin-bottom: 8px;
+    }
+
+    /* Non-linear path diagram */
+    .ofs-path-wrap {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 24px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+      line-height: 1.6; color: var(--text);
+    }
+    .ofs-path-row { display: flex; align-items: baseline; gap: 8px; }
+    .ofs-path-row + .ofs-path-row { margin-top: 3px; }
+    .ofs-path-indent { padding-left: 28px; }
+    .ofs-path-step-num { color: var(--muted); min-width: 18px; flex-shrink: 0; }
+    .ofs-path-step-label { color: var(--text); }
+    .ofs-path-note { color: var(--muted); font-size: 10px; padding-left: 6px; }
+    .ofs-path-back { color: rgba(180,60,60,0.75); padding-left: 4px; }
+    .ofs-path-warn { color: rgba(160,110,30,0.9); font-weight: 600; }
+    .ofs-path-arrow { color: var(--muted); }
+
+    /* Screenshot slot */
+    .ofs-screenshot-slot {
+      margin: 4px 0;
+    }
+    .ofs-screenshot-placeholder {
+      width: 100%; min-height: 200px; border-radius: 12px;
+      border: 1.5px dashed var(--border);
+      background: var(--bg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 8px;
+    }
+    .ofs-screenshot-icon { font-size: 28px; opacity: 0.3; }
+    .ofs-screenshot-label {
+      font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+      color: var(--muted); letter-spacing: 0.04em;
     }
 
     /* ── PPO Example Tag ───────────────────────────── */
@@ -652,7 +1228,7 @@
       .sec { padding: 20px 20px; }
       .sec-head { font-size: 20px; }
 
-      /* Section 01 & 02 — fix inline flex rows with fixed-width columns */
+      /* Section 01 & 02 · fix inline flex rows with fixed-width columns */
       .split-img-row {
         flex-direction: column !important;
         gap: 16px !important;
@@ -667,7 +1243,7 @@
         object-fit: cover;
       }
 
-      /* Bubble row — stack vertically */
+      /* Bubble row · stack vertically */
       .bubble-narrow-row {
         flex-direction: column;
         align-items: flex-end;
@@ -675,21 +1251,21 @@
       }
       .bubble-char { display: none; }
 
-      /* Persona table — horizontal scroll */
+      /* Persona table · horizontal scroll */
       .ptable-wrap {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
       }
       .ptable { min-width: 480px; }
 
-      /* Flow table — horizontal scroll */
+      /* Flow table · horizontal scroll */
       .flow-table-wrap {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
       }
       .flow-table { min-width: 480px; }
 
-      /* Preview intro row — stack */
+      /* Preview intro row · stack */
       .preview-intro-row {
         flex-direction: column;
         gap: 12px;
@@ -708,6 +1284,9 @@
 
       /* Title heading */
       .title-main-heading { font-size: 22px !important; }
+
+      /* Old flow steps · stack to 2 columns on mobile */
+      .ofs-steps { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -715,15 +1294,22 @@
 
 <!-- ── NAV ──────────────────────────────────────────── -->
 <nav class="nav">
-  <a class="nav-back" href="/">← Iris Hsieh</a>
+  <a class="nav-back" href="/#work">← Iris Hsieh</a>
   <div class="nav-anchors">
     <a class="nav-anchor" href="#intro" data-i18n="nav.intro">.Intro</a>
     <a class="nav-anchor" href="#s01" data-i18n="nav.s01">01.Achievement</a>
     <a class="nav-anchor" href="#s02" data-i18n="nav.s02">02.Context</a>
     <a class="nav-anchor" href="#s03" data-i18n="nav.s03">03.Investigate</a>
-    <a class="nav-anchor" href="#s04" data-i18n="nav.s04">04.Solution</a>
-    <a class="nav-anchor" href="#s05" data-i18n="nav.s05">05.Results</a>
+    <a class="nav-anchor" href="#s03b" data-i18n="nav.s03b">04.Diagnose</a>
+    <a class="nav-anchor" href="#s04" data-i18n="nav.s04">05.Solution</a>
+    <a class="nav-anchor" href="#s05" data-i18n="nav.s05">06.Results</a>
   </div>
+  <select class="nav-lang" id="nav-lang-select">
+    <option value="en">EN</option>
+    <option value="ja">JA</option>
+    <option value="zh-tw">繁</option>
+    <option value="zh-cn">简</option>
+  </select>
 </nav>
 
 <!-- ── TITLE BAR ────────────────────────────────────── -->
@@ -735,24 +1321,28 @@
 </div>
 
 <!-- ── INTRO ─────────────────────────────────────────── -->
-<div id="intro" class="sec cream" style="padding-top:0;padding-bottom:0;">
+<div id="intro" class="sec cream" style="padding-top:0;padding-bottom:48px;">
   <div class="sec-inner" style="max-width:100%;padding:0;">
     <div class="intro-card">
       <div class="intro-photo">
-        <img src="/rezio-airpos.jpg" alt="KKday Rezio AirPos terminal" />
+        <img src="/assets/rezio/rezio-cover.png" alt="KKday Rezio booking calendar interface" />
       </div>
       <div class="intro-copy">
         <div class="text-block">
           <p class="h3" data-i18n="intro.h3.product">Product overview</p>
-          <p class="body" data-i18n="intro.product.body">KKday Rezio is a B2B booking and operations platform for travel businesses, covering product listing, payments, and order management. It integrates with channels such as GetYourGuide, Viator, KKday, and Activity Japan to expand distribution and streamline operations.</p>
+          <p class="body" data-i18n="intro.product.body">KKday Rezio is a B2B booking and operations platform for travel businesses, covering product listing, payments, and order management. It integrates with channels such as GetYourGuide, Viator, KKday, and Activity Japan to expand distribution and streamline operations. The platform is trusted by a diverse range of premier global travel brands, including hospitality and leisure experts like Alpina Resorts and Holiday XP, as well as landmark nature destinations such as Izu Panorama Park, Jozankei Farm, and Otaru Canal.</p>
         </div>
         <div class="text-block">
           <p class="h3" data-i18n="intro.h3.role">My Role:</p>
-          <p class="body" data-i18n="intro.role.body">As the lead interaction designer, I redesigned the end-to-end product listing experience by restructuring the information architecture, rebuilding the design system, and aligning teams around research findings. The redesign reduced setup time by <span class="stat-hi">38% (45 → 28 min)</span>, achieved a SUS score of <span class="stat-hi">80.3</span>, and contributed to an estimated <span class="stat-hi">~30%</span> reduction in support ticket volume.</p>
+          <p class="body" data-i18n="intro.role.body">As the lead interaction designer, I redesigned the end-to-end product listing experience by restructuring the information architecture, rebuilding the design system, and aligning teams around research findings. The redesign reduced setup time by <span class="stat-hi">38% (45 → 28 min)</span>, achieved a <span class="stat-hi">SUS score of 80.3</span>, and drove a <span class="stat-hi">30%</span> reduction in support ticket volume.</p>
         </div>
         <div class="text-block">
           <p class="h3" data-i18n="intro.h3.time">Timeline</p>
           <p class="body">2024–2025</p>
+        </div>
+        <div class="text-block">
+          <p class="h3" data-i18n="intro.h3.website">Website</p>
+          <p class="body"><a href="https://rezio.io/ja/home" target="_blank" rel="noopener" class="intro-link">rezio.io ↗</a></p>
         </div>
       </div>
     </div>
@@ -769,7 +1359,7 @@
     </div>
     <div class="split-img-row" style="display:flex;gap:24px;align-items:flex-start;">
       <div style="flex-shrink:0;width:341px;border-radius:20px;overflow:hidden;align-self:stretch;position:relative;min-height:200px;">
-        <img src="https://www.figma.com/api/mcp/asset/8466f9ed-f4f5-4d15-9b40-2e55636a119e"
+        <img src="assets/rezio/IMG_6164 2.png"
           alt="KKday design award"
           style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:20px;" />
       </div>
@@ -777,9 +1367,9 @@
         <div class="text-block">
           <p class="h3" data-i18n="s01.h3.product">Product outcomes</p>
           <ol class="num-list">
-            <li data-i18n="s01.product.li1">Reduced setup time by 38% (45 → 28 min), enabling more independent onboarding without support intervention</li>
-            <li data-i18n="s01.product.li2">Achieved a SUS score of 80.3, indicating a significantly clearer and more learnable setup flow</li>
-            <li data-i18n="s01.product.li3">Contributed to an estimated ~30% reduction in support ticket volume without adding headcount</li>
+            <li data-i18n="s01.product.li1">Reduced setup time by <span class="stat-hi">38% (45 → 28 min)</span>, enabling more independent onboarding without support intervention</li>
+            <li data-i18n="s01.product.li2">Achieved a <span class="stat-hi">SUS score of 80.3</span>, indicating a significantly clearer and more learnable setup flow</li>
+            <li data-i18n="s01.product.li3">Reduced support ticket volume by <span class="stat-hi">30%</span> without adding headcount</li>
           </ol>
         </div>
         <div class="text-block">
@@ -833,18 +1423,25 @@
             </div>
           </div>
           <div class="wws-note">
-            <span class="wws-stat-num">60%</span> needed support &nbsp;·&nbsp; avg <span class="wws-stat-num">45 min</span>
+            <div class="wws-note-item">
+              <span class="wws-stat-num">60 %</span>
+              <span class="wws-note-lbl">needed support</span>
+            </div>
+            <div class="wws-note-item">
+              <span class="wws-stat-num">45 min</span>
+              <span class="wws-note-lbl">avg setup time</span>
+            </div>
           </div>
         </div>
       </div>
       <div style="flex:1;display:flex;flex-direction:column;gap:28px;justify-content:center;">
         <div class="text-block">
           <p class="h3" data-i18n="s02.h3.bg">Project Background:</p>
-          <p class="body" data-i18n="s02.bg.body">Originally built for a narrower user group, the product struggled as operational complexity grew. The "Getting Started" section alone drove 36% of all help article views, signaling deep setup friction. What was framed as a 10-minute setup routinely took 45-50 minutes, and 60% of users could not complete it without support.</p>
+          <p class="body" data-i18n="s02.bg.body">Originally built for a narrower user group, the product struggled as operational complexity grew. The "Getting Started" section alone drove <span class="stat-hi">36%</span> of all help article views, signaling deep setup friction. What was framed as a 10-minute setup routinely took <span class="stat-hi">45-50 minutes</span>, and <span class="stat-hi">60%</span> of users could not complete it without support.</p>
         </div>
         <div class="text-block">
           <p class="h3" data-i18n="s02.h3.goal">Our Goal:</p>
-          <p class="body" data-i18n="s02.goal.body">We redesigned the product listing experience to better match users' mental models by restructuring flows, rewriting labels, and surfacing guidance contextually, so users could complete setup with less confusion and less dependence on support.</p>
+          <p class="body" data-i18n="s02.goal.body">We redesigned the product listing experience to better match users' mental models by restructuring flows, rewriting labels, and surfacing guidance contextually, so users could complete setup with <span class="stat-hi">less confusion and less dependence on support</span>.</p>
         </div>
       </div>
     </div>
@@ -862,15 +1459,15 @@
     <!-- Preliminary Research -->
     <div class="text-block">
       <p class="h3" data-i18n="s03.h3.research">Preliminary research:</p>
-      <p class="body" data-i18n="s03.research.body1">We interviewed users and frontline staff to map how products were actually listed in practice. One charter business owner shared: "I miss the instant replies on LINE. With the new system, responses take much longer."</p>
-      <p class="body" data-i18n="s03.research.body2">The pattern was consistent across interviews — system complexity had created a dependency on real-time support that neither users nor the support team could sustain.</p>
+      <p class="body" data-i18n="s03.research.body1">We interviewed users and frontline staff to map how products were actually listed in practice. One charter vehicle operator shared: "I miss the instant replies on LINE. With the new system, responses take much longer."</p>
+      <p class="body" data-i18n="s03.research.body2">The pattern was consistent across interviews · system complexity had created a <span class="stat-hi">dependency on real-time support</span> that neither users nor the support team could sustain.</p>
     </div>
 
     <!-- Persona -->
     <div style="display:flex;flex-direction:column;gap:24px;">
       <div class="text-block">
         <p class="h3" data-i18n="s03.h3.persona">Persona:</p>
-        <p class="body" data-i18n="s03.persona.body">Research surfaced two distinct user types: Takeshi Tanaka, the business decision-maker optimizing for revenue and channel integration, and Mari Yamaguchi, the daily operator managing orders and reservations. Despite different goals, both hit the same wall — setup complexity that stalled progress and eroded trust in the system.</p>
+        <p class="body" data-i18n="s03.persona.body">Research surfaced two distinct user types: Takeshi Tanaka, the business decision-maker optimizing for revenue and channel integration, and Mari Yamaguchi, the daily operator managing orders and reservations. Despite different goals, both hit the same wall · setup complexity that stalled progress and eroded trust in the system.</p>
       </div>
       <div class="persona-wrap">
         <div class="ptable-wrap"><table class="ptable">
@@ -879,42 +1476,42 @@
               <td></td>
               <td>
                 <div class="p-persona-cell">
-                  <img class="p-avatar" src="https://www.figma.com/api/mcp/asset/48a36e13-7d6a-4f42-bccd-c3068fb1075b" alt="Takeshi" />
+                  <img class="p-avatar" src="assets/rezio/Rectangle 1.png" alt="Takeshi" />
                   <div>
-                    <div class="p-role-label">Decision Maker</div>
+                    <div class="p-role-label" data-i18n="s03.persona.role.dm">Decision Maker</div>
                     <div class="p-name">Takeshi Tanaka</div>
                   </div>
                 </div>
               </td>
               <td>
                 <div class="p-persona-cell">
-                  <img class="p-avatar" src="https://www.figma.com/api/mcp/asset/8c292409-5749-4aa1-9634-b98131738078" alt="Mari" />
+                  <img class="p-avatar" src="assets/rezio/Rectangle 2.png" alt="Mari" />
                   <div>
-                    <div class="p-role-label">Daily Operator</div>
+                    <div class="p-role-label" data-i18n="s03.persona.role.do">Daily Operator</div>
                     <div class="p-name">Mari Yamaguchi</div>
                   </div>
                 </div>
               </td>
             </tr>
             <tr class="p-data-row">
-              <td>Position</td>
-              <td>Manager / Business Owner</td>
-              <td>Operations Assistant / Reservation Agent</td>
+              <td data-i18n="s03.ptable.row.position">Position</td>
+              <td data-i18n="s03.ptable.t1.position">Manager / Business Owner</td>
+              <td data-i18n="s03.ptable.t2.position">Operations Assistant / Reservation Agent</td>
             </tr>
             <tr class="p-data-row">
-              <td>Key Focus</td>
-              <td>Revenue growth, operational efficiency, channel integration</td>
-              <td>Ease of use, error reduction, quick order access</td>
+              <td data-i18n="s03.ptable.row.keyfocus">Key Focus</td>
+              <td data-i18n="s03.ptable.t1.keyfocus">Revenue growth, operational efficiency, channel integration</td>
+              <td data-i18n="s03.ptable.t2.keyfocus">Ease of use, error reduction, quick order access</td>
             </tr>
             <tr class="p-data-row">
-              <td>Key Features</td>
-              <td>Multi-platform product management, sales reports</td>
-              <td>Order export, ticket redemption</td>
+              <td data-i18n="s03.ptable.row.keyfeatures">Key Features</td>
+              <td data-i18n="s03.ptable.t1.keyfeatures">Multi-platform product management, sales reports</td>
+              <td data-i18n="s03.ptable.t2.keyfeatures">Order export, ticket redemption</td>
             </tr>
             <tr class="p-data-row">
-              <td>Needs</td>
-              <td>Stable integration, enhanced brand image</td>
-              <td>Easy to learn, time-saving and efficient</td>
+              <td data-i18n="s03.ptable.row.needs">Needs</td>
+              <td data-i18n="s03.ptable.t1.needs">Stable integration, enhanced brand image</td>
+              <td data-i18n="s03.ptable.t2.needs">Easy to learn, time-saving and efficient</td>
             </tr>
           </tbody>
         </table></div>
@@ -925,7 +1522,7 @@
     <div style="display:flex;flex-direction:column;gap:24px;">
       <div class="text-block">
         <p class="h3" data-i18n="s03.h3.journey">User Journey Map:</p>
-        <p class="body" data-i18n="s03.journey.body">We mapped emotional engagement across six stages — from first adoption through potential cancellation. Mari's journey surfaced friction concentrated in daily task execution; Takeshi's revealed risk aversion at strategic decision points. Both paths converged on the same two critical drop-off zones.</p>
+        <p class="body" data-i18n="s03.journey.body">We mapped emotional engagement across six stages · from first adoption through potential cancellation. Mari's journey surfaced friction concentrated in daily task execution; Takeshi's revealed risk aversion at strategic decision points. Both paths converged on the same <span class="stat-hi">two critical drop-off zones</span>.</p>
       </div>
       <div class="cjm-outer">
       <div class="cjm-wrap">
@@ -933,7 +1530,7 @@
         <div class="cjm-chart">
           <div class="cjm-y-axis">
             <span class="cjm-y-emoji">😊</span>
-            <span class="cjm-y-text">Feelings &amp; Thoughts</span>
+            <span class="cjm-y-text" data-i18n="cjm.lbl.feelings">Feelings &amp; Thoughts</span>
             <span class="cjm-y-emoji">😞</span>
           </div>
           <div class="cjm-svg-wrap">
@@ -968,129 +1565,129 @@
             <!-- Quote bubbles (% of svg-wrap, aspect-ratio 900:240) -->
             <div class="cjm-bubble" data-stage="0" style="left:0%;top:44%;">
               <div class="cjm-speaker">Mari Yamaguchi</div>
-              "Bookings pile up and I'm scared of making mistakes."
+              <span data-i18n="cjm.bubble.s0">"Bookings pile up and I'm scared of making mistakes."</span>
             </div>
             <div class="cjm-bubble" data-stage="1" style="left:14%;top:56%;">
               <div class="cjm-speaker">Mari Yamaguchi</div>
-              "Finally someone's helping. I hope this fixes the chaos."
+              <span data-i18n="cjm.bubble.s1">"Finally someone's helping. I hope this fixes the chaos."</span>
             </div>
             <div class="cjm-bubble takeshi" data-stage="2" style="left:30%;top:0%;">
               <div class="cjm-speaker">Takeshi Tanaka</div>
-              "System aligned with our processes — promising start."
+              <span data-i18n="cjm.bubble.s2.dm">"System aligned with our processes · promising start."</span>
             </div>
             <div class="cjm-bubble" data-stage="2" style="left:30%;top:36%;">
               <div class="cjm-speaker">Mari Yamaguchi</div>
-              "First tour published. Step-by-step made it stress-free."
+              <span data-i18n="cjm.bubble.s2.do">"First tour published. Step-by-step made it stress-free."</span>
             </div>
             <div class="cjm-bubble takeshi" data-stage="3" style="left:46%;top:0%;">
               <div class="cjm-speaker">Takeshi Tanaka</div>
-              "Sales clear. I can adjust strategy without guesswork."
+              <span data-i18n="cjm.bubble.s3.dm">"Sales clear. I can adjust strategy without guesswork."</span>
             </div>
             <div class="cjm-bubble" data-stage="3" style="left:46%;top:36%;">
               <div class="cjm-speaker">Mari Yamaguchi</div>
-              "Automated emails save me daily. Far fewer mistakes."
+              <span data-i18n="cjm.bubble.s3.do">"Automated emails save me daily. Far fewer mistakes."</span>
             </div>
             <div class="cjm-bubble" data-stage="4" style="left:63%;top:38%;">
               <div class="cjm-speaker">Mari Yamaguchi</div>
-              "Fixing errors wasn't straightforward — always had to call support."
+              <span data-i18n="cjm.bubble.s4">"Fixing errors wasn't straightforward · always had to call support."</span>
             </div>
             <div class="cjm-bubble takeshi" data-stage="5" style="right:7%;top:51%;">
               <div class="cjm-speaker">Takeshi Tanaka</div>
-              "Impact was more limited than expected. Decided not to renew."
+              <span data-i18n="cjm.bubble.s5">"Impact was more limited than expected. Decided not to renew."</span>
             </div>
           </div>
         </div>
         <!-- Steps bar -->
         <div class="cjm-stages-row">
-          <div class="cjm-steps-lbl">Steps</div>
+          <div class="cjm-steps-lbl" data-i18n="cjm.lbl.steps">Steps</div>
           <div class="cjm-stages">
-            <div class="cjm-stage">Before using Rezio</div>
-            <div class="cjm-stage">Subscribed to Rezio</div>
-            <div class="cjm-stage">Uploading Itinerary</div>
-            <div class="cjm-stage">Selling Itinerary</div>
-            <div class="cjm-stage">Adjusting after Launch</div>
-            <div class="cjm-stage">Unsubscribing</div>
+            <div class="cjm-stage" data-i18n="cjm.stage.0">Before using Rezio</div>
+            <div class="cjm-stage" data-i18n="cjm.stage.1">Subscribed to Rezio</div>
+            <div class="cjm-stage" data-i18n="cjm.stage.2">Uploading Itinerary</div>
+            <div class="cjm-stage" data-i18n="cjm.stage.3">Selling Itinerary</div>
+            <div class="cjm-stage" data-i18n="cjm.stage.4">Adjusting after Launch</div>
+            <div class="cjm-stage" data-i18n="cjm.stage.5">Unsubscribing</div>
           </div>
         </div>
         <!-- Actions -->
         <div class="cjm-actions-wrap">
-          <div class="cjm-actions-lbl">Actions</div>
+          <div class="cjm-actions-lbl" data-i18n="cjm.lbl.actions">Actions</div>
           <div class="cjm-actions">
             <div class="cjm-col">
               <div class="cjm-persona-block">
-                <div class="cjm-persona-tag">Daily Operator<strong>Mari Yamaguchi</strong></div>
+                <div class="cjm-persona-tag"><span data-i18n="cjm.role.do">Daily Operator</span><strong>Mari Yamaguchi</strong></div>
                 <ul class="cjm-blist">
-                  <li>Consolidate bookings</li>
-                  <li>Track schedules</li>
-                  <li>Send emails manually</li>
+                  <li data-i18n="cjm.act.s0.1">Consolidate bookings</li>
+                  <li data-i18n="cjm.act.s0.2">Track schedules</li>
+                  <li data-i18n="cjm.act.s0.3">Send emails manually</li>
                 </ul>
               </div>
             </div>
             <div class="cjm-col">
               <div class="cjm-persona-block">
-                <div class="cjm-persona-tag">Daily Operator<strong>Mari Yamaguchi</strong></div>
+                <div class="cjm-persona-tag"><span data-i18n="cjm.role.do">Daily Operator</span><strong>Mari Yamaguchi</strong></div>
                 <ul class="cjm-blist">
-                  <li>Onboarding call</li>
-                  <li>Activate trial</li>
+                  <li data-i18n="cjm.act.s1.1">Onboarding call</li>
+                  <li data-i18n="cjm.act.s1.2">Activate trial</li>
                 </ul>
               </div>
             </div>
             <div class="cjm-col">
               <div class="cjm-persona-block">
-                <div class="cjm-persona-tag">Decision Maker<strong>Takeshi Tanaka</strong></div>
+                <div class="cjm-persona-tag"><span data-i18n="cjm.role.dm">Decision Maker</span><strong>Takeshi Tanaka</strong></div>
                 <ul class="cjm-blist">
-                  <li>Sign contract</li>
-                  <li>Begin training</li>
+                  <li data-i18n="cjm.act.s2.dm1">Sign contract</li>
+                  <li data-i18n="cjm.act.s2.dm2">Begin training</li>
                 </ul>
               </div>
               <div class="cjm-col-div"></div>
               <div class="cjm-persona-block">
-                <div class="cjm-persona-tag">Daily Operator<strong>Mari Yamaguchi</strong></div>
+                <div class="cjm-persona-tag"><span data-i18n="cjm.role.do">Daily Operator</span><strong>Mari Yamaguchi</strong></div>
                 <ul class="cjm-blist">
-                  <li>Publish first tour</li>
-                  <li>Align team on process</li>
+                  <li data-i18n="cjm.act.s2.do1">Publish first tour</li>
+                  <li data-i18n="cjm.act.s2.do2">Align team on process</li>
                 </ul>
               </div>
             </div>
             <div class="cjm-col">
               <div class="cjm-persona-block">
-                <div class="cjm-persona-tag">Decision Maker<strong>Takeshi Tanaka</strong></div>
+                <div class="cjm-persona-tag"><span data-i18n="cjm.role.dm">Decision Maker</span><strong>Takeshi Tanaka</strong></div>
                 <ul class="cjm-blist">
-                  <li>View sales reports</li>
-                  <li>Manage orders</li>
+                  <li data-i18n="cjm.act.s3.dm1">View sales reports</li>
+                  <li data-i18n="cjm.act.s3.dm2">Manage orders</li>
                 </ul>
               </div>
               <div class="cjm-col-div"></div>
               <div class="cjm-persona-block">
-                <div class="cjm-persona-tag">Daily Operator<strong>Mari Yamaguchi</strong></div>
+                <div class="cjm-persona-tag"><span data-i18n="cjm.role.do">Daily Operator</span><strong>Mari Yamaguchi</strong></div>
                 <ul class="cjm-blist">
-                  <li>Send vouchers</li>
-                  <li>Monitor capacities</li>
+                  <li data-i18n="cjm.act.s3.do1">Send vouchers</li>
+                  <li data-i18n="cjm.act.s3.do2">Monitor capacities</li>
                 </ul>
               </div>
             </div>
             <div class="cjm-col">
               <div class="cjm-persona-block">
-                <div class="cjm-persona-tag">Decision Maker<strong>Takeshi Tanaka</strong></div>
+                <div class="cjm-persona-tag"><span data-i18n="cjm.role.dm">Decision Maker</span><strong>Takeshi Tanaka</strong></div>
                 <ul class="cjm-blist">
-                  <li>Update pricing</li>
-                  <li>Adjust tours</li>
+                  <li data-i18n="cjm.act.s4.dm1">Update pricing</li>
+                  <li data-i18n="cjm.act.s4.dm2">Adjust tours</li>
                 </ul>
               </div>
               <div class="cjm-col-div"></div>
               <div class="cjm-persona-block">
-                <div class="cjm-persona-tag">Daily Operator<strong>Mari Yamaguchi</strong></div>
+                <div class="cjm-persona-tag"><span data-i18n="cjm.role.do">Daily Operator</span><strong>Mari Yamaguchi</strong></div>
                 <ul class="cjm-blist">
-                  <li>Handle invalid orders</li>
-                  <li>Contact support</li>
+                  <li data-i18n="cjm.act.s4.do1">Handle invalid orders</li>
+                  <li data-i18n="cjm.act.s4.do2">Contact support</li>
                 </ul>
               </div>
             </div>
             <div class="cjm-col">
               <div class="cjm-persona-block">
-                <div class="cjm-persona-tag">Decision Maker<strong>Takeshi Tanaka</strong></div>
+                <div class="cjm-persona-tag"><span data-i18n="cjm.role.dm">Decision Maker</span><strong>Takeshi Tanaka</strong></div>
                 <ul class="cjm-blist">
-                  <li>Decide not to renew</li>
+                  <li data-i18n="cjm.act.s5.1">Decide not to renew</li>
                 </ul>
               </div>
             </div>
@@ -1105,10 +1702,10 @@
       <div class="text-block">
         <p class="h3" data-i18n="s03.h3.pain">Pain Points &amp; Opportunities</p>
         <div class="body">
-          <p data-i18n="s03.pain.body">The journey maps identified 2 high-risk drop-off zones: initial onboarding and post-launch configuration changes. Both shared the same root cause — the system's structure didn't match users' mental models, leaving them unable to self-recover when they made errors.</p>
+          <p data-i18n="s03.pain.body">The journey maps highlighted two critical drop-off zones: initial onboarding and post-launch configuration. Both stages suffer from a fundamental misalignment between the system's architecture and the user's mental model. This gap prevents users from self-correcting when errors occur, leading to:</p>
           <ul class="bull-list" style="margin-top:8px;">
-            <li data-i18n="s03.pain.li1">Uncertainty about system value early on</li>
-            <li data-i18n="s03.pain.li2">Complexity and instability when updating live settings post-launch</li>
+            <li data-i18n="s03.pain.li1"><span class="stat-hi">Onboarding</span>: Early-stage churn driven by uncertainty over the system's value.</li>
+            <li data-i18n="s03.pain.li2"><span class="stat-hi">Post-Launch</span>: Friction and perceived instability when attempting to modify live settings.</li>
           </ul>
         </div>
       </div>
@@ -1117,7 +1714,7 @@
         <div class="ppo-chart">
           <div class="cjm-y-axis">
             <span class="cjm-y-emoji">😊</span>
-            <span class="cjm-y-text">Feelings &amp; Thoughts</span>
+            <span class="cjm-y-text" data-i18n="cjm.lbl.feelings">Feelings &amp; Thoughts</span>
             <span class="cjm-y-emoji">😞</span>
           </div>
           <div class="ppo-svg-wrap">
@@ -1142,58 +1739,58 @@
         </div>
         <!-- Stage labels (reuse CJM classes) -->
         <div class="cjm-stages-row">
-          <div class="cjm-steps-lbl">Steps</div>
+          <div class="cjm-steps-lbl" data-i18n="cjm.lbl.steps">Steps</div>
           <div class="cjm-stages">
-            <div class="cjm-stage">Before using Rezio</div>
-            <div class="cjm-stage">Subscribed to Rezio</div>
-            <div class="cjm-stage">Uploading Itinerary</div>
-            <div class="cjm-stage">Selling Itinerary</div>
-            <div class="cjm-stage">Adjusting after Launch</div>
-            <div class="cjm-stage">Unsubscribing</div>
+            <div class="cjm-stage" data-i18n="cjm.stage.0">Before using Rezio</div>
+            <div class="cjm-stage" data-i18n="cjm.stage.1">Subscribed to Rezio</div>
+            <div class="cjm-stage" data-i18n="cjm.stage.2">Uploading Itinerary</div>
+            <div class="cjm-stage" data-i18n="cjm.stage.3">Selling Itinerary</div>
+            <div class="cjm-stage" data-i18n="cjm.stage.4">Adjusting after Launch</div>
+            <div class="cjm-stage" data-i18n="cjm.stage.5">Unsubscribing</div>
           </div>
         </div>
         <!-- Pain Points row -->
         <div class="ppo-row">
-          <div class="ppo-row-lbl"><span class="ppo-row-icon">♥</span>Pain Points</div>
+          <div class="ppo-row-lbl"><span class="ppo-row-icon">♥</span><span data-i18n="ppo.lbl.pain">Pain Points</span></div>
           <div class="ppo-row-body">
             <div class="ppo-s0"></div>
             <div class="ppo-z1">
               <ul class="ppo-list">
-                <li><strong>Onboarding uncertainty</strong> — Users were unsure whether the system could truly resolve their existing operational chaos.</li>
-                <li><strong>High onboarding cost</strong> — Significant time and internal training were required.</li>
+                <li data-i18n="ppo.pain.z1.1"><strong>Onboarding uncertainty</strong> · Users were unsure whether the system could truly resolve their existing operational chaos.</li>
+                <li data-i18n="ppo.pain.z1.2"><strong>High onboarding cost</strong> · Significant time and internal training were required.</li>
               </ul>
             </div>
             <div class="ppo-gap-col"></div>
             <div class="ppo-z2">
               <ul class="ppo-list">
-                <li><strong>Chain reactions after updates</strong> — Complicated update processes frequently triggered downstream errors.</li>
-                <li><strong>Heavy reliance on support</strong> — Workflows for updating pricing or tour details were too complex, making it easy for staff to make mistakes.</li>
+                <li data-i18n="ppo.pain.z2.1"><strong>Chain reactions after updates</strong> · Complicated update processes frequently triggered downstream errors.</li>
+                <li data-i18n="ppo.pain.z2.2"><strong>Heavy reliance on support</strong> · Workflows for updating pricing or tour details were too complex, making it easy for staff to make mistakes.</li>
               </ul>
             </div>
           </div>
         </div>
         <!-- Opportunities row -->
         <div class="ppo-row">
-          <div class="ppo-row-lbl"><span class="ppo-row-icon">✦</span>Ideation</div>
+          <div class="ppo-row-lbl"><span class="ppo-row-icon">✦</span><span data-i18n="ppo.lbl.ideation">Ideation</span></div>
           <div class="ppo-row-body">
             <div class="ppo-s0"></div>
             <div class="ppo-z1">
               <ul class="ppo-list">
-                <li class="ppo-ideation-li" data-tip-product="Shopify" data-tip-domain="shopify.com" data-tip="Setup checklist surfaces only 3 core tasks at launch — hiding complexity behind progressive disclosure.">Build early trust and reduce onboarding friction <span class="ppo-eg-tag">Example</span></li>
-                <li class="ppo-ideation-li" data-tip-product="HubSpot" data-tip-domain="hubspot.com" data-tip="Asks 'What brings you here?' at sign-up and tailors the entire onboarding path to the user's role.">Role-based interactive onboarding flows <span class="ppo-eg-tag">Example</span></li>
-                <li class="ppo-ideation-li" data-tip-product="Notion" data-tip-domain="notion.so" data-tip="Template gallery lets users start from real examples, dramatically reducing blank-page anxiety and time-to-value.">Example templates, Success Showcases <span class="ppo-eg-tag">Example</span></li>
-                <li class="ppo-ideation-li" data-tip-product="Linear" data-tip-domain="linear.app" data-tip="Persistent progress checklist guides new teams through workspace setup, making completion feel achievable.">Guided setup checklist <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-i18n="ppo.idea.z1.1" data-tip-product="Shopify" data-tip-domain="shopify.com" data-tip="Setup checklist surfaces only 3 core tasks at launch · hiding complexity behind progressive disclosure.">Build early trust and reduce onboarding friction <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-i18n="ppo.idea.z1.2" data-tip-product="HubSpot" data-tip-domain="hubspot.com" data-tip="Asks 'What brings you here?' at sign-up and tailors the entire onboarding path to the user's role.">Role-based interactive onboarding flows <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-i18n="ppo.idea.z1.3" data-tip-product="Notion" data-tip-domain="notion.so" data-tip="Template gallery lets users start from real examples, dramatically reducing blank-page anxiety and time-to-value.">Example templates, Success Showcases <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-i18n="ppo.idea.z1.4" data-tip-product="Linear" data-tip-domain="linear.app" data-tip="Persistent progress checklist guides new teams through workspace setup, making completion feel achievable.">Guided setup checklist <span class="ppo-eg-tag">Example</span></li>
               </ul>
             </div>
             <div class="ppo-gap-col"></div>
             <div class="ppo-z2">
               <ul class="ppo-list">
-                <li class="ppo-ideation-li" data-tip-product="Shopify" data-tip-domain="shopify.com" data-tip="'Save as draft' vs 'Publish' separates editing from going live, preventing accidental changes to active listings.">Simplify update workflows and reduce errors <span class="ppo-eg-tag">Example</span></li>
-                <li class="ppo-ideation-li" data-tip-product="Webflow" data-tip-domain="webflow.com" data-tip="Live preview mode shows a split view so users verify exactly how changes look before committing.">Preview-before-publish <span class="ppo-eg-tag">Example</span></li>
-                <li class="ppo-ideation-li" data-tip-product="Stripe" data-tip-domain="stripe.com" data-tip="Real-time field validation catches mistakes instantly and surfaces blockers before form submission.">Auto-validation and error detection <span class="ppo-eg-tag">Example</span></li>
-                <li class="ppo-ideation-li" data-tip-product="Figma" data-tip-domain="figma.com" data-tip="Named version history lets teams experiment freely, knowing any saved state can be restored in one click.">Version history with rollback <span class="ppo-eg-tag">Example</span></li>
-                <li class="ppo-ideation-li" data-tip-product="Intercom" data-tip-domain="intercom.com" data-tip="Contextual help panel surfaces relevant docs based on the current page, reducing support volume without UI clutter.">Self-serve help panel with step-by-step guidance and FAQs <span class="ppo-eg-tag">Example</span></li>
-                <li class="ppo-ideation-li" data-tip-product="Notion AI" data-tip-domain="notion.so" data-tip="Suggests content and next actions based on cursor context, turning the blank-page problem into a guided start.">AI-powered assistant <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-i18n="ppo.idea.z2.1" data-tip-product="Shopify" data-tip-domain="shopify.com" data-tip="'Save as draft' vs 'Publish' separates editing from going live, preventing accidental changes to active listings.">Simplify update workflows and reduce errors <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-i18n="ppo.idea.z2.2" data-tip-product="Webflow" data-tip-domain="webflow.com" data-tip="Live preview mode shows a split view so users verify exactly how changes look before committing.">Preview-before-publish <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-i18n="ppo.idea.z2.3" data-tip-product="Stripe" data-tip-domain="stripe.com" data-tip="Real-time field validation catches mistakes instantly and surfaces blockers before form submission.">Auto-validation and error detection <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-i18n="ppo.idea.z2.4" data-tip-product="Figma" data-tip-domain="figma.com" data-tip="Named version history lets teams experiment freely, knowing any saved state can be restored in one click.">Version history with rollback <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-i18n="ppo.idea.z2.5" data-tip-product="Intercom" data-tip-domain="intercom.com" data-tip="Contextual help panel surfaces relevant docs based on the current page, reducing support volume without UI clutter.">Self-serve help panel with step-by-step guidance and FAQs <span class="ppo-eg-tag">Example</span></li>
+                <li class="ppo-ideation-li" data-i18n="ppo.idea.z2.6" data-tip-product="Notion AI" data-tip-domain="notion.so" data-tip="Suggests content and next actions based on cursor context, turning the blank-page problem into a guided start.">AI-powered assistant <span class="ppo-eg-tag">Example</span></li>
               </ul>
             </div>
           </div>
@@ -1201,51 +1798,315 @@
       </div></div>
     </div>
 
-    <!-- Revealing Gaps -->
+  </div>
+</div>
+
+<!-- ── OLD FLOW + INVESTIGATION ──────────────────────── -->
+<div id="s03b" class="sec" style="background:#fffefb;padding-top:48px;padding-bottom:64px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">04.</span>
+      <span class="sec-title" data-i18n="s03b.title">Diagnosing the Core Flow</span>
+    </div>
+
+    <!-- Opening + diagram intro · one unified text block -->
+    <div class="text-block ofs-intro">
+      <p class="body" data-i18n="s03b.context">Based on our journey mapping, we have prioritized the Core Product Listing Flow for this system revamp. By focusing on this critical touchpoint, we aim to <span class="stat-hi">bridge the gap between the system architecture and the user's mental model</span>, ensuring a foundation where users can navigate and self-correct with confidence.</p>
+      <p class="body" data-i18n="s03b.intro">We traced how a jewelry workshop listed their Silver Clay Ring experience on Rezio for the first time. What looked like a straightforward 4-step flow revealed itself, step by step, as something far more tangled.</p>
+      <p class="body" data-i18n="s03b.prd.intro">Through extensive user interviews with tour operators and workshop organizers, a consistent pattern emerged: long before adopting a formal booking system, most merchants had already developed their own highly structured way of organizing product data.<br><br>This diagram captures the "merchant logic" identified during those field visits. Taking a "Silver Clay Ring Workshop" as an example, it illustrates how merchants must manage multi-layered information in their daily operations · from product-level details like cancellation policies, to specific package-level constraints such as tiered pricing, minimum quantities, or age limits. These intricate structures represent the authentic, yet demanding, operational reality that businesses manage every day.</p>
+    </div>
+
+    <!-- Product structure diagram -->
+    <div class="prd-tree">
+      <div class="prd-card">
+        <!-- Root product node -->
+        <div class="prd-node">
+          <div class="prd-node-tag" data-i18n="s03b.prd.tag">Product</div>
+          <div class="prd-node-name" data-i18n="s03b.kv.product">Silver Clay Ring Workshop</div>
+        </div>
+        <!-- Horizontal arrow → info node -->
+        <div class="prd-hline"></div>
+        <!-- Product-level info node -->
+        <div class="prd-node prd-node-info">
+          <div class="prd-node-info-title" data-i18n="s03b.prd.info.title">Product-level info</div>
+          <div class="prd-node-info-sub" data-i18n="s03b.prd.meta">Images, description, merchant, reviews, cancellation policy</div>
+        </div>
+        <!-- Horizontal connector → fork -->
+        <div class="prd-hline" style="width:40px;"></div>
+        <!-- Package columns · left border acts as fork bar, ::before arms reach each pkg -->
+        <div class="prd-col-pkgs">
+          <!-- Package A -->
+          <div class="prd-pkg-h">
+            <div class="prd-node prd-node-pkg">
+              <div class="prd-node-pkg-label" data-i18n="s03b.prd.pkg.a.label">Package A</div>
+              <div class="prd-node-pkg-sub" data-i18n="s03b.prd.pkg.a.name">Gemstone silver clay ring hand-making experience｜Single registration</div>
+            </div>
+            <div class="prd-fields-h">
+              <div class="prd-field">NT$2,050 / person</div>
+              <div class="prd-field">Min qty: 1</div>
+              <div class="prd-field">Available from: 2026-03-24</div>
+              <div class="prd-field">
+                <span class="prd-field-label" data-i18n="s03b.prd.pkg.rules">Package-level rules</span>
+                <span data-i18n="s03b.prd.pkg.a.rule">Space limited · 12+ only</span>
+              </div>
+            </div>
+          </div>
+          <!-- Package B -->
+          <div class="prd-pkg-h">
+            <div class="prd-node prd-node-pkg">
+              <div class="prd-node-pkg-label" data-i18n="s03b.prd.pkg.b.label">Package B</div>
+              <div class="prd-node-pkg-sub" data-i18n="s03b.prd.pkg.b.name">Gemstone silver clay ring hand-making experience｜10% discount for two persons</div>
+            </div>
+            <div class="prd-fields-h">
+              <div class="prd-field"><s>NT$1,880</s> → NT$1,743 / person</div>
+              <div class="prd-field">Min qty: 2</div>
+              <div class="prd-field">Available from: 2026-03-24</div>
+              <div class="prd-field">
+                <span class="prd-field-label" data-i18n="s03b.prd.pkg.rules">Package-level rules</span>
+                <span data-i18n="s03b.prd.pkg.b.rule">Must arrive together</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vertical story -->
+    <div class="ofs-story">
+
+      <!-- ① Initial Setup -->
+      <div class="ofs-chapter">
+        <div class="ofs-spine">
+          <div class="ofs-badge">01</div>
+          <div class="ofs-spine-line"></div>
+        </div>
+        <div class="ofs-body">
+          <div class="ofs-chapter-title" data-i18n="s03b.step1.title">Package Setup</div>
+          <p class="ofs-chapter-story" data-i18n="s03b.story1">The "Package" tab defines each sales option · name, description, and validity period.</p>
+          <div class="ofs-kv">
+            <div class="ofs-kv-row"><span class="ofs-kv-key" data-i18n="s03b.kv.key.pkg">Package name</span><span class="ofs-kv-val" data-i18n="s03b.kv.pkg">Gemstone silver clay ring hand-making experience | Single registration</span></div>
+            <div class="ofs-kv-row"><span class="ofs-kv-key" data-i18n="s03b.kv.key.validity">Validity</span><span class="ofs-kv-val" data-i18n="s03b.kv.validity">Valid on the selected date only, expires after that</span></div>
+            <div class="ofs-kv-row"><span class="ofs-kv-key" data-i18n="s03b.kv.key.sales.switch">Sales switch</span><span class="ofs-kv-val" data-i18n="s03b.kv.sales.switch">On</span></div>
+          </div>
+          <div class="ofs-screenshot"><img src="assets/rezio/rzio-step1.png" alt="Rezio – Package tab"></div>
+                  </div>
+      </div>
+
+      <!-- ② Sales Options & Pricing -->
+      <div class="ofs-chapter pain">
+        <div class="ofs-spine">
+          <div class="ofs-badge">02</div>
+          <div class="ofs-spine-line"></div>
+        </div>
+        <div class="ofs-body">
+          <div class="ofs-chapter-title" data-i18n="s03b.step2.title">Listing Settings</div>
+          <p class="ofs-chapter-story" data-i18n="s03b.story2">After saving a package, the next required configuration lives on the "Listing Settings" tab · separated by four intervening tabs: Taxes, Cancellation, Deposit, and Booking. Here, confirmation method, maximum bookable days, payment options, and voucher settings are configured. These all apply to the entire product, not the package just saved.</p>
+          <div class="ofs-kv">
+            <div class="ofs-kv-row"><span class="ofs-kv-key" data-i18n="s03b.kv.key.confirmation">Confirmation</span><span class="ofs-kv-val" data-i18n="s03b.kv.confirmation">Instant confirmation</span></div>
+            <div class="ofs-kv-row"><span class="ofs-kv-key" data-i18n="s03b.kv.key.maxbook">Max bookable</span><span class="ofs-kv-val" data-i18n="s03b.kv.maxbook">Unlimited days</span></div>
+            <div class="ofs-kv-row"><span class="ofs-kv-key" data-i18n="s03b.kv.key.payment">Payment</span><span class="ofs-kv-val" data-i18n="s03b.kv.payment">ATM / Bank Transfer</span></div>
+            <div class="ofs-kv-row"><span class="ofs-kv-key" data-i18n="s03b.kv.key.voucher">Voucher</span><span class="ofs-kv-val" data-i18n="s03b.kv.voucher">Rezio Voucher · redeemable 1×</span></div>
+          </div>
+          <div class="ofs-screenshot"><img src="assets/rezio/rzio-step2.png" alt="Rezio – Listing Settings tab"></div>
+          <div class="ofs-pain">
+            <span class="ofs-pain-tag" data-i18n="s03b.pain1.tag">Pain Point</span>
+            <p data-i18n="s03b.pain1.body">Nothing in the interface signals that the context has changed. No breadcrumb, no label, no scope indicator · the Listing Settings tab carries the same visual weight as the Package tab. Merchants working sequentially assume each step still relates to the package they were just editing.</p>
+          </div>
+          <div class="ofs-pain">
+            <span class="ofs-pain-tag" data-i18n="s03b.pain2.tag">Pain Point</span>
+            <p data-i18n="s03b.pain2.body">These product-level settings · voucher configuration, confirmation windows, payment methods · surface mid-flow between package steps, with no hierarchy or grouping to communicate the scope change. It is a silent level-switch with no off-ramp.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ③ Configure Availability -->
+      <div class="ofs-chapter pain">
+        <div class="ofs-spine">
+          <div class="ofs-badge">03</div>
+          <div class="ofs-spine-line"></div>
+        </div>
+        <div class="ofs-body">
+          <div class="ofs-chapter-title" data-i18n="s03b.step3.title">Set Price</div>
+          <p class="ofs-chapter-story" data-i18n="s03b.story3">The "Set Price" tab requires two sub-steps: select a pre-built pricing rule (Step 1), then define when that rule applies by choosing a binding type and schedule (Step 2). Together with the package defined earlier, these three pieces form one sellable entry · but the system never frames it that way.</p>
+          <div class="ofs-kv">
+            <div class="ofs-kv-row"><span class="ofs-kv-key" data-i18n="s03b.kv.key.pricingrule">Pricing rule</span><span class="ofs-kv-val" data-i18n="s03b.kv.pricingrule">Price for Single · NT$2,050 / person</span></div>
+            <div class="ofs-kv-row"><span class="ofs-kv-key" data-i18n="s03b.kv.key.bindtype">Binding type</span><span class="ofs-kv-val" data-i18n="s03b.kv.bindtype">Weekly Repeat</span></div>
+            <div class="ofs-kv-row"><span class="ofs-kv-key" data-i18n="s03b.kv.key.schedule">Schedule</span><span class="ofs-kv-val" data-i18n="s03b.kv.schedule">Mon – Sun · 10:00 – 18:00</span></div>
+          </div>
+          <div class="ofs-screenshot"><img src="assets/rezio/rzio-step3.png" alt="Rezio – Set Price tab"></div>
+          <div class="ofs-pain">
+            <span class="ofs-pain-tag" data-i18n="s03b.pain3.tag">Pain Point</span>
+            <p data-i18n="s03b.pain3.body">The three components of a sellable entry · Package, Price Rule, Time Window · are each defined in completely different places. Pricing rules must be pre-created in a global settings area before they can be selected here. If the right rule doesn't exist, the merchant must leave this screen, navigate elsewhere to create it, and return. The system never surfaces this dependency, and provides no scaffolding for mentally assembling all three pieces.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ④ Available Quantity -->
+      <div class="ofs-chapter pain">
+        <div class="ofs-spine">
+          <div class="ofs-badge">04</div>
+          <!-- no line · last step -->
+        </div>
+        <div class="ofs-body">
+          <div class="ofs-chapter-title" data-i18n="s03b.step4.title">Bound Rules</div>
+          <p class="ofs-chapter-story" data-i18n="s03b.story4">The example below shows the first bound rule being created · one package, one pricing rule, one time window. But if a merchant wants weekday and weekend pricing for even a single package, that's already two separate rules. Add a second package, and it becomes four. Each must be created, configured, and bound individually, with no way to duplicate or batch-apply.</p>
+          <div class="ofs-kv">
+            <div class="ofs-kv-row"><span class="ofs-kv-key" data-i18n="s03b.kv.key.bound.pkg">Package</span><span class="ofs-kv-val" data-i18n="s03b.kv.bound.pkg">Single registration · Per Head · Adult</span></div>
+            <div class="ofs-kv-row"><span class="ofs-kv-key" data-i18n="s03b.kv.key.bound.price">Selling price</span><span class="ofs-kv-val" data-i18n="s03b.kv.bound.price">NT$1,880</span></div>
+            <div class="ofs-kv-row"><span class="ofs-kv-key" data-i18n="s03b.kv.key.bound.apply">Applied to</span><span class="ofs-kv-val" data-i18n="s03b.kv.bound.apply">Weekly Repeat · Mon / Tue / Wed / Thu / Fri / Sat / Sun</span></div>
+          </div>
+          <div class="ofs-kv">
+            <div class="ofs-kv-row"><span class="ofs-kv-key" data-i18n="s03b.kv.key.bound.pkg">Package</span><span class="ofs-kv-val" data-i18n="s03b.kv.bound.pkg2">Single registration · Per Head · Adult</span></div>
+            <div class="ofs-kv-row"><span class="ofs-kv-key" data-i18n="s03b.kv.key.bound.price">Selling price</span><span class="ofs-kv-val" data-i18n="s03b.kv.bound.price2">NT$2,050</span></div>
+            <div class="ofs-kv-row"><span class="ofs-kv-key" data-i18n="s03b.kv.key.bound.apply">Applied to</span><span class="ofs-kv-val" data-i18n="s03b.kv.bound.apply2">Weekly Repeat · Mon / Tue / Wed / Thu / Fri / Sat / Sun</span></div>
+          </div>
+          <div class="ofs-screenshot"><img src="assets/rezio/rzio-step4.png" alt="Rezio – Bound Rules table"></div>
+          <div class="ofs-pain">
+            <span class="ofs-pain-tag" data-i18n="s03b.pain4.tag">Pain Point</span>
+            <p data-i18n="s03b.pain4.body">Any differential pricing · by day of week, season, or identity type · multiplies the number of rules exponentially: N packages × M price tiers × T time windows = N×M×T bound rules to create, configure, and verify individually. There is no grouped editing, no bulk action, and no indication of this complexity before the merchant begins. This is the single most operationally damaging friction point in the legacy flow.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /ofs-story -->
+
+
+    <!-- Screenshot placeholder -->
     <div class="text-block">
-      <p class="h3" data-i18n="s04.h3.gaps">Revealing Gaps, Defining Priorities:</p>
-      <p class="body" data-i18n="s04.gaps.body">Card sorting exposed a fundamental mismatch between users' mental models and the product's information architecture. Usability testing quantified the impact: several core tasks logged completion rates below 50% and error rates above 2 per session — the strongest signal for where to direct the redesign.</p>
+      <p class="h3" data-i18n="s04.h3.gaps">Why It Feels So Counter-Intuitive</p>
+      <p class="body" data-i18n="s04.gaps.body">The four steps above expose a system built around internal data relationships rather than user intent. Merchants think in a natural sequence: what am I selling, when, and at what price. The system, however, treats these as independent entities · packages, pricing rules, and time bindings · that must be configured separately and connected through an abstract relational model that is never explained to the user.<br><br>The result is a flow that constantly demands decisions before the user has the context to make them: committing to a price before knowing the schedule, configuring a package while being silently rerouted to product-level settings, and constructing "bound rules" with no indication of how many are needed or how they relate to each other.</p>
+      <p class="body" data-i18n="s04.gaps.example">Say the Silver Clay Ring Workshop wants to run weekday and weekend pricing · that's <span class="stat-hi">2 packages × 2 price tiers × 2 time windows = 4 bound rules</span> to create manually, one for every combination. There is no batch apply, no shortcut, and no indication this multiplication is even required.</p>
+    </div>
+
+    <!-- Bound-rules multiplication diagram -->
+    <div class="bound-eq-wrap">
+      <div class="bound-eq">
+        <!-- Factor 1: Packages -->
+        <div class="bound-factor">
+          <div class="bound-factor-head">Package</div>
+          <div class="bound-factor-n">2</div>
+          <div class="bound-factor-item">Package A · Single registration</div>
+          <div class="bound-factor-item">Package B · Paired (10% off)</div>
+        </div>
+        <div class="bound-op">×</div>
+        <!-- Factor 2: Price tiers -->
+        <div class="bound-factor">
+          <div class="bound-factor-head">Price tier</div>
+          <div class="bound-factor-n">2</div>
+          <div class="bound-factor-item">Weekday · NT$2,050</div>
+          <div class="bound-factor-item">Weekend · NT$2,300</div>
+        </div>
+        <div class="bound-op">×</div>
+        <!-- Factor 3: Time windows -->
+        <div class="bound-factor">
+          <div class="bound-factor-head">Time window</div>
+          <div class="bound-factor-n">2</div>
+          <div class="bound-factor-item">Mon – Fri · 10:00 – 12:00</div>
+          <div class="bound-factor-item">Sat – Sun · 10:00 – 12:00</div>
+        </div>
+        <div class="bound-op">=</div>
+        <!-- Result -->
+        <div class="bound-result">
+          <div class="bound-result-n">4</div>
+          <div class="bound-result-unit">bound rules<br>to create</div>
+          <div class="bound-result-items">
+            <div class="bound-result-item">Pkg A · Weekday</div>
+            <div class="bound-result-item">Pkg A · Weekend</div>
+            <div class="bound-result-item">Pkg B · Weekday</div>
+            <div class="bound-result-item">Pkg B · Weekend</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Time overlap · critical system behavior -->
+    <div class="overlap-section">
+      <div class="overlap-head">Critical System Behavior</div>
+      <div class="overlap-title">The system flags the overlap · but makes you debug it rule by rule.</div>
+      <p class="overlap-body">When two bound rules share the same time window, saving shows which dates are overlapping. But the error stops there. There is no indication of which rules are in conflict, no direct link to the offending entries, and no suggested fix. The merchant has to manually scan every rule one by one to find the pair causing the collision · then figure out on their own how to resolve it.</p>
+      <div class="cal-wrap">
+        <div class="cal-days">
+          <div class="cal-day">MON</div>
+          <div class="cal-day">TUE</div>
+          <div class="cal-day">WED</div>
+          <div class="cal-day">THU</div>
+          <div class="cal-day">FRI</div>
+          <div class="cal-day warn">SAT</div>
+          <div class="cal-day warn">SUN</div>
+        </div>
+        <div class="cal-bars">
+          <!-- Row 1: Rule A · Weekly Repeat, all 7 days -->
+          <div class="cal-bar-row">
+            <div class="cal-block rule-a">A</div>
+            <div class="cal-block rule-a">A</div>
+            <div class="cal-block rule-a">A</div>
+            <div class="cal-block rule-a">A</div>
+            <div class="cal-block rule-a">A</div>
+            <div class="cal-block rule-a">A</div>
+            <div class="cal-block rule-a">A</div>
+          </div>
+          <!-- Row 2: Rule B · Weekend only -->
+          <div class="cal-bar-row">
+            <div class="cal-block empty"></div>
+            <div class="cal-block empty"></div>
+            <div class="cal-block empty"></div>
+            <div class="cal-block empty"></div>
+            <div class="cal-block empty"></div>
+            <div class="cal-block rule-b">B</div>
+            <div class="cal-block rule-b">B</div>
+          </div>
+          <!-- Row 3: Overlap marker on Sat & Sun -->
+          <div class="cal-bar-row">
+            <div class="cal-block empty"></div>
+            <div class="cal-block empty"></div>
+            <div class="cal-block empty"></div>
+            <div class="cal-block empty"></div>
+            <div class="cal-block empty"></div>
+            <div class="cal-block overlap-block">?</div>
+            <div class="cal-block overlap-block">?</div>
+          </div>
+        </div>
+        <div class="cal-legend">
+          <div class="cal-legend-item"><div class="cal-legend-dot a"></div>Rule A · Weekly Repeat · NT$2,050 / person</div>
+          <div class="cal-legend-item"><div class="cal-legend-dot b"></div>Rule B · Weekend · NT$2,300 / person</div>
+          <div class="cal-legend-item"><div class="cal-legend-dot overlap"></div>Sat &amp; Sun overlap · which price applies?</div>
+        </div>
+      </div>
+      <div class="ofs-pain critical">
+        <span class="ofs-pain-tag">Critical Risk</span>
+        <p>The system resolves conflicts silently. There is no validation, no warning banner, and no conflict indicator in the Bound Rules table. Merchants only discover the problem when a customer reports an unexpected price · or never. This is the highest-severity usability failure in the legacy flow: a data integrity risk invisible to the person responsible for the data.</p>
+      </div>
     </div>
 
     <!-- Key Finding -->
     <div style="display:flex;flex-direction:column;gap:24px;">
       <div class="text-block">
-        <p class="h3" data-i18n="s04.h3.finding">Key Finding:</p>
-        <p class="body" data-i18n="s04.finding.body">Usability testing identified 4 systemic friction sources in the legacy system:</p>
+        <p class="h3" data-i18n="s04.h3.finding">Key Finding</p>
+        <p class="body" data-i18n="s04.finding.body">Field investigation and usability testing identified <span class="stat-hi">6 systemic friction sources</span> in the legacy system:</p>
       </div>
-      <div class="icon-list">
-        <div class="icon-item">
-          <img src="https://www.figma.com/api/mcp/asset/c3e326c4-dcbf-434f-89ff-dac45ed9eb30" alt="" />
-          <p class="body-med" data-i18n="s04.finding.f1">Misaligned mental models — The listing flow was structured around system logic, not how users actually think about setting up their products.</p>
-        </div>
-        <div class="icon-item">
-          <img src="https://www.figma.com/api/mcp/asset/93aa6557-014a-4f17-a304-1f3e7ed84062" alt="" />
-          <p class="body-med" data-i18n="s04.finding.f2">No error recovery — Users hit dead ends with no in-context guidance, forcing them to abandon tasks or call support to continue.</p>
-        </div>
-        <div class="icon-item">
-          <img src="https://www.figma.com/api/mcp/asset/90e0f5de-f520-44c5-ab0f-f594aaf5c5d0" alt="" />
-          <p class="body-med" data-i18n="s04.finding.f3">Internal jargon — Labels reflected engineering concepts rather than user vocabulary, creating consistent misunderstanding at critical setup steps.</p>
-        </div>
-        <div class="icon-item">
-          <img src="https://www.figma.com/api/mcp/asset/c4d3f8cd-6b3f-412c-bc79-dbb02b158b30" alt="" />
-          <p class="body-med" data-i18n="s04.finding.f4">Inconsistent interaction patterns — Without a unified design language, users couldn't build reliable expectations as they moved through the interface.</p>
-        </div>
-      </div>
+      <ol class="num-list" style="padding-left:24px;">
+        <li data-i18n="s04.finding.f1">Misaligned mental models · The listing flow was structured around system logic, not how users actually think about setting up their products.</li>
+        <li data-i18n="s04.finding.f2">No error recovery · Users hit dead ends with no in-context guidance, forcing them to abandon tasks or call support to continue.</li>
+        <li data-i18n="s04.finding.f3">Internal jargon · Labels reflected engineering concepts rather than user vocabulary, creating consistent misunderstanding at critical setup steps.</li>
+        <li data-i18n="s04.finding.f4">Inconsistent interaction patterns · Without a unified design language, users couldn't build reliable expectations as they moved through the interface.</li>
+        <li data-i18n="s04.finding.f5">Cross-tab edit dependencies · Changing a package name, price, or schedule requires edits across multiple disconnected tabs with no linking guidance, making updates error-prone and time-consuming.</li>
+      </ol>
     </div>
 
     <!-- Fail Fast -->
     <div class="text-block">
-      <p class="h3" data-i18n="s04.h3.fail">Fail Fast, Succeed Faster:</p>
-      <p class="body" data-i18n="s04.fail.body">In 3 months, we ran 5+ rounds of rolling research — advancing from concept sketches to a testable prototype. Each sprint was scoped to a specific hypothesis, ensuring every design change addressed a confirmed user finding rather than an assumption.</p>
+      <p class="h3" data-i18n="s04.h3.fail">Fail Fast, Succeed Faster</p>
+      <p class="body" data-i18n="s04.fail.body">In <span class="stat-hi">3 months</span>, we ran <span class="stat-hi">5+ rounds</span> of rolling research · advancing from concept sketches to a testable prototype. Each sprint was scoped to a specific hypothesis, ensuring every design change addressed a confirmed user finding rather than an assumption.</p>
     </div>
 
-    <!-- UI Mocks -->
-    <div style="display:flex;flex-direction:column;gap:32px;">
+    <!-- UI Mockups + Prototyping -->
+    <div style="display:flex;flex-direction:column;gap:16px;">
       <div class="text-block">
-        <p class="h3" data-i18n="s04.h3.ui">UI Mockups and Prototyping:</p>
-        <p class="body" data-i18n="s04.ui.body">At each design review, we built prototypes — using AI generation or Figma — to test specific hypotheses before committing to development. The interactive prototype below covers the pricing flow: follow the green cursor to explore the interaction model.</p>
+        <p class="h3" data-i18n="s04.h3.ui">UI Mockups and Prototyping</p>
+        <p class="body" data-i18n="s04.ui.body">At each design review, we built prototypes · using AI generation or Figma · to test specific hypotheses before committing to development. The interactive prototype below covers the pricing flow: follow the green cursor to explore the interaction model.</p>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -1253,99 +2114,116 @@
 <div id="s04" class="sec cream" style="padding-top:32px;padding-bottom:48px;">
   <div class="sec-inner">
     <div class="sec-head">
-      <span class="sec-num">04.</span>
+      <span class="sec-num">05.</span>
       <span class="sec-title" data-i18n="s05.title">Our Solution</span>
     </div>
 
     <!-- New Proposal -->
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <div class="text-block">
-        <p class="h3" data-i18n="s04.h3.proposal">New Proposal:</p>
-        <p class="body" data-i18n="s04.proposal.body">We decoupled pricing from identity-based time slot bindings — allowing users to assign price rules directly to time periods. The restructured flow follows users' natural working sequence, eliminating the abstract "identity relationship" concept that consistently blocked progress during testing.</p>
-      </div>
-      <div class="flow-wrap">
-        <div class="flow-table-wrap"><table class="flow-table">
-          <thead>
-            <tr>
-              <th style="width:71px;"></th>
-              <th>Old Flow</th>
-              <th>New Flow</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="flow-step">Step 1.</td>
-              <td>Initial Setup: Add images and basic information</td>
-              <td>Initial Setup: Add images and basic information</td>
-            </tr>
-            <tr>
-              <td class="flow-step">Step 2.</td>
-              <td>Define Sales Options &amp; Set Pricing:<br>Configure identities and prices together</td>
-              <td>Configure Availability: Define time slots first</td>
-            </tr>
-            <tr>
-              <td class="flow-step">Step 3.</td>
-              <td>Configure Availability: Adjust sale periods and sessions</td>
-              <td>Define Sales Options: Configure identities and plans</td>
-            </tr>
-            <tr>
-              <td class="flow-step">Step 4.</td>
-              <td>Set how many units this package can sell (available quantity)</td>
-              <td>Set Pricing: Add pricing and discounts</td>
-            </tr>
-            <tr>
-              <td class="flow-step">Step 5.</td>
-              <td>—</td>
-              <td>Set Sales Limits: Limits are clearly defined</td>
-            </tr>
-          </tbody>
-        </table></div>
-      </div>
+    <div class="text-block">
+      <p class="feature-title" data-i18n="s04.h3.proposal">New Proposal: Setup That Follows the Way You Think</p>
+      <p class="body" data-i18n="s04.proposal.body">We <span class="stat-hi">decoupled pricing from identity-based time slot bindings</span> · allowing users to assign price rules directly to time periods. The restructured flow follows users' natural working sequence, eliminating the abstract "identity relationship" concept that consistently blocked progress during testing.</p>
     </div>
 
-    <!-- Feature 1 -->
-    <div class="feature-block">
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <p class="feature-title" data-i18n="s05.feat1.title">Lowering Onboarding Cost with a Short Profiling Questionnaire</p>
-        <p class="body" data-i18n="s05.feat1.body">A short upfront questionnaire captures itinerary type, dynamically suppressing irrelevant fields throughout the flow. In usability testing, the questionnaire achieved 96% profiling accuracy — enabling users to complete setup end-to-end without backtracking or contacting support. The approach also reduced onboarding training time for the sales team.</p>
+    <!-- New Flow Story -->
+    <div class="ofs-story">
+
+      <!-- ① Package Settings -->
+      <div class="ofs-chapter">
+        <div class="ofs-spine">
+          <div class="ofs-badge">01</div>
+          <div class="ofs-spine-line"></div>
+        </div>
+        <div class="ofs-body">
+          <div class="ofs-chapter-title" data-i18n="s05.new.step1.title">Package Settings</div>
+          <p class="ofs-chapter-story" data-i18n="s05.new.story1">The entry point for creating a new product listing. Clicking "+ Add Package" triggers a profiling questionnaire before proceeding · replacing the old flow where every field was exposed upfront regardless of product type.</p>
+          <div class="ofs-screenshot"><img src="assets/rezio/New-1.png" alt="New flow – Package Settings"></div>
+        </div>
       </div>
-      <div class="video-box" style="min-height:340px;">
-        <span style="font-size:10px;color:rgba(0,0,0,0.3);letter-spacing:0.1em;text-transform:uppercase;font-family:'IBM Plex Mono',monospace;">UI Recording — Onboarding Questionnaire</span>
+
+      <!-- ② Profiling Questionnaire -->
+      <div class="ofs-chapter">
+        <div class="ofs-spine">
+          <div class="ofs-badge">02</div>
+          <div class="ofs-spine-line"></div>
+        </div>
+        <div class="ofs-body">
+          <div class="ofs-chapter-title" data-i18n="s05.new.step2.title">Profiling Questionnaire</div>
+          <p class="ofs-chapter-story" data-i18n="s05.new.story2">A short questionnaire captures the itinerary type at the very beginning, so the system only presents fields relevant to that product · hiding everything the user doesn't need. In usability testing, the questionnaire achieved <span class="stat-hi">96%</span> profiling accuracy · enabling users to complete setup end-to-end without backtracking or contacting support, and reducing onboarding training time for the sales team.</p>
+          <div class="ofs-screenshot">
+            <video src="assets/rezio/Questionnaire.mov" autoplay loop muted playsinline style="width:100%;border-radius:6px;"></video>
+          </div>
+        </div>
       </div>
-    </div>
+
+      <!-- ③ Item Settings -->
+      <div class="ofs-chapter">
+        <div class="ofs-spine">
+          <div class="ofs-badge">03</div>
+          <div class="ofs-spine-line"></div>
+        </div>
+        <div class="ofs-body">
+          <div class="ofs-chapter-title" data-i18n="s05.new.step3.title">Item Settings</div>
+          <p class="ofs-chapter-story" data-i18n="s05.new.story3">Configure identity types (e.g. Adult, Child) and specifications for each package. A <span class="stat-hi">live preview</span> "Effect Illustration" shows exactly how the booking page will appear to customers · replacing the old flow where merchants had to publish first and then check for errors.</p>
+
+          <div class="ofs-screenshot"><img src="assets/rezio/New-2.png" alt="New flow – Item Settings"></div>
+        </div>
+      </div>
+
+      <!-- ④ Sales Calendar -->
+      <div class="ofs-chapter">
+        <div class="ofs-spine">
+          <div class="ofs-badge">04</div>
+          <div class="ofs-spine-line"></div>
+        </div>
+        <div class="ofs-body">
+          <div class="ofs-chapter-title" data-i18n="s05.new.step4.title">Sales Calendar</div>
+          <p class="ofs-chapter-story" data-i18n="s05.new.story4">Set the available sales period and reservation rules · opening time, closing deadline, and excluded dates · all in one view. The live calendar beside the form is a <span class="stat-hi">real-time preview</span>: for example, if today is 10/12, the 12th already shows as unavailable because the closing deadline requires 1-day advance booking, and the 18th is marked unavailable because it was added as an excluded date · every rule is visualized the moment it's set. Based on our research, we moved this configuration from the product level down to the package level · so each package can have its own blackout dates and booking window rules. In the old flow, availability was buried across separate tabs with no visual confirmation.</p>
+          <div class="ofs-screenshot"><img src="assets/rezio/New-3.png" alt="New flow – Sales Calendar"></div>
+        </div>
+      </div>
+
+      <!-- ⑤ Session Settings -->
+      <div class="ofs-chapter">
+        <div class="ofs-spine">
+          <div class="ofs-badge">05</div>
+          <div class="ofs-spine-line"></div>
+        </div>
+        <div class="ofs-body">
+          <div class="ofs-chapter-title" data-i18n="s05.new.step5.title">Session Settings</div>
+          <p class="ofs-chapter-story" data-i18n="s05.new.story5">Define available days and time slots in one step. Select which days of the week to open, set session start times and durations, and the calendar on the right <span class="stat-hi">renders instantly</span> the full weekly timetable · what you configure is exactly what customers will see. The old flow required merchants to pre-create time bindings in a separate global settings area before they could be selected here.</p>
+          <div class="ofs-screenshot"><img src="assets/rezio/New-4.png" alt="New flow – Session Settings"></div>
+        </div>
+      </div>
+
+      <!-- ⑥ Price Settings -->
+      <div class="ofs-chapter">
+        <div class="ofs-spine">
+          <div class="ofs-badge">06</div>
+        </div>
+        <div class="ofs-body">
+          <div class="ofs-chapter-title" data-i18n="s05.new.step6.title">Price Settings</div>
+          <p class="ofs-chapter-story" data-i18n="s05.new.story6">Assign prices directly to time slots · with support for multiple price tiers (e.g. Default Price, Weekend Price). The <span class="stat-hi">color-coded</span> calendar grid updates in real time, letting merchants verify exactly which price rule applies to each session before publishing · eliminating the old "Bound Rules" model where N×M×T combinations had to be created and verified individually.</p>
+          <div class="ofs-screenshot"><img src="assets/rezio/New-5.png" alt="New flow – Price Settings"></div>
+        </div>
+      </div>
+
+    </div><!-- /ofs-story (new flow) -->
+
 
     <!-- Feature 2 -->
     <div class="feature-block">
       <div style="display:flex;flex-direction:column;gap:8px;">
         <p class="feature-title" data-i18n="s05.feat2.title">Reducing Support Dependency with a Contextual Help Panel</p>
-        <p class="body" data-i18n="s05.feat2.body">The self-serve help panel surfaces contextual guidance at the exact point of friction — enabling users to resolve issues without contacting support. Estimated impact: ~30% reduction in support ticket volume and faster average resolution time, directly reducing operational cost.</p>
+        <p class="body" data-i18n="s05.feat2.body">The self-serve help panel surfaces contextual guidance at the exact point of friction · enabling users to resolve issues without contacting support. Estimated impact: <span class="stat-hi">~30%</span> reduction in support ticket volume and faster average resolution time, directly reducing operational cost.</p>
       </div>
-      <div class="video-box" style="min-height:400px;">
-        <span style="font-size:10px;color:rgba(0,0,0,0.3);letter-spacing:0.1em;text-transform:uppercase;font-family:'IBM Plex Mono',monospace;">UI Recording — Self-Serve Help Panel</span>
-      </div>
+      <div class="ofs-screenshot"><img src="assets/rezio/Tutorial.png" alt="Self-Serve Help Panel"></div>
     </div>
 
-    <!-- Feature 3 -->
-    <div class="feature-block">
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <p class="feature-title" data-i18n="s05.feat3.title">Reducing Errors with Preview Before Publish</p>
-        <div class="preview-intro-row">
-          <img class="preview-thumb" src="https://www.figma.com/api/mcp/asset/85ba3f6b-ab3e-4981-9ffb-9e9fba8779f5" alt="Preview icon" />
-          <p class="body" data-i18n="s05.feat3.body">We replaced the single-column form with a dual-column interface: settings on the left, real-time product preview on the right. Every field change renders instantly — letting users validate their input before publishing and catching errors that previously required post-launch corrections.</p>
-        </div>
-      </div>
-      <div class="preview-grid">
-        <img src="https://www.figma.com/api/mcp/asset/0e41d895-c3af-4f9a-babb-0a1787a6029e" alt="Preview UI 1" />
-        <img src="https://www.figma.com/api/mcp/asset/33707737-63b5-4308-881c-42b114216f51" alt="Preview UI 2" />
-        <img src="https://www.figma.com/api/mcp/asset/d4b81cd9-1f2d-41ae-90e1-5fe267d05bff" alt="Preview UI 3" />
-        <img src="https://www.figma.com/api/mcp/asset/a5930e27-da21-483a-8817-6e8baca546b9" alt="Preview UI 4" />
-      </div>
-    </div>
 
     <!-- Feature 4 -->
     <div style="display:flex;flex-direction:column;gap:8px;">
       <p class="feature-title" data-i18n="s05.feat4.title">Creating a More Conversational UX Copy System</p>
-      <p class="body" data-i18n="s05.feat4.body">We replaced isolated field labels with sentence-based inputs — embedding context directly into the form structure. Instead of interpreting a label in isolation, users read a complete sentence and fill in the blanks. Testing showed faster task completion and fewer misconfigurations, contributing directly to the overall SUS score of 80.3.</p>
+      <p class="body" data-i18n="s05.feat4.body">We replaced isolated field labels with sentence-based inputs · embedding context directly into the form structure. Instead of interpreting a label in isolation, users read a complete sentence and fill in the blanks. Testing showed faster task completion and fewer misconfigurations, contributing directly to the overall <span class="stat-hi">SUS score of 80.3</span>.</p>
       <div class="conv-row" style="padding-top:12px;">
         <div class="conv-card">
           <div class="conv-card-hd">
@@ -1390,16 +2268,16 @@
 <div id="s05" class="sec cream" style="padding-top:32px;padding-bottom:60px;">
   <div class="sec-inner">
     <div class="sec-head">
-      <span class="sec-num">05.</span>
+      <span class="sec-num">06.</span>
       <span class="sec-title" data-i18n="s06.title">Results</span>
     </div>
     <div class="results-row">
       <img class="results-img"
-        src="https://www.figma.com/api/mcp/asset/4dac7b4a-922a-4171-b9b2-e85baa4c3738"
+        src="assets/rezio/IMG_6164 3.png"
         alt="KKday team photo" />
       <div class="results-copy">
-        <p class="body" data-i18n="s06.body1">The redesign delivered measurable progress against all three goals: setup time dropped from 45 to 28 minutes (–38%), SUS reached 80.3, and support ticket volume was estimated to decrease by ~30% without additional headcount.</p>
-        <p class="body" data-i18n="s06.body2">AI-assisted prototyping shortened the iteration cycle, while the shared design system reduced recurring handoff friction between design and engineering — improvements that continued beyond the project itself.</p>
+        <p class="body" data-i18n="s06.body1">The redesign delivered measurable progress against all three goals: setup time dropped from <span class="stat-hi">45 to 28 minutes (–38%)</span>, <span class="stat-hi">SUS reached 80.3</span>, and support ticket volume dropped by <span class="stat-hi">30%</span> without additional headcount.</p>
+        <p class="body" data-i18n="s06.body2">AI-assisted prototyping shortened the iteration cycle, while the <span class="stat-hi">shared design system</span> reduced recurring handoff friction between design and engineering · improvements that continued beyond the project itself.</p>
         <p class="body" data-i18n="s06.body3">With more time, I would involve users earlier in stakeholder alignment so evidence could shape consensus sooner and reduce rework. Even so, one of the strongest outcomes was the team capability built through the process itself.</p>
       </div>
     </div>
@@ -1466,68 +2344,251 @@
         'nav.s01': '01.成果',
         'nav.s02': '02.出発点',
         'nav.s03': '03.調査',
-        'nav.s04': '04.解決策',
-        'nav.s05': '05.結果',
+        'nav.s03b': '04.診断',
+        'nav.s04': '05.解決策',
+        'nav.s05': '06.結果',
+        'intro.h3.website': 'ウェブサイト',
         'intro.h3.product': '製品概要',
         'intro.h3.role': '担当役割',
         'intro.h3.time': 'プロジェクト期間',
-        'intro.product.body': 'KKday Rezio は、旅行事業者向けの B2B 予約・運用プラットフォームです。商品登録、決済、注文管理をカバーし、GetYourGuide、Viator、KKday、Activity Japan などのチャネルと連携して販路拡大と業務効率化を支えます。',
-        'intro.role.body': 'リードインタラクションデザイナーとして、商品登録体験をエンドツーエンドで再設計しました。情報アーキテクチャの再構築、デザインシステムの刷新、リサーチ知見を軸にした部門横断の合意形成を推進。結果として、設定時間を 38% 短縮（45 → 28 分）し、SUS 80.3 を達成、さらにサポートチケット数は推定で約 30% 減少しました。',
+        'intro.product.body': 'KKday Rezio は、旅行事業者向けの B2B 予約・運用プラットフォームです。商品登録、決済、注文管理をカバーし、GetYourGuide、Viator、KKday、Activity Japan などのチャネルと連携して販路拡大と業務効率化を支えます。Alpina Resorts や Holiday XP などのホスピタリティ・レジャーブランドから、伊豆パノラマパーク、定山渓ファーム、小樽運河といった自然観光スポットまで、世界を代表する多彩なトラベルブランドに信頼されています。',
+        'intro.role.body': 'リードインタラクションデザイナーとして、商品登録体験をエンドツーエンドで再設計しました。情報アーキテクチャの再構築、デザインシステムの刷新、リサーチ知見を軸にした部門横断の合意形成を推進。結果として、設定時間を <span class="stat-hi">38% 短縮（45 → 28 分）</span>し、<span class="stat-hi">SUS 80.3</span> を達成、さらにサポートチケット数を <span class="stat-hi">30%</span> 削減しました。',
         's0.title': '始める前に、\n製品にまつわる小話を……',
         's0.bubble1': '新規ユーザーの約 60% が独力で設定を完了できず、サポートチームが毎回のオンボーディングを手動でガイドしていました。あるユーザーは率直に言いました：「SaaS ツールなのに……付き添いが必要だ。」約束と現実のギャップが、私たちが解決すべき問題を定義しました。',
         's0.bubble2': 'では、ユーザーが旅行商品をスムーズかつ独立して公開できるようにするには？',
         's01.title': '成果',
         's01.h3.product': 'プロダクト成果',
         's01.h3.team': 'チーム成果',
-        's01.product.li1': '設定時間を 38% 短縮（45 → 28 分）し、より自走可能なオンボーディングを実現',
-        's01.product.li2': 'SUS 80.3 を達成し、セットアップフローの分かりやすさと学習しやすさを改善',
-        's01.product.li3': 'サポートチケット数を推定で約 30% 削減し、人員増加なしで運営負荷を低減',
+        's01.product.li1': '設定時間を <span class="stat-hi">38% 短縮（45 → 28 分）</span>し、より自走可能なオンボーディングを実現',
+        's01.product.li2': '<span class="stat-hi">SUS 80.3</span> を達成し、セットアップフローの分かりやすさと学習しやすさを改善',
+        's01.product.li3': 'サポートチケット数を <span class="stat-hi">30%</span> 削減し、人員増加なしで運営負荷を低減',
         's01.team.li1': 'AI 支援プロトタイピングにより 3 ヶ月の反復サイクルを圧縮し、開発前に仮説を検証',
         's01.team.li2': '共有コンポーネントシステムとバージョン管理されたガイドラインにより、デザインと開発の引き継ぎ摩擦を軽減',
         's02.title': '出発点',
         's02.h3.bg': 'プロジェクト背景',
         's02.h3.goal': '目標',
-        's02.bg.body': 'もともと限定的なユーザー像を前提に設計されていたため、運用の複雑さが増すにつれてスケールしにくくなっていました。「はじめに」セクションだけでヘルプ記事閲覧数の 36% を占め、設定時の深い摩擦を示していました。10 分で完了する想定のセットアップは実際には 45〜50 分かかり、60% のユーザーがサポートなしでは完了できませんでした。',
-        's02.goal.body': '商品登録体験をユーザーのメンタルモデルに近づけるため、フローの再構築、ラベルの書き直し、文脈に応じたガイダンスの提示を行い、サポートへの依存を減らしながら設定を完了できる状態を目指しました。',
+        's02.bg.body': 'もともと限定的なユーザー像を前提に設計されていたため、運用の複雑さが増すにつれてスケールしにくくなっていました。「はじめに」セクションだけでヘルプ記事閲覧数の <span class="stat-hi">36%</span> を占め、設定時の深い摩擦を示していました。10 分で完了する想定のセットアップは実際には <span class="stat-hi">45〜50 分</span>かかり、<span class="stat-hi">60%</span> のユーザーがサポートなしでは完了できませんでした。',
+        's02.goal.body': '商品登録体験をユーザーのメンタルモデルに近づけるため、フローの再構築、ラベルの書き直し、文脈に応じたガイダンスの提示を行い、<span class="stat-hi">サポートへの依存を減らしながら</span>設定を完了できる状態を目指しました。',
         's03.title': '調査と課題整理',
         's03.h3.research': '予備調査',
-        's03.research.body1': 'ユーザーと現場スタッフにインタビューし、実際の商品登録の実態を把握しました。あるチャーター会社のオーナーは語りました：「LINE のリアルタイム返信が懐かしい。新システムだと応答に時間がかかりすぎる。」',
-        's03.research.body2': 'この傾向はインタビュー全体を通じて一貫していました——システムの複雑さがリアルタイムサポートへの依存を生み出しており、ユーザーにとってもサポートチームにとっても持続不可能な状況でした。',
+        's03.research.body1': 'ユーザーと現場スタッフにインタビューし、実際の商品登録の実態を把握しました。ある貸切バス事業者は語りました：「LINE のリアルタイム返信が懐かしい。新システムだと応答に時間がかかりすぎる。」',
+        's03.research.body2': 'この傾向はインタビュー全体を通じて一貫していました·システムの複雑さが<span class="stat-hi">リアルタイムサポートへの依存</span>を生み出しており、ユーザーにとってもサポートチームにとっても持続不可能な状況でした。',
         's03.h3.persona': 'ペルソナ',
-        's03.persona.body': '調査から 2 つの異なるユーザータイプが浮かび上がりました：収益とチャネル統合を重視する意思決定者の田中武、そして注文と予約管理を担う日常オペレーターの山口真理。目標は異なりますが、両者は同じ壁にぶつかっていました——設定の複雑さが進捗を阻み、システムへの信頼を損なっていました。',
+        's03.persona.body': '調査から 2 つの異なるユーザータイプが浮かび上がりました：収益とチャネル統合を重視する意思決定者の田中武、そして注文と予約管理を担う日常オペレーターの山口真理。目標は異なりますが、両者は同じ壁にぶつかっていました·設定の複雑さが進捗を阻み、システムへの信頼を損なっていました。',
         's03.h3.journey': 'ユーザージャーニーマップ',
-        's03.journey.body': '最初の導入から解約の可能性まで、6 つのステージにわたる感情的な旅程をマッピングしました。山口真理のジャーニーは日々の業務遂行における摩擦を浮き彫りにし、田中武のジャーニーは戦略的意思決定ポイントでのリスク回避傾向を示しました。両方の経路が同じ 2 つの重要な離脱ゾーンに収束しました。',
+        's03.journey.body': '最初の導入から解約の可能性まで、6 つのステージにわたる感情的な旅程をマッピングしました。山口真理のジャーニーは日々の業務遂行における摩擦を浮き彫りにし、田中武のジャーニーは戦略的意思決定ポイントでのリスク回避傾向を示しました。両方の経路が同じ <span class="stat-hi">2 つの重要な離脱ゾーン</span>に収束しました。',
         's03.h3.pain': '課題と機会',
-        's03.pain.body': 'ジャーニーマップから 2 つのハイリスク離脱ゾーンが特定されました：初期オンボーディングと公開後の設定変更。どちらも同じ根本原因を持っていました——システムの構造がユーザーのメンタルモデルと一致せず、エラーが発生しても自力で回復できませんでした。',
-        's03.pain.li1': 'システムの価値に対する初期段階での不確実性',
-        's03.pain.li2': '公開後のライブ設定更新時の複雑さと不安定さ',
+        's03.pain.body': 'ジャーニーマップは 2 つの重要な離脱ポイントを浮き彫りにしました：初期オンボーディングと公開後の設定変更。どちらの段階も根本的な問題を共有していました·システムのアーキテクチャとユーザーのメンタルモデルの乖離により、エラーが起きた際に自己修正ができない状況が生まれていました。',
+        's03.pain.li1': '<span class="stat-hi">オンボーディング</span>：システムの価値への不確実性による早期離脱',
+        's03.pain.li2': '<span class="stat-hi">公開後</span>：ライブ設定を変更しようとした際の操作困難と不安定感',
+        's03b.title': 'コアフローの診断',
+        's03b.context': 'ジャーニーマッピングの結果をもとに、今回の改善ではコア商品登録フローを最優先領域として設定しました。このクリティカルな接点に集中することで、<span class="stat-hi">システムアーキテクチャとユーザーのメンタルモデルの乖離を埋め</span>、ユーザーが自信を持ってナビゲートし、自己修正できる基盤を整えることを目指します。',
+        's03b.intro': '「金工私塾」がRezioに銀粘土指輪ワークショップを初めて登録する際の操作経路を追跡しました。4 ステップの単純なフローに見えたものが、一歩ずつ進むうちに、実際にはまったく線形ではないことが明らかになりました。',
+        's03b.step1.title': 'パッケージ設定',
+        's03b.step1.desc': '画像アップロード、商品名・説明文・費用に含まれるもの／含まれないもの・確認ポリシーの入力。',
+        's03b.step2.title': '販売ルール設定',
+        's03b.step2.desc': 'チケット種別と最低購入数を定義しながら、同時に価格も設定する。',
+        's03b.pain1.tag': '課題',
+        's03b.pain1.body': 'パッケージのコンテキストを離れたことを示すプロンプト、パンくずリスト、視覚的なシグナルがありません。タブを順番に操作するユーザーは、これらの設定が特定のパッケージではなくグローバルに適用されることに気づきません。',
+        's03b.pain2.tag': '課題',
+        's03b.pain2.body': 'バウチャー送信ルール、確認ウィンドウ、支払方法は商品レベルの設定ですが、パッケージ設定のステップの間に表示され、スコープの変化を示す階層やグループ化がありません。',
+        's03b.step3.title': '価格設定',
+        's03b.step3.desc': '価格設定後にのみ、利用可能な時間帯・公開日・セッションごとの定員を設定できる。',
+        's03b.pain3.tag': '課題',
+        's03b.pain3.body': '価格ルールは、このリストに表示される前に、グローバル設定エリアで別途作成しておく必要があります。適切なルールがまだ存在しない場合は、この画面を離れて「価格ルール」に移動して作成し、戻る必要があります。システムはこの依存関係を示しません。',
+        's03b.step4.title': '販売ルール（バインド）',
+        's03b.step4.desc': '販売可能なユニット数を設定する。',
+        's03b.pain4.tag': '課題',
+        's03b.pain4.body': '差別化された価格設定に複数のバインドルールが必要であることを示すものが画面上にありません。結果のテーブルはグループ化のないフラットなリストになり、エントリ間の関係（同じパッケージ、異なる時間帯）が完全に見えません。',
+        's03b.kv.product': '天然石銀粘土リング手作り体験',
+        's03b.prd.intro': '旅行会社やワークショップ主催者への広範なユーザーインタビューを通じて、ある共通のパターンが浮かび上がりました。正式な予約システムを導入するずっと前から、多くの事業者はすでに自分なりの高度に体系化された商品データの管理方法を確立していたのです。<br><br>この図は、現地調査で見えてきた「商家ロジック」を捉えたものです。「シルバークレイリング手作り体験」を例に、事業者が日常業務でいかに多層的な情報を管理しているかを示します·キャンセルポリシーといった商品レベルの情報から、段階的な料金設定・最小催行人数・年齢制限といったプランレベルの制約まで。こうした複雑な構造こそが、事業者が毎日向き合っているリアルな運営の現実です。',
+        's03b.prd.tag': '商品',
+        's03b.prd.info.title': '商品レベルの情報',
+        's03b.prd.meta': '画像、説明、事業者情報、レビュー、キャンセルポリシー',
+        's03b.prd.pkg.rules': 'プランごとのルール',
+        's03b.prd.pkg.a.label': 'プラン A',
+        's03b.prd.pkg.a.name': 'ジェムストーン銀粘土リング手作り体験｜個人申し込み',
+        's03b.prd.pkg.a.detail': '最少 1 名 · 2026-03-24 〜',
+        's03b.prd.pkg.a.rule': '定員制 · 12 歳以上のみ',
+        's03b.prd.pkg.b.label': 'プラン B',
+        's03b.prd.pkg.b.name': 'ジェムストーン銀粘土リング手作り体験｜2 名で 10% 割引',
+        's03b.prd.pkg.b.detail': '最少 2 名 · 2026-03-24 〜',
+        's03b.prd.pkg.b.rule': '同時入場必須',
+        's03b.q1': '「ルールをどう決めるか考えている途中なのに、もう価格を入力しろと言われた。元値すら決めていないのに。」',
+        's03b.q2': '「どの日に授業があるかもまだわからないのに、先に価格を決めるの？週末は割増にする？この数字、あとで変えることになるんじゃないの？」',
+        's03b.q3': '「スケジュールを設定してから、週末にも授業があることに気づいた。でもステップ 2 では平日価格しか入力していない。戻って修正したら、ここのスケジュールが崩れないかな？」',
+        's03b.q4': '「6 というのは 1 セッションに 6 人なの？それとも今月の販売総数が 6 組？わからないし、確認する場所もない。」',
+        's03b.path.h3': '実際の操作経路',
+        's03b.path.body': '直線的な 4 ステップに見えたウィザードは、実際には何度も行き来するループでした。商品主はステップ 2 と 3 を平均 3〜4 回繰り返してから、ようやく公開ボタンを押せる状態になりました。',
+        's03b.path.s1': '基本設定',
+        's03b.path.s2': '方案 + 価格設定',
+        's03b.path.s2.note': '（仮の価格をとりあえず入力）',
+        's03b.path.s3': '空き時間の設定',
+        's03b.path.s3.note': '（平日 / 休日の差別化価格が必要と判明）',
+        's03b.path.back1': '🔄 ② に戻る·価格を修正',
+        's03b.path.back2': '🔄 ③ に戻る·空き時間が変わっていないか確認',
+        's03b.path.s4': '販売数量',
+        's03b.path.s4.note': '（セッションごと？それとも合計？）',
+        's03b.path.back3': '🔄 ② に戻る·もう一度確認',
+        's03b.path.warn': '⚠ 商品主が公開に踏み切るまでに、<span class="stat-hi">3〜4 往復</span>が発生',
+        's03.persona.role.dm': '意思決定者',
+        's03.persona.role.do': '日常オペレーター',
+        's03.ptable.row.position': '役職',
+        's03.ptable.t1.position': 'マネージャー・事業主',
+        's03.ptable.t2.position': '運営アシスタント・予約担当',
+        's03.ptable.row.keyfocus': '重点',
+        's03.ptable.t1.keyfocus': '収益向上・業務効率化・チャネル統合',
+        's03.ptable.t2.keyfocus': '使いやすさ・エラー削減・迅速な注文確認',
+        's03.ptable.row.keyfeatures': '主な機能',
+        's03.ptable.t1.keyfeatures': 'マルチチャネル商品管理・売上レポート',
+        's03.ptable.t2.keyfeatures': '注文エクスポート・チケット引換',
+        's03.ptable.row.needs': 'ニーズ',
+        's03.ptable.t1.needs': '安定した統合・ブランドイメージ向上',
+        's03.ptable.t2.needs': '学習しやすく時間節約で効率的',
+        'cjm.stage.0': 'Rezio 導入前',
+        'cjm.stage.1': 'Rezio 契約',
+        'cjm.stage.2': '行程登録',
+        'cjm.stage.3': '販売中',
+        'cjm.stage.4': '公開後調整',
+        'cjm.stage.5': '解約',
+        'cjm.lbl.steps': 'ステップ',
+        'cjm.lbl.actions': 'アクション',
+        'cjm.lbl.feelings': '感情と思考',
+        'cjm.role.dm': '意思決定者',
+        'cjm.role.do': '日常オペレーター',
+        'cjm.bubble.s0': '「予約がたまっていき、ミスをしそうで怖い。」',
+        'cjm.bubble.s1': '「ようやく助けてもらえる。これで混乱が解決することを願う。」',
+        'cjm.bubble.s2.dm': '「システムが業務フローと合っている·有望なスタート。」',
+        'cjm.bubble.s2.do': '「初めてのツアーを公開した。ステップ形式でストレスなく完了できた。」',
+        'cjm.bubble.s3.dm': '「売上が明確になった。推測なく戦略を調整できる。」',
+        'cjm.bubble.s3.do': '「自動メールのおかげで毎日の作業が楽になった。ミスも激減した。」',
+        'cjm.bubble.s4': '「エラー修正が複雑で、毎回サポートに電話しなければならなかった。」',
+        'cjm.bubble.s5': '「期待ほどの効果が出なかった。更新しないことにした。」',
+        'cjm.act.s0.1': '予約を集約',
+        'cjm.act.s0.2': 'スケジュール管理',
+        'cjm.act.s0.3': 'メールを手動送信',
+        'cjm.act.s1.1': '導入コール',
+        'cjm.act.s1.2': 'トライアル開始',
+        'cjm.act.s2.dm1': '契約締結',
+        'cjm.act.s2.dm2': '研修開始',
+        'cjm.act.s2.do1': '初のツアー公開',
+        'cjm.act.s2.do2': 'チームのプロセス共有',
+        'cjm.act.s3.dm1': '売上レポート確認',
+        'cjm.act.s3.dm2': '注文管理',
+        'cjm.act.s3.do1': 'クーポン送付',
+        'cjm.act.s3.do2': '定員モニタリング',
+        'cjm.act.s4.dm1': '価格更新',
+        'cjm.act.s4.dm2': 'ツアー調整',
+        'cjm.act.s4.do1': '無効注文の対応',
+        'cjm.act.s4.do2': 'サポートへ連絡',
+        'cjm.act.s5.1': '更新しないと決定',
+        'ppo.lbl.pain': '課題',
+        'ppo.lbl.ideation': 'アイデア',
+        'ppo.pain.z1.1': '<strong>オンボーディングの不確実性</strong> · 自社の運用混乱を本当に解決できるのか、ユーザーは確信が持てなかった。',
+        'ppo.pain.z1.2': '<strong>高い導入コスト</strong> · 多大な時間と社内研修が必要だった。',
+        'ppo.pain.z2.1': '<strong>更新後の連鎖エラー</strong> · 複雑な更新プロセスが後続のエラーを頻繁に引き起こした。',
+        'ppo.pain.z2.2': '<strong>サポートへの高依存</strong> · 価格やツアー詳細の更新フローが複雑すぎて、スタッフがミスしやすい状況だった。',
+        'ppo.idea.z1.1': '初期信頼を構築し、オンボーディングの摩擦を軽減 <span class="ppo-eg-tag">例</span>',
+        'ppo.idea.z1.2': '役割ベースのインタラクティブな導入フロー <span class="ppo-eg-tag">例</span>',
+        'ppo.idea.z1.3': 'サンプルテンプレート・成功例の紹介 <span class="ppo-eg-tag">例</span>',
+        'ppo.idea.z1.4': 'ガイド付きセットアップチェックリスト <span class="ppo-eg-tag">例</span>',
+        'ppo.idea.z2.1': '更新フローを簡略化しエラーを削減 <span class="ppo-eg-tag">例</span>',
+        'ppo.idea.z2.2': '公開前プレビュー <span class="ppo-eg-tag">例</span>',
+        'ppo.idea.z2.3': '自動バリデーション・エラー検知 <span class="ppo-eg-tag">例</span>',
+        'ppo.idea.z2.4': 'ロールバック付きバージョン履歴 <span class="ppo-eg-tag">例</span>',
+        'ppo.idea.z2.5': 'ステップガイドと FAQ 付きセルフサービスヘルプパネル <span class="ppo-eg-tag">例</span>',
+        'ppo.idea.z2.6': 'AI アシスタント <span class="ppo-eg-tag">例</span>',
+        's03b.story1': '「パッケージ」タブでは、各販売オプション（名称・説明・有効期間）を定義します。',
+        's03b.story1.dim': '「オプション説明」というラベルが同じ画面に2回表示されます·1回は自由記述フィールドの上に、もう1回は有効期間のラジオボタン群の上に。同じラベルで、2つのまったく異なる入力タイプに使われています。プレースホルダーには温泉プールのパッケージが例示されており、タスクのコンテキストから注意をそらします。',
+        's03b.story2': 'パッケージ設定の途中で、次に必要な作業はまったく別のタブ「販売ルール設定」に移動します。確認方法、最大予約可能日数、支払方法、バウチャー設定がここにあります。コンテキストがパッケージから商品全体へと暗黙的に切り替わっています。',
+        's03b.story3': '「価格設定」タブは2つのサブステップで動作します：まず、あらかじめ作成された価格ルールをリストから選択し、次にそのルールが適用されるスケジュールを定義します。',
+        's03b.story4': '「販売ルール」テーブルの各行は、パッケージ×価格ルール×時間帯の1つの販売可能な組み合わせを表しています。同じパッケージで平日料金と週末料金を設定するには、異なるスケジュールで2つの別々のルールを作成してバインドする必要があります。',
+        's03b.kv.key.product': '商品',
+        's03b.kv.key.includes': '含まれるもの',
+        's03b.kv.key.restrictions': '制限',
+        's03b.kv.key.confirmation': '確認方法',
+        's03b.kv.key.solo': 'ソロ',
+        's03b.kv.key.pair': 'ペア（10% 引き）',
+        's03b.kv.key.timeslots': '時間帯',
+        's03b.kv.key.openfrom': '開始日',
+        's03b.kv.includes': '講師 · 材料（シルバークレイ・宝石） · 用具 · ジュエリーボックス',
+        's03b.kv.restrictions': '12 歳未満不可 · ペアで同時入場',
+        's03b.kv.confirmation': '即時確認',
+        's03b.kv.solo': 'NT$2,050 / 人 · 最少 1 名',
+        's03b.kv.pair': 'NT$1,743 / 人 · 最少 2 名 · 同時入場',
+        's03b.kv.openfrom': '2026-03-23 · 過去の日付はグレーアウト',
+        's03b.kv.key.pkg': '方案名',
+        's03b.kv.pkg': '宝石銀粘土指輪手作り体験 | 個人登録',
+        's03b.kv.key.validity': '有効期間',
+        's03b.kv.validity': '選択日のみ有効',
+        's03b.kv.key.pkg.rules': 'ルール',
+        's03b.kv.pkg.rules': '定員制・12歳以上',
+        's03b.kv.key.maxbook': '最大予約可能日数',
+        's03b.kv.maxbook': '無制限',
+        's03b.kv.key.payment': '支払方法',
+        's03b.kv.payment': 'ATM / 銀行振込',
+        's03b.kv.key.voucher': 'バウチャー',
+        's03b.kv.voucher': 'Rezio バウチャー · 2回使用可',
+        's03b.kv.key.pricingrule': '価格ルール',
+        's03b.kv.pricingrule': '個人価格 · NT$2,050 / 人',
+        's03b.kv.key.bindtype': 'バインド種別',
+        's03b.kv.bindtype': '週次繰り返し',
+        's03b.kv.key.schedule': 'スケジュール',
+        's03b.kv.schedule': '月〜日 · 10:00 – 18:00',
+        's03b.kv.key.bound.pkg': 'パッケージ',
+        's03b.kv.bound.pkg': '個人登録 · 人頭制 · 大人',
+        's03b.kv.key.bound.price': '販売価格',
+        's03b.kv.bound.price': 'NT$1,880',
+        's03b.kv.key.bound.apply': '適用対象',
+        's03b.kv.bound.apply': '週次繰り返し · 月 / 火 / 水 / 木 / 金 / 土 / 日',
+        's03b.kv.key.sales.switch': '販売スイッチ',
+        's03b.kv.sales.switch': 'オン',
         's04.title': '反復',
-        's04.h3.gaps': '差異の発見、優先順位の定義',
-        's04.gaps.body': 'カードソーティングにより、ユーザーのメンタルモデルと製品の情報アーキテクチャとの根本的な不一致が明らかになりました。ユーザビリティテストはその影響を数値化しました：主要タスクのいくつかで完了率が 50% 未満、セッションあたりエラー率 2 回超 — 再設計の方向性を示す最も強いシグナルでした。',
+        's04.h3.gaps': 'なぜこれほど反直感的なのか',
+        's04.gaps.body': '上記の4ステップは、ユーザーの意図ではなく内部のデータ関係を中心に構築されたシステムを露わにしています。商家は自然な順序で考えます·何を売るか、いつ、いくらで。しかしシステムは、これらを独立したエンティティ（パッケージ、価格ルール、時間バインディング）として扱い、ユーザーに一切説明されることなく抽象的なリレーショナルモデルで結びつけなければなりません。<br><br>その結果は、ユーザーが判断するためのコンテキストを持つ前に決断を迫るフローです·スケジュールが決まる前に価格をコミットし、パッケージを設定しながら気づかないうちに商品レベルの設定に誘導され、「バインドルール」がいくつ必要か、互いにどのように関連するかの説明もないまま構築しなければなりません。',
+        's04.gaps.example': '「シルバークレイリング手作り体験」が平日と週末で異なる料金を設定したい場合 · <span class="stat-hi">2 パッケージ × 2 価格帯 × 2 時間帯 = 4 つのバインドルール</span>を手動で作成、組み合わせごとに 1 つずつ。一括適用はなく、ショートカットもなく、この掛け算が必要だという案内も一切ありません。',
+        's04.gaps.body': 'カードソーティングにより、ユーザーのメンタルモデルと製品の情報アーキテクチャとの根本的な不一致が明らかになりました。ユーザビリティテストはその影響を数値化しました：主要タスクのいくつかで完了率が 50% 未満、セッションあたりエラー率 2 回超 · 再設計の方向性を示す最も強いシグナルでした。この 2 つの高リスク離脱ゾーンに対してユーザビリティテストを実施·スコアはいずれも 60 未満でした。',
         's04.h3.finding': '主な発見',
-        's04.finding.body': 'ユーザビリティテストにより、レガシーシステムの 4 つの系統的摩擦要因が特定されました：',
-        's04.finding.f1': 'メンタルモデルの不一致 — 登録フローはシステムロジックで構成されており、ユーザーが実際に商品を設定する思考方法とは異なっていました。',
-        's04.finding.f2': 'エラー回復なし — ユーザーは文脈内のガイダンスなしに行き詰まり、タスクを放棄するかサポートに電話することを余儀なくされました。',
-        's04.finding.f3': '内部専門用語 — ラベルはユーザーの語彙ではなくエンジニアリングの概念を反映しており、重要な設定ステップで一貫した誤解を生んでいました。',
-        's04.finding.f4': 'インタラクションパターンの不統一 — 統一されたデザイン言語がないため、インターフェースを移動する際に信頼できる期待を構築できませんでした。',
-        's04.h3.proposal': '新提案',
-        's04.proposal.body': '価格設定をアイデンティティベースの時間帯バインドから切り離し、ユーザーが価格ルールを直接時間帯に割り当てられるようにしました。再構築されたフローはユーザーの自然な作業順序に従い、テスト中に常に進捗を妨げていた抽象的な「アイデンティティ関係」の概念を排除しました。',
+        's04.finding.body': 'ユーザビリティテストにより、レガシーシステムの <span class="stat-hi">4 つの系統的摩擦要因</span>が特定されました：',
+        's04.finding.f1': 'メンタルモデルの不一致 · 登録フローはシステムロジックで構成されており、ユーザーが実際に商品を設定する思考方法とは異なっていました。',
+        's04.finding.f2': 'エラー回復なし · ユーザーは文脈内のガイダンスなしに行き詰まり、タスクを放棄するかサポートに電話することを余儀なくされました。',
+        's04.finding.f3': '内部専門用語 · ラベルはユーザーの語彙ではなくエンジニアリングの概念を反映しており、重要な設定ステップで一貫した誤解を生んでいました。',
+        's04.finding.f4': 'インタラクションパターンの不統一 · 統一されたデザイン言語がないため、インターフェースを移動する際に信頼できる期待を構築できませんでした。',
+        's04.finding.f5': 'タブ間の編集依存 · パッケージ名、価格、スケジュールの変更にはリンクガイダンスのない複数の分断されたタブでの編集が必要で、更新がエラーを起こしやすく時間がかかりました。',
+        's04.h3.proposal': '新提案：思考の流れに沿ったセットアップ',
+        's04.proposal.body': '<span class="stat-hi">価格設定をアイデンティティベースの時間帯バインドから切り離し</span>、ユーザーが価格ルールを直接時間帯に割り当てられるようにしました。再構築されたフローはユーザーの自然な作業順序に従い、テスト中に常に進捗を妨げていた抽象的な「アイデンティティ関係」の概念を排除しました。',
+        's05.new.step1.title': 'パッケージ設定',
+        's05.new.story1': '新しい商品リスティング作成の入口。「+ パッケージ追加」をクリックするとプロファイル問診票が表示されます · 以前は商品タイプに関係なくすべてのフィールドが表示されていた旧フローを置き換えました。',
+        's05.new.step2.title': 'プロファイル問診票',
+        's05.new.story2': '短い問診票が旅程タイプを最初に把握し、その商品に関連するフィールドのみを表示 · 不要なものはすべて非表示にします。ユーザビリティテストでは <span class="stat-hi">96%</span> のプロファイリング精度を達成 · バックトラックやサポート連絡なしでセットアップを完了でき、営業チームの研修時間も短縮されました。',
+        's05.new.step3.title': 'アイテム設定',
+        's05.new.story3': 'パッケージごとにアイデンティティタイプ（例：大人、子供）と仕様を設定。<span class="stat-hi">ライブプレビュー</span>の「効果イラスト」で予約ページの見え方をリアルタイムプレビュー · 以前は公開後にエラーを確認するしかなかった旧フローを置き換えました。',
+        's05.new.step4.title': 'セールスカレンダー',
+        's05.new.story4': '販売期間と予約ルール · 開始時間、締切、除外日 · を一画面に集約。フォーム横のライブカレンダーは<span class="stat-hi">リアルタイムプレビュー</span>：例えば今日が 10/12 の場合、締切が 1 日前のため 12 日は購入不可、18 日は除外日として無効と表示 · すべてのルールが設定した瞬間に可視化されます。調査に基づき、この設定を商品レベルからパッケージレベルに移行 · 各パッケージが独自の休業日と予約ルールを持てるようにしました。旧フローでは可用性が複数タブに分散し視覚的確認がありませんでした。',
+        's05.new.step5.title': 'セッション設定',
+        's05.new.story5': '営業日と時間帯を一ステップで定義。曜日を選択し、セッション開始時間と所要時間を設定すると、右側のカレンダーが週間時刻表を<span class="stat-hi">即座に描画</span> · 設定した内容がそのまま顧客に表示されます。旧フローでは別のグローバル設定エリアで時間バインドを事前作成する必要がありました。',
+        's05.new.step6.title': '価格設定',
+        'diagram.ref': '所見即所得 · 右側の図解 →',
+        's05.new.story6': '時間帯に直接価格を割り当て · 複数の価格帯（例：デフォルト価格、週末価格）をサポート。<span class="stat-hi">色分け</span>カレンダーグリッドがリアルタイムで更新され、公開前に各セッションに適用される価格ルールを正確に確認 · N×M×T の組み合わせを個別に作成・検証する旧「バインドルール」モデルを排除しました。',
+        's03b.kv.bound.pkg2': '単一登録 · 人頭制 · 大人',
+        's03b.kv.bound.price2': 'NT$2,050',
+        's03b.kv.bound.apply2': '週次繰り返し · 月 / 火 / 水 / 木 / 金 / 土 / 日',
         's04.h3.fail': '速く失敗し、速く成功する',
-        's04.fail.body': '3 ヶ月で 5 回以上のローリングリサーチを実施し、コンセプトスケッチからテスト可能なプロトタイプへと進化させました。各スプリントは特定の仮説にスコープを絞り、すべてのデザイン変更が仮定ではなく確認されたユーザー知見に基づくことを保証しました。',
+        's04.fail.body': '<span class="stat-hi">3 ヶ月</span>で <span class="stat-hi">5 回以上</span>のローリングリサーチを実施し、コンセプトスケッチからテスト可能なプロトタイプへと進化させました。各スプリントは特定の仮説にスコープを絞り、すべてのデザイン変更が仮定ではなく確認されたユーザー知見に基づくことを保証しました。',
         's04.h3.ui': 'UI モックとプロトタイピング',
         's04.ui.body': '各デザインレビューでは、開発着手前に特定の仮説をテストするためにプロトタイプを作成しました（AI 生成または Figma を使用）。下のインタラクティブプロトタイプは価格設定フローをカバーしています：グリーンカーソルに従ってインタラクションモデルを探索してください。',
         's05.title': '解決策',
         's05.feat1.title': '短いプロファイル設問でオンボーディング負荷を下げる',
-        's05.feat1.body': '事前の短い問診票で旅程タイプを把握し、フロー全体で無関係なフィールドを動的に非表示にします。ユーザビリティテストでは問診票が 96% のプロファイリング精度を達成 — ユーザーはバックトラックやサポート連絡なしでエンドツーエンドの設定を完了できました。このアプローチにより営業チームの導入研修時間も短縮されました。',
+        's05.feat1.body': '事前の短い問診票で旅程タイプを把握し、フロー全体で無関係なフィールドを動的に非表示にします。ユーザビリティテストでは問診票が <span class="stat-hi">96%</span> のプロファイリング精度を達成 · ユーザーはバックトラックやサポート連絡なしでエンドツーエンドの設定を完了できました。このアプローチにより営業チームの導入研修時間も短縮されました。',
         's05.feat2.title': 'セルフサービスヘルプパネルでカスタマーサポート依存を削減',
-        's05.feat2.body': 'セルフサービスヘルプパネルは摩擦が生じる正確なポイントで文脈的なガイダンスを提供し、ユーザーがサポートに連絡せずに問題を解決できるようにします。推定効果：サポートチケット数 約 30% 削減、平均解決時間の短縮、運営コストの直接削減。',
+        's05.feat2.body': 'セルフサービスヘルプパネルは摩擦が生じる正確なポイントで文脈的なガイダンスを提供し、ユーザーがサポートに連絡せずに問題を解決できるようにします。推定効果：サポートチケット数 <span class="stat-hi">約 30%</span> 削減、平均解決時間の短縮、運営コストの直接削減。',
         's05.feat3.title': '公開前プレビューで入力ミスを減らす',
         's05.feat3.body': '単一カラムのフォームを二列インターフェースに置き換えました：左側に設定、右側にリアルタイム商品プレビュー。フィールドの変更は即座に反映され、公開前に入力を検証でき、公開後の修正が必要だったエラーを事前に防げます。',
         's05.feat4.title': 'より会話的な UX コピーシステムの構築',
-        's05.feat4.body': '孤立したフィールドラベルを文章ベースの入力に置き換え、コンテキストをフォーム構造に直接埋め込みました。孤立したラベルを解釈する代わりに、ユーザーは完全な文章を読んで空欄を埋めます。テストではタスク完了速度の向上と誤設定の減少が示され、全体の SUS スコア 80.3 に直接貢献しました。',
+        's05.feat4.body': '孤立したフィールドラベルを文章ベースの入力に置き換え、コンテキストをフォーム構造に直接埋め込みました。孤立したラベルを解釈する代わりに、ユーザーは完全な文章を読んで空欄を埋めます。テストではタスク完了速度の向上と誤設定の減少が示され、全体の <span class="stat-hi">SUS スコア 80.3</span> に直接貢献しました。',
         's06.title': '結果',
-        's06.body1': 'リデザインにより 3 つの目標すべてで測定可能な前進が見られました。設定時間は 45 分から 28 分へ短縮（–38%）、SUS は 80.3 に到達し、サポートチケット数も追加人員なしで推定約 30% 減少しました。',
-        's06.body2': 'AI 支援プロトタイピングは反復サイクルを短縮し、共有デザインシステムはデザインとエンジニアリングの引き継ぎ摩擦を継続的に減らしました。これらの改善はプロジェクト後も機能し続けました。',
+        's06.body1': 'リデザインにより 3 つの目標すべてで測定可能な前進が見られました。設定時間は <span class="stat-hi">45 分から 28 分へ短縮（–38%）</span>、<span class="stat-hi">SUS は 80.3</span> に到達し、サポートチケット数も追加人員なしで <span class="stat-hi">30%</span> 減少しました。',
+        's06.body2': 'AI 支援プロトタイピングは反復サイクルを短縮し、<span class="stat-hi">共有デザインシステム</span>はデザインとエンジニアリングの引き継ぎ摩擦を継続的に減らしました。これらの改善はプロジェクト後も機能し続けました。',
         's06.body3': 'より時間があれば、ステークホルダーの合意形成にもっと早い段階でユーザーを巻き込み、エビデンスによって議論を前倒しで整えたかったと思います。それでも、このプロセスを通じてチームに残せた実践知そのものが大きな成果でした。',
       },
       'zh-tw': {
@@ -1537,68 +2598,250 @@
         'nav.s01': '01.成果',
         'nav.s02': '02.起點',
         'nav.s03': '03.調查',
-        'nav.s04': '04.解決方案',
-        'nav.s05': '05.結果',
+        'nav.s03b': '04.診斷',
+        'nav.s04': '05.解決方案',
+        'nav.s05': '06.結果',
+        'intro.h3.website': '網站',
         'intro.h3.product': '產品概覽',
         'intro.h3.role': '我的角色',
         'intro.h3.time': '專案期間',
-        'intro.product.body': 'KKday Rezio 是面向旅遊業者的 B2B 預訂與營運平台，涵蓋商品上架、付款與訂單管理，並整合 GetYourGuide、Viator、KKday 與 Activity Japan 等通路，以擴大銷售面並提升營運效率。',
-        'intro.role.body': '身為 lead interaction designer，我重新設計了端到端的商品上架體驗，包含重構資訊架構、重建設計系統，以及以研究洞察推動跨部門對齊。這次改版讓設定時間縮短 38%（45 → 28 分鐘）、SUS 達到 80.3，並帶來支援工單量估計約 30% 的下降。',
+        'intro.product.body': 'KKday Rezio 是面向旅遊業者的 B2B 預訂與營運平台，涵蓋商品上架、付款與訂單管理，並整合 GetYourGuide、Viator、KKday 與 Activity Japan 等通路，以擴大銷售面並提升營運效率。平台深受全球頂尖旅遊品牌信賴，涵蓋 Alpina Resorts、Holiday XP 等酒店休閒品牌，以及伊豆全景公園、定山溪農場、小樽運河等知名自然景點。',
+        'intro.role.body': '身為 lead interaction designer，我重新設計了端到端的商品上架體驗，包含重構資訊架構、重建設計系統，以及以研究洞察推動跨部門對齊。這次改版讓設定時間縮短 <span class="stat-hi">38%（45 → 28 分鐘）</span>、<span class="stat-hi">SUS 達到 80.3</span>，並將支援工單量降低了 <span class="stat-hi">30%</span>。',
         's0.title': '在開始之前，\n分享一個關於產品的趣聞……',
-        's0.bubble1': '近 60% 的新用戶無法獨立完成設定——迫使客服人員手動引導每次導入過程。一位用戶直白地說：「這是 SaaS 工具……但要找人陪。」承諾與現實之間的落差，定義了我們要解決的問題。',
+        's0.bubble1': '近 60% 的新用戶無法獨立完成設定·迫使客服人員手動引導每次導入過程。一位用戶直白地說：「這是 SaaS 工具……但要找人陪。」承諾與現實之間的落差，定義了我們要解決的問題。',
         's0.bubble2': '那麼，我們如何讓用戶能夠順暢、獨立地上架旅遊商品？',
         's01.title': '成果',
         's01.h3.product': '產品成果',
         's01.h3.team': '團隊成果',
-        's01.product.li1': '設定時間縮短 38%（45 → 28 分鐘），讓更多用戶能在較少支援介入下完成導入',
-        's01.product.li2': 'SUS 達到 80.3，顯示整體設定流程在清晰度與可學習性上明顯改善',
-        's01.product.li3': '支援工單量估計減少約 30%，在不增加人力的情況下降低營運負擔',
+        's01.product.li1': '設定時間縮短 <span class="stat-hi">38%（45 → 28 分鐘）</span>，讓更多用戶能在較少支援介入下完成導入',
+        's01.product.li2': '<span class="stat-hi">SUS 達到 80.3</span>，顯示整體設定流程在清晰度與可學習性上明顯改善',
+        's01.product.li3': '支援工單量減少 <span class="stat-hi">30%</span>，在不增加人力的情況下降低營運負擔',
         's01.team.li1': '透過 AI 輔助原型製作壓縮三個月的迭代週期，在正式開發前驗證假設',
         's01.team.li2': '以共用元件系統與版本控管規範降低設計與工程之間反覆的交付摩擦',
         's02.title': '我們的起點',
         's02.h3.bg': '專案背景',
         's02.h3.goal': '我們的目標',
-        's02.bg.body': '這個產品原先是為較單一的用戶情境設計，隨著營運複雜度提高，擴展性開始出現瓶頸。「入門」區塊佔所有說明文章瀏覽量的 36%，清楚反映出設定流程中的深層摩擦。原本被包裝為 10 分鐘可完成的設定，實際上往往需要 45 到 50 分鐘，且 60% 的用戶無法在沒有支援的情況下完成。',
-        's02.goal.body': '我們重新設計商品上架體驗，讓流程更貼近用戶的心智模型，透過重構步驟、改寫標籤與情境式引導，降低困惑與對支援的依賴。',
+        's02.bg.body': '這個產品原先是為較單一的用戶情境設計，隨著營運複雜度提高，擴展性開始出現瓶頸。「入門」區塊佔所有說明文章瀏覽量的 <span class="stat-hi">36%</span>，清楚反映出設定流程中的深層摩擦。原本被包裝為 10 分鐘可完成的設定，實際上往往需要 <span class="stat-hi">45 到 50 分鐘</span>，且 <span class="stat-hi">60%</span> 的用戶無法在沒有支援的情況下完成。',
+        's02.goal.body': '我們重新設計商品上架體驗，讓流程更貼近用戶的心智模型，透過重構步驟、改寫標籤與情境式引導，<span class="stat-hi">降低困惑與對支援的依賴</span>。',
         's03.title': '研究與問題定義',
         's03.h3.research': '初步研究',
-        's03.research.body1': '我們訪談用戶與第一線員工，實際了解商品上架的操作方式。一位包船業者分享：「我很懷念 LINE 上的即時回覆，新系統的回應時間慢了很多。」',
-        's03.research.body2': '這個現象在訪談中反覆出現——系統複雜度讓用戶高度依賴即時支援，而這對用戶和客服團隊雙方都難以為繼。',
+        's03.research.body1': '我們訪談用戶與第一線員工，實際了解商品上架的操作方式。一位包車業者分享：「我很懷念 LINE 上的即時回覆，新系統的回應時間慢了很多。」',
+        's03.research.body2': '這個現象在訪談中反覆出現·系統複雜度讓用戶<span class="stat-hi">高度依賴即時支援</span>，而這對用戶和客服團隊雙方都難以為繼。',
         's03.h3.persona': '用戶人物誌',
-        's03.persona.body': '研究中浮現出兩種截然不同的用戶類型：以營收與通路整合為優先的決策者田中武（Takeshi Tanaka），以及負責日常訂單與預訂管理的操作員山口真理（Mari Yamaguchi）。儘管目標不同，兩者都面臨同一道牆——複雜的設定流程讓進度停滯，並侵蝕了對系統的信任。',
+        's03.persona.body': '研究中浮現出兩種截然不同的用戶類型：以營收與通路整合為優先的決策者田中武（Takeshi Tanaka），以及負責日常訂單與預訂管理的操作員山口真理（Mari Yamaguchi）。儘管目標不同，兩者都面臨同一道牆·複雜的設定流程讓進度停滯，並侵蝕了對系統的信任。',
         's03.h3.journey': '用戶旅程地圖',
-        's03.journey.body': '我們繪製了六個階段的情緒歷程——從首次使用到可能流失。山口真理的旅程揭示了日常操作中集中的摩擦點；田中武的旅程則顯示出在策略決策點的風險規避傾向。兩條路徑最終收斂至相同的兩個關鍵流失區。',
+        's03.journey.body': '我們繪製了六個階段的情緒歷程·從首次使用到可能流失。山口真理的旅程揭示了日常操作中集中的摩擦點；田中武的旅程則顯示出在策略決策點的風險規避傾向。兩條路徑最終收斂至相同的<span class="stat-hi">兩個關鍵流失區</span>。',
         's03.h3.pain': '痛點與機會',
-        's03.pain.body': '旅程地圖識別出兩個高風險流失區：初始導入和上線後的設定調整。兩者有相同的根本原因——系統結構與用戶的心智模型不符，導致他們在發生錯誤時無法自行恢復。',
-        's03.pain.li1': '早期對系統價值的不確定性',
-        's03.pain.li2': '上線後調整設定時的複雜性與不穩定性',
+        's03.pain.body': '旅程地圖揭示了兩個關鍵流失節點：初始上架流程與發布後的配置調整。兩個階段都源於同一根本問題·系統架構與使用者心智模型的落差，導致他們在出錯時無法自行修正。',
+        's03.pain.li1': '<span class="stat-hi">上架階段</span>：對系統價值感到不確定，導致早期流失',
+        's03.pain.li2': '<span class="stat-hi">發布後</span>：修改已上線設定時，感受到操作困難與系統不穩定',
+        's03b.title': '核心流程診斷',
+        's03b.context': '根據旅程地圖的洞察，我們將本次系統改版的優先焦點設定為核心商品上架流程。透過聚焦在這個關鍵觸點，我們的目標是<span class="stat-hi">縮小系統架構與使用者心智模型之間的落差</span>，建立一個讓使用者能夠自信操作、並在出錯時自行修正的基礎。',
+        's03b.intro': '我們追蹤了「金工私塾」在 Rezio 首次上架銀黏土戒指工作坊的完整操作路徑。看似直覺的四步驟流程，一步一步揭露出實際上完全不線性的操作路徑。',
+        's03b.step1.title': '方案設定',
+        's03b.step1.desc': '上傳圖片、填寫商品名稱、描述、費用包含與不包含的項目，以及確認方式。',
+        's03b.step2.title': '上架規則設定',
+        's03b.step2.desc': '定義票種與最低購買數量·同時需要填入價格。',
+        's03b.pain1.tag': '痛點',
+        's03b.pain1.body': '沒有任何提示、麵包屑或視覺信號告知你已離開方案設定的情境。依序切換頁籤的使用者，往往不會意識到這些設定套用的範圍是整個商品，而非他們正在設定的那個方案。',
+        's03b.pain2.tag': '痛點',
+        's03b.pain2.body': '憑證寄送規則、確認時間窗口和付款方式都是商品層級的決策，卻夾在方案設定步驟之間顯示，沒有任何層級結構或分組提示這個範圍的切換。',
+        's03b.step3.title': '設定價格',
+        's03b.step3.desc': '在定價已填入之後，才能設定可用時段、開放日期與每場次容量。',
+        's03b.pain3.tag': '痛點',
+        's03b.pain3.body': '價格規則必須事先在全域設定區域中建立，才會出現在這個清單裡。如果所需規則尚不存在，必須離開此頁面、前往價格規則頁面建立後再返回。系統沒有任何提示說明這個依存關係。',
+        's03b.step4.title': '銷售規則綁定',
+        's03b.step4.desc': '設定可售出的組數。',
+        's03b.pain4.tag': '痛點',
+        's03b.pain4.body': '畫面上沒有任何提示告知差異化定價需要建立多條綁定規則。最終呈現的表格是一個沒有分組的平面清單，各條目之間的關聯（同一個方案、不同時間區間）完全無從辨識。',
+        's03b.kv.product': '寶石銀黏土戒指手作體驗',
+        's03b.prd.intro': '透過對旅遊業者與工作坊主辦人的深度使用者訪談，一個共通的模式逐漸浮現：早在導入正式訂位系統之前，大多數商家就已建立了一套高度結構化的商品資料管理方式。<br><br>這張圖呈現的，是田野訪談中歸納出的「商家邏輯」。以「寶石銀黏土戒指手作體驗」為例，說明商家在日常營運中如何管理多層次的資訊·從取消政策等商品層級的細節，到分級定價、最低人數、年齡限制等套裝層級的限制條件。這些複雜的結構，正是商家每天都在面對的真實、卻繁瑣的營運現實。',
+        's03b.prd.tag': '商品',
+        's03b.prd.info.title': '商品層級資訊',
+        's03b.prd.meta': '圖片、說明、商家資訊、評價、取消政策',
+        's03b.prd.pkg.rules': '方案專屬規則',
+        's03b.prd.pkg.a.label': '方案 A',
+        's03b.prd.pkg.a.name': '寶石銀黏土戒指手作體驗｜單人報名',
+        's03b.prd.pkg.a.detail': '最低 1 人 · 2026-03-24 起',
+        's03b.prd.pkg.a.rule': '名額有限 · 12 歲以上',
+        's03b.prd.pkg.b.label': '方案 B',
+        's03b.prd.pkg.b.name': '寶石銀黏土戒指手作體驗｜雙人九折優惠',
+        's03b.prd.pkg.b.detail': '最低 2 人 · 2026-03-24 起',
+        's03b.prd.pkg.b.rule': '必須同時入場',
+        's03b.q1': '「我還在想規則怎麼訂，系統就要我填價格了。我連原價都還沒想好。」',
+        's03b.q2': '「我都還不知道哪天有課，怎麼先訂價？假日要不要加價？我現在填的數字等一下是不是還要改？」',
+        's03b.q3': '「我設完場次才發現週末也有課，但我剛才在 Step 2 填的是平日價。現在要回去改嗎？改了之後這邊的場次會不會跑掉？」',
+        's03b.q4': '「6 是每場 6 個人，還是這個月總共只賣 6 組？我不確定，但也沒地方問。」',
+        's03b.path.h3': '實際操作路徑',
+        's03b.path.body': '看起來像四步驟的線性流程，實際上是反覆來回的迴圈。商家平均需要在步驟 2 和步驟 3 之間來回 3 到 4 次，才敢按下發布。',
+        's03b.path.s1': '基本設定',
+        's03b.path.s2': '方案 + 定價',
+        's03b.path.s2.note': '（先填一個大概的價格）',
+        's03b.path.s3': '場次設定',
+        's03b.path.s3.note': '（發現需要平假日差異定價）',
+        's03b.path.back1': '🔄 回到 ② · 修改價格',
+        's03b.path.back2': '🔄 回到 ③ · 確認場次沒有跑掉',
+        's03b.path.s4': '庫存數量',
+        's03b.path.s4.note': '（不確定是每場次還是總量）',
+        's03b.path.back3': '🔄 回到 ② · 再次確認',
+        's03b.path.warn': '⚠ 來回 <span class="stat-hi">3–4 輪</span>，才敢按下發布',
+        's03.persona.role.dm': '決策者',
+        's03.persona.role.do': '日常操作員',
+        's03.ptable.row.position': '職稱',
+        's03.ptable.t1.position': '經理・企業主',
+        's03.ptable.t2.position': '運營助理・訂位專員',
+        's03.ptable.row.keyfocus': '重點',
+        's03.ptable.t1.keyfocus': '營收成長、運營效率、通路整合',
+        's03.ptable.t2.keyfocus': '易用性、減少錯誤、快速查看訂單',
+        's03.ptable.row.keyfeatures': '關鍵功能',
+        's03.ptable.t1.keyfeatures': '跨平台商品管理、銷售報表',
+        's03.ptable.t2.keyfeatures': '訂單匯出、票券核銷',
+        's03.ptable.row.needs': '需求',
+        's03.ptable.t1.needs': '穩定整合、提升品牌形象',
+        's03.ptable.t2.needs': '易學上手、省時高效',
+        'cjm.stage.0': '使用 Rezio 前',
+        'cjm.stage.1': '訂閱 Rezio',
+        'cjm.stage.2': '上架行程',
+        'cjm.stage.3': '銷售行程',
+        'cjm.stage.4': '上線後調整',
+        'cjm.stage.5': '取消訂閱',
+        'cjm.lbl.steps': '步驟',
+        'cjm.lbl.actions': '行動',
+        'cjm.lbl.feelings': '感受與想法',
+        'cjm.role.dm': '決策者',
+        'cjm.role.do': '日常操作員',
+        'cjm.bubble.s0': '「訂單愈積愈多，我很怕出錯。」',
+        'cjm.bubble.s1': '「終於有人幫忙了。希望這能解決混亂局面。」',
+        'cjm.bubble.s2.dm': '「系統與我們的流程一致·很有前景的開始。」',
+        'cjm.bubble.s2.do': '「第一個行程上架了。步驟式引導讓我很安心。」',
+        'cjm.bubble.s3.dm': '「銷售狀況清楚了。不用猜測就能調整策略。」',
+        'cjm.bubble.s3.do': '「自動郵件每天幫我省很多事，失誤也少很多。」',
+        'cjm.bubble.s4': '「修正錯誤不直覺，每次都得打電話給客服。」',
+        'cjm.bubble.s5': '「效果比預期有限。決定不續約。」',
+        'cjm.act.s0.1': '整合訂單',
+        'cjm.act.s0.2': '追蹤行程',
+        'cjm.act.s0.3': '手動發送電子郵件',
+        'cjm.act.s1.1': '新手諮詢電話',
+        'cjm.act.s1.2': '啟用試用',
+        'cjm.act.s2.dm1': '簽訂合約',
+        'cjm.act.s2.dm2': '開始培訓',
+        'cjm.act.s2.do1': '上架第一個行程',
+        'cjm.act.s2.do2': '與團隊對齊流程',
+        'cjm.act.s3.dm1': '查看銷售報表',
+        'cjm.act.s3.dm2': '管理訂單',
+        'cjm.act.s3.do1': '發送票券',
+        'cjm.act.s3.do2': '監控容量',
+        'cjm.act.s4.dm1': '更新定價',
+        'cjm.act.s4.dm2': '調整行程',
+        'cjm.act.s4.do1': '處理無效訂單',
+        'cjm.act.s4.do2': '聯繫客服',
+        'cjm.act.s5.1': '決定不續約',
+        'ppo.lbl.pain': '痛點',
+        'ppo.lbl.ideation': '解決方向',
+        'ppo.pain.z1.1': '<strong>上架的不確定感</strong> · 用戶不確定系統是否真的能解決既有的運營混亂。',
+        'ppo.pain.z1.2': '<strong>高昂的導入成本</strong> · 需要花費大量時間與內部培訓。',
+        'ppo.pain.z2.1': '<strong>更新後的連鎖反應</strong> · 複雜的更新流程頻繁觸發下游錯誤。',
+        'ppo.pain.z2.2': '<strong>高度依賴客服支援</strong> · 更新定價或行程細節的流程過於複雜，員工容易出錯。',
+        'ppo.idea.z1.1': '建立早期信任，降低導入摩擦 <span class="ppo-eg-tag">範例</span>',
+        'ppo.idea.z1.2': '角色導向的互動式導入流程 <span class="ppo-eg-tag">範例</span>',
+        'ppo.idea.z1.3': '範例模板、成功案例展示 <span class="ppo-eg-tag">範例</span>',
+        'ppo.idea.z1.4': '引導式設定清單 <span class="ppo-eg-tag">範例</span>',
+        'ppo.idea.z2.1': '簡化更新流程、減少錯誤 <span class="ppo-eg-tag">範例</span>',
+        'ppo.idea.z2.2': '發布前預覽 <span class="ppo-eg-tag">範例</span>',
+        'ppo.idea.z2.3': '自動驗證與錯誤偵測 <span class="ppo-eg-tag">範例</span>',
+        'ppo.idea.z2.4': '版本記錄與回滾 <span class="ppo-eg-tag">範例</span>',
+        'ppo.idea.z2.5': '附步驟指引與常見問題的自助說明面板 <span class="ppo-eg-tag">範例</span>',
+        'ppo.idea.z2.6': 'AI 智慧助手 <span class="ppo-eg-tag">範例</span>',
+        's03b.story1': '「方案」頁籤用於定義每個銷售選項，包含名稱、描述與有效期間。',
+        's03b.story1.dim': '同樣的標籤「選項描述」在同一個畫面上出現了兩次·一次在自由文字欄位上方，一次在有效期設定的單選按鈕群組上方。相同的標籤，對應兩種完全不同的輸入類型。預設提示文字還引用了溫泉泳池套裝，把注意力從實際任務中帶走。',
+        's03b.story2': '在方案設定進行到一半時，下一個必要步驟跳到了完全不同的頁籤·「上架設定」。確認方式、最長可預訂天數、付款方式和憑證設定都在這裡。操作情境已悄悄從「方案」切換到了整個「商品」層級。',
+        's03b.story3': '「設定價格」頁籤分為兩個子步驟：首先從清單中選擇一條預先建立的價格規則，接著定義該規則的套用時間範圍。',
+        's03b.story4': '「銷售規則」表格中的每一列代表一條可銷售組合：方案 × 價格規則 × 時間區間。若要讓同一個方案在平日與週末使用不同價格，就必須建立兩條分別綁定不同時間範圍的規則。',
+        's03b.kv.key.product': '商品',
+        's03b.kv.key.includes': '包含',
+        's03b.kv.key.restrictions': '限制',
+        's03b.kv.key.confirmation': '確認方式',
+        's03b.kv.key.solo': '單人',
+        's03b.kv.key.pair': '雙人（九折）',
+        's03b.kv.key.timeslots': '時段',
+        's03b.kv.key.openfrom': '開放日期',
+        's03b.kv.includes': '講師 · 材料（銀黏土、寶石） · 器具 · 珠寶盒',
+        's03b.kv.restrictions': '12 歲以下謝絕 · 雙人必須同時入場',
+        's03b.kv.confirmation': '即時確認',
+        's03b.kv.solo': 'NT$2,050 / 人 · 最低 1 人',
+        's03b.kv.pair': 'NT$1,743 / 人 · 最低 2 人 · 必須同時入場',
+        's03b.kv.openfrom': '2026-03-23 · 過去日期呈灰色',
+        's03b.kv.key.pkg': '方案名稱',
+        's03b.kv.pkg': '寶石銀黏土戒指手作體驗 | 單人報名',
+        's03b.kv.key.validity': '有效期',
+        's03b.kv.validity': '僅限選定日期當天',
+        's03b.kv.key.pkg.rules': '規則',
+        's03b.kv.pkg.rules': '名額有限 · 12 歲以上',
+        's03b.kv.key.maxbook': '最長可預訂天數',
+        's03b.kv.maxbook': '無限制',
+        's03b.kv.key.payment': '付款方式',
+        's03b.kv.payment': 'ATM / 銀行轉帳',
+        's03b.kv.key.voucher': '憑證',
+        's03b.kv.voucher': 'Rezio 憑證 · 可使用 2 次',
+        's03b.kv.key.pricingrule': '價格規則',
+        's03b.kv.pricingrule': '單人價格 · NT$2,050 / 人',
+        's03b.kv.key.bindtype': '綁定類型',
+        's03b.kv.bindtype': '每週重複',
+        's03b.kv.key.schedule': '時間表',
+        's03b.kv.schedule': '週一至週日 · 10:00 – 18:00',
+        's03b.kv.key.bound.pkg': '方案',
+        's03b.kv.bound.pkg': '單人報名 · 按人頭計費 · 成人',
+        's03b.kv.key.bound.price': '銷售價格',
+        's03b.kv.bound.price': 'NT$1,880',
+        's03b.kv.key.bound.apply': '套用對象',
+        's03b.kv.bound.apply': '每週重複 · 一 / 二 / 三 / 四 / 五 / 六 / 日',
+        's03b.kv.key.sales.switch': '販售開關',
+        's03b.kv.sales.switch': '開啟',
         's04.title': '迭代',
-        's04.h3.gaps': '揭露落差，定義優先序',
-        's04.gaps.body': '卡片分類揭示了用戶心智模型與產品資訊架構之間的根本差距。易用性測試量化了影響程度：多個核心任務的完成率低於 50%，每次操作的錯誤率超過 2 次——這是確定設計改造重點的最強訊號。',
+        's04.h3.gaps': '為什麼這麼反直覺',
+        's04.gaps.body': '上述四個步驟揭示了一個圍繞內部資料關係而非使用者意圖所設計的系統。商家的思考順序是自然的：我要賣什麼、什麼時候賣、賣多少錢。然而系統將這些拆解為獨立的實體·方案、價格規則、時間綁定·需要分別設定，再透過一個從未向使用者說明的抽象關聯模型串接起來。<br><br>結果是一個在使用者尚未具備判斷脈絡之前就不斷要求做決策的流程：在不知道排程的情況下先定價、在設定方案的途中被悄悄導往商品層級的設定、在毫無提示下建立「銷售規則」，卻不知道需要幾條、彼此之間又有什麼關聯。',
+        's04.gaps.example': '假設「銀黏土戒指手作體驗」想要區分平日與假日定價，那就是 <span class="stat-hi">2 種方案 × 2 種定價 × 2 個時段 = 4 條銷售規則</span>需手動建立，每種組合各一條。沒有批次套用，沒有捷徑，也沒有任何提示告訴你這個乘法是必要的。',
         's04.h3.finding': '關鍵發現',
-        's04.finding.body': '易用性測試識別出舊系統中的四個系統性摩擦來源：',
-        's04.finding.f1': '心智模型不一致——上架流程是按系統邏輯建構的，而非用戶實際設定商品的思考方式。',
-        's04.finding.f2': '缺乏錯誤恢復機制——用戶遭遇死路時沒有任何情境引導，被迫放棄任務或致電客服才能繼續。',
-        's04.finding.f3': '內部術語——標籤反映的是工程概念而非用戶語彙，在關鍵設定步驟造成持續性誤解。',
-        's04.finding.f4': '互動模式不一致——缺乏統一的設計語言，用戶在介面中移動時無法建立可靠的預期。',
-        's04.h3.proposal': '新方案',
-        's04.proposal.body': '我們將定價從基於身份的時段綁定中解耦——允許用戶直接將價格規則指定給時間段。重構後的流程遵循用戶的自然工作順序，消除了測試中持續阻礙進展的「身份關係」抽象概念。',
+        's04.finding.body': '易用性測試識別出舊系統中的<span class="stat-hi">四個系統性摩擦來源</span>：',
+        's04.finding.f1': '心智模型不一致·上架流程是按系統邏輯建構的，而非用戶實際設定商品的思考方式。',
+        's04.finding.f2': '缺乏錯誤恢復機制·用戶遭遇死路時沒有任何情境引導，被迫放棄任務或致電客服才能繼續。',
+        's04.finding.f3': '內部術語·標籤反映的是工程概念而非用戶語彙，在關鍵設定步驟造成持續性誤解。',
+        's04.finding.f4': '互動模式不一致·缺乏統一的設計語言，用戶在介面中移動時無法建立可靠的預期。',
+        's04.finding.f5': '跨分頁編輯依賴·更改方案名稱、價格或時程需要在多個未連結的分頁中操作，使更新容易出錯且耗時。',
+        's04.h3.proposal': '新方案：順應你的思考方式設定',
+        's04.proposal.body': '我們<span class="stat-hi">將定價從基於身份的時段綁定中解耦</span>·允許用戶直接將價格規則指定給時間段。重構後的流程遵循用戶的自然工作順序，消除了測試中持續阻礙進展的「身份關係」抽象概念。',
+        's05.new.step1.title': '方案設定',
+        's05.new.story1': '建立新商品的入口。點擊「+ 新增方案」後會觸發分群問卷·取代舊版不分產品類型就全部欄位一次攤開的做法。',
+        's05.new.step2.title': '分群問卷',
+        's05.new.story2': '短問卷在一開始就捕捉行程類型，系統只呈現該產品需要的欄位·隱藏所有不相關的選項。在易用性測試中達到 <span class="stat-hi">96%</span> 的分群準確率·用戶可端到端完成設定，無需回頭或聯繫客服，也縮短了銷售團隊的培訓時間。',
+        's05.new.step3.title': '項目設定',
+        's05.new.story3': '為每個方案設定身份類型（如成人、兒童）與規格。<span class="stat-hi">即時預覽</span>的「效果預覽」直接呈現預約頁面的實際外觀·取代舊版必須先發布再檢查錯誤的做法。',
+        's05.new.step4.title': '銷售日曆',
+        's05.new.story4': '在同一畫面設定可售期間與預約規則·開賣時間、截止時間、排除日期·並搭配<span class="stat-hi">即時日曆預覽</span>。例如假設今天是 10/12：因截止時間需提前 1 天，12 日顯示為不可購買；18 日因設定為排除日期而顯示不可用。根據研究，我們將此設定從產品層級下放到方案層級·讓不同方案可各自設定休息日與開賣規則。舊版中可用性設定分散在多個分頁，且無視覺化確認。',
+        's05.new.step5.title': '場次設定',
+        's05.new.story5': '一步完成營業日與時段定義。選擇每週開放的天數、設定場次開始時間與時長，右側日曆<span class="stat-hi">即時呈現</span>完整的週間排程。舊版需要在另一個全域設定區預先建立時段綁定才能使用。',
+        's05.new.step6.title': '價格設定',
+        'diagram.ref': '所見即所得 · 右側示意圖 →',
+        's05.new.story6': '直接為時段指派價格·支援多種價格層級（如預設價格、週末價格）。<span class="stat-hi">色彩標記</span>的日曆格讓每個場次適用的規則一目了然·消除舊版 N×M×T 組合需逐一建立並驗證的「綁定規則」模式。',
+        's03b.kv.bound.pkg2': '單人報名 · 每人計 · 成人',
+        's03b.kv.bound.price2': 'NT$2,050',
+        's03b.kv.bound.apply2': '每週重複 · 一 / 二 / 三 / 四 / 五 / 六 / 日',
         's04.h3.fail': '快速失敗，快速成功',
-        's04.fail.body': '在三個月內，我們進行了 5 輪以上的滾動研究——從概念草稿推進至可測試的原型。每個衝刺都針對特定假設，確保每一項設計改動都是基於已確認的用戶發現，而非假設。',
+        's04.fail.body': '在<span class="stat-hi">三個月</span>內，我們進行了 <span class="stat-hi">5 輪以上</span>的滾動研究·從概念草稿推進至可測試的原型。每個衝刺都針對特定假設，確保每一項設計改動都是基於已確認的用戶發現，而非假設。',
         's04.h3.ui': 'UI 模型與原型',
-        's04.ui.body': '在每次設計評審中，我們都會建立原型——使用 AI 生成或 Figma——在正式開發前測試特定假設。下方的互動原型涵蓋定價流程：跟隨綠色游標探索互動模型。',
+        's04.ui.body': '在每次設計評審中，我們都會建立原型·使用 AI 生成或 Figma·在正式開發前測試特定假設。下方的互動原型涵蓋定價流程：跟隨綠色游標探索互動模型。',
         's05.title': '我們的解決方案',
         's05.feat1.title': '以簡短分群問卷降低導入成本',
-        's05.feat1.body': '前置的簡短問卷收集行程類型，在整個流程中動態隱藏無關欄位。在易用性測試中，問卷達到 96% 的分析準確率——讓用戶能夠端到端完成設定，無需回頭或聯繫客服。此方案也縮短了銷售團隊的導入培訓時間。',
+        's05.feat1.body': '前置的簡短問卷收集行程類型，在整個流程中動態隱藏無關欄位。在易用性測試中，問卷達到 <span class="stat-hi">96%</span> 的分析準確率·讓用戶能夠端到端完成設定，無需回頭或聯繫客服。此方案也縮短了銷售團隊的導入培訓時間。',
         's05.feat2.title': '透過自助服務說明面板，降低對客服的依賴',
-        's05.feat2.body': '自助服務說明面板在摩擦點即時提供情境引導——讓用戶無需聯繫客服即可解決問題。預估影響：支援工單量減少約 30%，平均解決時間縮短，直接降低營運成本。',
+        's05.feat2.body': '自助服務說明面板在摩擦點即時提供情境引導·讓用戶無需聯繫客服即可解決問題。預估影響：支援工單量減少約 <span class="stat-hi">30%</span>，平均解決時間縮短，直接降低營運成本。',
         's05.feat3.title': '透過「發布前預覽」降低錯誤率',
-        's05.feat3.body': '我們將單欄表單替換為雙欄介面：左側設定，右側即時商品預覽。每個欄位的變更即時渲染——讓用戶在發布前驗證輸入，避免需要上線後修正的錯誤。',
+        's05.feat3.body': '我們將單欄表單替換為雙欄介面：左側設定，右側即時商品預覽。每個欄位的變更即時渲染·讓用戶在發布前驗證輸入，避免需要上線後修正的錯誤。',
         's05.feat4.title': '打造更具對話感的 UX 文案系統',
-        's05.feat4.body': '我們將孤立的欄位標籤替換為句式輸入——將情境直接嵌入表單結構中。用戶不再需要孤立地解讀標籤，而是閱讀完整句子後填入空格。測試顯示任務完成速度更快、錯誤設定更少，直接促成了 SUS 分數 80.3 的達成。',
+        's05.feat4.body': '我們將孤立的欄位標籤替換為句式輸入·將情境直接嵌入表單結構中。用戶不再需要孤立地解讀標籤，而是閱讀完整句子後填入空格。測試顯示任務完成速度更快、錯誤設定更少，直接促成了 <span class="stat-hi">SUS 分數 80.3</span> 的達成。',
         's06.title': '結果',
-        's06.body1': '這次改版在三個目標上都帶來了可衡量的進展：設定時間從 45 分鐘縮短至 28 分鐘（–38%）、SUS 達到 80.3，支援工單量也在未增加人力的情況下估計下降約 30%。',
-        's06.body2': 'AI 輔助原型製作縮短了迭代週期，而共享設計系統則持續降低設計與工程之間的交付摩擦，讓這些改善在專案結束後仍能延續。',
+        's06.body1': '這次改版在三個目標上都帶來了可衡量的進展：設定時間從 <span class="stat-hi">45 分鐘縮短至 28 分鐘（–38%）</span>、<span class="stat-hi">SUS 達到 80.3</span>，支援工單量也在未增加人力的情況下下降 <span class="stat-hi">30%</span>。',
+        's06.body2': 'AI 輔助原型製作縮短了迭代週期，而<span class="stat-hi">共享設計系統</span>則持續降低設計與工程之間的交付摩擦，讓這些改善在專案結束後仍能延續。',
         's06.body3': '如果有更多時間，我會在利害關係人對齊的更早階段納入用戶，讓證據更早進入討論、減少返工。不過，這個過程中累積下來的團隊能力，本身也是非常重要的成果。',
       },
       'zh-cn': {
@@ -1608,78 +2851,270 @@
         'nav.s01': '01.成果',
         'nav.s02': '02.起点',
         'nav.s03': '03.调研',
-        'nav.s04': '04.解决方案',
-        'nav.s05': '05.结果',
+        'nav.s03b': '04.诊断',
+        'nav.s04': '05.解决方案',
+        'nav.s05': '06.结果',
+        'intro.h3.website': '网站',
         'intro.h3.product': '产品概览',
         'intro.h3.role': '我的角色',
         'intro.h3.time': '项目周期',
-        'intro.product.body': 'KKday Rezio 是面向旅游业者的 B2B 预订与运营平台，覆盖商品上架、付款与订单管理，并整合 GetYourGuide、Viator、KKday 与 Activity Japan 等渠道，以扩大分销并提升运营效率。',
-        'intro.role.body': '作为 lead interaction designer，我重新设计了端到端的商品上架体验，包括重构信息架构、重建设计系统，并以研究洞察推动跨团队对齐。这次改版将设定时间缩短了 38%（45 → 28 分钟），SUS 达到 80.3，并带来支持工单量估计约 30% 的下降。',
+        'intro.product.body': 'KKday Rezio 是面向旅游业者的 B2B 预订与运营平台，覆盖商品上架、付款与订单管理，并整合 GetYourGuide、Viator、KKday 与 Activity Japan 等渠道，以扩大分销并提升运营效率。平台深受全球顶尖旅游品牌信赖，涵盖 Alpina Resorts、Holiday XP 等酒店休闲品牌，以及伊豆全景公园、定山溪农场、小樽运河等知名自然景点。',
+        'intro.role.body': '作为 lead interaction designer，我重新设计了端到端的商品上架体验，包括重构信息架构、重建设计系统，并以研究洞察推动跨团队对齐。这次改版将设置时间缩短了 <span class="stat-hi">38%（45 → 28 分钟）</span>，<span class="stat-hi">SUS 达到 80.3</span>，并将客服工单量降低了 <span class="stat-hi">30%</span>。',
         's0.title': '在开始之前，\n分享一个关于产品的趣事……',
-        's0.bubble1': '近 60% 的新用户无法独立完成设定——迫使客服人员手动引导每次导入过程。一位用户直白地说：「这是 SaaS 工具……但要找人陪。」承诺与现实之间的落差，定义了我们要解决的问题。',
+        's0.bubble1': '近 60% 的新用户无法独立完成设置·迫使客服人员手动引导每次导入过程。一位用户直白地说：「这是 SaaS 工具……但要找人陪。」承诺与现实之间的落差，定义了我们要解决的问题。',
         's0.bubble2': '那么，我们如何让用户能够顺畅、独立地上架旅游商品？',
         's01.title': '成果',
         's01.h3.product': '产品层面',
         's01.h3.team': '团队层面',
-        's01.product.li1': '设定时间缩短 38%（45 → 28 分钟），让更多用户能在更少支持介入下完成导入',
-        's01.product.li2': 'SUS 达到 80.3，说明整体设定流程在清晰度与可学习性上显著提升',
-        's01.product.li3': '支持工单量估计减少约 30%，在不增加人力的情况下减轻运营负担',
+        's01.product.li1': '设置时间缩短 <span class="stat-hi">38%（45 → 28 分钟）</span>，让更多用户能在更少支持介入下完成导入',
+        's01.product.li2': '<span class="stat-hi">SUS 达到 80.3</span>，说明整体设置流程在清晰度与可学习性上显著提升',
+        's01.product.li3': '客服工单量减少 <span class="stat-hi">30%</span>，在不增加人力的情况下减轻运营负担',
         's01.team.li1': '通过 AI 辅助原型制作压缩三个月的迭代周期，在正式开发前验证假设',
         's01.team.li2': '以共享组件系统与版本管理规范降低设计与工程之间反复出现的交付摩擦',
         's02.title': '我们的起点',
         's02.h3.bg': '项目背景',
         's02.h3.goal': '我们的目标',
-        's02.bg.body': '这款产品最初是为相对单一的用户情境设计的，随着运营复杂度提升，扩展性开始受到限制。「入门」区块占所有帮助文章浏览量的 36%，清楚反映出设定流程中的深层摩擦。原本被描述为 10 分钟即可完成的设定，实际往往需要 45 到 50 分钟，而且 60% 的用户无法在没有支持的情况下完成。',
-        's02.goal.body': '我们重新设计商品上架体验，让流程更贴近用户的心智模型，通过重构步骤、改写标签和情境式引导，降低困惑与对支持的依赖。',
+        's02.bg.body': '这款产品最初是为相对单一的用户情境设计的，随着运营复杂度提升，扩展性开始受到限制。「入门」区块占所有帮助文章浏览量的 <span class="stat-hi">36%</span>，清楚反映出设置流程中的深层摩擦。原本被描述为 10 分钟即可完成的设置，实际往往需要 <span class="stat-hi">45 到 50 分钟</span>，而且 <span class="stat-hi">60%</span> 的用户无法在没有支持的情况下完成。',
+        's02.goal.body': '我们重新设计商品上架体验，让流程更贴近用户的心智模型，通过重构步骤、改写标签和情境式引导，<span class="stat-hi">降低困惑与对支持的依赖</span>。',
         's03.title': '研究与问题定义',
         's03.h3.research': '初步调研',
-        's03.research.body1': '我们访谈用户与一线员工，实际了解商品上架的操作方式。一位包船业者分享：「我很怀念 LINE 上的实时回复，新系统的响应时间慢了很多。」',
-        's03.research.body2': '这一现象在访谈中反复出现——系统复杂度让用户高度依赖实时支持，而这对用户和客服团队双方都难以为继。',
+        's03.research.body1': '我们访谈用户与一线员工，实际了解商品上架的操作方式。一位包车业者分享：「我很怀念 LINE 上的实时回复，新系统的响应时间慢了很多。」',
+        's03.research.body2': '这一现象在访谈中反复出现·系统复杂度让用户<span class="stat-hi">高度依赖实时支持</span>，而这对用户和客服团队双方都难以为继。',
         's03.h3.persona': '用户人物画像',
-        's03.persona.body': '调研中浮现出两种截然不同的用户类型：以营收与渠道整合为优先的决策者田中武（Takeshi Tanaka），以及负责日常订单与预订管理的操作员山口真理（Mari Yamaguchi）。尽管目标不同，两者都面临同一道墙——复杂的设定流程让进度停滞，并侵蚀了对系统的信任。',
+        's03.persona.body': '调研中浮现出两种截然不同的用户类型：以营收与渠道整合为优先的决策者田中武（Takeshi Tanaka），以及负责日常订单与预订管理的操作员山口真理（Mari Yamaguchi）。尽管目标不同，两者都面临同一道墙·复杂的设置流程让进度停滞，并侵蚀了对系统的信任。',
         's03.h3.journey': '用户旅程地图',
-        's03.journey.body': '我们绘制了六个阶段的情绪历程——从首次使用到可能流失。山口真理的旅程揭示了日常操作中集中的摩擦点；田中武的旅程则显示出在战略决策点的风险规避倾向。两条路径最终收敛至相同的两个关键流失区。',
+        's03.journey.body': '我们绘制了六个阶段的情绪历程·从首次使用到可能流失。山口真理的旅程揭示了日常操作中集中的摩擦点；田中武的旅程则显示出在战略决策点的风险规避倾向。两条路径最终收敛至相同的<span class="stat-hi">两个关键流失区</span>。',
         's03.h3.pain': '痛点与机会',
-        's03.pain.body': '旅程地图识别出两个高风险流失区：初始导入和上线后的设定调整。两者有相同的根本原因——系统结构与用户的心智模型不符，导致他们在发生错误时无法自行恢复。',
-        's03.pain.li1': '早期对系统价值的不确定性',
-        's03.pain.li2': '上线后调整设定时的复杂性与不稳定性',
+        's03.pain.body': '旅程地图揭示了两个关键流失节点：初始上架流程与发布后的配置调整。两个阶段都源于同一根本问题·系统架构与用户心智模型的落差，导致他们在出错时无法自行修正。',
+        's03.pain.li1': '<span class="stat-hi">上架阶段</span>：对系统价值感到不确定，导致早期流失',
+        's03.pain.li2': '<span class="stat-hi">发布后</span>：修改已上线设置时，感受到操作困难与系统不稳定',
+        's03b.title': '核心流程诊断',
+        's03b.context': '根据旅程地图的洞察，我们将本次系统改版的优先焦点设定为核心商品上架流程。通过聚焦这个关键触点，我们的目标是<span class="stat-hi">缩小系统架构与用户心智模型之间的落差</span>，建立一个让用户能够自信操作、并在出错时自行修正的基础。',
+        's03b.intro': '我们追踪了「金工私塾」在 Rezio 首次上架银黏土戒指工作坊的完整操作路径。看似直观的四步骤流程，一步步揭示出实际上完全不线性的操作路径。',
+        's03b.step1.title': '套餐设置',
+        's03b.step1.desc': '上传图片、填写商品名称、描述、费用包含与不包含的项目，以及确认方式。',
+        's03b.step2.title': '上架规则设置',
+        's03b.step2.desc': '定义票种与最低购买数量·同时需要填入价格。',
+        's03b.pain1.tag': '痛点',
+        's03b.pain1.body': '没有任何提示、面包屑或视觉信号告知你已离开套餐设置的情境。依次切换选项卡的用户，往往不会意识到这些设置适用范围是整个商品，而非他们正在设置的那个套餐。',
+        's03b.pain2.tag': '痛点',
+        's03b.pain2.body': '凭证发送规则、确认时间窗口和付款方式都是商品层级的决策，却夹在套餐设置步骤之间显示，没有任何层级结构或分组提示这个范围的切换。',
+        's03b.step3.title': '设置价格',
+        's03b.step3.desc': '在定价已填入之后，才能设置可用时段、开放日期与每场次容量。',
+        's03b.pain3.tag': '痛点',
+        's03b.pain3.body': '价格规则必须事先在全局设置区域中建立，才会出现在这个列表里。如果所需规则尚不存在，必须离开此页面、前往价格规则页面创建后再返回。系统没有任何提示说明这个依存关系。',
+        's03b.step4.title': '销售规则绑定',
+        's03b.step4.desc': '设置可售出的数量。',
+        's03b.pain4.tag': '痛点',
+        's03b.pain4.body': '界面上没有任何提示告知差异化定价需要创建多条绑定规则。最终呈现的表格是一个没有分组的平面列表，各条目之间的关联（同一个套餐、不同时间区间）完全无从辨识。',
+        's03b.kv.product': '宝石银黏土戒指手作体验',
+        's03b.prd.intro': '通过对旅游业者与工作坊主办方的深度用户访谈，一个共同的模式逐渐浮现：早在引入正式预订系统之前，大多数商家就已建立了一套高度结构化的商品数据管理方式。<br><br>这张图呈现的，是实地调研中归纳出的「商家逻辑」。以「银黏土戒指手作体验」为例，说明商家在日常运营中如何管理多层次的信息·从取消政策等商品层级的细节，到阶梯定价、最低人数、年龄限制等套餐层级的约束条件。这些复杂的结构，正是商家每天都在面对的真实却繁琐的运营现实。',
+        's03b.prd.tag': '商品',
+        's03b.prd.info.title': '商品层级信息',
+        's03b.prd.meta': '图片、说明、商家信息、评价、取消政策',
+        's03b.prd.pkg.rules': '套餐专属规则',
+        's03b.prd.pkg.a.label': '套餐 A',
+        's03b.prd.pkg.a.name': '宝石银黏土戒指手作体验｜单人报名',
+        's03b.prd.pkg.a.detail': '最低 1 人 · 2026-03-24 起',
+        's03b.prd.pkg.a.rule': '名额有限 · 12 岁以上',
+        's03b.prd.pkg.b.label': '套餐 B',
+        's03b.prd.pkg.b.name': '宝石银黏土戒指手作体验｜双人九折优惠',
+        's03b.prd.pkg.b.detail': '最低 2 人 · 2026-03-24 起',
+        's03b.prd.pkg.b.rule': '必须同时入场',
+        's03b.q1': '「我还在想规则怎么订，系统就要我填价格了。我连原价都还没想好。」',
+        's03b.q2': '「我都还不知道哪天有课，怎么先订价？假日要不要加价？我现在填的数字等一下是不是还要改？」',
+        's03b.q3': '「我设完场次才发现周末也有课，但我刚才在 Step 2 填的是平日价。现在要回去改吗？改了之后这边的场次会不会跑掉？」',
+        's03b.q4': '「6 是每场 6 个人，还是这个月总共只卖 6 组？我不确定，但也没地方问。」',
+        's03b.path.h3': '实际操作路径',
+        's03b.path.body': '看起来像四步骤的线性流程，实际上是反复来回的循环。商家平均需要在步骤 2 和步骤 3 之间来回 3 到 4 次，才敢点击发布。',
+        's03b.path.s1': '基本设置',
+        's03b.path.s2': '套餐 + 定价',
+        's03b.path.s2.note': '（先填一个大概的价格）',
+        's03b.path.s3': '场次设置',
+        's03b.path.s3.note': '（发现需要平假日差异定价）',
+        's03b.path.back1': '🔄 回到 ② · 修改价格',
+        's03b.path.back2': '🔄 回到 ③ · 确认场次没有变动',
+        's03b.path.s4': '库存数量',
+        's03b.path.s4.note': '（不确定是每场次还是总量）',
+        's03b.path.back3': '🔄 回到 ② · 再次确认',
+        's03b.path.warn': '⚠ 来回 <span class="stat-hi">3–4 轮</span>，才敢点击发布',
         's04.title': '迭代',
-        's04.h3.gaps': '揭露落差，定义优先级',
-        's04.gaps.body': '卡片分类揭示了用户心智模型与产品信息架构之间的根本差距。易用性测试量化了影响程度：多个核心任务的完成率低于 50%，每次操作的错误率超过 2 次——这是确定设计改造重点的最强信号。',
+        's04.h3.gaps': '为什么这么反直觉',
+        's04.gaps.body': '上述四个步骤揭示了一个围绕内部数据关系而非用户意图所设计的系统。商家的思考顺序是自然的：我要卖什么、什么时候卖、卖多少钱。然而系统将这些拆解为独立的实体·套餐、价格规则、时间绑定·需要分别设置，再通过一个从未向用户说明的抽象关联模型串联起来。<br><br>结果是一个在用户尚未具备判断背景之前就不断要求做决策的流程：在不知道排期的情况下先定价、在设置套餐途中被悄悄引导至商品层级的设置、在毫无提示下创建「销售规则」，却不知道需要几条、彼此之间又有什么关联。',
+        's04.gaps.example': '假设「银黏土戒指手作体验」想要区分工作日与假日定价，那就是 <span class="stat-hi">2 种套餐 × 2 种定价 × 2 个时段 = 4 条销售规则</span>需手动创建，每种组合各一条。没有批量套用，没有捷径，也没有任何提示告诉你这个乘法是必要的。',
         's04.h3.finding': '关键发现',
-        's04.finding.body': '易用性测试识别出旧系统中的四个系统性摩擦来源：',
-        's04.finding.f1': '心智模型不一致——上架流程是按系统逻辑构建的，而非用户实际设定商品的思考方式。',
-        's04.finding.f2': '缺乏错误恢复机制——用户遭遇死路时没有任何情境引导，被迫放弃任务或致电客服才能继续。',
-        's04.finding.f3': '内部术语——标签反映的是工程概念而非用户词汇，在关键设定步骤造成持续性误解。',
-        's04.finding.f4': '交互模式不一致——缺乏统一的设计语言，用户在界面中移动时无法建立可靠的预期。',
-        's04.h3.proposal': '新方案',
-        's04.proposal.body': '我们将定价从基于身份的时段绑定中解耦——允许用户直接将价格规则指定给时间段。重构后的流程遵循用户的自然工作顺序，消除了测试中持续阻碍进展的「身份关系」抽象概念。',
+        's04.finding.body': '易用性测试识别出旧系统中的<span class="stat-hi">四个系统性摩擦来源</span>：',
+        's04.finding.f1': '心智模型不一致·上架流程是按系统逻辑构建的，而非用户实际设置商品的思考方式。',
+        's04.finding.f2': '缺乏错误恢复机制·用户遭遇死路时没有任何情境引导，被迫放弃任务或致电客服才能继续。',
+        's04.finding.f3': '内部术语·标签反映的是工程概念而非用户词汇，在关键设置步骤造成持续性误解。',
+        's04.finding.f4': '交互模式不一致·缺乏统一的设计语言，用户在界面中移动时无法建立可靠的预期。',
+        's04.finding.f5': '跨标签页编辑依赖·更改套餐名称、价格或时间表需要在多个未关联的标签页中操作，使更新容易出错且耗时。',
+        's04.h3.proposal': '新方案：顺应你的思考方式设定',
+        's04.proposal.body': '我们<span class="stat-hi">将定价从基于身份的时段绑定中解耦</span>·允许用户直接将价格规则指定给时间段。重构后的流程遵循用户的自然工作顺序，消除了测试中持续阻碍进展的「身份关系」抽象概念。',
+        's05.new.step1.title': '套餐设置',
+        's05.new.story1': '创建新商品的入口。点击「+ 新增套餐」后会触发分群问卷·取代旧版不分产品类型就全部字段一次展开的做法。',
+        's05.new.step2.title': '分群问卷',
+        's05.new.story2': '短问卷在一开始就捕获行程类型，系统只呈现该产品需要的字段·隐藏所有不相关的选项。在易用性测试中达到 <span class="stat-hi">96%</span> 的分群准确率·用户可端到端完成设置，无需回头或联系客服，也缩短了销售团队的培训时间。',
+        's05.new.step3.title': '项目设置',
+        's05.new.story3': '为每个套餐设置身份类型（如成人、儿童）与规格。<span class="stat-hi">即时预览</span>的「效果预览」直接呈现预约页面的实际外观·取代旧版必须先发布再检查错误的做法。',
+        's05.new.step4.title': '销售日历',
+        's05.new.story4': '在同一画面设置可售期间与预约规则·开售时间、截止时间、排除日期·并搭配<span class="stat-hi">即时日历预览</span>。例如假设今天是 10/12：因截止时间需提前 1 天，12 日显示为不可购买；18 日因设置为排除日期而显示不可用。根据调研，我们将此设置从产品层级下放到套餐层级·让不同套餐可各自设置休息日与开售规则。旧版中可用性设置分散在多个标签页，且无可视化确认。',
+        's05.new.step5.title': '场次设置',
+        's05.new.story5': '一步完成营业日与时段定义。选择每周开放的天数、设置场次开始时间与时长，右侧日历<span class="stat-hi">即时呈现</span>完整的周间排程。旧版需要在另一个全局设置区预先创建时段绑定才能使用。',
+        's05.new.step6.title': '价格设置',
+        'diagram.ref': '所见即所得 · 右侧示意图 →',
+        's05.new.story6': '直接为时段指派价格·支持多种价格层级（如默认价格、周末价格）。<span class="stat-hi">色彩标记</span>的日历格让每个场次适用的规则一目了然·消除旧版 N×M×T 组合需逐一创建并验证的「绑定规则」模式。',
+        's03b.kv.bound.pkg2': '单人报名 · 每人计 · 成人',
+        's03b.kv.bound.price2': 'NT$2,050',
+        's03b.kv.bound.apply2': '每周重复 · 一 / 二 / 三 / 四 / 五 / 六 / 日',
         's04.h3.fail': '快速失败，快速成功',
-        's04.fail.body': '在三个月内，我们进行了 5 轮以上的滚动调研——从概念草稿推进至可测试的原型。每个冲刺都针对特定假设，确保每一项设计改动都是基于已确认的用户发现，而非假设。',
+        's04.fail.body': '在<span class="stat-hi">三个月</span>内，我们进行了 <span class="stat-hi">5 轮以上</span>的滚动调研·从概念草稿推进至可测试的原型。每个冲刺都针对特定假设，确保每一项设计改动都是基于已确认的用户发现，而非假设。',
         's04.h3.ui': 'UI 模型与原型',
-        's04.ui.body': '在每次设计评审中，我们都会创建原型——使用 AI 生成或 Figma——在正式开发前测试特定假设。下方的交互原型涵盖定价流程：跟随绿色光标探索交互模型。',
+        's04.ui.body': '在每次设计评审中，我们都会创建原型·使用 AI 生成或 Figma·在正式开发前测试特定假设。下方的交互原型涵盖定价流程：跟随绿色光标探索交互模型。',
         's05.title': '我们的解决方案',
         's05.feat1.title': '通过简短画像问卷降低导入成本',
-        's05.feat1.body': '前置的简短问卷收集行程类型，在整个流程中动态隐藏无关字段。在易用性测试中，问卷达到 96% 的分析准确率——让用户能够端到端完成设定，无需回头或联系客服。此方案也缩短了销售团队的导入培训时间。',
+        's05.feat1.body': '前置的简短问卷收集行程类型，在整个流程中动态隐藏无关字段。在易用性测试中，问卷达到 <span class="stat-hi">96%</span> 的分析准确率·让用户能够端到端完成设置，无需回头或联系客服。此方案也缩短了销售团队的导入培训时间。',
         's05.feat2.title': '通过自助服务帮助面板，降低对客服的依赖',
-        's05.feat2.body': '自助服务帮助面板在摩擦点即时提供情境引导——让用户无需联系客服即可解决问题。预估影响：支持工单量减少约 30%，平均解决时间缩短，直接降低运营成本。',
+        's05.feat2.body': '自助服务帮助面板在摩擦点即时提供情境引导·让用户无需联系客服即可解决问题。预估影响：支持工单量减少约 <span class="stat-hi">30%</span>，平均解决时间缩短，直接降低运营成本。',
         's05.feat3.title': '通过「发布前预览」降低错误率',
-        's05.feat3.body': '我们将单栏表单替换为双栏界面：左侧设定，右侧实时商品预览。每个字段的变更即时渲染——让用户在发布前验证输入，避免需要上线后修正的错误。',
+        's05.feat3.body': '我们将单栏表单替换为双栏界面：左侧设置，右侧实时商品预览。每个字段的变更即时渲染·让用户在发布前验证输入，避免需要上线后修正的错误。',
         's05.feat4.title': '打造更具对话感的 UX 文案系统',
-        's05.feat4.body': '我们将孤立的字段标签替换为句式输入——将情境直接嵌入表单结构中。用户不再需要孤立地解读标签，而是阅读完整句子后填入空格。测试显示任务完成速度更快、错误设定更少，直接促成了 SUS 分数 80.3 的达成。',
+        's05.feat4.body': '我们将孤立的字段标签替换为句式输入·将情境直接嵌入表单结构中。用户不再需要孤立地解读标签，而是阅读完整句子后填入空格。测试显示任务完成速度更快、错误设置更少，直接促成了 <span class="stat-hi">SUS 分数 80.3</span> 的达成。',
         's06.title': '结果',
-        's06.body1': '这次改版在三个目标上都带来了可衡量的进展：设定时间从 45 分钟缩短至 28 分钟（–38%）、SUS 达到 80.3，支持工单量也在未增加人力的情况下估计下降约 30%。',
-        's06.body2': 'AI 辅助原型制作缩短了迭代周期，而共享设计系统则持续降低了设计与工程之间的交付摩擦，让这些改进在项目结束后依然发挥作用。',
+        's06.body1': '这次改版在三个目标上都带来了可衡量的进展：设置时间从 <span class="stat-hi">45 分钟缩短至 28 分钟（–38%）</span>、<span class="stat-hi">SUS 达到 80.3</span>，客服工单量也在未增加人力的情况下下降 <span class="stat-hi">30%</span>。',
+        's06.body2': 'AI 辅助原型制作缩短了迭代周期，而<span class="stat-hi">共享设计系统</span>则持续降低了设计与工程之间的交付摩擦，让这些改进在项目结束后依然发挥作用。',
         's06.body3': '如果有更多时间，我会在利益相关者对齐的更早阶段引入用户，让证据更早进入讨论并减少返工。不过，这个过程中沉淀下来的团队能力，本身也是一项重要成果。',
+        's03.persona.role.dm': '决策者',
+        's03.persona.role.do': '日常操作员',
+        's03.ptable.row.position': '职位',
+        's03.ptable.t1.position': '经理・企业主',
+        's03.ptable.t2.position': '运营助理・订位专员',
+        's03.ptable.row.keyfocus': '重点',
+        's03.ptable.t1.keyfocus': '营收增长、运营效率、渠道整合',
+        's03.ptable.t2.keyfocus': '易用性、减少错误、快速查看订单',
+        's03.ptable.row.keyfeatures': '关键功能',
+        's03.ptable.t1.keyfeatures': '跨平台商品管理、销售报表',
+        's03.ptable.t2.keyfeatures': '订单导出、票券核销',
+        's03.ptable.row.needs': '需求',
+        's03.ptable.t1.needs': '稳定整合、提升品牌形象',
+        's03.ptable.t2.needs': '易学上手、省时高效',
+        'cjm.stage.0': '使用 Rezio 前',
+        'cjm.stage.1': '订阅 Rezio',
+        'cjm.stage.2': '上架行程',
+        'cjm.stage.3': '销售行程',
+        'cjm.stage.4': '上线后调整',
+        'cjm.stage.5': '取消订阅',
+        'cjm.lbl.steps': '步骤',
+        'cjm.lbl.actions': '行动',
+        'cjm.lbl.feelings': '感受与想法',
+        'cjm.role.dm': '决策者',
+        'cjm.role.do': '日常操作员',
+        'cjm.bubble.s0': '「订单越来越多，我怕出错。」',
+        'cjm.bubble.s1': '「终于有人帮我了。希望这能解决混乱。」',
+        'cjm.bubble.s2.dm': '「系统符合我们的流程·很有希望的开始。」',
+        'cjm.bubble.s2.do': '「第一个行程上架了。逐步引导让我很轻松。」',
+        'cjm.bubble.s3.dm': '「销售情况清楚了。不用猜测就能调整策略。」',
+        'cjm.bubble.s3.do': '「自动邮件每天帮我省了很多事，错误也少很多。」',
+        'cjm.bubble.s4': '「修复错误不直观，每次都得打电话给客服。」',
+        'cjm.bubble.s5': '「效果比预期有限。决定不续约。」',
+        'cjm.act.s0.1': '整合订单',
+        'cjm.act.s0.2': '追踪行程',
+        'cjm.act.s0.3': '手动发送电子邮件',
+        'cjm.act.s1.1': '入门咨询电话',
+        'cjm.act.s1.2': '启用试用',
+        'cjm.act.s2.dm1': '签订合约',
+        'cjm.act.s2.dm2': '开始培训',
+        'cjm.act.s2.do1': '上架第一个行程',
+        'cjm.act.s2.do2': '与团队对齐流程',
+        'cjm.act.s3.dm1': '查看销售报表',
+        'cjm.act.s3.dm2': '管理订单',
+        'cjm.act.s3.do1': '发送票券',
+        'cjm.act.s3.do2': '监控容量',
+        'cjm.act.s4.dm1': '更新定价',
+        'cjm.act.s4.dm2': '调整行程',
+        'cjm.act.s4.do1': '处理无效订单',
+        'cjm.act.s4.do2': '联系客服',
+        'cjm.act.s5.1': '决定不续约',
+        'ppo.lbl.pain': '痛点',
+        'ppo.lbl.ideation': '解决方向',
+        'ppo.pain.z1.1': '<strong>上架的不确定感</strong> · 用户不确定系统是否真的能解决既有的运营混乱。',
+        'ppo.pain.z1.2': '<strong>高昂的导入成本</strong> · 需要花费大量时间与内部培训。',
+        'ppo.pain.z2.1': '<strong>更新后的连锁反应</strong> · 复杂的更新流程频繁触发下游错误。',
+        'ppo.pain.z2.2': '<strong>高度依赖客服支持</strong> · 更新定价或行程细节的流程过于复杂，员工容易出错。',
+        'ppo.idea.z1.1': '建立早期信任，降低导入摩擦 <span class="ppo-eg-tag">示例</span>',
+        'ppo.idea.z1.2': '角色导向的交互式导入流程 <span class="ppo-eg-tag">示例</span>',
+        'ppo.idea.z1.3': '范例模板、成功案例展示 <span class="ppo-eg-tag">示例</span>',
+        'ppo.idea.z1.4': '引导式设置清单 <span class="ppo-eg-tag">示例</span>',
+        'ppo.idea.z2.1': '简化更新流程、减少错误 <span class="ppo-eg-tag">示例</span>',
+        'ppo.idea.z2.2': '发布前预览 <span class="ppo-eg-tag">示例</span>',
+        'ppo.idea.z2.3': '自动验证与错误检测 <span class="ppo-eg-tag">示例</span>',
+        'ppo.idea.z2.4': '版本记录与回滚 <span class="ppo-eg-tag">示例</span>',
+        'ppo.idea.z2.5': '附步骤指引与常见问题的自助帮助面板 <span class="ppo-eg-tag">示例</span>',
+        'ppo.idea.z2.6': 'AI 智能助手 <span class="ppo-eg-tag">示例</span>',
+        's03b.story1': '「套餐」选项卡用于定义每个销售选项，包含名称、描述与有效期间。',
+        's03b.story1.dim': '同样的标签「选项描述」在同一个界面上出现了两次·一次在自由文本字段上方，一次在有效期设置的单选按钮组上方。相同的标签，对应两种完全不同的输入类型。默认提示文字还引用了温泉泳池套餐，把注意力从实际任务中带走。',
+        's03b.story2': '在套餐设置进行到一半时，下一个必要步骤跳到了完全不同的选项卡·「上架设置」。确认方式、最长可预订天数、付款方式和凭证设置都在这里。操作情境已悄然从「套餐」切换到了整个「商品」层级。',
+        's03b.story3': '「设置价格」选项卡分为两个子步骤：首先从列表中选择一条预先建立的价格规则，接着定义该规则的适用时间范围。',
+        's03b.story4': '「销售规则」表格中的每一行代表一条可销售组合：套餐 × 价格规则 × 时间区间。若要让同一个套餐在工作日与周末使用不同价格，就必须创建两条分别绑定不同时间范围的规则。',
+        's03b.kv.key.product': '商品',
+        's03b.kv.key.includes': '包含',
+        's03b.kv.key.restrictions': '限制',
+        's03b.kv.key.confirmation': '确认方式',
+        's03b.kv.key.solo': '单人',
+        's03b.kv.key.pair': '双人（九折）',
+        's03b.kv.key.timeslots': '时段',
+        's03b.kv.key.openfrom': '开放日期',
+        's03b.kv.includes': '讲师 · 材料（银黏土、宝石） · 器具 · 珠宝盒',
+        's03b.kv.restrictions': '12 岁以下谢绝 · 双人必须同时入场',
+        's03b.kv.confirmation': '即时确认',
+        's03b.kv.solo': 'NT$2,050 / 人 · 最低 1 人',
+        's03b.kv.pair': 'NT$1,743 / 人 · 最低 2 人 · 必须同时入场',
+        's03b.kv.openfrom': '2026-03-23 · 过去日期显示为灰色',
+        's03b.kv.key.pkg': '套餐名称',
+        's03b.kv.pkg': '宝石银黏土戒指手作体验 | 单人报名',
+        's03b.kv.key.validity': '有效期',
+        's03b.kv.validity': '仅限所选日期当天',
+        's03b.kv.key.pkg.rules': '规则',
+        's03b.kv.pkg.rules': '名额有限 · 12 岁以上',
+        's03b.kv.key.maxbook': '最长可预订天数',
+        's03b.kv.maxbook': '不限',
+        's03b.kv.key.payment': '付款方式',
+        's03b.kv.payment': 'ATM / 银行转账',
+        's03b.kv.key.voucher': '凭证',
+        's03b.kv.voucher': 'Rezio 凭证 · 可使用 2 次',
+        's03b.kv.key.pricingrule': '价格规则',
+        's03b.kv.pricingrule': '单人价格 · NT$2,050 / 人',
+        's03b.kv.key.bindtype': '绑定类型',
+        's03b.kv.bindtype': '每周重复',
+        's03b.kv.key.schedule': '时间表',
+        's03b.kv.schedule': '周一至周日 · 10:00 – 18:00',
+        's03b.kv.key.bound.pkg': '套餐',
+        's03b.kv.bound.pkg': '单人报名 · 按人头计费 · 成人',
+        's03b.kv.key.bound.price': '销售价格',
+        's03b.kv.bound.price': 'NT$1,880',
+        's03b.kv.key.bound.apply': '适用对象',
+        's03b.kv.bound.apply': '每周重复 · 一 / 二 / 三 / 四 / 五 / 六 / 日',
+        's03b.kv.key.sales.switch': '销售开关',
+        's03b.kv.sales.switch': '开启',
       }
     };
 
     // Store originals for rich-HTML elements
     const rezioRichKeys = ['s0.title', 's0.bubble1', 's0.bubble2', 'intro.product.body', 'intro.role.body',
+      's01.product.li1', 's01.product.li2', 's01.product.li3',
       's02.bg.body', 's02.goal.body', 's03.research.body1', 's03.research.body2', 's03.persona.body',
-      's03.journey.body', 's03.pain.body', 's04.gaps.body', 's04.finding.body', 's04.proposal.body',
+      's03.journey.body', 's03.pain.body', 's04.gaps.body', 's04.gaps.example', 's04.finding.body', 's04.proposal.body',
       's04.fail.body', 's04.ui.body', 's05.feat1.body', 's05.feat2.body', 's05.feat3.body', 's05.feat4.body',
-      's06.body1', 's06.body2', 's06.body3'];
+      's06.body1', 's06.body2', 's06.body3',
+      's03b.prd.intro',
+      'ppo.pain.z1.1', 'ppo.pain.z1.2', 'ppo.pain.z2.1', 'ppo.pain.z2.2',
+      'ppo.idea.z1.1', 'ppo.idea.z1.2', 'ppo.idea.z1.3', 'ppo.idea.z1.4',
+      'ppo.idea.z2.1', 'ppo.idea.z2.2', 'ppo.idea.z2.3', 'ppo.idea.z2.4', 'ppo.idea.z2.5', 'ppo.idea.z2.6',
+      's03b.story1', 's03b.story1.dim', 's03b.story2', 's03b.story3', 's03b.story4',
+      's03b.pain3.body',
+      's03.pain.li1', 's03.pain.li2',
+      's03b.path.body', 's03b.path.warn',
+      's05.new.story3', 's05.new.story4', 's05.new.story5', 's05.new.story6'];
 
     const rezioOriginals = {};
     rezioRichKeys.forEach(key => {
@@ -1707,7 +3142,11 @@
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (t[key] !== undefined) {
-          el.textContent = pangu(t[key]);
+          if (rezioRichKeys.includes(key)) {
+            el.innerHTML = pangu(t[key]);
+          } else {
+            el.textContent = pangu(t[key]);
+          }
         }
       });
       document.documentElement.lang = lang === 'zh-tw' ? 'zh-TW' : lang === 'zh-cn' ? 'zh-CN' : lang;
@@ -1717,7 +3156,19 @@
     try {
       const saved = localStorage.getItem('portfolio-lang');
       if (saved && saved !== 'en') applyRezioLang(saved);
+      const sel = document.getElementById('nav-lang-select');
+      if (sel) sel.value = saved || 'en';
     } catch(e) {}
+
+    // Language dropdown
+    const langSel = document.getElementById('nav-lang-select');
+    if (langSel) {
+      langSel.addEventListener('change', () => {
+        const lang = langSel.value;
+        applyRezioLang(lang);
+        try { localStorage.setItem('portfolio-lang', lang); } catch(e) {}
+      });
+    }
   })();
 
   // ── CJM Animated Journey Map ──────────────────────────
@@ -1816,7 +3267,7 @@
 </div>
 
 <script>
-  // WWSanim — trigger once on scroll into view
+  // WWSanim · trigger once on scroll into view
   (() => {
     const wwsEl = document.querySelector('.wws-anim');
     if (wwsEl) {
@@ -1858,6 +3309,51 @@
         hideTimer = setTimeout(() => { tooltip.style.display = 'none'; }, 160);
       });
     });
+  })();
+</script>
+
+<script>
+  // s03b · scroll-reveal: intro + each chapter step
+  (() => {
+    const intro = document.querySelector('#s03b .ofs-intro');
+    const prdTree = document.querySelector('#s03b .prd-tree');
+    const chapters = Array.from(document.querySelectorAll('#s03b .ofs-chapter'));
+    const targets = [intro, prdTree, ...chapters].filter(Boolean);
+    if (!targets.length) return;
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('ofs-visible');
+        obs.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
+
+    targets.forEach(el => obs.observe(el));
+
+    // prd-card stagger · trigger when card enters view
+    const prdCard = document.querySelector('#s03b .prd-card');
+    if (prdCard) {
+      const cardObs = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          prdCard.classList.add('prd-anim');
+          cardObs.disconnect();
+        }
+      }, { threshold: 0.15 });
+      cardObs.observe(prdCard);
+    }
+
+    // bound-eq stagger · trigger when diagram enters view
+    const boundEq = document.querySelector('#s03b .bound-eq');
+    if (boundEq) {
+      const boundObs = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          boundEq.classList.add('bound-anim');
+          boundObs.disconnect();
+        }
+      }, { threshold: 0.15 });
+      boundObs.observe(boundEq);
+    }
   })();
 </script>
 </body>

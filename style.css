@@ -398,7 +398,7 @@
 
     .intro-headline {
       font-family: 'Barlow', sans-serif;
-      font-size: clamp(46px, 5vw, 64px);
+      font-size: clamp(36px, 4vw, 52px);
       font-weight: 700;
       font-style: italic;
       letter-spacing: -0.02em;
@@ -619,6 +619,43 @@
       padding: 2px 8px; border-radius: 20px;
       white-space: nowrap;
       font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.04em;
+    }
+
+    /* ── ARTICLE POPUP ────────────────── */
+    .article-overlay {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
+      justify-content: center; align-items: center;
+    }
+    .article-overlay.open { display: flex; }
+    .article-popup {
+      background: #fffefb; border-radius: 20px; max-width: 620px; width: 90%;
+      max-height: 80vh; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .article-popup-header {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 32px 36px 20px; border-bottom: 1px solid rgba(0,0,0,0.06);
+      position: sticky; top: 0; background: #fffefb; border-radius: 20px 20px 0 0; z-index: 1;
+    }
+    .article-popup-close {
+      background: none; border: none; font-size: 24px; cursor: pointer;
+      color: #999; line-height: 1; flex-shrink: 0; margin-top: 2px;
+    }
+    .article-popup-close:hover { color: #333; }
+    .article-popup-scroll {
+      padding: 24px 36px 40px; overflow-y: auto; max-height: calc(80vh - 100px);
+      font-family: 'Noto Sans', sans-serif; font-size: 14px; line-height: 1.8; color: #2e2a25;
+    }
+    .article-video { aspect-ratio: 16/9; border-radius: 12px; overflow: hidden; margin-bottom: 20px; background: #000; }
+    .article-video video { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .article-popup-scroll p { margin: 0 0 16px; }
+    .article-popup-scroll p:last-child { margin-bottom: 0; }
+    .article-popup-scroll a { color: var(--accent, #c96); text-decoration: underline; }
+    .article-sign { margin-top: 24px; text-align: right; }
+    .article-sign img { width: 120px; opacity: 0.8; }
+    .article-popup-title {
+      font-family: 'Barlow', sans-serif; font-size: 20px; font-weight: 700;
+      line-height: 1.3; margin: 0; color: #1a1714; flex: 1;
     }
 
     /* ══════════════════════════════════

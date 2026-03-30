@@ -54,6 +54,18 @@
       scrollbar-width: none;
     }
     .nav-anchors::-webkit-scrollbar { display: none; }
+    .nav-lang {
+      margin-left: 20px; flex-shrink: 0;
+      appearance: none; -webkit-appearance: none;
+      background: transparent; border: 1px solid rgba(43,37,32,0.2);
+      border-radius: 6px; padding: 3px 22px 3px 8px;
+      font-size: 11px; font-weight: 600; font-family: 'Barlow', sans-serif;
+      color: var(--muted); cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 6px center;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .nav-lang:hover { border-color: rgba(43,37,32,0.45); color: var(--text); }
     .nav-anchor {
       font-size: 11px; font-weight: 500;
       letter-spacing: 0.01em;
@@ -144,6 +156,8 @@
       justify-content: center;
     }
 
+    .stat-hi { background: #ffe033; padding: 1px 4px; border-radius: 4px; font-weight: 600; }
+
     /* ── CHAT BUBBLES ─────────────────────────────── */
     .chat-wrap {
       display: flex; flex-direction: column; gap: 24px;
@@ -211,7 +225,7 @@
       aspect-ratio: 9/19.5;
       background: #f4f4f4;
     }
-    .phone-frame img {
+    .phone-frame img, .phone-frame video {
       width: 100%; height: 100%; object-fit: cover;
     }
     .phone-frame-placeholder {
@@ -273,12 +287,18 @@
 
 <!-- ── NAV ────────────────────────────────────────── -->
 <nav class="nav">
-  <a class="nav-back" href="/">← Iris Hsieh</a>
+  <a class="nav-back" href="/#work">← Iris Hsieh</a>
   <div class="nav-anchors">
     <a class="nav-anchor" href="#intro">.Intro</a>
     <a class="nav-anchor" href="#s01">01.Start</a>
     <a class="nav-anchor" href="#s02">02.Our Solution</a>
   </div>
+  <select class="nav-lang" id="nav-lang-select">
+    <option value="en">EN</option>
+    <option value="ja">JA</option>
+    <option value="zh-tw">繁</option>
+    <option value="zh-cn">简</option>
+  </select>
 </nav>
 
 <!-- ── TITLE BAR ──────────────────────────────────── -->
@@ -294,7 +314,7 @@
   <div class="sec-inner" style="max-width:100%;padding:0;">
     <div class="intro-card">
       <div class="intro-photo">
-        <img src="https://www.figma.com/api/mcp/asset/1178c2d3-61df-4225-8676-51de77533636" alt="A41 All For One app" />
+        <img src="assets/All for one/cover.png" alt="A41 All For One app" />
       </div>
       <div class="intro-copy">
         <div class="text-block">
@@ -303,7 +323,7 @@
         </div>
         <div class="text-block">
           <p class="h3">My Role:</p>
-          <p class="body">I led the redesign of three core flows: the product page, shopping cart, and profile page. The work focused on replacing brittle WebView patterns with a more native mobile experience and creating clearer paths to checkout.</p>
+          <p class="body">I led the redesign of <span class="stat-hi">three core flows</span>: the product page, shopping cart, and profile page. The work focused on replacing brittle WebView patterns with a more <span class="stat-hi">native mobile experience</span> and creating clearer paths to checkout.</p>
         </div>
         <div class="text-block">
           <p class="h3">Timeframe:</p>
@@ -318,31 +338,8 @@
   </div>
 </div>
 
-<!-- ── 0. A FACT ABOUT OUR APP ─────────────────────── -->
-<div class="sec cream" style="padding-top:120px;padding-bottom:120px;">
-  <div class="sec-inner">
-    <div class="sec-head">
-      <span class="sec-num">0.</span>
-      <span class="sec-title">Core Product Constraint</span>
-    </div>
-    <div class="chat-wrap">
-      <div class="bubble-wide">
-        <p class="body">A41 consolidated products from multiple storefronts into one app, but the underlying data was still fragmented by seller, format, and logistics model. That made consistency at the interface layer the central design problem.</p>
-      </div>
-      <div class="bubble-narrow-row">
-        <div class="bubble-narrow">
-          <p class="body-med">THE GOAL WAS TO TURN INCONSISTENT SOURCE DATA AND CROSS-STORE LOGISTICS INTO A SHOPPING FLOW THAT FELT CLEAR, NATIVE, AND RELIABLE.</p>
-        </div>
-        <div class="bubble-char">
-          <img src="https://www.figma.com/api/mcp/asset/f44ffae4-715c-4392-ad22-e783b85743ad" alt="" />
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- ── 01. WHERE WE STARTED ───────────────────────── -->
-<div id="s01" class="sec white" style="padding-top:120px;padding-bottom:140px;">
+<div id="s01" class="sec white" style="padding-top:32px;padding-bottom:60px;">
   <div class="sec-inner">
     <div class="sec-head">
       <span class="sec-num">01.</span>
@@ -350,17 +347,17 @@
     </div>
     <div class="split-row">
       <div class="split-photo">
-        <img src="https://www.figma.com/api/mcp/asset/a85d899f-76bc-4e10-981a-80258a0063bf" alt="A41 previous design reference" />
+        <img src="assets/All for one/order-logic-diagram.png" alt="A41 previous design reference" />
       </div>
       <div class="split-copy">
-        <p class="body">Before redesigning the interface, I audited the existing product to understand where the experience was breaking down and what the team needed to scale it more coherently.</p>
+        <p class="body">Before redesigning the interface, I <span class="stat-hi">audited the existing product</span> to understand where the experience was breaking down and what the team needed to scale it more coherently.</p>
         <div class="text-block">
           <p class="h3">Understanding Past Design History:</p>
           <p class="body">Before I took on this project, the client had hired other designers to work on the interface. Therefore, before initiating the project, I reviewed previous design documents to understand the overall design direction of the product.</p>
         </div>
         <div class="text-block">
           <p class="h3">Migrating to Figma &amp; Building a Design System:</p>
-          <p class="body">The previous designer mainly worked with Adobe Illustrator and Avocode. To better support the product team's workflow, I migrated the existing files to Figma and Zeplin, then built a design system to enable smoother collaboration going forward.</p>
+          <p class="body">The previous designer mainly worked with Adobe Illustrator and Avocode. To better support the product team's workflow, I migrated the existing files to Figma and Zeplin, then <span class="stat-hi">built a design system</span> to enable smoother collaboration going forward.</p>
         </div>
         <div class="text-block">
           <p class="h3">Competitive Analysis &amp; UX Information Architecture Audit:</p>
@@ -376,7 +373,7 @@
 </div>
 
 <!-- ── 02. OUR SOLUTION ───────────────────────────── -->
-<div id="s02" class="sec cream" style="padding-top:120px;padding-bottom:140px;">
+<div id="s02" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
   <div class="sec-inner">
     <div class="sec-head">
       <span class="sec-num">02.</span>
@@ -392,20 +389,20 @@
       <div class="phone-pair">
         <div class="phone-col">
           <div class="phone-frame" style="border-radius:36px;border-width:4px;">
-            <div class="phone-frame-placeholder">[ Previous version prototype ]</div>
+            <img src="assets/All for one/product-page-previous.png" alt="Previous version prototype" />
           </div>
           <div class="phone-copy">
             <p class="h3">Previous version</p>
-            <p class="body">In the previous version, we couldn't hide the original shopping cart and purchase buttons from the WebView-based product page. Moreover, store and product information could only be viewed within WebView, which often caused frustration and confusion for users.</p>
+            <p class="body">In the previous version, we couldn't hide the original shopping cart and purchase buttons from the <span class="stat-hi">WebView-based product page</span>. Moreover, store and product information could only be viewed within WebView, which often caused frustration and confusion for users.</p>
           </div>
         </div>
         <div class="phone-col">
           <div class="phone-frame" style="border-radius:36px;border-width:4px;">
-            <div class="phone-frame-placeholder">[ Redesign version prototype ]</div>
+            <img src="assets/All for one/product-page-redesign.png" alt="Redesign version prototype" />
           </div>
           <div class="phone-copy">
             <p class="h3">Redesign version</p>
-            <p class="body">In the redesign, improvements in web-scraped data integration allowed designers to display store and product information natively within the app.</p>
+            <p class="body">In the redesign, improvements in web-scraped data integration allowed designers to <span class="stat-hi">display store and product information natively</span> within the app.</p>
           </div>
         </div>
       </div>
@@ -417,22 +414,22 @@
       <div class="phone-pair">
         <div class="phone-col">
           <div class="phone-frame">
-            <div class="phone-frame-placeholder">[ Product Info screen ]</div>
+            <video src="assets/All for one/product-info.mp4" autoplay loop muted playsinline></video>
           </div>
           <div class="phone-copy">
             <p class="h3">Product Information</p>
-            <p class="body">Since product descriptions could only be retrieved as one full block, I redesigned the section to be collapsed by default. Users expand it only when needed, reducing disruption during browsing or checkout.</p>
+            <p class="body">Since product descriptions could only be retrieved as one full block, I redesigned the section to be <span class="stat-hi">collapsed by default</span>. Users expand it only when needed, reducing disruption during browsing or checkout.</p>
             <p class="body" style="margin-top:4px;">Because the length and structure were unpredictable, I added a "Back to top" button at the bottom once expanded. I tested other options (like "Hide"), but usability studies confirmed "Back to top" was the most intuitive and efficient.</p>
           </div>
         </div>
         <div class="phone-col">
           <div class="phone-frame">
-            <div class="phone-frame-placeholder">[ Color &amp; Size Picker screen ]</div>
+            <video src="assets/All for one/color-size-picker.mp4" autoplay loop muted playsinline></video>
           </div>
           <div class="phone-copy">
             <p class="h3">Color &amp; Size Picker</p>
             <p class="body">The main challenge came from inconsistent scraped data: colors could appear as "grass green" or "green with rhombus pattern," while size labels varied widely. This unpredictability made fixed layouts impossible.</p>
-            <p class="body" style="margin-top:4px;">To solve this, I used a Bottom Sheet design, which balanced information capacity and usability on mobile — providing a more stable and flexible user experience.</p>
+            <p class="body" style="margin-top:4px;">To solve this, I used a <span class="stat-hi">Bottom Sheet design</span>, which balanced information capacity and usability on mobile — providing a more stable and flexible user experience.</p>
           </div>
         </div>
       </div>
@@ -444,17 +441,17 @@
       <div class="phone-pair">
         <div class="phone-col">
           <div class="phone-frame">
-            <img src="https://www.figma.com/api/mcp/asset/7e10dce9-0a84-43f8-949a-72c1f88a4864" alt="Two shopping carts UI" />
+            <img src="assets/All for one/shopping-bag.png" alt="Two shopping carts UI" />
           </div>
           <div class="phone-copy">
             <p class="h3">Two Shopping Carts (Taiwan &amp; Korea)</p>
-            <p class="body">In the shopping cart design, international items and other products required separate checkouts, so we decided to split the cart into two sections.</p>
+            <p class="body">In the shopping cart design, international items and other products required separate checkouts, so we decided to <span class="stat-hi">split the cart into two sections</span>.</p>
             <p class="body" style="margin-top:4px;">This design was mainly to prevent users from being notified after clicking "Checkout" that they couldn't place all items in one order. After user testing, I introduced Tabs, allowing users to easily switch between carts, while showing the current item count directly on each tab.</p>
           </div>
         </div>
         <div class="phone-col">
           <div class="phone-frame" style="aspect-ratio:auto;height:auto;">
-            <img src="https://www.figma.com/api/mcp/asset/1d54ea8f-9c3c-4f85-90a8-6943eb0c97cf" alt="Checkout page UI" />
+            <img src="assets/All for one/checkout.png" alt="Checkout page UI" />
           </div>
           <div class="phone-copy">
             <p class="h3">Checkout Page</p>
@@ -475,22 +472,22 @@
       <div class="phone-pair">
         <div class="phone-col">
           <div class="phone-frame" style="border-radius:36px;border-width:4px;">
-            <img src="https://www.figma.com/api/mcp/asset/c1e4381a-1f82-4603-badd-30694b988b7e" alt="Profile page previous version" />
+            <img src="assets/All for one/profile-previous.png" alt="Profile page previous version" />
           </div>
           <div class="phone-copy">
             <p class="h3">Previous version</p>
             <p class="body">In the original product plan, the User Profile Page reserved space for a future "user post" feature. However, due to strategy changes, this feature was not implemented, leaving the reserved area wasted.</p>
-            <p class="body" style="margin-top:4px;">In an e-commerce app, every section represents a potential touchpoint for products, so unused space meant missed opportunities for user engagement.</p>
+            <p class="body" style="margin-top:4px;">In an e-commerce app, every section represents a <span class="stat-hi">potential touchpoint for products</span>, so unused space meant missed opportunities for user engagement.</p>
           </div>
         </div>
         <div class="phone-col">
           <div class="phone-frame" style="border-radius:36px;border-width:4px;">
-            <img src="https://www.figma.com/api/mcp/asset/c7e95e6b-c981-440e-bcfa-adc5335771ee" alt="Profile page redesign version" />
+            <img src="assets/All for one/profile-redesign.png" alt="Profile page redesign version" />
           </div>
           <div class="phone-copy">
             <p class="h3">Redesign version</p>
             <p class="body">In the redesigned User Profile Page, I placed My Order and Customer Service at the top for quick access.</p>
-            <p class="body" style="margin-top:4px;">Below, I added Recently Viewed, Shopping Cart, and My Picks carousels, increasing the chances for products to re-enter the checkout flow.</p>
+            <p class="body" style="margin-top:4px;">Below, I added Recently Viewed, Shopping Cart, and My Picks carousels, <span class="stat-hi">increasing the chances for products to re-enter the checkout flow</span>.</p>
           </div>
         </div>
       </div>
@@ -532,6 +529,19 @@
     }
     window.addEventListener('scroll', update, { passive: true });
     update();
+  })();
+
+  // ── Language switcher ──
+  (function() {
+    const sel = document.getElementById('nav-lang-select');
+    if (!sel) return;
+    try {
+      const saved = localStorage.getItem('portfolio-lang');
+      if (saved) sel.value = saved;
+    } catch(e) {}
+    sel.addEventListener('change', () => {
+      try { localStorage.setItem('portfolio-lang', sel.value); } catch(e) {}
+    });
   })();
 </script>
 

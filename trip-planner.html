@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Trip Planner · Iris Hsieh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #f0ebe2;
+      --bg-card:  #fffefb;
+      --border:   #dbd4c9;
+      --text:     #2b2520;
+      --muted:    #8c8079;
+      --accent:   #5b7fa6;
+    }
+
+    html, body {
+      font-family: 'Noto Sans', 'Barlow', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.4;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; }
+
+    /* ── NAV ──────────────────────────────────────── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(240,235,226,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(43,37,32,0.08);
+      padding: 16px 60px;
+      display: flex; align-items: center;
+    }
+    .nav-back {
+      font-size: 13px; font-weight: 600;
+      color: var(--muted); letter-spacing: 0.04em;
+      font-family: 'Barlow', sans-serif;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text); }
+    .nav-anchors {
+      display: flex; align-items: center; gap: 0;
+      margin-left: auto; overflow-x: auto; scrollbar-width: none;
+    }
+    .nav-anchors::-webkit-scrollbar { display: none; }
+    .nav-lang {
+      margin-left: 20px; flex-shrink: 0;
+      appearance: none; -webkit-appearance: none;
+      background: transparent; border: 1px solid rgba(43,37,32,0.2);
+      border-radius: 6px; padding: 3px 22px 3px 8px;
+      font-size: 11px; font-weight: 600; font-family: 'Barlow', sans-serif;
+      color: var(--muted); cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 6px center;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .nav-lang:hover { border-color: rgba(43,37,32,0.45); color: var(--text); }
+    .nav-anchor {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.01em;
+      color: var(--muted); padding: 4px 9px; border-radius: 6px;
+      white-space: nowrap; font-family: 'IBM Plex Mono', monospace;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-anchor:hover { color: var(--text); }
+    .nav-anchor.active { color: var(--text); background: rgba(43,37,32,0.07); }
+
+    /* ── SECTION WRAPPERS ─────────────────────────── */
+    .sec {
+      width: 100%; padding: 120px 60px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .sec.white { background: var(--bg-card); }
+    .sec.cream { background: var(--bg); }
+    .sec-inner { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 48px; }
+
+    /* ── SECTION HEADING ──────────────────────────── */
+    .sec-head {
+      display: flex; gap: 28px; align-items: flex-start;
+      font-size: 32px; font-weight: 800; font-family: 'Barlow', sans-serif;
+      line-height: 1.1; letter-spacing: -0.02em; text-transform: uppercase;
+    }
+    .sec-num { white-space: nowrap; flex-shrink: 0; }
+    .sec-title { flex: 1; }
+
+    /* ── TYPE SCALE ───────────────────────────────── */
+    .h3 { font-size: 11px; font-weight: 700; line-height: 1.2; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Barlow', sans-serif; }
+    .body { font-size: 14px; font-weight: 400; line-height: 1.75; font-family: 'Noto Sans', sans-serif; }
+    .body-med { font-size: 14px; font-weight: 600; line-height: 1.5; font-family: 'Noto Sans', sans-serif; }
+    .text-block { display: flex; flex-direction: column; gap: 8px; }
+
+    /* ── TITLE BAR ────────────────────────────────── */
+    .title-bar {
+      width: 100%; background: var(--bg); padding: 28px 60px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .title-bar-inner { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 12px; }
+
+    /* ── INTRO SPLIT CARD ─────────────────────────── */
+    .intro-card { width: 100%; border-radius: 20px; overflow: hidden; display: flex; align-items: stretch; min-height: 440px; }
+    .intro-photo { flex: 1; position: relative; min-height: 320px; }
+    .intro-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .intro-copy {
+      flex: 1; background: var(--bg-card); padding: 24px 40px;
+      display: flex; flex-direction: column; gap: 16px; justify-content: center;
+    }
+
+    .stat-hi { background: #ffe033; padding: 1px 4px; border-radius: 4px; font-weight: 600; }
+
+    /* ── SPLIT ROW ────────────────────────────────── */
+    .split-row { display: flex; gap: 40px; align-items: stretch; width: 100%; }
+    .split-photo { width: 300px; flex-shrink: 0; border-radius: 20px; overflow: hidden; background: #fff0d8; }
+    .split-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .split-copy { flex: 1; display: flex; flex-direction: column; gap: 20px; justify-content: center; }
+
+    /* ── NUMBERED STEP LIST ───────────────────────── */
+    .step-list { display: flex; flex-direction: column; gap: 32px; }
+    .step-row { display: flex; gap: 24px; align-items: flex-start; }
+    .step-num {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background: #f8d08c; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; font-family: 'Barlow', sans-serif;
+    }
+    .step-copy { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+
+    /* ── BULL LIST ────────────────────────────────── */
+    .bull-list { padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+    .bull-list li { font-size: 14px; line-height: 1.75; font-family: 'Noto Sans', sans-serif; }
+
+    /* ── STAT CARDS ───────────────────────────────── */
+    .stat-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px; width: 100%;
+    }
+    .stat-card {
+      background: var(--bg); border-radius: 16px; padding: 28px 24px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .sec.white .stat-card { background: #f6f1ea; }
+    .stat-card-number {
+      font-size: 28px; font-weight: 800; font-family: 'Barlow', sans-serif;
+      line-height: 1.1; letter-spacing: -0.02em;
+    }
+    .stat-card-label {
+      font-size: 13px; font-weight: 400; line-height: 1.5;
+      font-family: 'Noto Sans', sans-serif; color: var(--muted);
+    }
+
+    /* ── FEATURE GRID ────────────────────────────── */
+    .feature-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px; width: 100%;
+    }
+    .feature-card {
+      background: var(--bg); border-radius: 16px; padding: 24px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .sec.white .feature-card { background: #f6f1ea; }
+
+    /* ── PLACEHOLDER IMAGE ───────────────────────── */
+    .ph-img {
+      background: #e8dfd4; border-radius: 20px; min-height: 300px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+    }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    .footer { width: 100%; padding: 40px 60px; background: var(--text); color: #fffefb; display: flex; justify-content: center; }
+    .footer-contact { display: flex; align-items: center; gap: 0; flex-wrap: wrap; justify-content: center; }
+    .footer-item { font-size: 12px; font-family: 'IBM Plex Mono', monospace; padding: 4px 16px; }
+    .footer-item a { color: inherit; }
+    .footer-item a:hover { text-decoration: underline; }
+    .footer-sep { width: 1px; height: 14px; background: rgba(255,255,255,0.2); }
+
+    /* ── RESPONSIVE ───────────────────────────────── */
+    @media (max-width: 900px) {
+      .nav { padding: 12px 20px; }
+      .title-bar { padding: 28px 20px 20px; }
+      .sec { padding: 60px 20px; }
+      .sec-head { font-size: 20px; }
+      .intro-card { flex-direction: column; }
+      .intro-photo { min-height: 260px; }
+      .split-row { flex-direction: column; }
+      .split-photo { width: 100%; }
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .footer { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ────────────────────────────────────────── -->
+<nav class="nav">
+  <a class="nav-back" href="/#writing">&larr; Iris Hsieh</a>
+  <div class="nav-anchors">
+    <a class="nav-anchor" href="#intro">.Intro</a>
+    <a class="nav-anchor" href="#s01">01.The Problem</a>
+    <a class="nav-anchor" href="#s02">02.Design Approach</a>
+    <a class="nav-anchor" href="#s03">03.What Gets Built</a>
+    <a class="nav-anchor" href="#s04">04.Key Decisions</a>
+    <a class="nav-anchor" href="#s05">05.Impact</a>
+  </div>
+  <select class="nav-lang" id="nav-lang-select">
+    <option value="en">EN</option>
+    <option value="ja">JA</option>
+    <option value="zh-tw">繁</option>
+    <option value="zh-cn">简</option>
+  </select>
+</nav>
+
+<!-- ── TITLE BAR ──────────────────────────────────── -->
+<div class="title-bar">
+  <div class="title-bar-inner">
+    <div style="font-size:36px;font-weight:800;line-height:1.1;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;">AI Trip Planner</div>
+    <div style="font-size:16px;font-weight:500;line-height:1.4;font-family:'Noto Sans',sans-serif;color:var(--muted);">A conversational AI skill that turns scattered travel research into a structured, beautiful HTML travel guide.</div>
+  </div>
+</div>
+
+<!-- ── INTRO ──────────────────────────────────────── -->
+<div id="intro" class="sec cream" style="padding-top:0;padding-bottom:0;">
+  <div class="sec-inner" style="max-width:100%;padding:0;">
+    <div class="intro-card">
+      <div class="intro-photo" style="display:flex;align-items:center;justify-content:center;background:#e8dfd4;">
+        <span style="color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;">Trip Planner Preview</span>
+      </div>
+      <div class="intro-copy">
+        <div class="text-block">
+          <p class="h3">Overview:</p>
+          <p class="body">Planning a trip usually means juggling dozens of browser tabs &mdash; flight searches, hotel comparisons, blog recommendations, Google Maps pins, and scattered notes. I built an AI-powered trip planner that consolidates this entire workflow into a single conversation. The skill asks the right questions, researches real-time prices and logistics, then generates a <span class="stat-hi">self-contained HTML travel guide</span> with interactive maps, day-by-day itineraries, and live budget tracking.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3">My Role:</p>
+          <p class="body">As both designer and developer, I designed the <span class="stat-hi">conversational flow</span>, defined the information architecture for the output, and built the complete system as a Claude Code skill. This included prompt engineering, multi-round data collection logic, real-time web research integration, and the <span class="stat-hi">visual design system</span> for the generated HTML guides.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3">Company &amp; Timeframe:</p>
+          <p class="body">Personal Project &middot; 2025&ndash;2026</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 01. THE PROBLEM ────────────────────────────── -->
+<div id="s01" class="sec white" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">01.</span>
+      <span class="sec-title">The Problem</span>
+    </div>
+    <div class="split-row">
+      <div class="ph-img" style="width:300px;flex-shrink:0;">Scattered tabs illustration</div>
+      <div class="split-copy">
+        <div class="text-block">
+          <p class="body">Travel planning is fragmented across dozens of tools and tabs. Users bounce between Google Flights, Booking.com, travel blogs, Google Maps, and messaging apps to coordinate with travel partners. Key information gets lost, budgets are vague, and the final "plan" is usually a messy Google Doc or scattered screenshots.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3">Key Pain Points:</p>
+          <ul class="bull-list" style="margin-top:4px;">
+            <li>Research is scattered across <span class="stat-hi">10+ browser tabs</span> with no single source of truth</li>
+            <li>Budget tracking is manual and often forgotten until overspending occurs</li>
+            <li>Coordinating with travel partners means copying and pasting across apps</li>
+            <li>Logistics details (airport transfers, SIM cards, visa requirements) are afterthoughts</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 02. DESIGN APPROACH ────────────────────────── -->
+<div id="s02" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">02.</span>
+      <span class="sec-title">Design Approach</span>
+    </div>
+    <p class="body">The core insight was that travel planning is inherently conversational &mdash; people naturally describe trips through dialogue, not forms. The skill's UX was designed around this principle, using structured conversation rounds to progressively build a complete trip profile.</p>
+    <div class="ph-img" style="min-height:240px;">Conversation flow screenshot</div>
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="text-block">
+        <p class="h3">Multi-Round Information Gathering</p>
+        <p class="body">The skill uses structured conversation rounds to collect trip parameters &mdash; dates, budget, travel style, dietary restrictions, interests. Each round builds on previous answers, creating a <span class="stat-hi">natural dialogue flow</span> rather than a rigid questionnaire.</p>
+      </div>
+      <div class="text-block">
+        <p class="h3">Smart Defaults with Escape Hatches</p>
+        <p class="body">Every question offers concrete options based on real destination data, but users can always override. This reduces decision fatigue while preserving full control over the planning process.</p>
+      </div>
+      <div class="text-block">
+        <p class="h3">Progressive Disclosure</p>
+        <p class="body">Start with essentials (where, when, budget), then layer in preferences (food, activities, pace). This mirrors how people naturally think about trips &mdash; <span class="stat-hi">big decisions first, details later</span>.</p>
+      </div>
+      <div class="text-block">
+        <p class="h3">Research-Backed Suggestions</p>
+        <p class="body">The skill searches real-time flight prices, hotel rates, and local recommendations before presenting options. Users make decisions based on <span class="stat-hi">actual data</span>, not guesswork.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 03. WHAT GETS BUILT ────────────────────────── -->
+<div id="s03" class="sec white" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">03.</span>
+      <span class="sec-title">What Gets Built</span>
+    </div>
+    <p class="body">The output is a <span class="stat-hi">self-contained HTML file</span> &mdash; a complete travel guide that works offline on any device. No app installation, no account creation, no internet required after generation.</p>
+    <div class="ph-img" style="min-height:360px;">Trip guide preview &mdash; interactive map + itinerary</div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <p class="h3">Interactive Map</p>
+        <p class="body">All locations pinned and color-coded by day, with walking routes and proximity grouping for efficient daily plans.</p>
+      </div>
+      <div class="feature-card">
+        <p class="h3">Day-by-Day Itinerary</p>
+        <p class="body">Time blocks, walking routes, and meal recommendations for each day &mdash; structured but flexible enough for spontaneity.</p>
+      </div>
+      <div class="feature-card">
+        <p class="h3">Live Budget Dashboard</p>
+        <p class="body">Tracks spending across categories (flights, hotels, food, activities) with real-time totals and remaining budget visibility.</p>
+      </div>
+      <div class="feature-card">
+        <p class="h3">Booking Status Tracker</p>
+        <p class="body">Visual status for flights, hotels, and activities &mdash; what's booked, what's pending, and what still needs action.</p>
+      </div>
+      <div class="feature-card">
+        <p class="h3">Packing Checklist</p>
+        <p class="body">Customized to destination weather and planned activities, with interactive checkboxes for tracking progress.</p>
+      </div>
+      <div class="feature-card">
+        <p class="h3">Digital Nomad Mode</p>
+        <p class="body">Coworking spots and wifi-friendly cafes surfaced alongside the itinerary for remote workers traveling abroad.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 04. KEY DESIGN DECISIONS ───────────────────── -->
+<div id="s04" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">04.</span>
+      <span class="sec-title">Key Design Decisions</span>
+    </div>
+    <div class="step-list">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-copy">
+          <p class="h3">Conversation over Forms</p>
+          <p class="body">A chat-based flow feels natural and adapts to each user's situation, unlike a rigid form that assumes everyone plans the same way. Some travelers have fixed dates and open budgets; others have tight budgets and flexible schedules. <span class="stat-hi">Conversation handles both</span>.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-copy">
+          <p class="h3">HTML over PDF</p>
+          <p class="body">Self-contained HTML files are interactive, searchable, and work offline on any device. <span class="stat-hi">No app installation needed</span>. Maps are clickable, checklists are interactive, and the budget dashboard updates as users mark items as booked.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-copy">
+          <p class="h3">Budget-First Planning</p>
+          <p class="body">By establishing budget early and showing real prices, users make <span class="stat-hi">informed trade-offs</span> instead of discovering they've overspent after booking. The budget dashboard is central to the guide, not an afterthought.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-copy">
+          <p class="h3">Bilingual by Default</p>
+          <p class="body">Every guide includes both English and the local language for restaurant names, addresses, and transit directions. This is <span class="stat-hi">essential for non-English-speaking destinations</span> &mdash; showing a taxi driver an address in the local script makes the difference between arriving and getting lost.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 05. IMPACT ─────────────────────────────────── -->
+<div id="s05" class="sec white" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">05.</span>
+      <span class="sec-title">Impact</span>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-card-number">15+</div>
+        <div class="stat-card-label">Complete trip guides generated across 8 countries</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-number">&lt; 2 hrs</div>
+        <div class="stat-card-label">Average planning time, reduced from days of research</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-number">~10%</div>
+        <div class="stat-card-label">Budget accuracy within 10% of actual trip spending</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-number">5+</div>
+        <div class="stat-card-label">Countries covered &mdash; Japan, Korea, Thailand, Portugal, and more</div>
+      </div>
+    </div>
+    <p class="body">What started as a personal tool has become something friends actively request before their trips. The project pushed me to think about AI not as a chatbot, but as a <span class="stat-hi">design material</span> &mdash; one that can research, structure, and present information in ways that genuinely save time and reduce the anxiety of travel planning.</p>
+  </div>
+</div>
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<div class="footer">
+  <div class="footer-contact">
+    <div class="footer-item"><span>WeChat: ralinzain</span></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.instagram.com/ralinzain" target="_blank" rel="noreferrer">Instagram</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.linkedin.com/in/ming-hsi-h-b59182158/" target="_blank" rel="noreferrer">LinkedIn</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://wa.me/886975573947">WhatsApp: +886 975 573 947</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="mailto:ralinzain@gmail.com">ralinzain@gmail.com</a></div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const anchors = document.querySelectorAll('.nav-anchor');
+    const sectionIds = ['intro','s01','s02','s03','s04','s05'];
+    const sections = sectionIds.map(id => document.getElementById(id));
+    const navEl = document.querySelector('.nav');
+    function update() {
+      const navH = navEl ? navEl.offsetHeight : 57;
+      const scrollY = window.scrollY + navH + 40;
+      let active = sections[0];
+      sections.forEach(sec => { if (sec && sec.offsetTop <= scrollY) active = sec; });
+      anchors.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + (active ? active.id : ''));
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  // ── Language switcher ──
+  (function() {
+    const sel = document.getElementById('nav-lang-select');
+    if (!sel) return;
+    try {
+      const saved = localStorage.getItem('portfolio-lang');
+      if (saved) sel.value = saved;
+    } catch(e) {}
+    sel.addEventListener('change', () => {
+      try { localStorage.setItem('portfolio-lang', sel.value); } catch(e) {}
+    });
+  })();
+</script>
+
+</body>
+</html>

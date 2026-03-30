@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reflections on Design · Iris Hsieh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #f0ebe2;
+      --bg-card:  #fffefb;
+      --border:   #dbd4c9;
+      --text:     #2b2520;
+      --muted:    #8c8079;
+      --accent:   #5b7fa6;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans', 'Barlow', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.4;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(240,235,226,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(43,37,32,0.08);
+      padding: 16px 60px;
+      display: flex; align-items: center;
+    }
+    .nav-back {
+      font-size: 13px; font-weight: 600;
+      color: var(--muted); letter-spacing: 0.04em;
+      font-family: 'Barlow', sans-serif;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text); text-decoration: none; }
+    .nav-lang {
+      margin-left: auto; flex-shrink: 0;
+      appearance: none; -webkit-appearance: none;
+      background: transparent; border: 1px solid rgba(43,37,32,0.2);
+      border-radius: 6px; padding: 3px 22px 3px 8px;
+      font-size: 11px; font-weight: 600; font-family: 'Barlow', sans-serif;
+      color: var(--muted); cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 6px center;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .nav-lang:hover { border-color: rgba(43,37,32,0.45); color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-video {
+      width: 100%;
+      aspect-ratio: 21/9;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(43,37,32,0.6) 100%);
+    }
+
+    /* ── ARTICLE ── */
+    .article {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+    .article-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .article h1 {
+      font-family: 'Barlow', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 40px;
+    }
+    .article p {
+      font-size: 16px;
+      line-height: 1.85;
+      margin-bottom: 28px;
+      font-family: 'Noto Sans', sans-serif;
+      color: var(--text);
+    }
+    .article p:last-of-type {
+      margin-bottom: 0;
+    }
+    .article a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(91,127,166,0.3);
+      transition: text-decoration-color 0.15s;
+    }
+    .article a:hover {
+      text-decoration-color: var(--accent);
+    }
+
+    /* ── PULL QUOTE ── */
+    .pull-quote {
+      border-left: 3px solid var(--accent);
+      padding: 4px 0 4px 24px;
+      margin: 40px 0;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.6;
+      font-family: 'Barlow', sans-serif;
+      font-style: italic;
+      color: var(--text);
+    }
+
+    /* ── SIGN ── */
+    .article-sign {
+      margin-top: 48px;
+      display: flex;
+    }
+    .article-sign img {
+      height: 48px;
+      display: block;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      width: 100%; padding: 40px 60px;
+      background: var(--text); color: #fffefb;
+      display: flex; justify-content: center;
+    }
+    .footer-contact {
+      display: flex; align-items: center; gap: 0;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .footer-item {
+      font-size: 12px; font-family: 'IBM Plex Mono', monospace;
+      padding: 4px 16px;
+    }
+    .footer-item a { color: inherit; text-decoration: none; }
+    .footer-item a:hover { text-decoration: underline; }
+    .footer-sep { width: 1px; height: 14px; background: rgba(255,255,255,0.2); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav { padding: 12px 20px; }
+      .article { padding: 40px 20px 60px; }
+      .article h1 { font-size: 26px; }
+      .hero-video { aspect-ratio: 16/9; }
+      .footer { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-back" href="/#writing">← Iris Hsieh</a>
+  <select class="nav-lang" id="nav-lang-select">
+    <option value="en">EN</option>
+    <option value="ja">JA</option>
+    <option value="zh-tw">繁</option>
+    <option value="zh-cn">简</option>
+  </select>
+</nav>
+
+<div class="hero">
+  <video class="hero-video" src="assets/home/影片生成：未來介面交互.mp4" autoplay loop muted playsinline></video>
+  <div class="hero-overlay"></div>
+</div>
+
+<article class="article">
+  <div class="article-meta">Reflection · 2025</div>
+  <h1 id="article-title">Reflections on Design: From Pixel-Perfect Obsession to the AI Cthulhu</h1>
+
+  <p data-lang="en">When I was younger, I used to pour my heart and soul into every project for design school, treating every output as a precious treasure. When I first entered the workforce, I held an uncompromising obsession with the completeness and precision of my designs.</p>
+  <p data-lang="en">But after several years as a digital product designer, I've gradually come to realize that "adaptation" is far more important than being "correct." A process that integrates seamlessly with an organization is better than a set of perfect rules. Rather than chasing pixel-perfect designs, products that are loved, relied upon, used, and bring true value to a company are what's truly worth pursuing.</p>
+  <p data-lang="en">The emergence of AI has made me realize that the very essence of design is shifting. We are no longer just creators of objects; we are the architects of the fields in which they exist. The key is no longer the artifact itself, but how it intervenes in life, influences human behavior, and creates social value. If a raw, AI-generated suggestion can truly solve a problem or change how people interact, its value far outweighs a polished but ineffective interface. We are moving from delivering outputs to delivering impact. Although job titles have become blurred, our responsibility toward society has only grown heavier.</p>
+
+  <div class="pull-quote">We are no longer simple builders; we are attempting to tame an uncertain power.</div>
+
+  <p data-lang="en">This shift in mindset made <a href="https://www.aidesignfieldguide.com/articles/barron-webster" target="_blank" rel="noreferrer">Barron Webster's interview</a> resonate deeply with me. His comparison of AI to "Cthulhu" struck a chord. Building products used to be like constructing a house — the logic was clear and visible. Now, working with AI feels like facing an autonomous, unfathomable alien intelligence. We are no longer simple builders; we are attempting to tame an uncertain power. This process of dancing with the unknown is precisely what makes product design today both fascinating and terrifying.</p>
+  <p data-lang="en">It has also made me realize that clinging to a specific job title is now meaningless. When models can generate interfaces and code at will, the design artifacts we once obsessed over — those perfect Figma components or visual mocks — are rapidly losing their value. In the AI era, these outputs are merely transient guests; true value no longer lies in what you drew, but in what you drove.</p>
+  <p data-lang="en">Though the world feels chaotic, as a product designer — or as a product builder — I still believe that design can create dialogue, light up people's hearts, pioneer the future, and strive for a better society.</p>
+
+  <p data-lang="zh-tw" style="display:none">年輕時，我總是全心投入設計學校的每一個專案，把每一份產出都當作珍貴的寶物。剛進入職場時，我對設計的完整度和精確度有著毫不妥協的執著。</p>
+  <p data-lang="zh-tw" style="display:none">但在數位產品設計的領域工作幾年後，我逐漸意識到「適應」遠比「正確」更為重要。一個能無縫融入組織的流程，勝過一套完美的規則。與其追求像素級的完美，那些被人喜愛、依賴、使用，並為公司帶來真正價值的產品，才是真正值得追求的。</p>
+  <p data-lang="zh-tw" style="display:none">AI 的出現讓我意識到，設計的本質正在轉變。我們不再只是物件的創造者，而是物件所存在之場域的建築師。關鍵不再是產出本身，而是它如何介入生活、影響人類行為、創造社會價值。如果一個粗糙的 AI 建議能真正解決問題或改變人們的互動方式，它的價值遠超一個精緻卻無效的介面。我們正從交付產出轉向交付影響力。雖然職稱已經模糊，但我們對社會的責任只會更加沉重。</p>
+  <p data-lang="zh-tw" style="display:none">這種思維的轉變讓我對 <a href="https://www.aidesignfieldguide.com/articles/barron-webster" target="_blank" rel="noreferrer">Barron Webster 的訪談</a>產生了深刻的共鳴。他將 AI 比作「克蘇魯」的說法觸動了我。過去做產品就像蓋房子——邏輯清晰可見。而現在，與 AI 共事就像面對一個自主的、深不可測的異星智慧。我們不再是單純的建造者，而是試圖馴服一股不確定的力量。這個與未知共舞的過程，正是今天產品設計既迷人又令人畏懼之處。</p>
+  <p data-lang="zh-tw" style="display:none">這也讓我意識到，執著於特定的職稱已經毫無意義。當模型可以隨意生成介面和程式碼時，我們曾經執著的設計產出——那些完美的 Figma 元件或視覺稿——正在快速失去價值。在 AI 時代，這些產出不過是過客；真正的價值不再在於你畫了什麼，而在於你推動了什麼。</p>
+  <p data-lang="zh-tw" style="display:none">儘管世界令人感到混亂，但作為一名產品設計師，或者說，作為一個產品的建造者，我仍然相信設計可以創造對話、點亮人心、開拓未來，並為更好的社會而努力。</p>
+
+  <p data-lang="zh-cn" style="display:none">年轻时，我总是全心投入设计学校的每一个项目，把每一份产出都当作珍贵的宝物。刚进入职场时，我对设计的完整度和精确度有着毫不妥协的执着。</p>
+  <p data-lang="zh-cn" style="display:none">但在数字产品设计领域工作几年后，我逐渐意识到「适应」远比「正确」更为重要。一个能无缝融入组织的流程，胜过一套完美的规则。与其追求像素级的完美，那些被人喜爱、依赖、使用，并为公司带来真正价值的产品，才是真正值得追求的。</p>
+  <p data-lang="zh-cn" style="display:none">AI 的出现让我意识到，设计的本质正在转变。我们不再只是物件的创造者，而是物件所存在之场域的建筑师。关键不再是产出本身，而是它如何介入生活、影响人类行为、创造社会价值。如果一个粗糙的 AI 建议能真正解决问题或改变人们的互动方式，它的价值远超一个精致却无效的界面。我们正从交付产出转向交付影响力。虽然职称已经模糊，但我们对社会的责任只会更加沉重。</p>
+  <p data-lang="zh-cn" style="display:none">这种思维的转变让我对 <a href="https://www.aidesignfieldguide.com/articles/barron-webster" target="_blank" rel="noreferrer">Barron Webster 的访谈</a>产生了深刻的共鸣。他将 AI 比作「克苏鲁」的说法触动了我。过去做产品就像盖房子——逻辑清晰可见。而现在，与 AI 共事就像面对一个自主的、深不可测的异星智慧。我们不再是单纯的建造者，而是试图驯服一股不确定的力量。这个与未知共舞的过程，正是今天产品设计既迷人又令人畏惧之处。</p>
+  <p data-lang="zh-cn" style="display:none">这也让我意识到，执着于特定的职称已经毫无意义。当模型可以随意生成界面和代码时，我们曾经执着的设计产出——那些完美的 Figma 组件或视觉稿——正在快速失去价值。在 AI 时代，这些产出不过是过客；真正的价值不再在于你画了什么，而在于你推动了什么。</p>
+  <p data-lang="zh-cn" style="display:none">尽管世界令人感到混乱，但作为一名产品设计师，或者说，作为一个产品的建造者，我仍然相信设计可以创造对话、点亮人心、开拓未来，并为更好的社会而努力。</p>
+
+  <p data-lang="ja" style="display:none">若い頃、デザインスクールの全てのプロジェクトに心血を注ぎ、全てのアウトプットを大切な宝物のように扱っていました。社会人になった当初は、デザインの完成度と精度に対して妥協のないこだわりを持っていました。</p>
+  <p data-lang="ja" style="display:none">しかしデジタルプロダクトデザイナーとして数年を過ごした今、「適応」が「正しさ」よりもはるかに重要であることに気づきました。組織にシームレスに統合されるプロセスは、完璧なルールのセットよりも優れています。ピクセルパーフェクトなデザインを追い求めるよりも、愛され、頼りにされ、使われ、会社に真の価値をもたらすプロダクトこそが、本当に追求すべきものです。</p>
+  <p data-lang="ja" style="display:none">AI の登場により、デザインの本質そのものが変化していることに気づきました。私たちはもはやオブジェクトの作り手ではなく、それが存在するフィールドの設計者です。重要なのはアーティファクトそのものではなく、それが生活にどう介入し、人間の行動にどう影響し、社会的価値をどう生み出すかです。粗削りな AI の提案が本当に問題を解決したり、人々の交流を変えたりできるなら、その価値は磨き上げられた無力なインターフェースをはるかに上回ります。私たちはアウトプットの提供からインパクトの提供へと移行しています。肩書きは曖昧になりましたが、社会に対する責任はますます重くなっています。</p>
+  <p data-lang="ja" style="display:none">この考え方の変化が、<a href="https://www.aidesignfieldguide.com/articles/barron-webster" target="_blank" rel="noreferrer">Barron Webster のインタビュー</a>に深く共感させました。AI を「クトゥルフ」に例えた彼の言葉が心に響きました。以前のプロダクト開発は家を建てるようなもの——ロジックは明確で目に見えるものでした。今、AI と向き合うことは、自律的で計り知れない異星知性と対峙するようなものです。私たちはもはや単純な建設者ではなく、不確実な力を手なずけようとしています。この未知と踊るプロセスこそが、今日のプロダクトデザインを魅力的で恐ろしいものにしています。</p>
+  <p data-lang="ja" style="display:none">特定の肩書きにしがみつくことがもはや無意味であることにも気づかされました。モデルが自在にインターフェースやコードを生成できる今、私たちがかつて執着したデザインの成果物——あの完璧な Figma コンポーネントやビジュアルモック——は急速に価値を失っています。AI 時代において、これらのアウトプットは一時的な客人に過ぎません。真の価値はもはや何を描いたかではなく、何を推進したかにあります。</p>
+  <p data-lang="ja" style="display:none">世界は混沌としていますが、プロダクトデザイナーとして、あるいはプロダクトビルダーとして、デザインは対話を生み出し、人の心を照らし、未来を切り拓き、より良い社会のために努力できると、今でも信じています。</p>
+
+</article>
+
+<div class="footer">
+  <div class="footer-contact">
+    <div class="footer-item"><span>WeChat: ralinzain</span></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.instagram.com/ralinzain" target="_blank" rel="noreferrer">Instagram</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.linkedin.com/in/ming-hsi-h-b59182158/" target="_blank" rel="noreferrer">LinkedIn</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://wa.me/886975573947">WhatsApp: +886 975 573 947</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="mailto:ralinzain@gmail.com">ralinzain@gmail.com</a></div>
+  </div>
+</div>
+
+<script>
+  // ── Language switcher ──
+  (function() {
+    const sel = document.getElementById('nav-lang-select');
+    if (!sel) return;
+
+    const titles = {
+      en: 'Reflections on Design: From Pixel-Perfect Obsession to the AI Cthulhu',
+      'zh-tw': '設計反思：從像素級執著到 AI 克蘇魯',
+      'zh-cn': '设计反思：从像素级执着到 AI 克苏鲁',
+      ja: 'デザイン省察：ピクセル完璧主義から AI クトゥルフへ'
+    };
+    const quotes = {
+      en: 'We are no longer simple builders; we are attempting to tame an uncertain power.',
+      'zh-tw': '我們不再是單純的建造者，而是試圖馴服一股不確定的力量。',
+      'zh-cn': '我们不再是单纯的建造者，而是试图驯服一股不确定的力量。',
+      ja: '私たちはもはや単純な建設者ではなく、不確実な力を手なずけようとしています。'
+    };
+
+    function applyLang(lang) {
+      // title
+      const h1 = document.getElementById('article-title');
+      if (h1 && titles[lang]) h1.textContent = titles[lang];
+      // pull quote
+      const pq = document.querySelector('.pull-quote');
+      if (pq && quotes[lang]) pq.textContent = quotes[lang];
+      // paragraphs
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
+      });
+    }
+
+    try {
+      const saved = localStorage.getItem('portfolio-lang');
+      if (saved) { sel.value = saved; applyLang(saved); }
+    } catch(e) {}
+
+    sel.addEventListener('change', () => {
+      const lang = sel.value;
+      try { localStorage.setItem('portfolio-lang', lang); } catch(e) {}
+      applyLang(lang);
+    });
+  })();
+</script>
+
+</body>
+</html>
