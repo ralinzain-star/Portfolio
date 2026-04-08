@@ -689,6 +689,11 @@
           var clone = tmpl.content.cloneNode(true);
           var allP = clone.querySelectorAll('p[data-lang]');
           allP.forEach(function(p) { if (p.dataset.lang !== langKey) p.remove(); });
+          var articleVideo = clone.querySelector('.article-video');
+          if (articleVideo) {
+            var visiblePs = clone.querySelectorAll('p[data-lang]');
+            if (visiblePs.length >= 2) visiblePs[1].after(articleVideo);
+          }
           body.innerHTML = '';
           body.appendChild(clone);
           overlay.classList.add('open');
