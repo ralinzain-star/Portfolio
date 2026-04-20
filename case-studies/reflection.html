@@ -4,181 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Reflections on Design · Iris Hsieh</title>
-  <link rel="icon" type="image/png" href="Logo.png" />
-  <link rel="apple-touch-icon" href="Logo.png" />
+  <link rel="icon" type="image/png" href="../Logo.png" />
+  <link rel="apple-touch-icon" href="../Logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:       #f0ebe2;
-      --bg-card:  #fffefb;
-      --border:   #dbd4c9;
-      --text:     #2b2520;
-      --muted:    #8c8079;
-      --accent:   #5b7fa6;
-    }
-
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Noto Sans', 'Barlow', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.4;
-    }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    /* ── NAV ── */
-    .nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(240,235,226,0.92);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(43,37,32,0.08);
-      padding: 16px 60px;
-      display: flex; align-items: center;
-    }
-    .nav-back { white-space: nowrap; flex-shrink: 0;
-      font-size: 13px; font-weight: 600;
-      color: var(--muted); letter-spacing: 0.04em;
-      font-family: 'Barlow', sans-serif;
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text); text-decoration: none; }
-    .nav-lang {
-      margin-left: auto; flex-shrink: 0;
-      appearance: none; -webkit-appearance: none;
-      background: transparent; border: 1px solid rgba(43,37,32,0.2);
-      border-radius: 6px; padding: 3px 22px 3px 8px;
-      font-size: 11px; font-weight: 600; font-family: 'Barlow', sans-serif;
-      color: var(--muted); cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 6px center;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .nav-lang:hover { border-color: rgba(43,37,32,0.45); color: var(--text); }
-
-    /* ── HERO ── */
-    .hero {
-      width: 100%;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-video {
-      width: 100%;
-      aspect-ratio: 21/9;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-    }
-    .hero-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom, transparent 40%, rgba(43,37,32,0.6) 100%);
-    }
-
-    /* ── ARTICLE ── */
-    .article {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 60px 24px 80px;
-    }
-    .article-meta {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-    .article h1 {
-      font-family: 'Barlow', sans-serif;
-      font-size: 36px;
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      margin-bottom: 40px;
-    }
-    .article p {
-      font-size: 16px;
-      line-height: 1.85;
-      margin-bottom: 28px;
-      font-family: 'Noto Sans', sans-serif;
-      color: var(--text);
-    }
-    .article p:last-of-type {
-      margin-bottom: 0;
-    }
-    .article a {
-      color: var(--accent);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-color: rgba(91,127,166,0.3);
-      transition: text-decoration-color 0.15s;
-    }
-    .article a:hover {
-      text-decoration-color: var(--accent);
-    }
-
-    /* ── PULL QUOTE ── */
-    .pull-quote {
-      border-left: 3px solid var(--accent);
-      padding: 4px 0 4px 24px;
-      margin: 40px 0;
-      font-size: 18px;
-      font-weight: 600;
-      line-height: 1.6;
-      font-family: 'Barlow', sans-serif;
-      font-style: italic;
-      color: var(--text);
-    }
-
-    /* ── SIGN ── */
-    .article-sign {
-      margin-top: 48px;
-      display: flex;
-    }
-    .article-sign img {
-      height: 48px;
-      display: block;
-    }
-
-    /* ── FOOTER ── */
-    .footer {
-      width: 100%; padding: 40px 60px;
-      background: var(--text); color: #fffefb;
-      display: flex; justify-content: center;
-    }
-    .footer-contact {
-      display: flex; align-items: center; gap: 0;
-      flex-wrap: wrap; justify-content: center;
-    }
-    .footer-item {
-      font-size: 12px; font-family: 'IBM Plex Mono', monospace;
-      padding: 4px 16px;
-    }
-    .footer-item a { color: inherit; text-decoration: none; }
-    .footer-item a:hover { text-decoration: underline; }
-    .footer-sep { width: 1px; height: 14px; background: rgba(255,255,255,0.2); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .nav { padding: 12px 20px; }
-      .article { padding: 40px 20px 60px; }
-      .article h1 { font-size: 26px; }
-      .hero-video { aspect-ratio: 16/9; }
-      .footer { padding: 32px 20px; }
-    }
-  </style>
+  <link rel="stylesheet" href="css/reflection.css">
+  <!-- Microsoft Clarity -->
+  <script src="js/analytics.js"></script>
 </head>
 <body>
 
 <nav class="nav">
-  <a class="nav-back" href="index.html#island-writing">← Iris Hsieh</a>
+  <a class="nav-back" href="../index.html#island-writing">← Iris Hsieh</a>
   <select class="nav-lang" id="nav-lang-select">
     <option value="en">EN</option>
     <option value="ja">JA</option>
@@ -188,7 +26,7 @@
 </nav>
 
 <div class="hero">
-  <video class="hero-video" src="assets/home/Video_Generation.mp4" autoplay loop muted playsinline></video>
+  <video class="hero-video" src="../assets/home/Video_Generation.mp4" autoplay loop muted playsinline></video>
   <div class="hero-overlay"></div>
 </div>
 
@@ -243,50 +81,7 @@
   </div>
 </div>
 
-<script>
-  // ── Language switcher ──
-  (function() {
-    const sel = document.getElementById('nav-lang-select');
-    if (!sel) return;
-
-    const titles = {
-      en: 'Reflections on Design: From Pixel-Perfect Obsession to the AI Cthulhu',
-      'zh-tw': '設計反思：從像素級的執著，到馴服 AI 克蘇魯',
-      'zh-cn': '设计反思：从像素级的执着，到驯服 AI 克苏鲁',
-      ja: 'デザインに関する考察：ピクセルパーフェクトへの執着からAIという未知の領域へ'
-    };
-    const quotes = {
-      en: 'We are no longer simple builders; we are attempting to tame an uncertain power.',
-      'zh-tw': '我們不再是單純的建造者，而是試圖馴服一股不確定的力量。',
-      'zh-cn': '我们不再是单纯的建造者，而是试图驯服一股不确定的力量。',
-      ja: '私たちはもはや単なる「作り手」ではなく、不確実な力を手なずけようとする存在なのです。'
-    };
-
-    function applyLang(lang) {
-      // title
-      const h1 = document.getElementById('article-title');
-      if (h1 && titles[lang]) h1.textContent = titles[lang];
-      // pull quote
-      const pq = document.querySelector('.pull-quote');
-      if (pq && quotes[lang]) pq.textContent = quotes[lang];
-      // paragraphs
-      document.querySelectorAll('[data-lang]').forEach(el => {
-        el.style.display = el.getAttribute('data-lang') === lang ? '' : 'none';
-      });
-    }
-
-    try {
-      const saved = localStorage.getItem('portfolio-lang');
-      if (saved) { sel.value = saved; applyLang(saved); }
-    } catch(e) {}
-
-    sel.addEventListener('change', () => {
-      const lang = sel.value;
-      try { localStorage.setItem('portfolio-lang', lang); } catch(e) {}
-      applyLang(lang);
-    });
-  })();
-</script>
+  <script src="js/reflection.js"></script>
 
 </body>
 </html>

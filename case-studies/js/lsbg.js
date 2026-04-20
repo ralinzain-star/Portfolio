@@ -1,0 +1,248 @@
+(function() {
+    const anchors = document.querySelectorAll('.nav-anchor');
+    const sectionIds = ['intro','s01','s02','s03','s04'];
+    const sections = sectionIds.map(id => document.getElementById(id));
+    const navEl = document.querySelector('.nav');
+
+    function update() {
+      const navH = navEl ? navEl.offsetHeight : 57;
+      const scrollY = window.scrollY + navH + 40;
+      let active = sections[0];
+      sections.forEach(sec => { if (sec && sec.offsetTop <= scrollY) active = sec; });
+      anchors.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + (active ? active.id : ''));
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  // ── Language switcher ──
+  (function() {
+    const lsbgI18n = {
+      en: {}, // keep English as HTML fallback
+      'zh-tw': {
+        'page.title': 'BumpHunter, AI 自行車道維護工具',
+        'page.subtitle': '將漢堡市民的通報數據，轉化為自行車基礎設施維護的結構化洞察。',
+        'nav.intro': '.介紹',
+        'nav.s01': '01.起點',
+        'nav.s02': '02.問題診斷',
+        'nav.s03': '03.解決方案',
+        'nav.s04': '04.專案亮點',
+        'intro.h3.product': '產品概覽',
+        'intro.product.body': 'BumpHunter 是為德國漢堡道路與水域管理署（LSBG）設計的 AI 輔助服務概念，旨在將市民反饋轉化為結構化的維護洞察。透過整合 Google Maps、Strava 活動數據與城市氣象資訊，系統能協助工程師及早發現問題、排定維修優先級，並做出更明智的基礎設施決策。',
+        'intro.h3.role': '我的角色',
+        'intro.role.body': '身為互動設計師，我主導了涵蓋「在地居民」與「自行車道工程師」<span class="stat-hi">兩條研究支線</span>，並促成了 <span class="stat-hi">20 多場跨文化訪談</span>。在專案過程中，我將研究洞察轉化為設計原則、建立高保真原型，並透過滾動式研究（Rolling Research）驗證功能與易用性。此外，我也協助高度國際化的團隊凝聚共識，打造出符合漢堡在地情境的互動模式。',
+        'intro.h3.time': '專案期間',
+        's01.title': '我們的起點',
+        's01.h3.bg': '專案背景',
+        's01.bg.body': '自行車道的巡檢、維護與規劃需要多個政府部門與檢測機構的協作。儘管市民可以通報問題，但多數人仍依賴電子郵件等傳統管道，導致<span class="stat-hi">資訊碎片化，難以轉化為實際行動</span>。無人機巡檢雖能解決部分問題，但其效能在冬季會大幅下降。',
+        's01.h3.goal': '我們的目標',
+        's01.goal.body': '設計一套輕量化的系統，將零散的訊號轉化為即時、具行動指導意義（Actionable）的車道狀況更新，讓工程師能<span class="stat-hi">減少實地巡視的頻率</span>、提升跨部門協作效率，並將維修資源集中在最關鍵的痛點上。',
+        's02.title': '研究與問題定義',
+        's02.h3.research': '初步研究',
+        's02.research.body1': '我們結合了次級資料分析與第一手田野調查，以深入了解自行車道規劃與巡檢的挑戰與機會。次級研究涵蓋了歐洲自行車道基礎設施文獻，包含規劃流程與巡檢重點（如除雪維護），並審閱了 LSBG 的內部系統操作文件。',
+        's02.research.body2': '第一手研究則包含了針對自行車道專家、工程師與自行車愛好者的深度訪談，以及焦點小組與實地觀察。',
+        's02.quote.1': '「荷蘭的成功，在於他們建立了一個全面且專用的自行車道網絡。」, <strong>Chris Brunlett 教授</strong>',
+        's02.quote.2': '「目前最缺乏的，是市民對於自行車道實際騎乘體驗的真實反饋。」, <strong>LSBG 自行車道工程師</strong>',
+        's02.quote.3': '「如果我的通報真的能幫助改善社區環境，我會更願意回報。」, <strong>在地市民</strong>',
+        's02.h3.insights': '關鍵洞察',
+        's02.insights.body': '研究顯示，<span class="stat-hi">工程師缺乏市民最在意的關鍵路段資訊，也無法掌握騎士的真實體驗</span>。同時，市民渴望他們的通報能被重視並獲得回應。這兩者的落差，為建立更主動的巡檢流程創造了絕佳機會。',
+        's02.h3.persona': '用戶人物誌 (Persona)',
+        's02.persona.body': '我們的研究揭示了塑造自行車道規劃與巡檢流程的兩個關鍵角色：市民與工程師。雖然雙方視角不同，但都面臨相同的結構性困境：溝通受限、數據不完整，且缺乏有效的資訊交換管道來影響實質的規劃決策。',
+        's02.h3.tips': '運用 AI 工具跨越語言隔閡',
+        's02.tips.li1': '<strong>快速逐字稿</strong>, 使用 Descript 將德語訪談轉換為文本。',
+        's02.tips.li2': '<strong>智能摘要</strong>, 透過 Hypotenuse 提取關鍵洞察。',
+        's02.tips.li3': '<strong>即時翻譯</strong>, 透過線上工具還原英文語境。',
+        's02.tips.li4': '<strong>視覺化</strong>, 在 Figma 中使用 QoQo.ai 快速繪製人物誌與旅程地圖。',
+        's03.title': '我們的解決方案',
+        's03.h3.blueprint': '服務藍圖 (Service Blueprint)',
+        's03.blueprint.body': '服務藍圖將維護工作重構為<span class="stat-hi">工程師與居民之間的雙向循環</span>。工程師透過地圖識別風險、交通模式與維護優先級；市民則回傳特定地點的通報、照片與騎乘反饋。雙方的資訊交匯，將零散的觀察轉化為清晰的巡檢與維修決策依據。',
+        's03.h3.map': '地圖檢視 (Map View)',
+        's03.map.body': '地圖檢視透過視覺化損壞嚴重度、通報密度與交通流量，讓工程師能快速鎖定自行車道維護的優先區域。顏色標記區分了極度危險、危險與輕微問題，搭配交通流量疊加層，協助工程師判斷哪裡的維修能帶來最大的正面影響。',
+        's03.h3.report': '報告檢視 (Report View)',
+        's03.report.body': '報告檢視將市民反饋轉化為結構化的可行動數據，呈現各行政區的車道狀況摘要。例如在 Bergstedt 區，<span class="stat-hi">不適感比例達 60%，危險比例達 70%</span>，主要問題包含路面抓地力低、坑洞與樹枝等危險障礙物。系統同時顯示通報數量與交通需求分佈，讓工程師能快速評估使用率與風險等級。',
+        's03.h3.mission': '派發任務 (Send Mission)',
+        's03.mission.body': '當工程師需要更多情境資訊來評估特定區域時，可以使用「派發任務」<span class="stat-hi">直接與當地居民互動</span>。這項功能會向該計畫的市民發送特定請求，邀請他們拍攝照片、記錄觀察並提供詳細反饋，讓工程師能透過真實用戶的在地洞察，填補數據空白並做出更精準的決策。',
+        's03.h3.citizen': '市民協作的道路使用通報：',
+        's03.citizen.body1': '漢堡市民可以透過簡單的點擊，分享真實的道路使用反饋，積極參與改善當地的自行車基礎設施。每一筆通報都能幫助工程師更了解現場狀況，並優先處理對社區最重要的維修項目。',
+        's03.citizen.body2': '只需幾個簡單的步驟，居民就能<span class="stat-hi">將日常的騎乘體驗轉化為可行動的洞察</span>，直接影響維護優先級，確保更安全、更舒適的自行車道環境。',
+        's04.title': '專案亮點',
+        's04.h3.workflow': '團隊協作與工作流程',
+        's04.workflow.body': '我們導入了<span class="stat-hi">敏捷衝刺（Agile sprints），每週進行成果展示與測試</span>，並使用故事對照（Story Mapping）確保工作方向正確。多數協作在 Figma 中進行，並輔以 Adobe 工具處理細節。我也將 AI 導入工作流程，以加速前期的溝通產出，讓團隊能更清晰地理解設計實驗。',
+        's04.h3.fail': '測試、迭代與跨文化合作',
+        's04.fail.body': '這個專案最令人難忘的，是發現慕尼黑和漢堡在自行車基礎設施上的思維差異。我曾提議在電線桿上張貼傳單，卻得知慕尼黑早已將電纜地下化。與如此多元的團隊合作，磨練了我察覺盲點、快速吸收反饋，並<span class="stat-hi">在跨文化情境下協同淬鍊想法</span>的能力。'
+      },
+      'zh-cn': {
+        'page.title': 'BumpHunter, AI 自行车道维护工具',
+        'page.subtitle': '将汉堡市民的反馈数据，转化为自行车基础设施维护的结构化洞察。',
+        'nav.intro': '.简介',
+        'nav.s01': '01.起点',
+        'nav.s02': '02.问题诊断',
+        'nav.s03': '03.解决方案',
+        'nav.s04': '04.项目亮点',
+        'intro.h3.product': '产品概览',
+        'intro.product.body': 'BumpHunter 是为德国汉堡道路与水域管理署（LSBG）设计的 AI 辅助服务概念，旨在将市民反馈转化为结构化的维护洞察。通过整合 Google Maps、Strava 活动数据与城市气象信息，系统能协助工程师及早发现问题、排定维修优先级，并做出更明智的基础设施决策。',
+        'intro.h3.role': '我的角色',
+        'intro.role.body': '作为交互设计师，我主导了涵盖"当地居民"与"自行车道工程师"<span class="stat-hi">两条调研支线</span>，并促成了 <span class="stat-hi">20 多场跨文化访谈</span>。在项目过程中，我将调研洞察转化为设计原则、构建高保真原型，并通过滚动式调研（Rolling Research）验证功能与可用性。此外，我也协助高度国际化的团队凝聚共识，打造出符合汉堡本地语境的交互模式。',
+        'intro.h3.time': '项目周期',
+        's01.title': '我们的起点',
+        's01.h3.bg': '项目背景',
+        's01.bg.body': '自行车道的巡检、维护与规划需要多个政府部门与检测机构的协同。尽管市民可以上报问题，但多数人仍依赖电子邮件等传统渠道，导致<span class="stat-hi">信息碎片化，难以转化为实际行动</span>。无人机巡检虽能解决部分问题，但其效能在冬季会大幅下降。',
+        's01.h3.goal': '我们的目标',
+        's01.goal.body': '设计一套轻量化的系统，将零散的信号转化为实时、具行动指导意义（Actionable）的车道状况更新，让工程师能<span class="stat-hi">减少实地巡视的频率</span>、提升跨部门协同效率，并将维修资源集中在最关键的痛点上。',
+        's02.title': '调研与问题定义',
+        's02.h3.research': '前期调研',
+        's02.research.body1': '我们结合了案头调研与一手田野调查，以深入了解自行车道规划与巡检的挑战与机会。案头调研涵盖了欧洲自行车道基础设施文献，包含规划流程与巡检重点（如除雪维护），并审阅了 LSBG 的内部系统操作文档。',
+        's02.research.body2': '一手调研则包含了针对自行车道专家、工程师与自行车爱好者的深度访谈，以及焦点小组与实地观察。',
+        's02.quote.1': '"荷兰的成功，在于他们建立了一个全面且专用的自行车道网络。", <strong>Chris Brunlett 教授</strong>',
+        's02.quote.2': '"目前最缺乏的，是市民对于自行车道实际骑行体验的真实反馈。", <strong>LSBG 自行车道工程师</strong>',
+        's02.quote.3': '"如果我的上报真的能帮助改善社区环境，我会更愿意反馈。", <strong>当地市民</strong>',
+        's02.h3.insights': '核心洞察',
+        's02.insights.body': '调研显示，<span class="stat-hi">工程师缺乏市民最在意的关键路段信息，也无法掌握骑行者的真实体验</span>。同时，市民渴望他们的上报能被重视并获得回应。这两者的落差，为建立更主动的巡检流程创造了绝佳机会。',
+        's02.h3.persona': '用户画像 (Persona)',
+        's02.persona.body': '我们的调研揭示了塑造自行车道规划与巡检流程的两个关键角色：市民与工程师。虽然双方视角不同，但都面临相同的结构性困境：沟通受限、数据不完整，且缺乏有效的信息交换渠道来影响实质的规划决策。',
+        's02.h3.tips': '运用 AI 工具跨越语言隔阂',
+        's02.tips.li1': '<strong>快速逐字稿</strong>, 使用 Descript 将德语访谈转换为文本。',
+        's02.tips.li2': '<strong>智能摘要</strong>, 通过 Hypotenuse 提取关键洞察。',
+        's02.tips.li3': '<strong>实时翻译</strong>, 通过在线工具还原英文语境。',
+        's02.tips.li4': '<strong>可视化</strong>, 在 Figma 中使用 QoQo.ai 快速绘制用户画像与旅程地图。',
+        's03.title': '我们的解决方案',
+        's03.h3.blueprint': '服务蓝图 (Service Blueprint)',
+        's03.blueprint.body': '服务蓝图将维护工作重构为<span class="stat-hi">工程师与居民之间的双向循环</span>。工程师通过地图识别风险、交通模式与维护优先级；市民则回传特定地点的上报、照片与骑行反馈。双方的信息交汇，将零散的观察转化为清晰的巡检与维修决策依据。',
+        's03.h3.map': '地图视图 (Map View)',
+        's03.map.body': '地图视图通过可视化损坏严重度、上报密度与交通流量，让工程师能快速锁定自行车道维护的优先区域。颜色标记区分了极度危险、危险与轻微问题，搭配交通流量叠加层，协助工程师判断哪里的维修能带来最大的正面影响。',
+        's03.h3.report': '报告视图 (Report View)',
+        's03.report.body': '报告视图将市民反馈转化为结构化的可行动数据，呈现各行政区的车道状况摘要。例如在 Bergstedt 区，<span class="stat-hi">不适感比例达 60%，危险比例达 70%</span>，主要问题包含路面抓地力低、坑洞与树枝等危险障碍物。系统同时显示上报数量与交通需求分布，让工程师能快速评估使用率与风险等级。',
+        's03.h3.mission': '派发任务 (Send Mission)',
+        's03.mission.body': '当工程师需要更多情境信息来评估特定区域时，可以使用"派发任务"<span class="stat-hi">直接与当地居民互动</span>。这项功能会向该计划的市民发送特定请求，邀请他们拍摄照片、记录观察并提供详细反馈，让工程师能通过真实用户的本地洞察，填补数据空白并做出更精准的决策。',
+        's03.h3.citizen': '市民协同的道路使用上报：',
+        's03.citizen.body1': '汉堡市民可以通过简单的点击，分享真实的道路使用反馈，积极参与改善当地的自行车基础设施。每一笔上报都能帮助工程师更了解现场状况，并优先处理对社区最重要的维修项目。',
+        's03.citizen.body2': '只需几个简单的步骤，居民就能<span class="stat-hi">将日常的骑行体验转化为可行动的洞察</span>，直接影响维护优先级，确保更安全、更舒适的自行车道环境。',
+        's04.title': '项目亮点',
+        's04.h3.workflow': '团队协同与工作流',
+        's04.workflow.body': '我们引入了<span class="stat-hi">敏捷冲刺（Agile sprints），每周进行成果展示与测试</span>，并使用用户故事地图（Story Mapping）确保工作方向正确。多数协同在 Figma 中进行，并辅以 Adobe 工具处理细节。我也将 AI 引入工作流，以加速前期的沟通产出，让团队能更清晰地理解设计实验。',
+        's04.h3.fail': '测试、迭代与跨文化合作',
+        's04.fail.body': '这个项目最令人难忘的，是发现慕尼黑和汉堡在自行车基础设施上的思维差异。我曾提议在电线杆上张贴传单，却得知慕尼黑早已将电缆地下化。与如此多元的团队合作，磨练了我察觉盲点、快速吸收反馈，并<span class="stat-hi">在跨文化情境下协同淬炼想法</span>的能力。'
+      },
+      ja: {
+        'page.title': 'BumpHunter, AI 自転車道メンテナンスツール',
+        'page.subtitle': 'ハンブルク市民の報告を、自転車インフラの保守管理に役立つ構造化されたインサイトに変換。',
+        'nav.intro': '.イントロ',
+        'nav.s01': '01.出発点',
+        'nav.s02': '02.課題の診断',
+        'nav.s03': '03.ソリューション',
+        'nav.s04': '04.ハイライト',
+        'intro.h3.product': 'プロダクト概要',
+        'intro.product.body': 'BumpHunterは、ハンブルクの道路・水域管理局（LSBG）向けに設計されたAI支援サービスコンセプトです。市民からのフィードバックを構造化されたメンテナンスのインサイトに変換します。Google Maps、Stravaの活動データ、都市の気象情報を統合することで、エンジニアが問題を早期に発見し、修理の優先順位をつけ、データに基づくインフラ決定を行えるよう支援します。',
+        'intro.h3.role': '担当役割',
+        'intro.role.body': 'インタラクションデザイナーとして、「地域住民」と「自転車道エンジニア」を対象とした<span class="stat-hi">2つのリサーチトラック</span>を設計し、<span class="stat-hi">20回以上の異文化インタビュー</span>をファシリテートしました。プロジェクトを通じて、リサーチのインサイトをデザイン原則に落とし込み、ハイファイなプロトタイプを構築し、ローリングリサーチを活用して機能とユーザビリティを検証しました。',
+        'intro.h3.time': 'プロジェクト期間',
+        's01.title': '私たちの出発点',
+        's01.h3.bg': 'プロジェクトの背景',
+        's01.bg.body': '自転車道の点検、保守、計画には、複数の政府部門と検査機関の連携が必要です。市民が問題を報告できる仕組みはありますが、多くの人がメールなどの従来のアナログな手段に依存しており、結果として<span class="stat-hi">情報が断片化し、実用的なアクションに結びつきにくい</span>状況でした。',
+        's01.h3.goal': '私たちの目標',
+        's01.goal.body': '散在する情報を、自転車道の状態に関するタイムリーで「アクション可能な（Actionable）」データへと変換する軽量なシステムを設計すること。これにより、エンジニアが<span class="stat-hi">現場視察の頻度を減らし</span>、部門間の調整を効率化し、最も重要な修理にリソースを集中できるようにします。',
+        's02.title': 'リサーチと課題定義',
+        's02.h3.research': '予備調査',
+        's02.research.body1': '自転車道の計画と点検における課題と機会を理解するため、二次調査と一次データを組み合わせました。',
+        's02.research.body2': '専門家、エンジニア、サイクリストへのインタビュー、フォーカスグループ、現地観察を実施しました。',
+        's02.quote.1': '「オランダの成功は、自転車専用の包括的なネットワークを構築したことにあります。」, <strong>Chris Brunlett 教授</strong>',
+        's02.quote.2': '「現在欠けているのは、自転車道での実際の走行体験に関する市民からのフィードバックです。」, <strong>LSBG 自転車道エンジニア</strong>',
+        's02.quote.3': '「自分の報告が本当に地域の改善に役立つなら、もっと報告したいと思います。」, <strong>地域住民</strong>',
+        's02.h3.insights': 'キーインサイト',
+        's02.insights.body': 'リサーチの結果、<span class="stat-hi">エンジニアは市民が最も重視する道路区間や実際の走行体験に関する詳細情報を把握できていない</span>ことが判明しました。同時に、市民は自身の報告が認識されることを望んでおり、よりプロアクティブな点検プロセスを構築する機会が浮かび上がりました。',
+        's02.h3.persona': 'ペルソナ (Persona)',
+        's02.persona.body': 'インフラ計画の意思決定プロセスに関わる2つの主要な役割、「市民」と「エンジニア」を定義しました。視点は異なりますが、どちらもコミュニケーションの制限や不完全なデータという同じ構造的な壁に直面していました。',
+        's02.h3.tips': 'AIツールを活用した言語の壁の克服',
+        's02.tips.li1': '<strong>文字起こし</strong>, Descriptを使用してドイツ語のインタビューをテキスト化。',
+        's02.tips.li2': '<strong>スマート要約</strong>, Hypotenuseで要点を抽出。',
+        's02.tips.li3': '<strong>翻訳</strong>, オンラインツールで英語のコンテキストに変換。',
+        's02.tips.li4': '<strong>視覚化</strong>, FigmaのQoQo.aiでペルソナとジャーニーマップを迅速に作成。',
+        's03.title': 'ソリューション',
+        's03.h3.blueprint': 'サービスブループリント',
+        's03.blueprint.body': 'メンテナンスを<span class="stat-hi">エンジニアと住民の双方向のループ</span>として再構築しました。エンジニアは地図を使用してリスクや優先順位を特定し、市民は特定場所の報告や写真を提供します。',
+        's03.h3.map': 'マップビュー (Map View)',
+        's03.map.body': '被害の深刻度、報告の密度、交通量を視覚化することで、エンジニアが優先エリアを迅速に特定できるようにします。',
+        's03.h3.report': 'レポートビュー (Report View)',
+        's03.report.body': '市民のフィードバックを構造化されたデータに変換し、地区ごとの自転車道の状態の概要を一目でわかるように提示します。',
+        's03.h3.mission': 'ミッションの送信 (Send Mission)',
+        's03.mission.body': 'エンジニアが特定エリアを評価するためにさらなるコンテキストを必要とする場合、ミッション送信機能を使用して<span class="stat-hi">地域住民に直接協力を依頼</span>できます。',
+        's03.h3.citizen': '市民参加型の道路状況報告：',
+        's03.citizen.body1': 'ハンブルクの住民は、簡単なクリック操作で実際の走行フィードバックを共有し、地域の自転車インフラ改善に積極的な役割を果たすことができます。',
+        's03.citizen.body2': 'わずか数ステップで、住民は<span class="stat-hi">日々の走行体験を実用的なインサイトに変換</span>し、メンテナンスの優先順位に直接影響を与えることができます。',
+        's04.title': 'プロジェクトのハイライト',
+        's04.h3.workflow': 'チームコラボレーションとワークフロー',
+        's04.workflow.body': '<span class="stat-hi">アジャイル開発のスプリント</span>を採用し、毎週のデモとテストを実施しました。また、AIをワークフローに組み込み、初期段階のプロトタイピングを加速させました。',
+        's04.h3.fail': 'テスト、イテレーション、そして異文化間コラボレーション',
+        's04.fail.body': 'このプロジェクトで最も印象的だったのは、ミュンヘンとハンブルクの自転車インフラに対するアプローチの違いを学んだことです。多様なチームとの協力により、盲点を発見し、フィードバックを素早く吸収し、<span class="stat-hi">異文化間でアイデアを洗練させる</span>能力が磨かれました。'
+      }
+    };
+
+    // Keys that contain HTML (spans, strong tags) and need innerHTML
+    const lsbgRichKeys = [
+      'intro.role.body', 's01.bg.body', 's01.goal.body',
+      's02.research.body1', 's02.research.body2',
+      's02.quote.1', 's02.quote.2', 's02.quote.3',
+      's02.insights.body', 's02.persona.body',
+      's02.tips.li1', 's02.tips.li2', 's02.tips.li3', 's02.tips.li4',
+      's03.blueprint.body', 's03.map.body', 's03.report.body',
+      's03.mission.body', 's03.citizen.body1', 's03.citizen.body2',
+      's04.workflow.body', 's04.fail.body',
+      'intro.product.body', 's01.bg.body', 's01.goal.body'
+    ];
+
+    const lsbgOriginals = {};
+    lsbgRichKeys.forEach(key => {
+      const el = document.querySelector(`[data-i18n="${key}"]`);
+      if (el) lsbgOriginals[key] = el.innerHTML;
+    });
+
+    function applyLsbgLang(lang) {
+      const t = lsbgI18n[lang];
+      if (!t || lang === 'en') {
+        // Restore English originals
+        lsbgRichKeys.forEach(key => {
+          const el = document.querySelector(`[data-i18n="${key}"]`);
+          if (el && lsbgOriginals[key]) el.innerHTML = lsbgOriginals[key];
+        });
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (!lsbgRichKeys.includes(key) && lsbgI18n.en && lsbgI18n.en[key]) {
+            el.textContent = lsbgI18n.en[key];
+          }
+        });
+        document.documentElement.lang = 'en';
+        return;
+      }
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) {
+          if (lsbgRichKeys.includes(key)) {
+            el.innerHTML = t[key];
+          } else {
+            el.textContent = t[key];
+          }
+        }
+      });
+      document.documentElement.lang = lang === 'zh-tw' ? 'zh-TW' : lang === 'zh-cn' ? 'zh-CN' : lang;
+    }
+
+    // On load, check localStorage
+    try {
+      const saved = localStorage.getItem('portfolio-lang');
+      if (saved && saved !== 'en') applyLsbgLang(saved);
+      const sel = document.getElementById('nav-lang-select');
+      if (sel) sel.value = saved || 'en';
+    } catch(e) {}
+
+    // Language dropdown
+    const langSel = document.getElementById('nav-lang-select');
+    if (langSel) {
+      langSel.addEventListener('change', () => {
+        const lang = langSel.value;
+        applyLsbgLang(lang);
+        try { localStorage.setItem('portfolio-lang', lang); } catch(e) {}
+      });
+    }
+  })();

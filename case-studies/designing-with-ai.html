@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Designing with AI · Iris Hsieh</title>
+  <link rel="icon" type="image/png" href="../Logo.png" />
+  <link rel="apple-touch-icon" href="../Logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/designing-with-ai.css">
+  <!-- Microsoft Clarity -->
+  <script src="js/analytics.js"></script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="nav-back" href="../index.html#island-writing">← Iris Hsieh</a>
+    <div class="nav-anchors">
+      <a class="nav-anchor" href="#intro" data-i18n="nav.intro">.Intro</a>
+      <a class="nav-anchor" href="#s02" data-i18n="nav.s02">01.Context</a>
+      <a class="nav-anchor" href="#s03" data-i18n="nav.s03">02.Pipeline</a>
+      <a class="nav-anchor" href="#s01" data-i18n="nav.s01">03.Outcome</a>
+    </div>
+    <select class="nav-lang" id="nav-lang-select">
+      <option value="en">EN</option>
+      <option value="ja">JA</option>
+      <option value="zh-tw">繁</option>
+      <option value="zh-cn">简</option>
+    </select>
+  </nav>
+
+  <!-- TITLE BAR -->
+  <div class="title-bar">
+    <div class="title-bar-inner">
+      <div class="title-main-heading" data-i18n="page.title"
+           style="font-size:40px;font-weight:800;line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;">
+        DESIGNING WITH AI
+      </div>
+      <div data-i18n="page.subtitle"
+           style="font-size:14px;font-weight:500;line-height:1.5;font-family:'Noto Sans',sans-serif;">
+        A systems-level workflow for solo designers, rebuilt around Claude Code at Wren AI.
+      </div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <div id="intro" class="sec cream" style="padding-top:0;padding-bottom:48px;">
+    <div class="sec-inner" style="max-width:100%;padding:0;">
+      <div class="intro-card">
+        <div class="intro-photo">
+          <img src="../assets/designing-with-ai/cover.png" alt="Design with AI, keyboard keys spelling DESIGN WITH AI" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;" />
+        </div>
+        <div class="intro-copy">
+          <div class="text-block">
+            <p class="h3" data-i18n="intro.h3.product">The premise</p>
+            <p class="body" data-i18n="intro.product.body">In early 2026, a designer at Anthropic declared that the traditional design process was dead. At the same time, I was a solo product designer at Wren AI, one person holding product design for a B2B AI platform, with <span class="stat-hi">16 hours</span> of my week swallowed by meetings and <span class="stat-hi">3–4 projects</span> running in parallel at any moment. This case study documents the 11-step AI workflow I built to make that actually possible.</p>
+          </div>
+          <div class="text-block">
+            <p class="h3" data-i18n="intro.h3.role">My Role</p>
+            <p class="body" data-i18n="intro.role.body">Senior Product Designer at Wren AI. Also, by necessity: PM, researcher, prototyper, motion designer, illustrator, technical writer, dogfooding lead. The workflow is how one person covers <span class="stat-hi">~6–8 FTE</span> of traditional scope without losing craft.</p>
+          </div>
+          <div class="text-block">
+            <p class="h3" data-i18n="intro.h3.time">Timeline</p>
+            <p class="body" data-i18n="intro.time.body">2026 → Present</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 01. CONTEXT (id stays s02) -->
+  <div id="s02" class="sec white" style="padding-top:32px;padding-bottom:60px;">
+    <div class="sec-inner">
+      <div class="sec-head">
+        <span class="sec-num">01.</span>
+        <span class="sec-title" data-i18n="s02.title">Why this workflow exists</span>
+      </div>
+
+      <div class="text-block" style="max-width:820px;">
+        <p class="h3" data-i18n="s02.h3.moment">The moment</p>
+        <p class="body" data-i18n="s02.moment.body">Early 2026. An Anthropic designer publishes a post arguing that the traditional design process, discovery → research → wireframe → mockup → spec → handoff, is obsolete. Models can generate working interfaces faster than a designer can sketch one. The artifact (the Figma file) is no longer where the value lives.</p>
+        <p class="body" data-i18n="s02.moment.body2">I read it at a B2B AI startup where I was the only product designer. I didn't have the luxury of disagreeing. The reality was already pressing against me:</p>
+      </div>
+
+      <ul class="bull-list" style="max-width:820px;">
+        <li data-i18n="s02.li1">A <span class="stat-hi">single designer</span> covering product design, visual design, prototyping, research, and brand for an entire product.</li>
+        <li data-i18n="s02.li2"><span class="stat-hi">16 hours/week</span> structurally committed to meetings that couldn't be eliminated.</li>
+        <li data-i18n="s02.li3"><span class="stat-hi">A new release every week</span>, each feature moves from brief to ship in under a week and a half of actual design time.</li>
+        <li data-i18n="s02.li4">Engineers who were already using Claude Code daily, if my handoffs weren't compatible with their workflow, I was the bottleneck.</li>
+        <li data-i18n="s02.li5">A startup budget that ruled out hiring.</li>
+      </ul>
+
+      <div class="text-block" style="max-width:820px;">
+        <p class="h3" data-i18n="s02.h3.reframe">The reframe</p>
+        <p class="body" data-i18n="s02.reframe.body">The old question, <em>"How do I get more time to design?"</em>, had no answer. The week was full. The new question became: <em>"How do I make every hour of mine count for five?"</em> That only worked if I stopped being the person making artifacts and started being the person directing a system that made them.</p>
+        <p class="body" data-i18n="s02.reframe.body2">Claude Code became that system. Not as a tool I reach for occasionally, but as the central orchestration layer, the thing specs, prototypes, research summaries, marketing videos, Notion updates, and product docs all flow through. Below is the pipeline I ended up with.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02. PIPELINE (id stays s03) -->
+  <div id="s03" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
+    <div class="sec-inner">
+      <div class="sec-head">
+        <span class="sec-num">02.</span>
+        <span class="sec-title" data-i18n="s03.title">The 11-step AI pipeline</span>
+      </div>
+
+      <div class="text-block" style="max-width:820px;">
+        <p class="h3" data-i18n="s03.h3">Steps 00 → 11</p>
+        <p class="body" data-i18n="s03.body">Each step is a Claude Code skill, a plugin, or a scripted handoff. Six of them run on the <em>design</em> skill pack, <code>user-research</code>, <code>design-critique</code>, <code>design-system-management</code>, <code>design-handoff</code>, <code>accessibility-review</code>, and <code>ux-writing</code>, each a focused playbook rather than an open prompt.</p>
+      </div>
+
+      <div class="ofs-story reveal-on-scroll">
+
+        <!-- 00 -->
+        <div class="ofs-chapter">
+          <div class="ofs-spine"><div class="ofs-badge">00</div><div class="ofs-spine-line"></div></div>
+          <div class="ofs-body">
+            <div class="ofs-chapter-title" data-i18n="s03.step0.title">Behavior analysis &amp; backtest</div>
+            <p class="ofs-chapter-story" data-i18n="s03.step0.story">The <code>user-research</code> skill ingests analytics events, session recordings, and support tickets and applies its synthesis framework, affinity mapping, impact/effort, jobs-to-be-done, to produce a behavior report with funnel drops, friction patterns, and anomalies. It then backtests them against the last round of design changes to show what actually moved.</p>
+            <div class="step-kv">
+              <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step0.tool"><code>user-research</code> skill</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step0.output">Weekly behavior report + design delta review</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Replaces</span><span class="step-kv-val" data-i18n="s03.step0.replaces">Data analyst + UX researcher</span></div>
+            </div>
+            <div class="skill-arch" data-i18n="s03.step0.arch">
+              <div class="skill-arch-head">
+                <span class="skill-arch-tag">Skill</span>
+                <span class="skill-arch-slug">user-research</span>
+                <span class="skill-arch-sub">behavior mode · weekly cadence</span>
+              </div>
+              <ol class="skill-arch-steps">
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Pull raw signals, analytics events, session recordings, support tickets</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Synthesize, affinity map → impact/effort → jobs-to-be-done</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Surface patterns, funnel drops, friction motifs, anomalies</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Backtest, diff against last design changes, measure actual lift</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Write behavior report, ranked findings + design delta review</span></li>
+              </ol>
+              <div class="skill-arch-foot">Runs every Monday. Report feeds step 01, every new spec starts from what the data actually showed.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 01 -->
+        <div class="ofs-chapter">
+          <div class="ofs-spine"><div class="ofs-badge">01</div><div class="ofs-spine-line"></div></div>
+          <div class="ofs-body">
+            <div class="ofs-chapter-title" data-i18n="s03.step1.title">Spec writing &amp; feature brainstorm</div>
+            <p class="ofs-chapter-story" data-i18n="s03.step1.story">A one-line brief from the CEO becomes a full spec, problem statement, scope, edge cases, acceptance criteria, risk list, inside a Claude Code skill that knows the product surface, pulls signals from the <code>user-research</code> output above, and respects the existing design system. I edit the shape of the argument, not the prose.</p>
+            <div class="step-kv">
+              <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step1.tool">Claude Code skill + <code>user-research</code> context</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step1.output">PRD-grade spec with edge cases &amp; criteria</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Replaces</span><span class="step-kv-val" data-i18n="s03.step1.replaces">Product manager</span></div>
+            </div>
+            <div class="skill-arch" data-i18n="s03.step1.arch">
+              <div class="skill-arch-head">
+                <span class="skill-arch-tag">Skill</span>
+                <span class="skill-arch-slug">prd-development</span>
+                <span class="skill-arch-sub">8-phase workflow</span>
+              </div>
+              <ol class="skill-arch-steps">
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Executive summary</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Problem statement, evidence-backed customer pain</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Target users &amp; personas</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Strategic context, OKR, market, why now</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Solution overview, high-level shape, flows</span></li>
+                <li><span class="skill-arch-no">06</span><span class="skill-arch-ph">Success metrics, primary / secondary / guardrail</span></li>
+                <li><span class="skill-arch-no">07</span><span class="skill-arch-ph">User stories &amp; requirements</span></li>
+                <li><span class="skill-arch-no">08</span><span class="skill-arch-ph">Out of scope &amp; dependencies</span></li>
+              </ol>
+              <div class="skill-arch-foot">Orchestrates 8+ component &amp; interactive sub-skills across 2–4 days.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 02 -->
+        <div class="ofs-chapter">
+          <div class="ofs-spine"><div class="ofs-badge">02</div><div class="ofs-spine-line"></div></div>
+          <div class="ofs-body">
+            <div class="ofs-chapter-title" data-i18n="s03.step2.title">User journey as HTML</div>
+            <p class="ofs-chapter-story" data-i18n="s03.step2.story">The spec feeds into the <code>user-research</code> skill's journey-mapping mode, which produces an interactive HTML user journey, stages, actions, emotions, pain points, and opportunity moments. It's shareable as a link, survives review edits, and becomes the single source of truth every downstream step references.</p>
+            <div class="step-kv">
+              <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step2.tool"><code>user-research</code> skill → HTML</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step2.output">Interactive journey map (standalone link)</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Replaces</span><span class="step-kv-val" data-i18n="s03.step2.replaces">Service designer / UX researcher</span></div>
+            </div>
+            <div class="skill-arch" data-i18n="s03.step2.arch">
+              <div class="skill-arch-head">
+                <span class="skill-arch-tag">Skill</span>
+                <span class="skill-arch-slug">journey-map</span>
+                <span class="skill-arch-sub">6-step builder</span>
+              </div>
+              <ol class="skill-arch-steps">
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Input source, conversation / file / Figma</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Gather journey data, stages, actions, responses, tags</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Confirmation loop, tree summary, iterate</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Generate JSON, <code>docs/journeys/{slug}.json</code></span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Generate HTML, styled, data-driven render</span></li>
+                <li><span class="skill-arch-no">06</span><span class="skill-arch-ph">Completion → hand off to <code>/dogfooding</code></span></li>
+              </ol>
+              <div class="skill-arch-foot">Outputs a single source of truth every downstream step references.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 -->
+        <div class="ofs-chapter">
+          <div class="ofs-spine"><div class="ofs-badge">03</div><div class="ofs-spine-line"></div></div>
+          <div class="ofs-body">
+            <div class="ofs-chapter-title" data-i18n="s03.step3.title">Prototype from user journey + Storybook</div>
+            <p class="ofs-chapter-story" data-i18n="s03.step3.story">I feed the journey HTML plus the team's Storybook into a skill that respects <code>design-system-management</code>, correct tokens, variants, sizes, and states, not new invention. It outputs a working HTML/CSS/JS prototype with routing, states, interactions, and fake data.</p>
+            <div class="step-kv">
+              <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step3.tool">Claude Code + <code>design-system-management</code> + Storybook</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step3.output">Runnable HTML/CSS/JS prototype</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Replaces</span><span class="step-kv-val" data-i18n="s03.step3.replaces">Prototyper / front-end designer</span></div>
+            </div>
+            <div class="skill-arch" data-i18n="s03.step3.arch">
+              <div class="skill-arch-head">
+                <span class="skill-arch-tag">Reference</span>
+                <span class="skill-arch-slug">storybook</span>
+                <span class="skill-arch-sub">what&rsquo;s inside</span>
+              </div>
+              <ol class="skill-arch-steps">
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Foundations, design tokens (color, typography, spacing, radius, motion)</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Components, every UI primitive with every variant × state (default, hover, active, disabled, loading, error)</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Patterns, composed blocks (toolbars, empty states, onboarding, side panels)</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Interaction stories, play functions capture hover / focus / loading / error paths</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Docs, auto-generated prop tables + usage guidelines per component</span></li>
+                <li><span class="skill-arch-no">06</span><span class="skill-arch-ph">A11y addon, contrast, keyboard nav, aria roles checked on every story</span></li>
+              </ol>
+              <div class="skill-arch-foot">Claude reads Storybook as the ground truth for what can be reused. If a component already exists, it must be used, no reinvention in the prototype.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 04 -->
+        <div class="ofs-chapter">
+          <div class="ofs-spine"><div class="ofs-badge">04</div><div class="ofs-spine-line"></div></div>
+          <div class="ofs-body">
+            <div class="ofs-chapter-title" data-i18n="s03.step4.title">Iterate in Claude Code</div>
+            <p class="ofs-chapter-story" data-i18n="s03.step4.story">I walk the prototype through the <code>design-critique</code> framework, first impression, usability, visual hierarchy, consistency, accessibility, and fix issues directly in Claude Code. I rework flows, tighten states, and fill empty / error / loading branches. Interaction design happens here now: in running code, not in Figma frames. The prototype becomes the design artifact of record. In parallel, I assess whether existing components cover the need, if they don't, I spin up the <code>design-system</code> agent to co-author new ones.</p>
+            <div class="step-kv">
+              <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step4.tool">Claude Code + <code>design-critique</code></span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step4.output">Reviewable prototype v1</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Replaces</span><span class="step-kv-val" data-i18n="s03.step4.replaces">Interaction designer</span></div>
+            </div>
+            <div class="skill-arch" data-i18n="s03.step4.arch">
+              <div class="skill-arch-head">
+                <span class="skill-arch-tag">Agent</span>
+                <span class="skill-arch-slug">design-system</span>
+                <span class="skill-arch-sub">5-option menu agent</span>
+              </div>
+              <ol class="skill-arch-steps">
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Prior art lookup, reuse check before building</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Component analysis, 6-phase spec (breakdown → status → interaction)</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Prototype builder, interactive HTML output</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Figma component doc, spec page authoring</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Handoff eval, readiness check before frontend</span></li>
+              </ol>
+              <div class="skill-arch-foot">Reads <code>DESIGN-COMPONENTS.md</code> + <code>DESIGN-TOKENS.md</code> on demand; pulls Figma context via MCP. One skill per run, no phases skipped.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 05 -->
+        <div class="ofs-chapter">
+          <div class="ofs-spine"><div class="ofs-badge">05</div><div class="ofs-spine-line"></div></div>
+          <div class="ofs-body">
+            <div class="ofs-chapter-title" data-i18n="s03.step5.title">Sync to Figma → Figma Make → back to prototype</div>
+            <p class="ofs-chapter-story" data-i18n="s03.step5.story">I pull the prototype into Figma and run <code>design-system-management</code> checks, correct token references, component variants, and states against the library. Figma Make then explores display states and alternative layouts at speed. Whatever wins comes back into Claude Code as a prompt to update the prototype. This is the only step where I still touch pixels directly, and it's the shortest.</p>
+            <div class="step-kv">
+              <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step5.tool">Figma + Figma Make + <code>design-system-management</code></span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step5.output">Design-system-aligned prototype v2</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Replaces</span><span class="step-kv-val" data-i18n="s03.step5.replaces">UI designer</span></div>
+            </div>
+            <div class="skill-arch" data-i18n="s03.step5.arch">
+              <div class="skill-arch-head">
+                <span class="skill-arch-tag">Loop</span>
+                <span class="skill-arch-slug">figma ⇄ claude-code</span>
+                <span class="skill-arch-sub">pixel-exploration detour</span>
+              </div>
+              <ol class="skill-arch-steps">
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Import prototype into Figma, via Figma MCP connector sync, layout gets regrouped + snapped to design-system tokens</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Paste the HTML file straight into Figma Make, skips rebuild, explores states &amp; alternates instantly</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Generate variants, 3–5 layouts / state combos in parallel, same input prompt</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Pick the winner, side-by-side against design-system fit, not aesthetics-first</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Write back with prompt, Claude Code updates the prototype, keeping parity with Figma</span></li>
+              </ol>
+              <div class="skill-arch-foot">Connector sync is the default loop. Direct HTML paste is the escape hatch when I want fast exploration instead of committed moves.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 06 -->
+        <div class="ofs-chapter">
+          <div class="ofs-spine"><div class="ofs-badge">06</div><div class="ofs-spine-line"></div></div>
+          <div class="ofs-body">
+            <div class="ofs-chapter-title" data-i18n="s03.step6.title">Handoff: Figma + prototype → engineer → Claude</div>
+            <p class="ofs-chapter-story" data-i18n="s03.step6.story">Engineers receive Figma <em>and</em> a working prototype, plus a <code>design-handoff</code> spec sheet, tokens, variants and states, interaction timing, content limits, edge cases, and accessibility notes. They feed the prototype into their own Claude Code session to generate production code, treating my prototype as executable spec, not as a mockup to reinterpret. Handoff ambiguity drops to near zero because there's nothing to translate.</p>
+            <div class="step-kv">
+              <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step6.tool"><code>design-handoff</code> + prototype → engineer's Claude</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step6.output">Production-ready feature branch</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Replaces</span><span class="step-kv-val" data-i18n="s03.step6.replaces">Design engineer / design ops</span></div>
+            </div>
+            <div class="skill-arch" data-i18n="s03.step6.arch">
+              <div class="skill-arch-head">
+                <span class="skill-arch-tag">Skill</span>
+                <span class="skill-arch-slug">wren-ux-writing</span>
+                <span class="skill-arch-sub">copy review · en / zh-TW / ja</span>
+              </div>
+              <ol class="skill-arch-steps">
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Load voice profile, <code>voice-profile-en.md</code> + <code>patterns.md</code> for tone + standard phrasings</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Apply patterns, buttons, errors, empty states, confirmations, validation</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Check glossary, <code>i18n/glossary.md</code> enforces consistent term mapping across locales</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Localize, <code>i18n/zh-tw.md</code> / <code>i18n/ja.md</code> rewrites, not word-for-word translations</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Review pass, <code>review.md</code> checks voice, clarity, consistency before handoff</span></li>
+              </ol>
+              <div class="skill-arch-foot">Runs on the prototype copy and the eng branch. Output: polished, glossary-aligned strings in EN / zh-TW / ja, ready to ship without a round of copy edits in code review.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 07 -->
+        <div class="ofs-chapter">
+          <div class="ofs-spine"><div class="ofs-badge">07</div><div class="ofs-spine-line"></div></div>
+          <div class="ofs-body">
+            <div class="ofs-chapter-title" data-i18n="s03.step7.title">Marketing video via Remotion</div>
+            <p class="ofs-chapter-story" data-i18n="s03.step7.story">Claude Code wraps the same prototype with Remotion to produce a launch video, scripted scene timing, on-screen callouts, voiceover stubs. Marketing gets a ready-to-edit MP4 without me opening After Effects. The design artifact and the marketing artifact share the same source.</p>
+            <div class="step-kv">
+              <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step7.tool">Claude Code + Remotion</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step7.output">Launch video (MP4) for marketing</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Replaces</span><span class="step-kv-val" data-i18n="s03.step7.replaces">Motion designer / video editor</span></div>
+            </div>
+            <div class="skill-arch" data-i18n="s03.step7.arch">
+              <div class="skill-arch-head">
+                <span class="skill-arch-tag">Framework</span>
+                <span class="skill-arch-slug">remotion</span>
+                <span class="skill-arch-sub">React → MP4</span>
+              </div>
+              <ol class="skill-arch-steps">
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Compose in React/TS, scene = component, time = props</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Parametrize, <code>inputProps</code> drive copy, data, colors</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Preview in Studio, hot-reload timeline with real data</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Render to MP4, CLI, server, or Remotion Lambda</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Embed via Player, same composition inside apps (optional)</span></li>
+              </ol>
+              <div class="skill-arch-foot">Source = the prototype. Same React components power the design artifact and the marketing MP4, no After Effects.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 08 -->
+        <div class="ofs-chapter">
+          <div class="ofs-spine"><div class="ofs-badge">08</div><div class="ofs-spine-line"></div></div>
+          <div class="ofs-body">
+            <div class="ofs-chapter-title" data-i18n="s03.step8.title">Brand: mascot, banners, teaser video</div>
+            <p class="ofs-chapter-story" data-i18n="s03.step8.story">Gemini, Weave, and Lovart (free tiers only) cover the brand layer, company mascot illustrations, campaign banners, short teaser videos.</p>
+            <div class="step-kv">
+              <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step8.tool">Gemini + Weave + Lovart (free)</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step8.output">Mascot, banner set, teaser video</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Replaces</span><span class="step-kv-val" data-i18n="s03.step8.replaces">Illustrator / brand designer</span></div>
+            </div>
+            <div class="step-media">
+              <img src="../assets/designing-with-ai/Illustration.png" alt="Wren AI mascot, three brand scenes generated with Gemini, Weave, Lovart" />
+            </div>
+          </div>
+        </div>
+
+        <!-- 09 -->
+        <div class="ofs-chapter">
+          <div class="ofs-spine"><div class="ofs-badge">09</div><div class="ofs-spine-line"></div></div>
+          <div class="ofs-body">
+            <div class="ofs-chapter-title" data-i18n="s03.step9.title">Dogfooding → summary → task assignment</div>
+            <p class="ofs-chapter-story" data-i18n="s03.step9.story">The same journey map that drove the prototype generates a <code>user-research</code>-style dogfooding checklist (usability-test structure: warm-up → context → deep dive → reaction → wrap-up). An <code>accessibility-review</code> pass runs alongside it for WCAG 2.1 AA, contrast, keyboard, focus, touch targets. A Claude Code skill then consolidates findings, ranks by severity, proposes fixes, and drafts task assignments by owner. By Monday morning, a sprint-ready backlog I didn't hand-write.</p>
+            <div class="step-kv">
+              <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step9.tool"><code>user-research</code> + <code>accessibility-review</code> + Claude Code</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step9.output">Dogfooding summary + ranked tasks</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Replaces</span><span class="step-kv-val" data-i18n="s03.step9.replaces">UX researcher + program manager</span></div>
+            </div>
+            <div class="skill-arch" data-i18n="s03.step9.arch">
+              <div class="skill-arch-head">
+                <span class="skill-arch-tag">Skill</span>
+                <span class="skill-arch-slug">dogfooding</span>
+                <span class="skill-arch-sub">6-step form generator</span>
+              </div>
+              <ol class="skill-arch-steps">
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Source selection, existing journey / file / fresh</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Analysis &amp; conversion, regroup into 4–5 testable sections</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Confirmation loop, structural summary, iterate</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Output destination, Notion page / local Markdown</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Generate the form, sections + bugs / ratings / exit criteria</span></li>
+                <li><span class="skill-arch-no">06</span><span class="skill-arch-ph">Language, EN default, zh-TW per journey</span></li>
+              </ol>
+              <div class="skill-arch-foot">20-minute budget per tester. Pulls from <code>docs/journeys/{slug}.json</code>, the same source that drove the prototype.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10 -->
+        <div class="ofs-chapter">
+          <div class="ofs-spine"><div class="ofs-badge">10</div><div class="ofs-spine-line"></div></div>
+          <div class="ofs-body">
+            <div class="ofs-chapter-title" data-i18n="s03.step10.title">PM ops: Notion sync &amp; workload math</div>
+            <p class="ofs-chapter-story" data-i18n="s03.step10.story">Claude updates the Notion product roadmap against the backlog, recalculates each person's workload, and surfaces overbooked weeks before they blow up. The weekly roadmap review becomes a 10-minute review of Claude's draft, not a 2-hour spreadsheet session.</p>
+            <div class="step-kv">
+              <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step10.tool">Claude + Notion MCP</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step10.output">Updated roadmap + workload flags</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Replaces</span><span class="step-kv-val" data-i18n="s03.step10.replaces">Producer / PM ops</span></div>
+            </div>
+            <div class="skill-arch" data-i18n="s03.step10.arch">
+              <div class="skill-arch-head">
+                <span class="skill-arch-tag">Skill</span>
+                <span class="skill-arch-slug">roadmap-planning</span>
+                <span class="skill-arch-sub">5-phase workflow</span>
+              </div>
+              <ol class="skill-arch-steps">
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Gather inputs, business goals, customer problems, constraints</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Define initiatives, epics with hypotheses &amp; metrics</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Prioritize, rank by impact / effort / strategic fit</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Sequence, releases or quarters with dependencies</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Communicate, Now / Next / Later narrative for stakeholders</span></li>
+              </ol>
+              <div class="skill-arch-foot">Outcome-driven, not a feature list. Syncs to Notion so the roadmap, backlog, and workload math live in one surface.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11 -->
+        <div class="ofs-chapter">
+          <div class="ofs-spine"><div class="ofs-badge">11</div><div class="ofs-spine-line"></div></div>
+          <div class="ofs-body">
+            <div class="ofs-chapter-title" data-i18n="s03.step11.title">External product documentation</div>
+            <p class="ofs-chapter-story" data-i18n="s03.step11.story">The journey map + the <code>ux-writing</code> skill + the Claude Chrome plugin produce the customer-facing docs, help-center pages, API reference stubs, release-note drafts, plus in-product microcopy (CTAs, empty states, error messages, confirmations). The same source that drove the prototype now drives the words users read when the feature ships, with a consistent voice and tone.</p>
+            <div class="step-kv">
+              <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step11.tool">Journey + <code>ux-writing</code> + Claude Chrome plugin</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step11.output">External product documentation</span></div>
+              <div class="step-kv-cell"><span class="step-kv-key">Replaces</span><span class="step-kv-val" data-i18n="s03.step11.replaces">Technical writer / content designer</span></div>
+            </div>
+            <div class="skill-arch" data-i18n="s03.step11.arch">
+              <div class="skill-arch-head">
+                <span class="skill-arch-tag">Skill</span>
+                <span class="skill-arch-slug">user-facing-docs</span>
+                <span class="skill-arch-sub">PRD → 4-section Markdown</span>
+              </div>
+              <ol class="skill-arch-steps">
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Ask for PRD source, paste or Notion URL</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Confirm tone, friendly / technical / formal</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Parse PRD &amp; apply rewrite rules, strip internal language</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Generate four sections, Overview · How It Works · Using · Tips</span></li>
+              </ol>
+              <div class="skill-arch-foot">Reads the PRD, rewrites from the user's perspective, drops engineering/PM framing. Help-center &amp; manual format, not tooltips or release notes.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 03. CONCLUSION (id stays s01) -->
+  <div id="s01" class="sec white" style="padding-top:32px;padding-bottom:60px;">
+    <div class="sec-inner">
+      <div class="sec-head">
+        <span class="sec-num">03.</span>
+        <span class="sec-title" data-i18n="s01.title">The outcome: when one person runs a system</span>
+      </div>
+
+      <div class="text-block" style="max-width:820px;">
+        <p class="body" data-i18n="s01.body">These are my real numbers at Wren AI, proof that the pipeline above actually runs. They don't record the limits of my stamina. They record what's possible once the question stops being "how do I get more time to design" and becomes "how do I direct a system that designs."</p>
+      </div>
+
+      <ul class="metric-list reveal-on-scroll">
+        <li class="metric-li">
+          <div class="metric-li-head">
+            <span class="metric-li-value">6–8<span class="metric-li-unit">FTE</span></span>
+            <span class="metric-li-label" data-i18n="s01.m1.label">I'm a designer, and an army</span>
+          </div>
+          <p class="metric-li-note" data-i18n="s01.m1.note">Before, this took 6–8 different minds, PM, researcher, UI/UX, tech writer, even motion designer. Now those boundaries collapse inside me. With AI as leverage, one person can run the whole production line.</p>
+        </li>
+        <li class="metric-li">
+          <div class="metric-li-head">
+            <span class="metric-li-value">3–4</span>
+            <span class="metric-li-label" data-i18n="s01.m2.label">Parallel universes with no queue</span>
+          </div>
+          <p class="metric-li-note" data-i18n="s01.m2.note">No "waiting on design" dead time here. 3–4 fronts advance simultaneously: Agent Mode's logic, Embedded Threads' experience, Design System maintenance, all in active motion, not queued and idle.</p>
+        </li>
+        <li class="metric-li">
+          <div class="metric-li-head">
+            <span class="metric-li-value">16<span class="metric-li-unit">hrs/wk</span></span>
+            <span class="metric-li-label" data-i18n="s01.m3.label">Time sliced by structure</span>
+          </div>
+          <p class="metric-li-note" data-i18n="s01.m3.note">16 hours a week, this is the communication tax I pay as a "human." 40% of my time is locked to meetings, non-negotiable. Which means every remaining minute has to deliver several times its weight.</p>
+        </li>
+        <li class="metric-li">
+          <div class="metric-li-head">
+            <span class="metric-li-value">24<span class="metric-li-unit">hrs/wk</span></span>
+            <span class="metric-li-label" data-i18n="s01.m4.label">24 hours as conductor</span>
+          </div>
+          <p class="metric-li-note" data-i18n="s01.m4.note">Meetings deducted, the 24 hours that remain each week are my real battlefield. Each project gets less than 6 hours. Sounds crazy? But when I'm no longer the craftsman drawing frames, when I'm the system owner directing Claude Code to execute the vision, a week's workload really does land inside 6 hours.</p>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-contact">
+      <div class="footer-item"><span>WeChat: ralinzain</span></div>
+      <div class="footer-sep"></div>
+      <div class="footer-item"><a href="https://www.instagram.com/ralinzain" target="_blank" rel="noreferrer">Instagram</a></div>
+      <div class="footer-sep"></div>
+      <div class="footer-item"><a href="https://www.linkedin.com/in/ming-hsi-h-b59182158/" target="_blank" rel="noreferrer">LinkedIn</a></div>
+      <div class="footer-sep"></div>
+      <div class="footer-item"><a href="https://wa.me/886975573947">WhatsApp: +886 975 573 947</a></div>
+      <div class="footer-sep"></div>
+      <div class="footer-item"><a href="mailto:ralinzain@gmail.com">ralinzain@gmail.com</a></div>
+    </div>
+  </div>
+
+  <script src="js/designing-with-ai.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>A41 All For One · Iris Hsieh</title>
+  <link rel="icon" type="image/png" href="../Logo.png" />
+  <link rel="apple-touch-icon" href="../Logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/a41.css">
+  <!-- Microsoft Clarity -->
+  <script src="js/analytics.js"></script>
+</head>
+<body>
+
+<!-- ── NAV ────────────────────────────────────────── -->
+<nav class="nav">
+  <a class="nav-back" href="../index.html#island-work" data-i18n="nav.back">← Iris Hsieh</a>
+  <div class="nav-anchors">
+    <a class="nav-anchor" href="#intro" data-i18n="nav.intro">.Intro</a>
+    <a class="nav-anchor" href="#s01" data-i18n="nav.s01">01.Start</a>
+    <a class="nav-anchor" href="#s02" data-i18n="nav.s02">02.Our Solution</a>
+  </div>
+  <select class="nav-lang" id="nav-lang-select">
+    <option value="en">EN</option>
+    <option value="ja">JA</option>
+    <option value="zh-tw">繁</option>
+    <option value="zh-cn">简</option>
+  </select>
+</nav>
+
+<!-- ── TITLE BAR ──────────────────────────────────── -->
+<div class="title-bar">
+  <div class="title-bar-inner">
+    <div data-i18n="page.title" style="font-size:40px;font-weight:800;line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;">All For One (E-commerce App)</div>
+    <div data-i18n="page.subtitle" style="font-size:16px;font-weight:500;line-height:1.4;font-family:'Noto Sans',sans-serif;color:var(--muted);">Unifying fragmented fashion e-commerce, from order management to cross-border checkout, into one coherent shopping experience.</div>
+  </div>
+</div>
+
+<!-- ── INTRO ──────────────────────────────────────── -->
+<div id="intro" class="sec cream" style="padding-top:0;padding-bottom:48px;">
+  <div class="sec-inner" style="max-width:100%;padding:0;">
+    <div class="intro-card">
+      <div class="intro-photo">
+        <img src="../assets/All for one/cover.png" alt="A41 All For One app" />
+      </div>
+      <div class="intro-copy">
+        <div class="text-block">
+          <p class="h3" data-i18n="intro.label.product">Product Overview:</p>
+          <p class="body" data-i18n="intro.product.body">All For One is a fashion commerce app that brings together products from Taiwanese and Korean brands in one mobile experience. Users can browse across stores, split checkout by seller, and track orders in a single flow. The design challenge was to turn fragmented catalog data and cross-store logistics into a shopping journey users could actually trust.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3" data-i18n="intro.label.role">My Role:</p>
+          <p class="body" data-i18n="intro.role.body">I led the redesign of <span class="stat-hi">three core flows</span>: the product page, shopping cart, and profile page. The work focused on replacing brittle WebView patterns with a more <span class="stat-hi">native mobile experience</span> and creating clearer paths to checkout.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3" data-i18n="intro.label.time">Timeframe:</p>
+          <p class="body" data-i18n="intro.time.body">None Capital · 2021–2022</p>
+        </div>
+        <div class="text-block">
+          <p class="h3" data-i18n="intro.label.platform">Platform:</p>
+          <p class="body" data-i18n="intro.platform.body">Mobile · iOS</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 01. WHERE WE STARTED ───────────────────────── -->
+<div id="s01" class="sec white" style="padding-top:32px;padding-bottom:60px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">01.</span>
+      <span class="sec-title" data-i18n="s01.title">Where We Started</span>
+    </div>
+    <div class="split-row">
+      <div class="split-photo">
+        <img src="../assets/All for one/order-logic-diagram.png" alt="A41 previous design reference" />
+      </div>
+      <div class="split-copy">
+        <p class="body" data-i18n="s01.lede">Before redesigning the interface, I <span class="stat-hi">audited the existing product</span> to understand where the experience was breaking down and what the team needed to scale it more coherently.</p>
+        <div class="text-block">
+          <p class="h3" data-i18n="s01.item1.label">Understanding Past Design History:</p>
+          <p class="body" data-i18n="s01.item1.body">Before I took on this project, the client had hired other designers to work on the interface. Therefore, before initiating the project, I reviewed previous design documents to understand the overall design direction of the product.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3" data-i18n="s01.item2.label">Migrating to Figma &amp; Building a Design System:</p>
+          <p class="body" data-i18n="s01.item2.body">The previous designer mainly worked with Adobe Illustrator and Avocode. To better support the product team's workflow, I migrated the existing files to Figma and Zeplin, then <span class="stat-hi">built a design system</span> to enable smoother collaboration going forward.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3" data-i18n="s01.item3.label">Competitive Analysis &amp; UX Information Architecture Audit:</p>
+          <p class="body" data-i18n="s01.item3.body">I analyzed core functions (e.g., product pages, checkout flows), studied industry benchmarks, and reorganized the information architecture and component structure.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3" data-i18n="s01.item4.label">Logistics Research:</p>
+          <p class="body" data-i18n="s01.item4.body">Because split-order logic varies across e-commerce platforms, I reviewed benchmark flows to better understand how other products handled logistics and fulfillment constraints.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 02. OUR SOLUTION ───────────────────────────── -->
+<div id="s02" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">02.</span>
+      <span class="sec-title" data-i18n="s02.title">Our Solution</span>
+    </div>
+
+    <!-- a. Product Page Redesign -->
+    <div style="display:flex;flex-direction:column;gap:24px;">
+      <div>
+        <p class="feat-section-title" data-i18n="s02.a.title">a. Product Page Redesign</p>
+        <p class="body" style="margin-top:4px;color:var(--muted);" data-i18n="s02.a.desc">Swipe the prototype to compare the before and after states.</p>
+      </div>
+      <div class="phone-pair">
+        <div class="phone-col">
+          <div class="phone-frame" style="border-radius:36px;border-width:4px;">
+            <img src="../assets/All for one/product-page-previous.png" alt="Previous version prototype" />
+          </div>
+          <div class="phone-copy">
+            <p class="h3" data-i18n="s02.a.prev.label">Previous version</p>
+            <p class="body" data-i18n="s02.a.prev.body">In the previous version, we couldn't hide the original shopping cart and purchase buttons from the <span class="stat-hi">WebView-based product page</span>. Moreover, store and product information could only be viewed within WebView, which often caused frustration and confusion for users.</p>
+          </div>
+        </div>
+        <div class="phone-col">
+          <div class="phone-frame" style="border-radius:36px;border-width:4px;">
+            <img src="../assets/All for one/product-page-redesign.png" alt="Redesign version prototype" />
+          </div>
+          <div class="phone-copy">
+            <p class="h3" data-i18n="s02.a.new.label">Redesign version</p>
+            <p class="body" data-i18n="s02.a.new.body">In the redesign, improvements in web-scraped data integration allowed designers to <span class="stat-hi">display store and product information natively</span> within the app.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- b. Main Features -->
+    <div style="display:flex;flex-direction:column;gap:24px;">
+      <p class="feat-section-title" data-i18n="s02.b.title">b. Main Features of the Redesign Version</p>
+      <div class="phone-pair">
+        <div class="phone-col">
+          <div class="phone-frame">
+            <video src="../assets/All for one/product-info.mp4" autoplay loop muted playsinline></video>
+          </div>
+          <div class="phone-copy">
+            <p class="h3" data-i18n="s02.b.info.label">Product Information</p>
+            <p class="body" data-i18n="s02.b.info.body1">Since product descriptions could only be retrieved as one full block, I redesigned the section to be <span class="stat-hi">collapsed by default</span>. Users expand it only when needed, reducing disruption during browsing or checkout.</p>
+            <p class="body" style="margin-top:4px;" data-i18n="s02.b.info.body2">Because the length and structure were unpredictable, I added a "Back to top" button at the bottom once expanded. I tested other options (like "Hide"), but usability studies confirmed "Back to top" was the most intuitive and efficient.</p>
+          </div>
+        </div>
+        <div class="phone-col">
+          <div class="phone-frame">
+            <video src="../assets/All for one/color-size-picker.mp4" autoplay loop muted playsinline></video>
+          </div>
+          <div class="phone-copy">
+            <p class="h3" data-i18n="s02.b.picker.label">Color &amp; Size Picker</p>
+            <p class="body" data-i18n="s02.b.picker.body1">The main challenge came from inconsistent scraped data: colors could appear as "grass green" or "green with rhombus pattern," while size labels varied widely. This unpredictability made fixed layouts impossible.</p>
+            <p class="body" style="margin-top:4px;" data-i18n="s02.b.picker.body2">To solve this, I used a <span class="stat-hi">Bottom Sheet design</span>, which balanced information capacity and usability on mobile, providing a more stable and flexible user experience.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- c. Shopping Cart Design -->
+    <div style="display:flex;flex-direction:column;gap:24px;">
+      <p class="feat-section-title" data-i18n="s02.c.title">c. Shopping Cart Design</p>
+      <div class="phone-pair">
+        <div class="phone-col">
+          <div class="phone-frame">
+            <img src="../assets/All for one/shopping-bag.png" alt="Two shopping carts UI" />
+          </div>
+          <div class="phone-copy">
+            <p class="h3" data-i18n="s02.c.cart.label">Two Shopping Carts (Taiwan &amp; Korea)</p>
+            <p class="body" data-i18n="s02.c.cart.body1">In the shopping cart design, international items and other products required separate checkouts, so we decided to <span class="stat-hi">split the cart into two sections</span>.</p>
+            <p class="body" style="margin-top:4px;" data-i18n="s02.c.cart.body2">This design was mainly to prevent users from being notified after clicking "Checkout" that they couldn't place all items in one order. After user testing, I introduced Tabs, allowing users to easily switch between carts, while showing the current item count directly on each tab.</p>
+          </div>
+        </div>
+        <div class="phone-col">
+          <div class="phone-frame" style="aspect-ratio:auto;height:auto;">
+            <img src="../assets/All for one/checkout.png" alt="Checkout page UI" />
+          </div>
+          <div class="phone-copy">
+            <p class="h3" data-i18n="s02.c.checkout.label">Checkout Page</p>
+            <p class="body" data-i18n="s02.c.checkout.body1">For the Item Cards, we set three goals:</p>
+            <ul class="bull-list" style="margin-top:6px;">
+              <li data-i18n="s02.c.checkout.li1">Clearly display prices so users can understand at a glance.</li>
+              <li data-i18n="s02.c.checkout.li2">Highlight the address for easy re-confirmation.</li>
+              <li data-i18n="s02.c.checkout.li3">Allow flexibility for larger product images.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- d. User Profile Page Redesign -->
+    <div style="display:flex;flex-direction:column;gap:24px;">
+      <p class="feat-section-title" data-i18n="s02.d.title">d. User Profile Page Redesign</p>
+      <div class="phone-pair">
+        <div class="phone-col">
+          <div class="phone-frame" style="border-radius:36px;border-width:4px;">
+            <img src="../assets/All for one/profile-previous.png" alt="Profile page previous version" />
+          </div>
+          <div class="phone-copy">
+            <p class="h3" data-i18n="s02.d.prev.label">Previous version</p>
+            <p class="body" data-i18n="s02.d.prev.body1">In the original product plan, the User Profile Page reserved space for a future "user post" feature. However, due to strategy changes, this feature was not implemented, leaving the reserved area wasted.</p>
+            <p class="body" style="margin-top:4px;" data-i18n="s02.d.prev.body2">In an e-commerce app, every section represents a <span class="stat-hi">potential touchpoint for products</span>, so unused space meant missed opportunities for user engagement.</p>
+          </div>
+        </div>
+        <div class="phone-col">
+          <div class="phone-frame" style="border-radius:36px;border-width:4px;">
+            <img src="../assets/All for one/profile-redesign.png" alt="Profile page redesign version" />
+          </div>
+          <div class="phone-copy">
+            <p class="h3" data-i18n="s02.d.new.label">Redesign version</p>
+            <p class="body" data-i18n="s02.d.new.body1">In the redesigned User Profile Page, I placed My Order and Customer Service at the top for quick access.</p>
+            <p class="body" style="margin-top:4px;" data-i18n="s02.d.new.body2">Below, I added Recently Viewed, Shopping Cart, and My Picks carousels, <span class="stat-hi">increasing the chances for products to re-enter the checkout flow</span>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<div class="footer">
+  <div class="footer-contact">
+    <div class="footer-item"><span>WeChat: ralinzain</span></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.instagram.com/ralinzain" target="_blank" rel="noreferrer">Instagram</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.linkedin.com/in/ming-hsi-h-b59182158/" target="_blank" rel="noreferrer">LinkedIn</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://wa.me/886975573947">WhatsApp: +886 975 573 947</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="mailto:ralinzain@gmail.com">ralinzain@gmail.com</a></div>
+  </div>
+</div>
+
+  <script src="js/a41.js"></script>
+
+</body>
+</html>

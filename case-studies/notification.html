@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Notification Framework · Iris Hsieh</title>
+  <link rel="icon" type="image/png" href="../Logo.png" />
+  <link rel="apple-touch-icon" href="../Logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/notification.css">
+  <!-- Microsoft Clarity -->
+  <script src="js/analytics.js"></script>
+</head>
+<body>
+
+<!-- ── NAV ────────────────────────────────────────── -->
+<nav class="nav">
+  <a class="nav-back" href="../index.html#island-work" data-i18n="nav.back">← Iris Hsieh</a>
+  <div class="nav-anchors">
+    <a class="nav-anchor" href="#intro" data-i18n="nav.intro">.Intro</a>
+    <a class="nav-anchor" href="#s01" data-i18n="nav.s01">01.Where We Started</a>
+    <a class="nav-anchor" href="#s02" data-i18n="nav.s02">02.Our Process</a>
+    <a class="nav-anchor" href="#s03" data-i18n="nav.s03">03.What We Built</a>
+    <a class="nav-anchor" href="#s04" data-i18n="nav.s04">04.AI Classifier</a>
+    <a class="nav-anchor" href="#s05" data-i18n="nav.s05">05.Impact</a>
+  </div>
+  <select class="nav-lang" id="nav-lang-select">
+    <option value="en">EN</option>
+    <option value="ja">JA</option>
+    <option value="zh-tw">繁</option>
+    <option value="zh-cn">简</option>
+  </select>
+</nav>
+
+<!-- ── TITLE BAR ──────────────────────────────────── -->
+<div class="title-bar">
+  <div class="title-bar-inner">
+    <div data-i18n="page.title" style="font-size:40px;font-weight:800;line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;">Notification Framework</div>
+    <div data-i18n="page.subtitle" style="font-size:16px;font-weight:500;line-height:1.4;font-family:'Noto Sans',sans-serif;color:var(--muted);">Turning scattered alerts into a unified, review-ready notification framework.</div>
+  </div>
+</div>
+
+<!-- ── INTRO ──────────────────────────────────────── -->
+<div id="intro" class="sec cream" style="padding-top:0;padding-bottom:48px;">
+  <div class="sec-inner" style="max-width:100%;padding:0;">
+    <div class="intro-card">
+      <div class="intro-photo">
+        <img src="../assets/Google/notification.png" alt="Notification Framework" />
+      </div>
+      <div class="intro-copy">
+        <div class="text-block">
+          <p class="h3" data-i18n="intro.label.product">Project Overview:</p>
+          <p class="body" data-i18n="intro.product.body1">We noticed that different features were sending out notifications without a shared understanding of what was already out there. As a result, users sometimes received repeated messages or missed the ones that actually mattered. We set out to fix that by building a shared framework that helps teams stay aligned on what gets sent, when, and why.</p>
+          <p class="body" data-i18n="intro.product.body2">The work introduced structured rules, expanded notification categories, and defined frequency and priority models. I also helped design a supporting AI-powered classifier tool that turns the framework into a reviewable workflow for planning and validation.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3" data-i18n="intro.label.role">My Role:</p>
+          <p class="body" data-i18n="intro.role.body">As the interaction designer, I <span class="stat-hi">audited and classified existing notifications</span>, co-developed the decision framework, and translated it into practical review tools. I aligned <span class="stat-hi">cross-functional teams</span> on shared standards, helped define the supporting classifier workflow, and documented the system so it could <span class="stat-hi">scale beyond a single feature team</span>.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3" data-i18n="intro.label.company">Company &amp; Timeframe:</p>
+          <p class="body" data-i18n="intro.company.body">Major Consumer Electronics Platform · 2025</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── 01. WHERE WE STARTED ───────────────────────── -->
+<div id="s01" class="sec white" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">01.</span>
+      <span class="sec-title" data-i18n="s01.title">Where We Started</span>
+    </div>
+    <div class="split-row">
+      <div class="split-copy">
+        <div class="text-block">
+          <p class="h3" data-i18n="s01.bg.label">Project Background:</p>
+          <p class="body" data-i18n="s01.bg.body">We began with a comprehensive audit of notifications across <span class="stat-hi">6 core features</span> on the platform. Notifications were scattered across separate design files with no single source of truth -- each team had been designing in isolation. The audit surfaced overlapping messages, inconsistent tone, and gaps where important notifications were missing entirely.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3" data-i18n="s01.goal.label">Our Goal:</p>
+          <ul class="bull-list" style="margin-top:4px;">
+            <li data-i18n="s01.goal.li1"><strong>Build the foundation</strong>, Create a unified framework that designers and product managers can reference together.</li>
+            <li data-i18n="s01.goal.li2"><strong>Ensure consistency</strong>, Reduce redundancy and conflicting messages across features.</li>
+            <li data-i18n="s01.goal.li3"><strong>Enable better work</strong>, Establish shared standards so teams can move faster with confidence.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 02. OUR PROCESS ────────────────────────────── -->
+<div id="s02" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">02.</span>
+      <span class="sec-title" data-i18n="s02.title">Our Process</span>
+    </div>
+    <p class="body" data-i18n="s02.lede">The framework was built on two pillars, each refined iteratively: <strong>Categorization &amp; Usage</strong>, informed by platform-level notification policies and adjusted through multiple rounds of review with stakeholders; and <strong>Notification Frequency Types</strong>, grounded in the existing design system to ensure visual and behavioral consistency.</p>
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="text-block">
+        <p class="h3" data-i18n="s02.step1.label">Step 1, Notification Audit</p>
+        <p class="body" data-i18n="s02.step1.body">We began with a comprehensive audit of notifications across 6 core features on the platform. Notifications were scattered across separate design files with no single source of truth. Each one was mapped by trigger, urgency, and frequency, then translated into flowcharts to reconstruct the end-to-end user journey.</p>
+      </div>
+      <div class="text-block">
+        <p class="h3" data-i18n="s02.step2.label">Step 2, Classification &amp; Rules</p>
+        <p class="body" data-i18n="s02.step2.body">From the audit, we designed a classification tree that asked simple but systematic questions: Is this user-initiated? Is it a device health warning? Is it contextual? Each answer led to a category, a frequency type, and an importance level.</p>
+      </div>
+      <div class="text-block">
+        <p class="h3" data-i18n="s02.step3.label">Step 3, Cross-Functional Alignment</p>
+        <p class="body" data-i18n="s02.step3.body">We partnered closely with PMs and engineers, running design reviews and scenario testing to pressure-test the framework against real use cases. These sessions revealed where redundancy was most painful and where consistency mattered most, shaping the framework into <span class="stat-hi">something practical, not just theoretical</span>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 03. WHAT WE BUILT ──────────────────────────── -->
+<div id="s03" class="sec white" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">03.</span>
+      <span class="sec-title" data-i18n="s03.title">What We Built</span>
+    </div>
+    <div class="step-list">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-copy">
+          <p class="h3" data-i18n="s03.step1.label">Categorization &amp; Usage Guidelines</p>
+          <p class="body" data-i18n="s03.step1.body">We defined <span class="stat-hi">8 categories</span> informed by platform-level notification policies (e.g., Critical Device Health Warning, Security &amp; Privacy, Background Actions, Contextual Insights). This gave teams a vocabulary to consistently describe what kind of message they were sending.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-copy">
+          <p class="h3" data-i18n="s03.step2.label">Frequency Type Guidelines</p>
+          <p class="body" data-i18n="s03.step2.body">We outlined <span class="stat-hi">4 main delivery types</span>: One-time Informational, Reappearing, Regular Delivery, and Ongoing. Each had clear rules on urgency, when it should disappear, and how often it could reappear. This gave teams explicit guardrails against over-notification and alert fatigue.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-copy">
+          <p class="h3" data-i18n="s03.step3.label">Ranking &amp; Priority Guidelines</p>
+          <p class="body" data-i18n="s03.step3.body">Each notification is assigned an importance level that determines its visual treatment and interruption behavior. We mapped notifications to <span class="stat-hi">4 levels (Urgent, High, Medium, Low)</span>. This ensured both consistency in tone and alignment with system behaviors (sound, vibration, heads-up, etc.).</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-copy">
+          <p class="h3" data-i18n="s03.step4.label">Notification Helper Tool</p>
+          <p class="body" data-i18n="s03.step4.body">A static framework alone wasn't enough, we needed a way for teams to actually use it in daily workflows. To solve this, I designed the <span class="stat-hi">AI-powered notification classifier</span>, a structured system that turned design rules into actionable outputs across different input types (PRDs, mocks, screenshots, flowcharts).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Classification Tree Flowchart -->
+    <div class="text-block" style="margin-top:16px;">
+      <p class="h3" data-i18n="s03.tree.label">Classification Tree</p>
+      <p class="body" data-i18n="s03.tree.body">The framework uses a decision-tree structure to classify any notification consistently. This sequential flow ensures every notification is evaluated through the same lens, regardless of which team is designing it.</p>
+    </div>
+    <div class="prd-tree prd-tree--notif ofs-visible">
+      <div class="prd-card prd-anim notif-flow">
+        <!-- Row 1: Start → Step 1 → Categories -->
+        <div class="flow-row">
+          <div class="prd-node">
+            <div class="prd-node-tag" data-i18n="s03.tree.start.tag">Start</div>
+            <div class="prd-node-name" data-i18n="s03.tree.start.name">New Notification</div>
+          </div>
+          <div class="prd-hline"></div>
+          <div class="prd-node prd-node-info">
+            <div class="prd-node-info-title" data-i18n="s03.tree.step1.tag">Step 1</div>
+            <div class="prd-node-info-sub" data-i18n="s03.tree.step1.sub">Categorization &amp; Usage, Select the category that best describes the notification's purpose.</div>
+          </div>
+          <div class="prd-hline" style="width:40px;"></div>
+          <div class="cat-grid">
+            <div class="prd-node-pkg cat-card"><div class="prd-node-pkg-label" data-i18n="s03.tree.cat1">1. Critical Device Health Warning</div></div>
+            <div class="prd-node-pkg cat-card"><div class="prd-node-pkg-label" data-i18n="s03.tree.cat2">2. Security, Safety &amp; Privacy</div></div>
+            <div class="prd-node-pkg cat-card"><div class="prd-node-pkg-label" data-i18n="s03.tree.cat3">3. User Initiated</div></div>
+            <div class="prd-node-pkg cat-card"><div class="prd-node-pkg-label" data-i18n="s03.tree.cat4">4. Background Actions</div></div>
+            <div class="prd-node-pkg cat-card"><div class="prd-node-pkg-label" data-i18n="s03.tree.cat5">5. Automated System Status</div></div>
+            <div class="prd-node-pkg cat-card"><div class="prd-node-pkg-label" data-i18n="s03.tree.cat6">6. System Management Guidance</div></div>
+            <div class="prd-node-pkg cat-card"><div class="prd-node-pkg-label" data-i18n="s03.tree.cat7">7. Contextual Insights &amp; Alerts</div></div>
+            <div class="prd-node-pkg cat-card"><div class="prd-node-pkg-label" data-i18n="s03.tree.cat8">8. Promotional</div></div>
+          </div>
+        </div>
+        <!-- Row 2: Step 2 → Step 3 → End -->
+        <div class="flow-row" style="padding-left:184px;">
+          <div class="prd-node prd-node-info">
+            <div class="prd-node-info-title" data-i18n="s03.tree.step2.tag">Step 2</div>
+            <div class="prd-node-info-sub" data-i18n="s03.tree.step2.sub">Frequency Type, Determine how often and under what conditions it should appear.</div>
+          </div>
+          <div class="prd-hline"></div>
+          <div class="prd-node prd-node-info">
+            <div class="prd-node-info-title" data-i18n="s03.tree.step3.tag">Step 3</div>
+            <div class="prd-node-info-sub" data-i18n="s03.tree.step3.sub">Importance Level, Assign a priority based on urgency and user impact.</div>
+          </div>
+          <div class="prd-hline"></div>
+          <div class="prd-node">
+            <div class="prd-node-tag" data-i18n="s03.tree.end.tag">End</div>
+            <div class="prd-node-name" data-i18n="s03.tree.end.name">Fully Classified</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 04. HOW I DESIGNED THE PROMPT ─────────────── -->
+<div id="s04" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">04.</span>
+      <span class="sec-title" data-i18n="s04.title">Designing the AI-Powered Classifier, Use Gemini Gem</span>
+    </div>
+    <div class="step-list">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-copy">
+          <p class="h3" data-i18n="s04.step1.label">Defining the Role &amp; Modes</p>
+          <p class="body" data-i18n="s04.step1.body">I set a clear role for the AI-powered classifier and introduced <span class="stat-hi">input-driven mode switching</span>. Depending on whether the input was text, planning documents, or flow diagrams, the classifier automatically applied the right logic. This reduced ambiguity and ensured each context was handled appropriately.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-copy">
+          <p class="h3" data-i18n="s04.step2.label">Standardized Review Table</p>
+          <p class="body" data-i18n="s04.step2.body">To make outputs directly usable, I created a fixed review table with fields: Feature, Trigger, Category, Frequency, Importance, Priority, Disappear Conditions, Layouts/Actions, and Display. Any inferred data had to be flagged as (AI Addition), making results <span class="stat-hi">traceable, auditable, and review-ready</span>.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-copy">
+          <p class="h3" data-i18n="s04.step3.label">Anchoring to Core Documents</p>
+          <p class="body" data-i18n="s04.step3.body">The classifier was anchored to three authoritative sources, Categories &amp; Usage, Frequency Types, and the Decision Tree. Each classification referenced these definitions and included a summary, ensuring <span class="stat-hi">consistency with the framework</span> instead of language-based guesswork.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-copy">
+          <p class="h3" data-i18n="s04.step4.label">Handling Complex Inputs</p>
+          <p class="body" data-i18n="s04.step4.body">I wrote strict rules for flowchart reviews, where noise is common. For flowchart inputs, <span class="stat-hi">only yellow cards were processed</span>, one per row, while non-notification elements were ignored. Even identical texts with different triggers became separate entries, keeping discussions strictly focused on notifications.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">5</div>
+        <div class="step-copy">
+          <p class="h3" data-i18n="s04.step5.label">Explainable Rules &amp; Feedback Loop</p>
+          <p class="body" data-i18n="s04.step5.body">Importance and priority were derived through explainable rules (Category → Frequency → System Behavior). Subjective scoring was replaced with <span class="stat-hi">logic teams could debate</span>. I also embedded a feedback loop: if a classification was challenged, the classifier suggested alternatives, recalculated values, and checked against the notification inventory for duplicates.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 05. IMPACT ─────────────────────────────────── -->
+<div id="s05" class="sec white" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">05.</span>
+      <span class="sec-title" data-i18n="s05.title">Impact</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:32px;">
+      <div class="text-block">
+        <p class="h3" data-i18n="s05.impact1.label">Build the Foundation</p>
+        <ul class="bull-list" style="margin-top:4px;">
+          <li data-i18n="s05.impact1.goal"><strong>Goal:</strong> Establish a unified notification framework to give the team a consistent way to classify and govern notifications.</li>
+          <li data-i18n="s05.impact1.body"><strong>Impact:</strong> Grounding the work in three core documents, Categories, Frequency Types, and Decision Tree, gave the team a <span class="stat-hi">shared language</span>. Review discussions shifted from individual interpretation to a more consistent decision process.</li>
+        </ul>
+      </div>
+      <div class="text-block">
+        <p class="h3" data-i18n="s05.impact2.label">Ensure Consistency</p>
+        <ul class="bull-list" style="margin-top:4px;">
+          <li data-i18n="s05.impact2.goal"><strong>Goal:</strong> Prevent users from receiving duplicate or conflicting messages, improving overall experience consistency.</li>
+          <li data-i18n="s05.impact2.body"><strong>Impact:</strong> Structured rules made de-duplication part of the workflow. The AI-powered classifier checked triggers for overlap and flagged inferred fields, <span class="stat-hi">reducing both omissions and review friction</span>.</li>
+        </ul>
+      </div>
+      <div class="text-block">
+        <p class="h3" data-i18n="s05.impact3.label">Enable Better Work</p>
+        <ul class="bull-list" style="margin-top:4px;">
+          <li data-i18n="s05.impact3.goal"><strong>Goal:</strong> Help designers and PMs make clearer decisions earlier in the process.</li>
+          <li data-i18n="s05.impact3.body"><strong>Impact:</strong> The classifier introduced MVP/long-term splits, explainable importance rules, and alternative suggestions, helping product planning <span class="stat-hi">move earlier and with clearer rationale</span>.</li>
+        </ul>
+      </div>
+      <p class="body" data-i18n="s05.summary">The framework, combined with AI-assisted tooling, lowered the effort required to design well-considered notifications. In the end, it turned a scattered notification problem into a <span class="stat-hi">repeatable process</span>, giving the team a <span class="stat-hi">shared foundation</span> for design reviews, trade-off discussions, and clearer accountability across features.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<div class="footer">
+  <div class="footer-contact">
+    <div class="footer-item"><span>WeChat: ralinzain</span></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.instagram.com/ralinzain" target="_blank" rel="noreferrer">Instagram</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.linkedin.com/in/ming-hsi-h-b59182158/" target="_blank" rel="noreferrer">LinkedIn</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://wa.me/886975573947">WhatsApp: +886 975 573 947</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="mailto:ralinzain@gmail.com">ralinzain@gmail.com</a></div>
+  </div>
+</div>
+
+  <script src="js/notification.js"></script>
+
+</body>
+</html>

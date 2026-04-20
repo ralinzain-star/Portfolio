@@ -1,0 +1,401 @@
+// ── Nav active state ──
+  (function() {
+    const anchors = document.querySelectorAll('.nav-anchor');
+    const sectionIds = ['intro','s01','s02','s03','s04','s05','s06'];
+    const sections = sectionIds.map(id => document.getElementById(id));
+    const navEl = document.querySelector('.nav');
+    function update() {
+      const navH = navEl ? navEl.offsetHeight : 57;
+      const scrollY = window.scrollY + navH + 40;
+      const atBottom = window.scrollY + window.innerHeight >= document.body.scrollHeight - 60;
+      let active = sections[0];
+      if (atBottom) {
+        active = sections[sections.length - 1];
+      } else {
+        sections.forEach(sec => { if (sec && sec.offsetTop <= scrollY) active = sec; });
+      }
+      anchors.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + (active ? active.id : ''));
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  // ── i18n ──
+  (function() {
+    const rezioI18n = {
+      'zh-tw': {
+        'nav.intro': '.介紹', 'nav.s01': '01.核心成果', 'nav.s02': '02.專案起點', 'nav.s03': '03.既存痛點', 'nav.s04': '04.設計流程', 'nav.s05': '05.系統架構', 'nav.s06': '06.總結',
+        'page.title': 'KKday Rezio 設計系統架構全面重塑',
+        'page.subtitle': '重建 Rezio 系統架構，實現跨平台擴充性與工程一致性',
+        'intro.label.product': '產品簡介：',
+        'intro.product.body': '本次設計系統重建旨在統一 KKday Rezio 碎片化的 UI 元件，並優化設計與開發間的協作效率。我們的核心目標是消除視覺不一致性、加速開發週期，並為未來產品的橫向擴展奠定堅實的架構基礎。',
+        'intro.label.role': '我的角色：',
+        'intro.role.body': '身為設計團隊核心，我主導了系統的架構轉型。我們透過原子設計思維將變體數量優化了 <span class="stat-hi">33%</span>，並成功導入多日期選擇器與表單篩選器等高複雜度組件。除了組件開發，我更推動了 UX 準則規範化、建構 Figma 資源庫，並與工程團隊緊密協作，建立版本控制與測試的標準化工作流程，透過 AI 輔助原型與 Storybook 驗證，大幅提升維護效率並減少返工成本。',
+        'intro.label.time': '時間範圍：',
+        'intro.time.body': '2024–2025',
+        's01.title': '核心成果',
+        's01.a1.title': '33% 元件結構精簡',
+        's01.a1.body': '透過優化元件結構，將變體數量從 60 個縮減至 40 個，顯著降低開發維護難度。',
+        's01.a2.title': '系統完成度達 90%',
+        's01.a2.body': '在一年內達成系統 <span class="stat-hi">90% 以上的覆蓋率</span>，並建立持續迭代機制。',
+        's01.a3.title': '工程協作標準化',
+        's01.a3.body': '建立跨部門協作模型，確保設計與開發在 <span class="stat-hi">版本控制、合併與測試</span> 上達成高度共識。',
+        's02.title': '專案起點',
+        's02.label.bg': '背景脈絡：',
+        's02.bg.body': 'Rezio 的設計系統並非從零開始，但先前由於缺乏與工程端的持續溝通，導致系統未被完整採用。隨時間推移，舊系統出現了色彩對比度不符合無障礙規範、色彩命名混亂導致視覺不一，以及按鈕樣式缺乏標準化等問題。',
+        's02.label.goal': '核心目標：',
+        's02.goal.body': '構建一個具備高度擴充性的系統，修補視覺斷層，提升組件易用性，並強化 <span class="stat-hi">設計與工程的夥伴關係</span>。',
+        's03.title': '既存痛點',
+        's03.heading': '當舊有設計演變成技術債，我們該如何應對？',
+        's03.body1': '我們汰除冗餘檔案並提煉核心資產，在「修補」與「重建」間取得平衡，確保產品在航行中能平穩轉換。',
+        's03.body2': '設計系統不只是 Figma 上的像素，更是設計與工程間的 <span class="stat-hi">共同語言</span>。新系統不再追求完美的檔案，而是聚焦於團隊契合度、可操作性及可持續的協作模式。',
+        's04.title': '設計流程',
+        's04.intro': '透過多個專案的實踐，我們磨合出一套兼具技術可行性與擴充性的協作流程：',
+        's04.s1.title': 'Step 1, 觀察、收集與定義',
+        's04.s1.li1': '持續追蹤組件在各專案的使用現況，記錄視覺斷層與缺失模式。',
+        's04.s1.li2': '收集開發團隊回饋，精確定義新組件的功能邊界與痛點。',
+        's04.s1.body': '例如：原始設計的時間選擇器會破壞輸入欄位佈局，且單選邏輯在大量操作下效率極低，這些觀察轉化為我們開發「多選時間器」的核心需求。',
+        's04.s2.title': 'Step 2, 技術評估與架構對齊',
+        's04.s2.li1': '與工程師審查需求，評估互動細節、技術限制與架構擴充性。',
+        's04.s2.li2': '確認組件是否具備「共通性」，以決定其納入系統庫的優先級。',
+        's04.s2.body': '我們確保「多選時間器」能複用單選組件的邏輯，同時在不破壞版面的前提下顯示多筆選取結果。',
+        's04.s3.title': 'Step 3, 高保真原型與 AI 驗證',
+        's04.s3.li1': '構建互動原型，並與設計及工程團隊共同驗證可行性。',
+        's04.s3.li2': '進行內部易用性測試，快速迭代至最優解。',
+        's04.s3.body': '在開發多選時間器時，我們利用 **Lovable 進行 AI 驅動的原型驗證**，在開發前快速測試複雜的交互邏輯，大幅縮短溝通與驗證週期。',
+        's04.s4.title': 'Step 4, 規範交付與品質控管',
+        's04.s4.li1': '完成設計規格 (Spec) 並交付完整的 Handoff 套件。',
+        's04.s4.li2': '開發期間保持即時對齊，解決實作落差。',
+        's04.s4.body': '實作過程中，我們透過 **Storybook** 審查組件，在獨立環境中驗證功能與視覺一致性，確保最終產出符合系統規範。',
+        's04.s4.caption': '透過原型探索後的最終方案：',
+        's04.s4.n1': '輸入關鍵字時清單自動捲動、勾選並置頂顯示。',
+        's04.s4.n2': '捲動選取時保持原位勾選，避免視覺跳動。',
+        's04.s4.n3': '完成選取後自動清空欄位，以便連續操作。',
+        's05.title': '系統架構',
+        's05.vs.label': '視覺風格 (Visual Style)',
+        's05.vs.body': '視覺風格是產品美學的基石。以下為我們設計令牌 (Design Token) 的命名體系：',
+        's05.tk.raw': '原始值', 's05.tk.prim': '基礎令牌', 's05.tk.sem': '語意令牌', 's05.tk.btn': '按鈕',
+        's05.co.label': '組件 (Components)',
+        's05.co.body1': '組件是實現一致性的積木。我們依照功能將其分為 General (如按鈕、字體)、Layout、Data Entry、Data Display 與 Feedback。',
+        's05.co.body2': '從最初的混亂無序，我們透過清晰的分類與原子設計重建了整個資源庫。歷時一年達到 <span class="stat-hi">90% 以上的完成度</span>，並持續演進中。',
+        's05.pt.label': '模式 (Patterns)',
+        's05.pt.body1': '模式是應對常見場景的解決方案，定義了介面在不同狀態下的回應行為。',
+        's05.pt.body2': '我們的系統規範了 <span class="stat-hi">六種關鍵狀態</span>，唯讀、停用、錯誤、Hover/Press、預設與已填入，確保每個觸點的行為一致且可預測。',
+        's05.st.pri': '優化級', 's05.st.sta': '狀態', 's05.st.use': '使用場景',
+        's05.st.r1.sta': '唯讀',
+        's05.st.r1.use': '欄位不可更改，用於展示已確認的資訊。若欄位無值，則顯示為停用狀態。',
+        's05.st.r2.sta': '停用', 's05.st.r2.use': '完全不可操作，用於當前權限或邏輯下不可使用的功能。',
+        's05.st.r3.sta': '錯誤', 's05.st.r3.use': '欄位內容未通過驗證時的警示狀態。',
+        's05.st.r4.sta': '懸停 / 按下', 's05.st.r4.use': '互動反饋狀態，增強操作的可感知性。',
+        's05.st.r5.sta': '預設 / 已填入',
+        's05.st.r5.use': '標準輸入狀態。根據是否有值在「唯讀」與「停用」間切換展示邏輯。',
+        's05.gl.label': '設計準則 (Guidelines)',
+        's05.gl.body': '準則是決策的依據。以下為按鈕組合的使用準則，旨在確保視覺層級與佈局的和諧：',
+        's05.gl.cons': '一致性',
+        's05.gl.do': '<strong>Do:</strong> 在 Action Bar 中使用相同類型的按鈕，並統一文案與圖示風格。',
+        's05.gl.dont': '<strong>Don\'t:</strong> 避免在同一操作區混用多種按鈕風格，造成視覺破碎感。',
+        's05.gl.multi': '多重操作排序',
+        's05.gl.multi.rule': '排序操作應置於最右側，由左至右為升序、降序。',
+        's05.gl.footer': '我們亦建立了選取組件的決策樹（如 Radio vs Dropdown）：當選項超過七個時才使用下拉選單，以優化單選場景的操作效率。',
+        's06.title': '總結',
+        's06.body1': '在一年內，我們將元件變體精簡了 <span class="stat-hi">33%</span>，並完善了多日期選擇與篩選等核心功能。',
+        's06.body2': '透過導入可複用組件、精煉使用模式，並善用 **AI 驅動的原型工具**，我們顯著提升了工程效率，減少了重複勞動，達成 90% 以上的系統完成度。',
+        's06.body3': '更重要的是，我們在設計、工程與 PM 之間建立了強固的協作節奏，將設計系統轉化為一套 **共同的決策框架與溝通語言**。',
+      },
+      'zh-cn': {
+        'nav.intro': '.介绍', 'nav.s01': '01.核心成果', 'nav.s02': '02.项目起点', 'nav.s03': '03.既存痛点', 'nav.s04': '04.设计流程', 'nav.s05': '05.系统架构', 'nav.s06': '06.总结',
+        'page.title': 'KKday Rezio 设计系统架构全面重塑',
+        'page.subtitle': '重建 Rezio 系统架构，实现跨平台扩展性与工程一致性',
+        'intro.label.product': '产品简介：',
+        'intro.product.body': '本次设计系统重建旨在统一 KKday Rezio 碎片化的 UI 组件，并优化设计与开发间的协作效率。我们的核心目标是消除视觉不一致性、加速开发周期，并为未来产品的横向扩展奠定坚实的架构基础。',
+        'intro.label.role': '我的角色：',
+        'intro.role.body': '作为设计团队核心，我主导了系统的架构转型。我们通过原子设计思维将变体数量优化了 <span class="stat-hi">33%</span>，并成功导入多日期选择器与表单筛选器等高复杂度组件。除了组件开发，我更推动了 UX 准则规范化、构建 Figma 资源库，并与工程团队紧密协作，建立版本控制与测试的标准化工作流程。通过 AI 辅助原型與 Storybook 验证，大幅提升维护效率并减少返工成本。',
+        'intro.label.time': '时间范围：',
+        'intro.time.body': '2024–2025',
+        's01.title': '核心成果',
+        's01.a1.title': '33% 组件结构精简',
+        's01.a1.body': '通过优化组件结构，将变体数量从 60 个缩减至 40 个，显著降低开发维护难度。',
+        's01.a2.title': '系统完成度达 90%',
+        's01.a2.body': '在一年内达成系统 <span class="stat-hi">90% 以上的覆盖率</span>，并建立持续迭代机制。',
+        's01.a3.title': '工程协作标准化',
+        's01.a3.body': '建立跨部门协作模型，确保设计与开发在 <span class="stat-hi">版本控制、合并与测试</span> 上达成高度共识。',
+        's02.title': '项目起点',
+        's02.label.bg': '背景脉络：',
+        's02.bg.body': 'Rezio 的设计系统并非从零开始，但先前由于缺乏与工程端的持续沟通，导致系统未被完整采用。随时间推移，旧系统出现了色彩对比度不符合无障碍规范、色彩命名混乱导致视觉不一，以及按钮样式缺乏标准化等问题。',
+        's02.label.goal': '核心目标：',
+        's02.goal.body': '构建一个具备高度扩展性的系统，修补视觉断层，提升组件易用性，并强化 <span class="stat-hi">设计与工程的伙伴关系</span>。',
+        's03.title': '既存痛点',
+        's03.heading': '当旧有设计演变成技术债，我们该如何应对？',
+        's03.body1': '我们汰除冗余文件并提炼核心资产，在"修补"与"重建"间取得平衡，确保产品在航行中能平稳转换。',
+        's03.body2': '设计系统不只是 Figma 上的像素，更是设计与工程间的 <span class="stat-hi">共同语言</span>。新系统不再追求完美的文件，而是聚焦于团队契合度、可操作性及可持续的协作模式。',
+        's04.title': '设计流程',
+        's04.intro': '通过多个项目的实践，我们磨合出一套兼具技术可行性与扩展性的协作流程：',
+        's04.s1.title': 'Step 1, 观察、收集与定义',
+        's04.s1.li1': '持续追踪组件在各项目的使用现状，记录视觉断层与缺失模式。',
+        's04.s1.li2': '收集开发团队反馈，精确定义新组件的功能边界与痛点。',
+        's04.s1.body': '例如：原始设计的时间选择器会破坏输入框布局，且单选逻辑在大量操作下效率极低，这些观察转化为我们开发"多选时间器"的核心需求。',
+        's04.s2.title': 'Step 2, 技术评估与架构对齐',
+        's04.s2.li1': '与工程师审查需求，评估交互细节、技术限制与架构扩展性。',
+        's04.s2.li2': '确认组件是否具备"共通性"，以决定其纳入系统库的优先级。',
+        's04.s2.body': '我们确保"多选时间器"能复用单选组件的逻辑，同时在不破坏版面的前提下显示多笔选取结果。',
+        's04.s3.title': 'Step 3, 高保真原型与 AI 验证',
+        's04.s3.li1': '构建交互原型，并与设计及工程团队共同验证可行性。',
+        's04.s3.li2': '进行内部可用性测试，快速迭代至最优解。',
+        's04.s3.body': '在开发多选时间器时，我们利用 **Lovable 进行 AI 驱动的原型验证**，在开发前快速测试复杂的交互逻辑，大幅缩短沟通与验证周期。',
+        's04.s4.title': 'Step 4, 规范交付与质量管控',
+        's04.s4.li1': '完成设计规格 (Spec) 并交付完整的 Handoff 套件。',
+        's04.s4.li2': '开发期间保持实时对齐，解决实现落差。',
+        's04.s4.body': '实现过程中，我们通过 **Storybook** 审查组件，在独立环境中验证功能与视觉一致性，确保最终产出符合系统规范。',
+        's04.s4.caption': '通过原型探索后的最终方案：',
+        's04.s4.n1': '输入关键字时列表自动滚动、勾选并置顶显示。',
+        's04.s4.n2': '滚动选取时保持原位勾选，避免视觉跳动。',
+        's04.s4.n3': '完成选取后自动清空栏位，以便连续操作。',
+        's05.title': '系统架构',
+        's05.vs.label': '视觉风格 (Visual Style)',
+        's05.vs.body': '视觉风格是产品美学的基石。以下为我们设计令牌 (Design Token) 的命名体系：',
+        's05.tk.raw': '原始值', 's05.tk.prim': '基础令牌', 's05.tk.sem': '语义令牌', 's05.tk.btn': '按钮',
+        's05.co.label': '组件 (Components)',
+        's05.co.body1': '组件是实现一致性的积木。我们依照功能将其分为 General (如按钮、字体)、Layout、Data Entry、Data Display 与 Feedback。',
+        's05.co.body2': '从最初的混乱无序，我们通过清晰的分类与原子设计重建了整个资源库。历时一年达到 <span class="stat-hi">90% 以上的完成度</span>，系统仍在持续演进中。',
+        's05.pt.label': '模式 (Patterns)',
+        's05.pt.body1': '模式是应对常见场景的解决方案，定义了界面在不同状态下的响应行为。',
+        's05.pt.body2': '我们的系统规范了 <span class="stat-hi">六种关键状态</span>，只读、禁用、错误、Hover/Press、默认与已填入，确保每个触点的行为一致且可预测。',
+        's05.st.pri': '优先级', 's05.st.sta': '状态', 's05.st.use': '使用场景',
+        's05.st.r1.sta': '只读',
+        's05.st.r1.use': '字段不可更改，用于展示已确认的信息。若字段无值，则显示为禁用状态。',
+        's05.st.r2.sta': '禁用', 's05.st.r2.use': '完全不可操作，用于当前权限或逻辑下不可使用的功能。',
+        's05.st.r3.sta': '错误', 's05.st.r3.use': '字段内容未通过验证时的警示状态。',
+        's05.st.r4.sta': '悬停 / 按下', 's05.st.r4.use': '交互反馈状态，增强操作的可感知性。',
+        's05.st.r5.sta': '默认 / 已填入',
+        's05.st.r5.use': '标准输入状态。根据是否有值在"只读"与"禁用"间切换展示逻辑。',
+        's05.gl.label': '设计准则 (Guidelines)',
+        's05.gl.body': '准则是决策的依据。以下为按钮组合的使用准則，旨在确保视觉层级与布局的和谐：',
+        's05.gl.cons': '一致性',
+        's05.gl.do': '<strong>Do:</strong> 在 Action Bar 中使用相同类型的按钮，并统一文案与图标风格。',
+        's05.gl.dont': '<strong>Don\'t:</strong> 避免在同一操作区混用多种按钮风格，造成视觉破碎感。',
+        's05.gl.multi': '多重操作排序',
+        's05.gl.multi.rule': '排序操作应置于最右侧，由左至右为升序、降序。',
+        's05.gl.footer': '我们亦建立了选取组件的决策树（如 Radio vs Dropdown）：当选项超过七个时才使用下拉菜单，以优化单选场景的操作效率。',
+        's06.title': '总结',
+        's06.body1': '在一年内，我们将组件变体精简了 <span class="stat-hi">33%</span>，并完善了多日期选择與筛选等核心功能。',
+        's06.body2': '通过导入可复用组件、精炼使用模式，并善用 **AI 驱动的原型工具**，我们显著提升了工程效率，减少了重复劳动，达成 90% 以上的系统完成度。',
+        's06.body3': '更重要的是，我们在设计、工程与 PM 之间建立了强固的协作节奏，将设计系统转化为一套 **共同的决策框架与沟通语言**。',
+      },
+      ja: {
+        'nav.intro': '.イントロ', 'nav.s01': '01.主な成果', 'nav.s02': '02.プロジェクト背景', 'nav.s03': '03.既存の課題', 'nav.s04': '04.ワークフロー', 'nav.s05': '05.システムの構造', 'nav.s06': '06.まとめ',
+        'page.title': 'KKday Rezio デザインシステムの抜本的な再構築',
+        'page.subtitle': 'スケーラビリティと実装効率を追求したデザインシステム設計',
+        'intro.label.product': 'プロダクト概要：',
+        'intro.product.body': '本プロジェクトは、分散していた KKday Rezio の UI コンポーネントを統一し、デザインとエンジニアリングの連携を最適化することを目的としています。視覚的な不一致を解消し、開発サイクルを加速させ、将来のプロダクト拡張に対応できるスケーラブルな基盤を構築しました。',
+        'intro.label.role': '私の役割：',
+        'intro.role.body': 'リードデザイナーとして、システムのアーキテクチャ刷新を主導しました。原子設計（Atomic Design）の思考を取り入れることで、コンポーネントのバリアントを <span class="stat-hi">33%</span> 削減し、複雑なマルチデートピッカーなどを新規導入しました。また、UX ガイドラインの策定、Figma ライブラリの構築に加え、バージョン管理やテストを含む標準化された開発フローを確立。AI プロトタイピングと Storybook を活用し、保守性の向上と手戻りコストの削減を実現しました。',
+        'intro.label.time': '期間：',
+        'intro.time.body': '2024–2025',
+        's01.title': '主な成果',
+        's01.a1.title': 'コンポーネント構造の 33% 最適化',
+        's01.a1.body': 'バリアント構成を 60 から 40 へスリム化し、実装とメンテナンスの負荷を大幅に軽減しました。',
+        's01.a2.title': 'システム完成度 90% 達成',
+        's01.a2.body': '1 年以内にシステムの <span class="stat-hi">90% 以上のカバレッジ</span> を達成し、継続的な改善プロセスを構築しました。',
+        's01.a3.title': '開発プロセスの標準化',
+        's01.a3.body': 'デザインとエンジニアリング間での <span class="stat-hi">バージョン管理、マージ、テスト</span> の共通フローを確立しました。',
+        's02.title': 'プロジェクトの起点',
+        's02.label.bg': '背景：',
+        's02.bg.body': '以前にもシステム構築の試みはありましたが、エンジニアとの継続的な対話不足により形骸化していました。その結果、アクセシビリティ基準を満たさないコントラスト比や、命名規則の不一致による視覚的なバラつきなどの問題が発生していました。',
+        's02.label.goal': '目標：',
+        's02.goal.body': '不一致を修正し、コンポーネントの操作性を高め、<span class="stat-hi">デザインとエンジニアリングの強力な連携</span> を促進するスケーラブルなシステムを再構築すること。',
+        's03.title': '既存の課題',
+        's03.heading': '設計の負債をいかにして解決するか？',
+        's03.body1': '古いファイルを整理し、価値ある資産を継承しながらコンポーネントを再定義しました。航行中の船を修理するように、段階的な移行を進めました。',
+        's03.body2': 'デザインシステムは単なる Figma のファイルではなく、チームの <span class="stat-hi">共通言語</span> です。完璧なピクセルよりも、チームへの適応性、ユーザビリティ、そして持続可能な協業体制に焦点を当てました。',
+        's04.title': 'ワークフロー',
+        's04.intro': '複数のプロジェクトを経て、技術的な妥当性と拡張性を兼ね備えた協業プロセスを磨き上げました：',
+        's04.s1.title': 'Step 1, 観察と要件定義',
+        's04.s1.li1': '各プロジェクトでの使用状況を監視し、不一致や欠落しているパターンを特定。',
+        's04.s1.li2': 'エンジニアからのフィードバックを収集し、課題を明確化。',
+        's04.s1.body': '例えば、元の時間ピッカーはレイアウトを崩す問題がありました。この観察に基づき、効率的な「マルチタイムピッカー」の要件を定義しました。',
+        's04.s2.title': 'Step 2, 技術レビューとアーキテクチャの整合',
+        's04.s2.li1': '要件をエンジニアとレビューし、インタラクションの詳細や制約を確認。',
+        's04.s2.li2': 'コンポーネントの「汎用性」を評価し、ライブラリへの採用優先度を決定。',
+        's04.s2.body': '既存の単一選択ロジックを再利用しつつ、レイアウトを保持したまま複数選択を表示できる設計を確保しました。',
+        's04.s3.title': 'Step 3, 高精度プロトタイプと AI 検証',
+        's04.s3.li1': 'インタラクティブなプロトタイプを作成し、技術的な妥当性を検証。',
+        's04.s3.li2': '内部ユーザビリティテストを実施し、最良の解決策へと収束。',
+        's04.s3.body': '**Lovable による AI 駆動のプロトタイプ検証** を導入し、実装前に複雑なユーザーフローをテストすることで、検証サイクルを劇的に短縮しました。',
+        's04.s4.title': 'Step 4, ハンドオフと品質管理',
+        's04.s4.li1': '仕様書（Spec）を完成させ、完全なハンドオフパッケージを提供。',
+        's04.s4.li2': '開発中も密接に連携し、実装上のギャップを即座に解消。',
+        's04.s4.body': '**Storybook** を活用してコンポーネントをレビューし、独立した環境で機能と視覚的な一貫性を検証。仕様通りの実装を保証しました。',
+        's04.s4.caption': 'プロトタイプによる検証を経て決定された最終案：',
+        's04.s4.n1': '入力時にリストが自動スクロールし、一致する項目をチェックしてトップに固定。',
+        's04.s4.n2': 'スクロール選択時はその場でチェックし、視覚的な混乱を防止。',
+        's04.s4.n3': '追加後に入力フィールドをクリアし、連続した操作をサポート。',
+        's05.title': 'システムの構造',
+        's05.vs.label': 'ビジュアルスタイル',
+        's05.vs.body': 'プロダクトのアイデンティティを定義する基盤です。以下はデザイントークンの命名体系です：',
+        's05.tk.raw': 'Raw 値', 's05.tk.prim': 'プリミティブ', 's05.tk.sem': 'セマンティック', 's05.tk.btn': 'ボタン',
+        's05.co.label': 'コンポーネント',
+        's05.co.body1': '再利用可能な構成要素。General、Layout、Data Entry、Data Display、Feedback に分類して管理しています。',
+        's05.co.body2': '当初の無秩序な状態から、原子設計に基づきライブラリをゼロから再構築。1 年で <span class="stat-hi">90% 以上の完成度</span> に達しました。',
+        's05.pt.label': 'パターン',
+        's05.pt.body1': '共通のユースケースに対する解決策。フローだけでなく、状態の変化に対する応答も定義します。',
+        's05.pt.body2': 'ReadOnly、Disabled、Error、Hover/Press、Default、Filled の <span class="stat-hi">6 つの主要な状態</span> を定義し、一貫した操作感を保証します。',
+        's05.st.pri': '優先度', 's05.st.sta': 'ステータス', 's05.st.use': 'ユースケース',
+        's05.st.r1.sta': '読み取り専用',
+        's05.st.r1.use': '値の変更不可。入力済み項目の確認用。値がない場合は Disabled として表示。',
+        's05.st.r2.sta': '無効', 's05.st.r2.use': '操作不可。権限やロジックにより使用できない機能に使用。',
+        's05.st.r3.sta': 'エラー', 's05.st.r3.use': 'バリデーションエラー時の警告表示。',
+        's05.st.r4.sta': 'ホバー / 押下', 's05.st.r4.use': 'ユーザー操作に対する即時の視覚的フィードバック。',
+        's05.st.r5.sta': 'デフォルト / 入力済み',
+        's05.st.r5.use': '標準の状態。値の有無により表示ロジックを切り替えます。',
+        's05.gl.label': 'ガイドライン',
+        's05.gl.body': '意思決定のルール。以下はボタン配置のガイドラインで、視覚的階層を整えるためのものです：',
+        's05.gl.cons': '一貫性',
+        's05.gl.do': '<strong>Do:</strong> Action Bar 内では同じボタンタイプを使用し、ラベルとアイコンのスタイルを統一する。',
+        's05.gl.dont': '<strong>Don\'t:</strong> 異なるタイプを混在させない。視覚的なノイズとなり、直感性を損なうため。',
+        's05.gl.multi': 'マルチアクションバーの順序',
+        's05.gl.multi.rule': 'ソート操作は常に右端。左から右へ昇順、降順の順で配置する。',
+        's05.gl.footer': '選択コンポーネント（Radio vs Dropdown）の選定ルールも定義。項目が 7 つ以上の場合はドロップダウンを推奨し、操作効率を最適化しています。',
+        's06.title': '結果',
+        's06.body1': '1 年以内にバリアントを <span class="stat-hi">33%</span> 削減し、複雑な機能要件を満たすスリムなデザインシステムへと進化させました。',
+        's06.body2': '**AI 駆動のプロトタイピング** を活用することで、開発効率を向上させ、手戻りを削減し、完成度 90% 以上を達成しました。',
+        's06.body3': '何より、デザイナー、エンジニア、PM 間の強固な協調体制を築き、デザインシステムを **共通の意思決定フレームワーク** へと昇華させました。',
+      },
+      'en': {
+        'nav.intro': '.Intro', 'nav.s01': '01.Achievement', 'nav.s02': '02.Start', 'nav.s03': '03.Broken', 'nav.s04': '04.Workflow', 'nav.s05': '05.System', 'nav.s06': '06.Results',
+        'page.title': 'KKday Rezio Design System Architecture Overhaul',
+        'page.subtitle': 'Rebuilding System Architecture for Scalability & Engineering Consistency',
+        'intro.label.product': 'Product Intro:',
+        'intro.product.body': 'This overhaul aimed to unify KKday Rezio\u2019s fragmented UI components and optimize cross-functional efficiency. The goal was to eliminate visual debt, accelerate the development cycle, and establish a scalable foundation for future product expansions.',
+        'intro.label.role': 'My Role:',
+        'intro.role.body': 'As a core designer, I led the architectural transformation. We optimized component structures to reduce variants by <span class="stat-hi">33%</span> and introduced high-complexity components like multi-date pickers. Beyond component building, I standardized UX guidelines, built the Figma library, and established standard workflows for version control and testing. By leveraging AI-powered prototyping and Storybook validation, we significantly boosted maintenance efficiency and reduced rework costs.',
+        'intro.label.time': 'TimeFrame:',
+        'intro.time.body': '2024\u20132025',
+        's01.title': 'Achievement',
+        's01.a1.title': '33% Variant Optimization',
+        's01.a1.body': 'Streamlined system complexity by reducing component variants from 60 to 40 through structured architecture.',
+        's01.a2.title': '90% System Coverage',
+        's01.a2.body': 'Achieved <span class="stat-hi">over 90% completion</span> within one year, establishing a sustainable iteration mechanism.',
+        's01.a3.title': 'Standardized Handover',
+        's01.a3.body': 'Defined cross-functional workflows to ensure alignment on <span class="stat-hi">versioning, merging, and testing</span>.',
+        's02.title': 'Where We Started',
+        's02.label.bg': 'Background:',
+        's02.bg.body': 'Rezio\u2019s design system was not built from scratch but suffered from low adoption due to a lack of engineering alignment. Over time, it developed technical debt: accessibility failures in color contrast, inconsistent naming, and unstandardized button styles.',
+        's02.label.goal': 'Project Goal:',
+        's02.goal.body': 'Rebuild a scalable system to fix visual fragmentation, enhance usability, and foster a <span class="stat-hi">stronger partnership between Design and Engineering</span>.',
+        's03.title': 'What Was Broken',
+        's03.heading': 'When Legacy Design Becomes Technical Debt\u2014What Next?',
+        's03.body1': 'We retired redundant files and distilled core assets, balancing \u201cfixing\u201d and \u201crebuilding\u201d to ensure a smooth transition while the product remained active.',
+        's03.body2': 'A real design system is more than Figma pixels\u2014it\u2019s a <span class="stat-hi">shared language</span>. The new system focuses on team fit, operational usability, and a sustainable collaboration model.',
+        's04.title': 'Workflow',
+        's04.intro': 'Through multiple iterations, we refined a collaboration process that ensures technical feasibility and scalability:',
+        's04.s1.title': 'Step 1 \u2014 Observation & Requirement Definition',
+        's04.s1.li1': 'Monitor component usage across projects to document visual debt and missing patterns.',
+        's04.s1.li2': 'Gather engineering feedback to pinpoint pain points and functional boundaries.',
+        's04.s1.body': 'Example: The original time picker broke layouts and had low efficiency. These observations drove the requirement for a new \u201cMulti-time Picker.\u201d',
+        's04.s2.title': 'Step 2 \u2014 Technical Review & Alignment',
+        's04.s2.li1': 'Review specs with engineers to discuss interaction details, constraints, and scalability.',
+        's04.s2.li2': 'Determine \u201cCommonality\u201d to prioritize inclusion in the system library.',
+        's04.s2.body': 'We ensured the Multi-time Picker reused single-select logic while supporting multiple values without breaking the UI.',
+        's04.s3.title': 'Step 3 \u2014 High-Fidelity Prototyping & AI Validation',
+        's04.s3.li1': 'Build interactive prototypes to validate feasibility with design and engineering teams.',
+        's04.s3.li2': 'Conduct internal usability testing to iterate toward the optimal solution.',
+        's04.s3.body': 'We utilized **Lovable for AI-powered prototyping** to rapidly test complex interaction logic before development, significantly shortening the validation cycle.',
+        's04.s4.title': 'Step 4 \u2014 Spec Handoff & Quality Control',
+        's04.s4.li1': 'Finalize design specs and deliver a complete Handoff package.',
+        's04.s4.li2': 'Maintain real-time alignment during development to bridge implementation gaps.',
+        's04.s4.body': 'We used **Storybook** to review components in an isolated environment, ensuring 100% visual and functional consistency with the system specs.',
+        's04.s4.caption': 'Final version after prototyping exploration:',
+        's04.s4.n1': 'Lists automatically scroll, check, and pin matching numbers when typing.',
+        's04.s4.n2': 'Items are checked in place when scrolling to avoid visual jumping.',
+        's04.s4.n3': 'The input field clears automatically after selection for continuous operation.',
+        's05.title': 'System Structure',
+        's05.vs.label': 'Visual Style',
+        's05.vs.body': 'Foundation of the product aesthetic. Here is our Design Token hierarchy:',
+        's05.tk.raw': 'Raw Value', 's05.tk.prim': 'Primitive', 's05.tk.sem': 'Semantic', 's05.tk.btn': 'Button',
+        's05.co.label': 'Components',
+        's05.co.body1': 'Building blocks for consistency. Organized by: General, Layout, Data Entry, Data Display, and Feedback.',
+        's05.co.body2': 'We rebuilt the library from scratch using Atomic Design. It took a year to reach <span class="stat-hi">over 90% completion</span>, and it continues to evolve.',
+        's05.pt.label': 'Patterns',
+        's05.pt.body1': 'Repeatable solutions for common scenarios, defining how the UI responds to different states.',
+        's05.pt.body2': 'We defined <span class="stat-hi">six key states</span>\u2014ReadOnly, Disabled, Error, Hover/Press, Default, and Filled\u2014ensuring every touchpoint is predictable.',
+        's05.st.pri': 'Priority', 's05.st.sta': 'Status', 's05.st.use': 'Usage',
+        's05.st.r1.sta': 'ReadOnly',
+        's05.st.r1.use': 'Field cannot be changed. Used for displaying confirmed info. Displays as Disabled if empty.',
+        's05.st.r2.sta': 'Disabled', 's05.st.r2.use': 'Functionally inactive. Used for restricted features or permissions.',
+        's05.st.r3.sta': 'Error', 's05.st.r3.use': 'Alert state when validation fails.',
+        's05.st.r4.sta': 'Hover / Press', 's05.st.r4.use': 'Interaction feedback to enhance perceivability.',
+        's05.st.r5.sta': 'Default / Filled',
+        's05.st.r5.use': 'Standard input states. Switching logic between ReadOnly and Disabled based on value.',
+        's05.gl.label': 'Guidelines',
+        's05.gl.body': 'Rules for decision-making. Below are the button guidelines for mixed-layout harmony:',
+        's05.gl.cons': 'Consistency',
+        's05.gl.do': '<strong>Do:</strong> Use identical button types in the Action Bar. Unify text and icon styles.',
+        's05.gl.dont': '<strong>Don\'t:</strong> Avoid mixing multiple button styles, which creates visual fragmentation.',
+        's05.gl.multi': 'Multi-Action Bar Order',
+        's05.gl.multi.rule': 'Sorting Action Bars should be on the far right. Order: Sort Up, then Sort Down.',
+        's05.gl.footer': 'We established a decision tree for selection components: Use dropdowns only when options exceed seven; otherwise, Radio buttons are preferred for efficiency.',
+        's06.title': 'Results',
+        's06.body1': 'In one year, we reduced variants by <span class="stat-hi">33%</span> and perfected core features like multi-date selection.',
+        's06.body2': 'By integrating reusable components and **AI-powered prototyping**, we boosted engineering efficiency and reached 90%+ completion.',
+        's06.body3': 'Most importantly, we built a robust rhythm between Design, Engineering, and PMs, turning the system into a **shared decision-making framework**.',
+      },
+    };
+
+    const rezioRichKeys = [
+      'intro.role.body',
+      's01.a1.title','s01.a2.body','s01.a3.body',
+      's02.goal.body',
+      's03.body2',
+      's04.s3.body','s04.s4.body',
+      's05.co.body2','s05.pt.body2',
+      's05.gl.do','s05.gl.dont',
+      's06.body1','s06.body2','s06.body3',
+    ];
+
+    const rezioOriginals = {};
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      rezioOriginals[key] = rezioRichKeys.includes(key) ? el.innerHTML : el.textContent;
+    });
+
+    function applyRezioLang(lang) {
+      const t = rezioI18n[lang];
+      if (!t || lang === 'en') {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (rezioOriginals[key] !== undefined) {
+            if (rezioRichKeys.includes(key)) el.innerHTML = rezioOriginals[key];
+            else el.textContent = rezioOriginals[key];
+          }
+        });
+        document.documentElement.lang = 'en';
+        return;
+      }
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) {
+          if (rezioRichKeys.includes(key)) el.innerHTML = t[key];
+          else el.textContent = t[key];
+        }
+      });
+      document.documentElement.lang = lang === 'zh-tw' ? 'zh-TW' : lang === 'zh-cn' ? 'zh-CN' : lang;
+    }
+
+    try {
+      const saved = localStorage.getItem('portfolio-lang');
+      if (saved && saved !== 'en') applyRezioLang(saved);
+      const sel = document.getElementById('nav-lang-select');
+      if (sel) sel.value = saved || 'en';
+    } catch(e) {}
+
+    const langSel = document.getElementById('nav-lang-select');
+    if (langSel) {
+      langSel.addEventListener('change', () => {
+        const lang = langSel.value;
+        applyRezioLang(lang);
+        try { localStorage.setItem('portfolio-lang', lang); } catch(e) {}
+      });
+    }
+  })();

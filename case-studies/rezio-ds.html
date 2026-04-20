@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rezio Design System · Iris Hsieh</title>
+  <link rel="icon" type="image/png" href="../Logo.png" />
+  <link rel="apple-touch-icon" href="../Logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/rezio-ds.css">
+  <!-- Microsoft Clarity -->
+  <script src="js/analytics.js"></script>
+</head>
+<body>
+
+<!-- ── NAV ──────────────────────────────────────── -->
+<nav class="nav">
+  <a class="nav-back" href="../index.html#island-work">← Iris Hsieh</a>
+  <div class="nav-anchors">
+    <a class="nav-anchor" href="#intro" data-i18n="nav.intro">.Intro</a>
+    <a class="nav-anchor" href="#s01" data-i18n="nav.s01">01.Achievement</a>
+    <a class="nav-anchor" href="#s02" data-i18n="nav.s02">02.Start</a>
+    <a class="nav-anchor" href="#s03" data-i18n="nav.s03">03.Broken</a>
+    <a class="nav-anchor" href="#s04" data-i18n="nav.s04">04.Workflow</a>
+    <a class="nav-anchor" href="#s05" data-i18n="nav.s05">05.System</a>
+    <a class="nav-anchor" href="#s06" data-i18n="nav.s06">06.Results</a>
+  </div>
+  <select class="nav-lang" id="nav-lang-select">
+    <option value="en">EN</option>
+    <option value="ja">JA</option>
+    <option value="zh-tw">繁</option>
+    <option value="zh-cn">简</option>
+  </select>
+</nav>
+
+<!-- ── TITLE BAR ─────────────────────────────────── -->
+<div class="title-bar">
+  <div class="title-bar-inner">
+    <div data-i18n="page.title" style="font-size:40px;font-weight:800;line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;">KKday Rezio Design System Overhaul</div>
+    <div data-i18n="page.subtitle" style="font-size:18px;font-weight:500;line-height:1.25;letter-spacing:-0.02em;font-family:'Barlow',sans-serif;">Rebuilding KKday Rezio Design System for Scalability &amp; Consistency</div>
+  </div>
+</div>
+
+<!-- ── INTRO ──────────────────────────────────────── -->
+<div id="intro" class="sec cream" style="padding-top:0;padding-bottom:48px;">
+  <div class="sec-inner" style="max-width:100%;padding:0;">
+    <div class="intro-card">
+      <div class="intro-photo">
+        <img src="../assets/rezio-ds/inconsistency-problem.png" alt="Design system inconsistency" />
+      </div>
+      <div class="intro-copy">
+        <div class="text-block">
+          <p class="label-lg" data-i18n="intro.label.product">Quick Product Intro:</p>
+          <p class="body" data-i18n="intro.product.body">The Design System Rebuild aimed to unify KKday Rezio's fragmented UI components and optimize collaboration between design and engineering. Our goal was to reduce visual inconsistencies, accelerate development, and build a scalable foundation for future product expansion.</p>
+        </div>
+        <div class="text-block">
+          <p class="label-lg" data-i18n="intro.label.role">My Role:</p>
+          <p class="body" data-i18n="intro.role.body">As part of the design team, I co-led the rebuild. We trimmed the system down by <span class="stat-hi">33%</span> (from 60 to 40 variants) while adding key pieces like a multi-date picker and form filters. Beyond components, I pushed for UX guidelines, built a Figma library, and worked closely with engineers to set up workflows for version control, merging, and testing. By integrating reusable parts early and using AI-powered prototyping, we sped up iteration, cut rework, and made the system easier to maintain.</p>
+        </div>
+        <div class="text-block">
+          <p class="label-lg" data-i18n="intro.label.time">TimeFrame:</p>
+          <p class="body" data-i18n="intro.time.body">2024–2025</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 01. ACHIEVEMENT ────────────────────────────── -->
+<div id="s01" class="sec white" style="padding-top:32px;padding-bottom:60px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">01.</span>
+      <span class="sec-title" data-i18n="s01.title">Achievement</span>
+    </div>
+    <div class="achieve-row">
+      <div class="achieve-photo">
+        <img src="../assets/rezio-ds/product-photo.png" alt="Rezio product in use" />
+      </div>
+      <div class="achieve-list">
+        <div class="achieve-item">
+          <p class="achieve-title" data-i18n="s01.a1.title">33% Fewer Variants</p>
+          <p class="body" data-i18n="s01.a1.body">Streamlined the design system by reducing component variants by ~33% (from 60 to 40).</p>
+        </div>
+        <div class="achieve-item">
+          <p class="achieve-title" data-i18n="s01.a2.title">90% System Completion</p>
+          <p class="body" data-i18n="s01.a2.body">Achieved over <span class="stat-hi">90% completion</span> of the system within one year, with ongoing improvements underway.</p>
+        </div>
+        <div class="achieve-item">
+          <p class="achieve-title" data-i18n="s01.a3.title">Aligned Workflows</p>
+          <p class="body" data-i18n="s01.a3.body">Set up cross-functional collaboration workflows with engineering for consistent <span class="stat-hi">version control, merging, and testing</span>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 02. WHERE WE STARTED ───────────────────────── -->
+<div id="s02" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">02.</span>
+      <span class="sec-title" data-i18n="s02.title">Where We Started</span>
+    </div>
+    <div class="split-row" style="gap:40px;align-items:center;">
+      <div class="split-photo" style="width:240px;">
+        <img src="../assets/rezio-ds/toggle-component.png" alt="Toggle component" style="width:100%;" />
+      </div>
+      <div class="split-copy">
+        <div class="text-block">
+          <p class="label-lg" data-i18n="s02.label.bg">Project Background:</p>
+          <p class="body" data-i18n="s02.bg.body">This design system rebuild didn't start from scratch. One of the previous designers had attempted to establish one, but due to a lack of ongoing communication with engineers, it was never fully adopted. In addition, over time, the old system became increasingly outdated and revealed multiple issues, such as insufficient color contrast that failed accessibility checks, an excess of similar colors causing visual inconsistency, and numerous button styles lacking standardization.</p>
+        </div>
+        <div class="text-block">
+          <p class="label-lg" data-i18n="s02.label.goal">Our Goal:</p>
+          <p class="body" data-i18n="s02.goal.body">Rebuild a scalable system that fixes inconsistencies, makes components easier to use, and fosters stronger <span class="stat-hi">designer–engineer collaboration</span>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 03. WHAT WAS BROKEN ────────────────────────── -->
+<div id="s03" class="sec white" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">03.</span>
+      <span class="sec-title" data-i18n="s03.title">What Was Broken</span>
+    </div>
+    <div class="split-row" style="gap:32px;align-items:center;">
+      <div class="split-copy" style="gap:12px;">
+        <p class="label-lg" data-i18n="s03.heading">When Past Designs Turn Into a Tangle, What's Next?</p>
+        <p class="body" data-i18n="s03.body1">We retired outdated files, kept valuable insights, and rebuilt components. Like fixing a ship mid-voyage, changes had to be gradual, not overnight.</p>
+        <p class="body" data-i18n="s03.body2">A real design system isn't just files in Figma, it's <span class="stat-hi">shared understanding</span> between design and engineering. Our old system lacked alignment, slowing updates and hurting consistency. The new system focuses on fit for the team, usability, and sustainable collaboration.</p>
+      </div>
+      <div class="split-photo" style="flex:1;background:transparent;border-radius:12px;overflow:hidden;">
+        <img src="../assets/rezio-ds/handoff-diagram.png" alt="Design to code handoff diagram" style="width:100%;" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 04. WORKFLOW ───────────────────────────────── -->
+<div id="s04" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">04.</span>
+      <span class="sec-title" data-i18n="s04.title">Workflow</span>
+    </div>
+
+    <p class="body" data-i18n="s04.intro">Through multiple iterations and real project trials, we refined a collaboration process with engineering that ensured new components were not only well-designed but also technically feasible, scalable, and easy to maintain:</p>
+
+    <div class="wf-steps">
+
+      <!-- Step 1 -->
+      <div class="wf-step">
+        <p class="wf-step-head" data-i18n="s04.s1.title">Step 1, Observation &amp; Requirements Gathering</p>
+        <div class="wf-step-body">
+          <ul class="bull-list">
+            <li data-i18n="s04.s1.li1">Continuously monitor component usage across projects and document any inconsistencies or missing patterns.</li>
+            <li data-i18n="s04.s1.li2">Gather feedback from the team to identify pain points and new component needs.</li>
+          </ul>
+          <p class="body" data-i18n="s04.s1.body">For example, in the original design, selected time tags would push the input field downward, so we needed a multi-select picker that allowed users to display multiple times directly within the picker. In addition, the single-select picker had efficiency issues, it required users to click repeatedly to complete the selection, resulting in unnecessary actions.</p>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="wf-step">
+        <p class="wf-step-head" data-i18n="s04.s2.title">Step 2, Discussion &amp; Direction Alignment</p>
+        <div class="wf-step-body">
+          <ul class="bull-list">
+            <li data-i18n="s04.s2.li1">Review requirements with engineers, discussing functionality, interaction details, technical constraints, and scalability.</li>
+            <li data-i18n="s04.s2.li2">Decide whether the component should be added to the Design System as a shared, reusable asset to support cross-project usage and easier maintenance.</li>
+          </ul>
+          <p class="body" data-i18n="s04.s2.body">For example, when we identified the need for a multiple time picker, we worked with the engineering team not only to communicate the strength of the demand and its scope of use, but also to ensure it could, while reusing parts of the single-select picker design, display multiple selected times directly within the picker without breaking the layout.</p>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="wf-step">
+        <p class="wf-step-head" data-i18n="s04.s3.title">Step 3, Prototype &amp; Usability Testing</p>
+        <div class="wf-step-split">
+          <div class="wf-step-split-copy">
+            <ul class="bull-list">
+              <li data-i18n="s04.s3.li1">Create interactive prototypes and validate feasibility with both design and engineering teams.</li>
+              <li data-i18n="s04.s3.li2">Conduct internal usability testing and iterate to converge on the best solution.</li>
+            </ul>
+            <p class="body" data-i18n="s04.s3.body">For example, when designing the multiple time picker, we built an interactive prototype and used <span class="stat-hi">Lovable for AI-powered prototype testing</span>. This allowed us to quickly simulate user flows, gather instant feedback, and refine the design before moving to final implementation.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="wf-step">
+        <p class="wf-step-head" data-i18n="s04.s4.title">Step 4, Final Design &amp; Development</p>
+        <div class="wf-step-body">
+          <ul class="bull-list">
+            <li data-i18n="s04.s4.li1">Finalize design specs and deliver a complete handoff package to engineering.</li>
+            <li data-i18n="s04.s4.li2">Maintain close communication during development to resolve implementation gaps quickly.</li>
+          </ul>
+          <p class="body" data-i18n="s04.s4.body">For example, during the multiple time picker implementation, we used <span class="stat-hi">Storybook</span> to review and validate the component. This allowed us to check functionality, interactions, and visual consistency in an isolated environment before integration, ensuring the final build matched the design specifications.</p>
+          <img src="../assets/rezio-ds/time-picker-states.png" alt="Time Picker component states" class="full-img" style="margin-top:8px;" />
+          <p class="body" data-i18n="s04.s4.caption" style="margin-top:4px;">Here's the final version we arrived at through prototyping exploration:</p>
+          <ol class="ord-list">
+            <li data-i18n="s04.s4.n1">When typing in the input field, the list automatically scrolls to the matching number, checks it, and pins it to the top.</li>
+            <li data-i18n="s04.s4.n2">When selecting by scrolling, the item is checked in place without being pinned to the top.</li>
+            <li data-i18n="s04.s4.n3">After adding, the input field is cleared.</li>
+          </ol>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── 05. DESIGN SYSTEM STRUCTURE ───────────────── -->
+<div id="s05" class="sec white" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">05.</span>
+      <span class="sec-title" data-i18n="s05.title">Our Design System Structure</span>
+    </div>
+
+    <!-- Visual Style -->
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <p class="label-lg" data-i18n="s05.vs.label">Visual Style</p>
+      <p class="body" data-i18n="s05.vs.body">Visual Style is the foundation of a product's look and feel, defining the overall aesthetic. It includes colors, typography, spacing, icons, etc. Below is our token naming hierarchy, using color as an example:</p>
+
+      <div class="token-hierarchy">
+        <div class="token-hier-row">
+          <div class="token-hier-label" data-i18n="s05.tk.raw">Raw Value</div>
+          <div class="token-hier-value">
+            <div class="token-hier-chip"><div class="token-hier-swatch"></div>#005ABE</div>
+          </div>
+        </div>
+        <div class="token-hier-row">
+          <div class="token-hier-label" data-i18n="s05.tk.prim">Primitive</div>
+          <div class="token-hier-value">
+            <div class="token-hier-chip"><div class="token-hier-swatch"></div>Cozy Blue-6</div>
+            <div class="color-palette">
+              <div class="color-palette-swatch" style="background:#002f63;"></div>
+              <div class="color-palette-swatch" style="background:#003d81;"></div>
+              <div class="color-palette-swatch" style="background:#004ca0;"></div>
+              <div class="color-palette-swatch selected" style="background:#005abe;border-radius:50%;flex:0 0 36px;height:36px;display:flex;align-items:center;justify-content:center;flex-direction:column;">
+                <span class="color-palette-label" style="font-size:9px;font-family:'IBM Plex Mono',monospace;color:#fff;line-height:1;text-align:center;">P<br>600</span>
+              </div>
+              <div class="color-palette-swatch" style="background:#2974c8;"></div>
+              <div class="color-palette-swatch" style="background:#5c95d5;"></div>
+              <div class="color-palette-swatch" style="background:#8fb6e2;"></div>
+              <div class="color-palette-swatch" style="background:#c7dbf1;"></div>
+              <div class="color-palette-swatch" style="background:#e5eef8;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="token-hier-row">
+          <div class="token-hier-label" data-i18n="s05.tk.sem">Semantic</div>
+          <div class="token-hier-value">
+            <div class="token-hier-chip"><div class="token-hier-swatch"></div>color-background-primary</div>
+            <div class="token-btn-preview" data-i18n="s05.tk.btn">Button</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Components -->
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="split-row" style="gap:24px;align-items:center;">
+        <div class="split-copy" style="gap:12px;">
+          <p class="label-lg" data-i18n="s05.co.label">Components</p>
+          <p class="body" data-i18n="s05.co.body1">Components are the reusable building blocks that bring consistency to the interface. They include buttons, input fields, menus, cards, etc. Our components are organized into categories such as General (buttons, typography, etc.), Layout, Data Entry, Data Display, and Feedback.</p>
+          <p class="body" data-i18n="s05.co.body2">From an initially unstructured and chaotic state, we reorganized them with clear classifications and rebuilt the library from scratch. It took a year to reach <span class="stat-hi">over 90% completion</span>, and the system continues to evolve.</p>
+        </div>
+        <div class="split-photo" style="flex-shrink:0;width:320px;background:transparent;border-radius:12px;overflow:hidden;">
+          <img src="../assets/rezio-ds/token-annotation.png" alt="Component library view" style="width:100%;" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Patterns -->
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <p class="label-lg" data-i18n="s05.pt.label">Patterns</p>
+      <p class="body" data-i18n="s05.pt.body1">Patterns are repeatable solutions to common interaction scenarios, defining not just the flow but also how the interface responds to different states. They guide users through tasks and ensure a cohesive experience across the product.</p>
+      <p class="body" data-i18n="s05.pt.body2">In our system, components are designed to handle <span class="stat-hi">six key states</span>, Read Only, Disabled, Error, Hover/Pressing, Default (Empty), and Filled, ensuring clarity and consistency in every interaction, giving the team a shared playbook for solving recurring design challenges.</p>
+      <table class="state-table">
+        <thead>
+          <tr>
+            <th data-i18n="s05.st.pri">Priority</th>
+            <th data-i18n="s05.st.sta">Status</th>
+            <th data-i18n="s05.st.use">Usage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td data-i18n="s05.st.r1.sta">Read Only</td>
+            <td data-i18n="s05.st.r1.use">The field is in a read-only state, and the entered values or functionalities cannot be changed. This applies to viewing the results of filled status fields. If the field is Default and has no value, it will display as Disabled in Read Only state.</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td data-i18n="s05.st.r2.sta">Disabled</td>
+            <td data-i18n="s05.st.r2.use">The field is in a non-editable state, applicable when the field has no practical function.</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td data-i18n="s05.st.r3.sta">Error</td>
+            <td data-i18n="s05.st.r3.use">Field error state, applicable when there is an error in the field.</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td data-i18n="s05.st.r4.sta">Hover / Pressing</td>
+            <td data-i18n="s05.st.r4.use">Field hover/pressing state, applicable when the field is highlighted during interaction.</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td data-i18n="s05.st.r5.sta">Default / Filled</td>
+            <td data-i18n="s05.st.r5.use">Field default and filled states, applicable to general status fields. If the field is filled and has a value, it will display as Read Only in Read Only state. If the field is Default and has no value, it will display as Disabled in Read Only state.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Guidelines -->
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <p class="label-lg" data-i18n="s05.gl.label">Guidelines</p>
+      <p class="body" data-i18n="s05.gl.body">Guidelines are the rules and best practices that guide design and development decisions. They cover areas such as component usage contexts, accessibility standards, and naming conventions. Below are the guidelines for using different buttons side by side, ensuring visual harmony and clear hierarchy in mixed-button layouts:</p>
+
+      <div class="guideline-block">
+        <div class="guideline-section-head" data-i18n="s05.gl.cons">Consistency</div>
+        <div class="guideline-row">
+          <div class="guideline-rule guideline-do" data-i18n="s05.gl.do">
+            <strong>Do:</strong> Use the same type of button in the Action Bar to maintain consistency. Try to unify the text descriptions and icons for the same type of button.
+          </div>
+          <div class="guideline-example" style="padding:12px 20px;">
+            <img src="../assets/rezio-ds/guideline-do.png" alt="Do: consistent button types" style="width:100%;max-width:560px;border-radius:6px;" />
+          </div>
+        </div>
+        <div class="guideline-row">
+          <div class="guideline-rule guideline-dont" data-i18n="s05.gl.dont">
+            <strong>Don't:</strong> Avoid using different button types in the Action Bar that create a patchwork effect, leading to inconsistent display.
+          </div>
+          <div class="guideline-example" style="padding:12px 20px;">
+            <img src="../assets/rezio-ds/guideline-dont.png" alt="Don't: mixed button types" style="width:100%;max-width:560px;border-radius:6px;" />
+          </div>
+        </div>
+        <div class="guideline-section-head" data-i18n="s05.gl.multi">Multi-Action Bar Order</div>
+        <div class="guideline-row" style="border-bottom:none;">
+          <div class="guideline-rule" data-i18n="s05.gl.multi.rule" style="border-right:1px solid var(--border);">
+            The sorting Action Bar should always be placed on the far right, with the order from left to right being Sort Up, Sort Down. When multiple Action Bars are displayed side by side, different types of buttons may be used as appropriate.
+          </div>
+          <div class="guideline-example" style="padding:12px 20px;">
+            <img src="../assets/rezio-ds/guideline-multibar.png" alt="Multi-action bar order" style="width:100%;max-width:560px;border-radius:6px;" />
+          </div>
+        </div>
+      </div>
+
+      <p class="body" data-i18n="s05.gl.footer">We also include decision rules for selecting the appropriate selection component, whether it is a checkbox, radio button, or dropdown, based on the number of options and the expected user flow. For example, a dropdown should only be used when there are more than seven options; otherwise, a radio selection is recommended for single-choice scenarios.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── 06. RESULTS ────────────────────────────────── -->
+<div id="s06" class="sec cream" style="padding-top:32px;padding-bottom:60px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">06.</span>
+      <span class="sec-title" data-i18n="s06.title">Results</span>
+    </div>
+    <div class="split-row" style="gap:40px;align-items:center;">
+      <div class="split-photo" style="flex:1;background:transparent;border-radius:0;overflow:visible;max-width:360px;">
+        <img src="../assets/rezio-ds/cover-logo.png" alt="Rezio Design System In Progress badge" style="width:100%;max-width:280px;" />
+      </div>
+      <div class="split-copy" style="flex:1;gap:20px;">
+        <p class="body" data-i18n="s06.body1">Within a year, we streamlined the design system by cutting component variants <span class="stat-hi">33%</span> (60 → 40) and adding key features like a multi-date picker and form filters. We set UX guidelines, built a Figma library, and aligned workflows with engineering to keep versioning and testing consistent.</p>
+        <p class="body" data-i18n="s06.body2">By introducing reusable components early, refining patterns, and leveraging <span class="stat-hi">AI-powered prototyping</span>, we boosted efficiency, reduced rework, and reached 90%+ completion.</p>
+        <p class="body" data-i18n="s06.body3">Most importantly, we established a strong rhythm between designers, engineers, and PMs, turning the design system into a <span class="stat-hi">shared language and decision-making framework</span>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<div class="footer">
+  <div class="footer-contact">
+    <div class="footer-item"><span>WeChat: ralinzain</span></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.instagram.com/ralinzain" target="_blank" rel="noreferrer">Instagram</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.linkedin.com/in/ming-hsi-h-b59182158/" target="_blank" rel="noreferrer">LinkedIn</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://wa.me/886975573947">WhatsApp: +886 975 573 947</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="mailto:ralinzain@gmail.com">ralinzain@gmail.com</a></div>
+  </div>
+</div>
+
+  <script src="js/rezio-ds.js"></script>
+</body>
+</html>

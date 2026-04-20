@@ -1,0 +1,8 @@
+exclude:
+  - scripts
+  - docs
+  - README.md
+  - DESIGN.md
+  - notification-framework-case-study.md
+  - .claude
+  - .github
