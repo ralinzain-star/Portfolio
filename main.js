@@ -73,8 +73,12 @@
 
         // Desktop: fly canvas to island
         const vw = wrap.clientWidth, vh = wrap.clientHeight;
+        const TOP_PAD = 64;
         const tx = -(el.offsetLeft - vw / 2 + el.offsetWidth / 2);
-        const ty = -(el.offsetTop  - vh / 2 + el.offsetHeight / 2);
+        // Top-anchor so the island title stays visible; center short islands that fit comfortably.
+        const ty = el.offsetHeight + TOP_PAD * 2 <= vh
+          ? -(el.offsetTop - vh / 2 + el.offsetHeight / 2)
+          : -(el.offsetTop - TOP_PAD);
         const from = { x: ox, y: oy }, to = { x: tx, y: ty };
         const dur = 650, start = performance.now();
         const ease = t => t < .5 ? 2*t*t : -1+(4-2*t)*t;
@@ -112,8 +116,11 @@
       const el = document.getElementById('island-' + id);
       if (!el) return;
       const vw = wrap.clientWidth, vh = wrap.clientHeight;
+      const TOP_PAD = 64;
       const tx = -(el.offsetLeft - vw / 2 + el.offsetWidth / 2);
-      const ty = -(el.offsetTop  - vh / 2 + el.offsetHeight / 2);
+      const ty = el.offsetHeight + TOP_PAD * 2 <= vh
+        ? -(el.offsetTop - vh / 2 + el.offsetHeight / 2)
+        : -(el.offsetTop - TOP_PAD);
       const from = { x: ox, y: oy }, to = { x: tx, y: ty };
       const dur = 650, start = performance.now();
       const ease = t => t < .5 ? 2*t*t : -1+(4-2*t)*t;
