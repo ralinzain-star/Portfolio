@@ -1,465 +1,1238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI Trip Planner · Iris Hsieh</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <title>AI Trip Planner · Iris Hsieh</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com" />
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+ <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+ <style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --bg:       #f0ebe2;
-      --bg-card:  #fffefb;
-      --border:   #dbd4c9;
-      --text:     #2b2520;
-      --muted:    #8c8079;
-      --accent:   #5b7fa6;
-    }
+  :root {
+   --bg:    #f0ebe2;
+   --bg-card: #fffefb;
+   --border:  #dbd4c9;
+   --text:   #2b2520;
+   --muted:  #8c8079;
+   --accent:  #5b7fa6;
+  }
 
-    html, body {
-      font-family: 'Noto Sans', 'Barlow', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.4;
-    }
-    a { color: inherit; text-decoration: none; }
-    img { display: block; }
+  html[lang="ja"]  body { font-family: 'Noto Sans JP', 'Noto Sans', 'Barlow', sans-serif; }
+  html[lang="zh-TW"] body { font-family: 'Noto Sans TC', 'Noto Sans', 'Barlow', sans-serif; }
+  html[lang="zh-CN"] body { font-family: 'Noto Sans SC', 'Noto Sans', 'Barlow', sans-serif; }
 
-    /* ── NAV ──────────────────────────────────────── */
-    .nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(240,235,226,0.92);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(43,37,32,0.08);
-      padding: 16px 60px;
-      display: flex; align-items: center;
-    }
-    .nav-back {
-      font-size: 13px; font-weight: 600;
-      color: var(--muted); letter-spacing: 0.04em;
-      font-family: 'Barlow', sans-serif;
-      transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--text); }
-    .nav-anchors {
-      display: flex; align-items: center; gap: 0;
-      margin-left: auto; overflow-x: auto; scrollbar-width: none;
-    }
-    .nav-anchors::-webkit-scrollbar { display: none; }
-    .nav-lang {
-      margin-left: 20px; flex-shrink: 0;
-      appearance: none; -webkit-appearance: none;
-      background: transparent; border: 1px solid rgba(43,37,32,0.2);
-      border-radius: 6px; padding: 3px 22px 3px 8px;
-      font-size: 11px; font-weight: 600; font-family: 'Barlow', sans-serif;
-      color: var(--muted); cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 6px center;
-      transition: border-color 0.15s, color 0.15s;
-    }
-    .nav-lang:hover { border-color: rgba(43,37,32,0.45); color: var(--text); }
-    .nav-anchor {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.01em;
-      color: var(--muted); padding: 4px 9px; border-radius: 6px;
-      white-space: nowrap; font-family: 'IBM Plex Mono', monospace;
-      transition: color 0.15s, background 0.15s;
-    }
-    .nav-anchor:hover { color: var(--text); }
-    .nav-anchor.active { color: var(--text); background: rgba(43,37,32,0.07); }
+  html, body {
+   font-family: 'Noto Sans', 'Barlow', sans-serif;
+   background: var(--bg);
+   color: var(--text);
+   -webkit-font-smoothing: antialiased;
+   line-height: 1.4;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
 
-    /* ── SECTION WRAPPERS ─────────────────────────── */
-    .sec {
-      width: 100%; padding: 120px 60px;
-      display: flex; flex-direction: column; align-items: center;
-    }
-    .sec.white { background: var(--bg-card); }
-    .sec.cream { background: var(--bg); }
-    .sec-inner { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 48px; }
+  /* ── NAV ──────────────────────────────────────── */
+  .nav {
+   position: sticky; top: 0; z-index: 100;
+   background: rgba(240,235,226,0.92);
+   backdrop-filter: blur(14px);
+   -webkit-backdrop-filter: blur(14px);
+   border-bottom: 1px solid rgba(43,37,32,0.08);
+   padding: 16px 60px;
+   display: flex; align-items: center;
+  }
+  .nav-back {
+   font-size: 13px; font-weight: 600;
+   color: var(--muted); letter-spacing: 0.04em;
+   font-family: 'Barlow', sans-serif;
+   transition: color 0.15s;
+  }
+  .nav-back:hover { color: var(--text); }
+  .nav-anchors {
+   display: flex; align-items: center; gap: 0;
+   margin-left: auto; overflow-x: auto; scrollbar-width: none;
+  }
+  .nav-anchors::-webkit-scrollbar { display: none; }
+  .nav-lang {
+   margin-left: 20px; flex-shrink: 0;
+   appearance: none; -webkit-appearance: none;
+   background: transparent; border: 1px solid rgba(43,37,32,0.2);
+   border-radius: 6px; padding: 3px 22px 3px 8px;
+   font-size: 11px; font-weight: 600; font-family: 'Barlow', sans-serif;
+   color: var(--muted); cursor: pointer;
+   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+   background-repeat: no-repeat; background-position: right 6px center;
+   transition: border-color 0.15s, color 0.15s;
+  }
+  .nav-lang:hover { border-color: rgba(43,37,32,0.45); color: var(--text); }
+  .nav-anchor {
+   font-size: 11px; font-weight: 500; letter-spacing: 0.01em;
+   color: var(--muted); padding: 4px 9px; border-radius: 6px;
+   white-space: nowrap; font-family: 'IBM Plex Mono', monospace;
+   transition: color 0.15s, background 0.15s;
+  }
+  .nav-anchor:hover { color: var(--text); }
+  .nav-anchor.active { color: var(--text); background: rgba(43,37,32,0.07); }
 
-    /* ── SECTION HEADING ──────────────────────────── */
-    .sec-head {
-      display: flex; gap: 28px; align-items: flex-start;
-      font-size: 32px; font-weight: 800; font-family: 'Barlow', sans-serif;
-      line-height: 1.1; letter-spacing: -0.02em; text-transform: uppercase;
-    }
-    .sec-num { white-space: nowrap; flex-shrink: 0; }
-    .sec-title { flex: 1; }
+  /* ── SECTION WRAPPERS ─────────────────────────── */
+  .sec {
+   width: 100%; padding: 48px 60px;
+   display: flex; flex-direction: column; align-items: center;
+  }
+  .sec.white { background: var(--bg-card); }
+  .sec.cream { background: var(--bg); }
+  .sec-inner { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 32px; }
 
-    /* ── TYPE SCALE ───────────────────────────────── */
-    .h3 { font-size: 11px; font-weight: 700; line-height: 1.2; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Barlow', sans-serif; }
-    .body { font-size: 14px; font-weight: 400; line-height: 1.75; font-family: 'Noto Sans', sans-serif; }
-    .body-med { font-size: 14px; font-weight: 600; line-height: 1.5; font-family: 'Noto Sans', sans-serif; }
-    .text-block { display: flex; flex-direction: column; gap: 8px; }
+  /* ── SECTION HEADING ──────────────────────────── */
+  .sec-head {
+   display: flex; gap: 28px; align-items: flex-start;
+   font-size: 24px; font-weight: 800; font-family: 'Barlow', sans-serif;
+   line-height: 1.15; letter-spacing: -0.02em; text-transform: uppercase;
+  }
+  .sec-num { white-space: nowrap; flex-shrink: 0; }
+  .sec-title { flex: 1; }
 
-    /* ── TITLE BAR ────────────────────────────────── */
-    .title-bar {
-      width: 100%; background: var(--bg); padding: 28px 60px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .title-bar-inner { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 12px; }
+  /* ── TYPE SCALE ───────────────────────────────── */
+  .h3 { font-size: 11px; font-weight: 700; line-height: 1.4; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Barlow', sans-serif; }
+  .body { font-size: 14px; font-weight: 400; line-height: 1.75; font-family: 'Noto Sans', 'Barlow', sans-serif; }
+  .body-med { font-size: 14px; font-weight: 600; line-height: 1.5; font-family: 'Noto Sans', sans-serif; }
+  .text-block { display: flex; flex-direction: column; gap: 8px; }
 
-    /* ── INTRO SPLIT CARD ─────────────────────────── */
-    .intro-card { width: 100%; border-radius: 20px; overflow: hidden; display: flex; align-items: stretch; min-height: 440px; }
-    .intro-photo { flex: 1; position: relative; min-height: 320px; }
-    .intro-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
-    .intro-copy {
-      flex: 1; background: var(--bg-card); padding: 24px 40px;
-      display: flex; flex-direction: column; gap: 16px; justify-content: center;
-    }
+  /* ── TITLE BAR ────────────────────────────────── */
+  .title-bar {
+   width: 100%; background: var(--bg); padding: 28px 60px;
+   display: flex; align-items: center; justify-content: center;
+  }
+  .title-bar-inner { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 12px; }
 
-    .stat-hi { background: #ffe033; padding: 1px 4px; border-radius: 4px; font-weight: 600; }
+  /* ── INTRO SPLIT CARD ─────────────────────────── */
+  .intro-card { width: 100%; border-radius: 20px; overflow: hidden; display: flex; align-items: stretch; min-height: 440px; }
+  .intro-photo { flex: 1; position: relative; min-height: 320px; }
+  .intro-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .intro-copy {
+   flex: 1; background: var(--bg-card); padding: 24px 40px;
+   display: flex; flex-direction: column; gap: 16px; justify-content: center;
+  }
 
-    /* ── SPLIT ROW ────────────────────────────────── */
-    .split-row { display: flex; gap: 40px; align-items: stretch; width: 100%; }
-    .split-photo { width: 300px; flex-shrink: 0; border-radius: 20px; overflow: hidden; background: #fff0d8; }
-    .split-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .split-copy { flex: 1; display: flex; flex-direction: column; gap: 20px; justify-content: center; }
+  .stat-hi { background: #ffe033; padding: 1px 4px; border-radius: 4px; font-weight: 600; }
 
-    /* ── NUMBERED STEP LIST ───────────────────────── */
-    .step-list { display: flex; flex-direction: column; gap: 32px; }
-    .step-row { display: flex; gap: 24px; align-items: flex-start; }
-    .step-num {
-      width: 32px; height: 32px; flex-shrink: 0;
-      background: #f8d08c; border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 700; font-family: 'Barlow', sans-serif;
-    }
-    .step-copy { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  /* ── SPLIT ROW ────────────────────────────────── */
+  .split-row { display: flex; gap: 40px; align-items: stretch; width: 100%; }
+  .split-photo { width: 300px; flex-shrink: 0; border-radius: 20px; overflow: hidden; background: #fff0d8; }
+  .split-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .split-copy { flex: 1; display: flex; flex-direction: column; gap: 16px; justify-content: center; }
 
-    /* ── BULL LIST ────────────────────────────────── */
-    .bull-list { padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
-    .bull-list li { font-size: 14px; line-height: 1.75; font-family: 'Noto Sans', sans-serif; }
+  /* ── NUMBERED STEP LIST ───────────────────────── */
+  .step-list { display: flex; flex-direction: column; gap: 32px; }
+  .step-row { display: flex; gap: 24px; align-items: flex-start; }
+  .step-num {
+   width: 32px; height: 32px; flex-shrink: 0;
+   background: #f8d08c; border-radius: 12px;
+   display: flex; align-items: center; justify-content: center;
+   font-size: 14px; font-weight: 700; font-family: 'Barlow', sans-serif;
+   color: var(--text);
+  }
+  .step-copy { flex: 1; display: flex; flex-direction: column; gap: 6px; }
 
-    /* ── STAT CARDS ───────────────────────────────── */
-    .stat-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px; width: 100%;
-    }
-    .stat-card {
-      background: var(--bg); border-radius: 16px; padding: 28px 24px;
-      display: flex; flex-direction: column; gap: 8px;
-    }
-    .sec.white .stat-card { background: #f6f1ea; }
-    .stat-card-number {
-      font-size: 28px; font-weight: 800; font-family: 'Barlow', sans-serif;
-      line-height: 1.1; letter-spacing: -0.02em;
-    }
-    .stat-card-label {
-      font-size: 13px; font-weight: 400; line-height: 1.5;
-      font-family: 'Noto Sans', sans-serif; color: var(--muted);
-    }
+  /* ── BULL LIST ────────────────────────────────── */
+  .bull-list { padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+  .bull-list li { font-size: 14px; line-height: 1.75; font-family: 'Noto Sans', sans-serif; }
 
-    /* ── FEATURE GRID ────────────────────────────── */
-    .feature-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px; width: 100%;
-    }
-    .feature-card {
-      background: var(--bg); border-radius: 16px; padding: 24px;
-      display: flex; flex-direction: column; gap: 8px;
-    }
-    .sec.white .feature-card { background: #f6f1ea; }
+  /* ── MD EXAMPLE ─────────────────────────────── */
+  .md-example {
+   margin-top: 12px; padding: 16px 20px; border-radius: 10px;
+   background: rgba(219,212,201,0.18); overflow-x: auto;
+   font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; line-height: 1.7;
+   color: var(--text); white-space: pre; border: none;
+  }
+  .md-example code { font-family: inherit; font-size: inherit; background: none; padding: 0; }
+  .sec.cream .md-example { background: #fff; }
+  .sec.white .md-example { background: rgba(219,212,201,0.18); }
 
-    /* ── PLACEHOLDER IMAGE ───────────────────────── */
-    .ph-img {
-      background: #e8dfd4; border-radius: 20px; min-height: 300px;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 12px;
-    }
+  /* ── STAT CARDS ───────────────────────────────── */
+  .stat-grid {
+   display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+   gap: 20px; width: 100%;
+  }
+  .stat-card {
+   background: var(--bg); border-radius: 16px; padding: 28px 24px;
+   display: flex; flex-direction: column; gap: 8px;
+  }
+  .sec.white .stat-card { background: #f6f1ea; }
+  .stat-card-number {
+   font-size: 28px; font-weight: 800; font-family: 'Barlow', sans-serif;
+   line-height: 1.1; letter-spacing: -0.02em;
+  }
+  .stat-card-label {
+   font-size: 13px; font-weight: 400; line-height: 1.5;
+   font-family: 'Noto Sans', sans-serif; color: var(--muted);
+  }
 
-    /* ── FOOTER ───────────────────────────────────── */
-    .footer { width: 100%; padding: 40px 60px; background: var(--text); color: #fffefb; display: flex; justify-content: center; }
-    .footer-contact { display: flex; align-items: center; gap: 0; flex-wrap: wrap; justify-content: center; }
-    .footer-item { font-size: 12px; font-family: 'IBM Plex Mono', monospace; padding: 4px 16px; }
-    .footer-item a { color: inherit; }
-    .footer-item a:hover { text-decoration: underline; }
-    .footer-sep { width: 1px; height: 14px; background: rgba(255,255,255,0.2); }
+  /* ── FEATURE GRID ────────────────────────────── */
+  .feature-grid {
+   display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+   gap: 16px; width: 100%;
+  }
+  .feature-card {
+   background: var(--bg); border-radius: 16px; padding: 24px;
+   display: flex; flex-direction: column; gap: 8px;
+  }
+  .sec.white .feature-card { background: #f6f1ea; }
 
-    /* ── RESPONSIVE ───────────────────────────────── */
-    @media (max-width: 900px) {
-      .nav { padding: 12px 20px; }
-      .title-bar { padding: 28px 20px 20px; }
-      .sec { padding: 60px 20px; }
-      .sec-head { font-size: 20px; }
-      .intro-card { flex-direction: column; }
-      .intro-photo { min-height: 260px; }
-      .split-row { flex-direction: column; }
-      .split-photo { width: 100%; }
-      .stat-grid { grid-template-columns: 1fr 1fr; }
-      .feature-grid { grid-template-columns: 1fr; }
-      .footer { padding: 32px 20px; }
-    }
-  </style>
+  /* ── PLACEHOLDER IMAGE ───────────────────────── */
+  .ph-img {
+   background: #e8dfd4; border-radius: 20px; min-height: 300px;
+   display: flex; align-items: center; justify-content: center;
+   color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+  }
+
+  /* ── PHONE SHOWCASE ──────────────────────────── */
+  .phone-row {
+   display: flex; gap: 24px; justify-content: center; align-items: flex-start;
+   flex-wrap: wrap; margin-top: 16px; width: 100%;
+  }
+  .phone-wrap { text-align: center; max-width: 280px; }
+  .phone {
+   width: 260px; border-radius: 20px; overflow: hidden;
+   border: 1px solid var(--border); background: #fff;
+   box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .phone img { width: 100%; display: block; }
+  .phone-label {
+   margin-top: 10px; font-size: 13px; font-weight: 600;
+   font-family: 'Barlow', sans-serif; letter-spacing: 0.3px;
+  }
+  .phone-sublabel {
+   margin-top: 2px; font-size: 11px; color: var(--muted);
+   font-family: 'IBM Plex Mono', monospace; line-height: 1.5;
+  }
+
+  /* ── ARCHITECTURE FLOW ───────────────────────── */
+  .arch-flow {
+   display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+   padding: 20px; background: var(--bg); border-radius: 16px;
+   font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+   color: var(--muted); justify-content: center;
+  }
+  .sec.white .arch-flow { background: #f6f1ea; }
+  .arch-node {
+   padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border);
+   border-radius: 10px; white-space: nowrap; font-weight: 500; color: var(--text);
+  }
+  .arch-arrow { font-size: 16px; color: var(--border); }
+
+  /* ── FOOTER ───────────────────────────────────── */
+  .footer { width: 100%; padding: 40px 60px; background: var(--text); color: #fffefb; display: flex; justify-content: center; }
+  .footer-contact { display: flex; align-items: center; gap: 0; flex-wrap: wrap; justify-content: center; }
+  .footer-item { font-size: 12px; font-family: 'IBM Plex Mono', monospace; padding: 4px 16px; }
+  .footer-item a { color: inherit; }
+  .footer-item a:hover { text-decoration: underline; }
+  .footer-sep { width: 1px; height: 14px; background: rgba(255,255,255,0.2); }
+
+  /* ── RESPONSIVE ───────────────────────────────── */
+  @media (max-width: 900px) {
+   .nav { padding: 12px 20px; }
+   .title-bar { padding: 28px 20px 20px; }
+   .sec { padding: 48px 20px; }
+   .sec-head { font-size: 20px; }
+   .intro-card { flex-direction: column; }
+   .intro-photo { min-height: 260px; }
+   .split-row { flex-direction: column; }
+   .split-photo { width: 100%; }
+   .stat-grid { grid-template-columns: 1fr 1fr; }
+   .feature-grid { grid-template-columns: 1fr; }
+   .footer { padding: 32px 20px; }
+  }
+ </style>
 </head>
 <body>
 
 <!-- ── NAV ────────────────────────────────────────── -->
 <nav class="nav">
-  <a class="nav-back" href="/#writing">&larr; Iris Hsieh</a>
-  <div class="nav-anchors">
-    <a class="nav-anchor" href="#intro">.Intro</a>
-    <a class="nav-anchor" href="#s01">01.The Problem</a>
-    <a class="nav-anchor" href="#s02">02.Design Approach</a>
-    <a class="nav-anchor" href="#s03">03.What Gets Built</a>
-    <a class="nav-anchor" href="#s04">04.Key Decisions</a>
-    <a class="nav-anchor" href="#s05">05.Impact</a>
-  </div>
-  <select class="nav-lang" id="nav-lang-select">
-    <option value="en">EN</option>
-    <option value="ja">JA</option>
-    <option value="zh-tw">繁</option>
-    <option value="zh-cn">简</option>
-  </select>
+ <a class="nav-back" href="/#writing">&larr; Iris Hsieh</a>
+ <div class="nav-anchors">
+  <a class="nav-anchor" href="#s00" data-i18n="nav.s00">01.Thesis</a>
+  <a class="nav-anchor" href="#s03" data-i18n="nav.s03">02.Philosophy</a>
+  <a class="nav-anchor" href="#s04" data-i18n="nav.s04">03.Decisions</a>
+  <a class="nav-anchor" href="#s05" data-i18n="nav.s05">04.Architecture</a>
+  <a class="nav-anchor" href="#s06" data-i18n="nav.s06">05.Results</a>
+  <a class="nav-anchor" href="#s07" data-i18n="nav.s07">06.Reflection</a>
+ </div>
+ <select class="nav-lang" id="nav-lang-select">
+  <option value="en">EN</option>
+  <option value="ja">JA</option>
+  <option value="zh-tw">繁</option>
+  <option value="zh-cn">简</option>
+ </select>
 </nav>
 
 <!-- ── TITLE BAR ──────────────────────────────────── -->
 <div class="title-bar">
-  <div class="title-bar-inner">
-    <div style="font-size:36px;font-weight:800;line-height:1.1;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;">AI Trip Planner</div>
-    <div style="font-size:16px;font-weight:500;line-height:1.4;font-family:'Noto Sans',sans-serif;color:var(--muted);">A conversational AI skill that turns scattered travel research into a structured, beautiful HTML travel guide.</div>
-  </div>
+ <div class="title-bar-inner">
+  <div style="font-size:40px;font-weight:800;line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;" data-i18n="page.title">AI Trip Planner</div>
+  <div style="font-size:16px;font-weight:500;line-height:1.4;font-family:'Noto Sans',sans-serif;color:var(--muted);" data-i18n="page.subtitle">A conversational Claude Code AI Skill that turns scattered travel research into structured, in-depth travel experiences.</div>
+ </div>
 </div>
 
 <!-- ── INTRO ──────────────────────────────────────── -->
-<div id="intro" class="sec cream" style="padding-top:0;padding-bottom:0;">
-  <div class="sec-inner" style="max-width:100%;padding:0;">
-    <div class="intro-card">
-      <div class="intro-photo" style="display:flex;align-items:center;justify-content:center;background:#e8dfd4;">
-        <span style="color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;">Trip Planner Preview</span>
-      </div>
-      <div class="intro-copy">
-        <div class="text-block">
-          <p class="h3">Overview:</p>
-          <p class="body">Planning a trip usually means juggling dozens of browser tabs &mdash; flight searches, hotel comparisons, blog recommendations, Google Maps pins, and scattered notes. I built an AI-powered trip planner that consolidates this entire workflow into a single conversation. The skill asks the right questions, researches real-time prices and logistics, then generates a <span class="stat-hi">self-contained HTML travel guide</span> with interactive maps, day-by-day itineraries, and live budget tracking.</p>
-        </div>
-        <div class="text-block">
-          <p class="h3">My Role:</p>
-          <p class="body">As both designer and developer, I designed the <span class="stat-hi">conversational flow</span>, defined the information architecture for the output, and built the complete system as a Claude Code skill. This included prompt engineering, multi-round data collection logic, real-time web research integration, and the <span class="stat-hi">visual design system</span> for the generated HTML guides.</p>
-        </div>
-        <div class="text-block">
-          <p class="h3">Company &amp; Timeframe:</p>
-          <p class="body">Personal Project &middot; 2025&ndash;2026</p>
-        </div>
-      </div>
+<div id="intro" class="sec cream" style="padding-top:0;padding-bottom:48px;">
+ <div class="sec-inner" style="max-width:100%;padding:0;">
+  <div class="intro-card">
+   <div class="intro-photo">
+    <img src="assets/trip-planner/preview.png" alt="Trip Planner map view with Busan, Aso/Kumamoto, Fukuoka attractions" />
+   </div>
+   <div class="intro-copy">
+    <div class="text-block">
+     <p class="h3" data-i18n="intro.label.overview">Project Origin:</p>
+     <p class="body" data-i18n="intro.overview.body">As a travel enthusiast, I wanted to share my upcoming Korea &rarr; Japan trip with friends and decided to do what everyone online was doing &mdash; <span class="stat-hi">Vibe Code</span> a website. But as the Claude Code trend swept the tech world, and after using Claude Code Skills extensively at work, a new idea took shape: what if I turned my trip-planning method into a structured <a href="https://agentskills.io/what-are-skills" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Skill</a> &mdash; so that anyone could become their own <span class="stat-hi">travel planner</span> and set off on the journey they truly want?</p>
     </div>
+    <div class="text-block">
+     <p class="h3" data-i18n="intro.label.role">My Role:</p>
+     <p class="body" data-i18n="intro.role.body">Product Designer, Full-stack Developer, AI Prompt Engineer. <span class="stat-hi">Claude Code Skill</span>, MCP, HTML/CSS/JS</p>
+    </div>
+    <div class="text-block">
+     <p class="h3" data-i18n="intro.label.time">Timeframe:</p>
+     <p class="body" data-i18n="intro.time.body">Side Project &middot; 2026.Mar&ndash;Present</p>
+    </div>
+    <div class="text-block">
+     <p class="h3" data-i18n="intro.label.repo">Open Source:</p>
+     <p class="body"><a href="https://github.com/ralinzain-star/trip-planner-skill" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;color:var(--accent);" data-i18n="intro.repo.body">github.com/ralinzain-star/trip-planner-skill &nearr;</a></p>
+    </div>
+   </div>
   </div>
+ </div>
 </div>
 
-<!-- ── 01. THE PROBLEM ────────────────────────────── -->
-<div id="s01" class="sec white" style="padding-top:32px;padding-bottom:32px;">
-  <div class="sec-inner">
-    <div class="sec-head">
-      <span class="sec-num">01.</span>
-      <span class="sec-title">The Problem</span>
-    </div>
-    <div class="split-row">
-      <div class="ph-img" style="width:300px;flex-shrink:0;">Scattered tabs illustration</div>
-      <div class="split-copy">
-        <div class="text-block">
-          <p class="body">Travel planning is fragmented across dozens of tools and tabs. Users bounce between Google Flights, Booking.com, travel blogs, Google Maps, and messaging apps to coordinate with travel partners. Key information gets lost, budgets are vague, and the final "plan" is usually a messy Google Doc or scattered screenshots.</p>
-        </div>
-        <div class="text-block">
-          <p class="h3">Key Pain Points:</p>
-          <ul class="bull-list" style="margin-top:4px;">
-            <li>Research is scattered across <span class="stat-hi">10+ browser tabs</span> with no single source of truth</li>
-            <li>Budget tracking is manual and often forgotten until overspending occurs</li>
-            <li>Coordinating with travel partners means copying and pasting across apps</li>
-            <li>Logistics details (airport transfers, SIM cards, visa requirements) are afterthoughts</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+<!-- ── 00. THESIS ──────────────────────────────────── -->
+<div id="s00" class="sec white" style="padding-top:32px;padding-bottom:60px;">
+ <div class="sec-inner">
+  <div class="sec-head">
+   <span class="sec-num">01.</span>
+   <span class="sec-title" data-i18n="s00.title">When Design Artifacts Are No Longer the Defining Axis</span>
   </div>
+  <div class="text-block">
+   <p class="body" data-i18n="s00.body">In the AI era, if the design artifact (Output) is no longer the defining axis of a designer&rsquo;s work, where does a designer&rsquo;s value manifest? In the past, our sense of achievement came from pixel-perfect craft &mdash; grid systems, color specs, we were the &ldquo;final reviewers&rdquo; of product visuals and interactions. But as generative AI and <span class="stat-hi">Vibe Coding</span> sweep in, when a prompt or a set of structured data can instantly produce a beautiful interface, we must honestly confront a shift: <span class="stat-hi">&ldquo;defining problems&rdquo; and &ldquo;building frameworks&rdquo; are becoming a designer&rsquo;s most important skills</span>.</p>
+  </div>
+  <div style="margin-top:24px;border-radius:16px;overflow:hidden;">
+   <img src="/assets/trip-planner/hero-cloud.png" alt="AI-generated dreamscape — a floating island with a gazebo workspace, Figma window, and crystal prism above the clouds" style="width:100%;display:block;" />
+  </div>
+ </div>
 </div>
 
-<!-- ── 02. DESIGN APPROACH ────────────────────────── -->
-<div id="s02" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
-  <div class="sec-inner">
-    <div class="sec-head">
-      <span class="sec-num">02.</span>
-      <span class="sec-title">Design Approach</span>
-    </div>
-    <p class="body">The core insight was that travel planning is inherently conversational &mdash; people naturally describe trips through dialogue, not forms. The skill's UX was designed around this principle, using structured conversation rounds to progressively build a complete trip profile.</p>
-    <div class="ph-img" style="min-height:240px;">Conversation flow screenshot</div>
-    <div style="display:flex;flex-direction:column;gap:20px;">
-      <div class="text-block">
-        <p class="h3">Multi-Round Information Gathering</p>
-        <p class="body">The skill uses structured conversation rounds to collect trip parameters &mdash; dates, budget, travel style, dietary restrictions, interests. Each round builds on previous answers, creating a <span class="stat-hi">natural dialogue flow</span> rather than a rigid questionnaire.</p>
-      </div>
-      <div class="text-block">
-        <p class="h3">Smart Defaults with Escape Hatches</p>
-        <p class="body">Every question offers concrete options based on real destination data, but users can always override. This reduces decision fatigue while preserving full control over the planning process.</p>
-      </div>
-      <div class="text-block">
-        <p class="h3">Progressive Disclosure</p>
-        <p class="body">Start with essentials (where, when, budget), then layer in preferences (food, activities, pace). This mirrors how people naturally think about trips &mdash; <span class="stat-hi">big decisions first, details later</span>.</p>
-      </div>
-      <div class="text-block">
-        <p class="h3">Research-Backed Suggestions</p>
-        <p class="body">The skill searches real-time flight prices, hotel rates, and local recommendations before presenting options. Users make decisions based on <span class="stat-hi">actual data</span>, not guesswork.</p>
-      </div>
-    </div>
+<!-- ── 01. DESIGN PHILOSOPHY ──────────────────────── -->
+<div id="s03" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
+ <div class="sec-inner">
+  <div class="sec-head">
+   <span class="sec-num">02.</span>
+   <span class="sec-title" data-i18n="s03.title">Design Philosophy</span>
   </div>
+  <div style="display:flex;flex-direction:column;gap:20px;">
+   <div class="text-block">
+    <p class="h3" data-i18n="s03.h1">Dialogue as Interface</p>
+    <p class="body" data-i18n="s03.b1">Trip planning is inherently fragmented and deeply personal. People rarely want to fill cold forms — they prefer to talk through their needs. I defined <span class="stat-hi">conversation as the core interface</span>. Through natural, multi-turn contextual dialogue, the AI simulates the questioning logic of a professional tour guide, progressively refining the plan, letting the interface flow with the user's thinking.</p>
+   </div>
+   <div class="text-block">
+    <p class="h3" data-i18n="s03.h2">Experience-Driven</p>
+    <p class="body" data-i18n="s03.b2">The trip webpage is just one form of visual output — the <span class="stat-hi">planning process itself</span> is the soul of this product. The essence of travel lies in the experience: what do you want to feel in a foreign place? How in control of your budget do you feel? How do you balance the everyday with unexpected surprises? I placed the design emphasis on the <strong>guided conversation upfront</strong>. This isn't just data collection — it's helping users complete a deep process of self-clarification, reclaiming the spontaneous spirit of travel. Real design happens in the dialogue: clarifying intent, resolving anxiety, and ultimately sending someone on a trip that is truly their own.</p>
+   </div>
+  </div>
+ </div>
 </div>
 
-<!-- ── 03. WHAT GETS BUILT ────────────────────────── -->
-<div id="s03" class="sec white" style="padding-top:32px;padding-bottom:32px;">
-  <div class="sec-inner">
-    <div class="sec-head">
-      <span class="sec-num">03.</span>
-      <span class="sec-title">What Gets Built</span>
-    </div>
-    <p class="body">The output is a <span class="stat-hi">self-contained HTML file</span> &mdash; a complete travel guide that works offline on any device. No app installation, no account creation, no internet required after generation.</p>
-    <div class="ph-img" style="min-height:360px;">Trip guide preview &mdash; interactive map + itinerary</div>
-    <div class="feature-grid">
-      <div class="feature-card">
-        <p class="h3">Interactive Map</p>
-        <p class="body">All locations pinned and color-coded by day, with walking routes and proximity grouping for efficient daily plans.</p>
-      </div>
-      <div class="feature-card">
-        <p class="h3">Day-by-Day Itinerary</p>
-        <p class="body">Time blocks, walking routes, and meal recommendations for each day &mdash; structured but flexible enough for spontaneity.</p>
-      </div>
-      <div class="feature-card">
-        <p class="h3">Live Budget Dashboard</p>
-        <p class="body">Tracks spending across categories (flights, hotels, food, activities) with real-time totals and remaining budget visibility.</p>
-      </div>
-      <div class="feature-card">
-        <p class="h3">Booking Status Tracker</p>
-        <p class="body">Visual status for flights, hotels, and activities &mdash; what's booked, what's pending, and what still needs action.</p>
-      </div>
-      <div class="feature-card">
-        <p class="h3">Packing Checklist</p>
-        <p class="body">Customized to destination weather and planned activities, with interactive checkboxes for tracking progress.</p>
-      </div>
-      <div class="feature-card">
-        <p class="h3">Digital Nomad Mode</p>
-        <p class="body">Coworking spots and wifi-friendly cafes surfaced alongside the itinerary for remote workers traveling abroad.</p>
-      </div>
-    </div>
+<!-- ── 03. KEY DECISIONS ──────────────────────────── -->
+<div id="s04" class="sec white" style="padding-top:32px;padding-bottom:32px;">
+ <div class="sec-inner">
+  <div class="sec-head">
+   <span class="sec-num">03.</span>
+   <span class="sec-title" data-i18n="s04.title">Key Decisions</span>
   </div>
+  <div class="text-block" style="padding:16px 20px;background:rgba(219,212,201,0.18);border-radius:12px;">
+   <p class="h3" data-i18n="s04.skill.label">What is a Skill?</p>
+   <p class="body" data-i18n="s04.skill.body">An <a href="https://agentskills.io/what-are-skills" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Agent Skill</a> is a lightweight, open format for extending AI agents. Each skill is a folder with a <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code> instruction file &mdash; plus optional scripts, templates, and reference materials. The agent reads the instructions on demand, gaining deep, specialized capabilities while staying fast.</p>
+  </div>
+  <p class="body" data-i18n="s04.intro">On the technical side, I made a core shift: abandoning rigid fill-in templates in favor of designing a structured <span class="stat-hi">Markdown as the semantic protocol for the UI</span>. This MD document doesn't just carry travel information &mdash; it directly defines the orchestration logic of the UI.</p>
+  <div class="step-list">
+   <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-copy">
+     <p class="h3" data-i18n="s04.d1.title">Semantic Mapping</p>
+     <p class="body" data-i18n="s04.d1.body">I defined a mapping ruleset where different Markdown syntax tags directly trigger specific design system components. <span class="stat-hi">Data tables</span> are parsed and rendered as interactive budget dashboards with dynamic filtering. <span class="stat-hi">Lists</span> — based on content characteristics — automatically render as checkbox-equipped packing checklists. <span class="stat-hi">Geo-links</span> are recognized by the engine and automatically pinned on the underlying interactive map.</p>
+     <p class="h3" style="margin-top:12px;" data-i18n="s04.d1.ex1">Data Table &rarr; Budget Dashboard</p>
+     <pre class="md-example"><code data-i18n="s04.d1.code1">MD Syntax                                Renders As
+──────────────────────────────────     ──────────────────────────
+| Item   | Cost  | Status    |              Interactive Budget Dashboard
+| Flight | $420 | Confirmed |        →     Filter by city / category
+| Hotel  | $850 | Pending   |              Real-time totals + remaining budget
+| Dining | $30  | —         |</code></pre>
+     <p class="h3" style="margin-top:12px;" data-i18n="s04.d1.ex2">Geo-link &rarr; Interactive Map</p>
+     <pre class="md-example"><code data-i18n="s04.d1.code2">MD Syntax                                Renders As
+──────────────────────────────────     ──────────────────────────
+[Tsukiji Market](geo:35.6654,139.7707)    Leaflet Interactive Map
+[Sensō-ji](geo:35.7148,139.7967)     →     Auto-pin coordinates
+[Shinjuku Gyoen](geo:35.6852,139.7100)    Color-coded by date + route lines</code></pre>
+    </div>
+   </div>
+   <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-copy">
+     <p class="h3" data-i18n="s04.d2.title">Giving AI Orchestration Authority</p>
+     <p class="body" data-i18n="s04.d2.body">Markdown is the AI's native language. Through MD, I handed the orchestration authority back to the AI, letting it <span class="stat-hi">spontaneously design the layout</span> based on each trip's characteristics. For an international flight itinerary, the AI autonomously decides to generate a warning block. For a remote-work-focused trip, it prioritizes a Workspace Guide section. The UI structure is no longer fixed — it <span class="stat-hi">grows from the content</span>.</p>
+     <pre class="md-example"><code data-i18n="s04.d2.code">Scenario A — International Trip (Korea → Japan)
+AI detects border crossing, auto-inserts at page top:
+
+  &gt; ⚠️ Entry Requirements
+  &gt; Korea: K-ETA required (apply 72hr ahead)
+  &gt; Japan: Visa-free 90 days, but fill out Visit Japan Web
+  &gt; Exchange: 1 TWD ≈ 42 KRW / 5 JPY
+
+─────────────────────────────────────────
+Scenario B — Remote Work Trip (Fukuoka Work Mode)
+AI detects Nomad Mode, auto-prioritizes:
+
+  ## 🖥️ Workspace Guide — Fukuoka
+  | Location           | Wi-Fi  | Outlet | Hours        |
+  | Starbucks Tenjin   | 50Mbps | ✅     | 07:00–22:00  |
+  | &amp;And Hostel Hakata | 80Mbps | ✅     | 24hr (guest) |
+
+→ The UI layout isn't a fixed template — it grows from this trip's characteristics</code></pre>
+    </div>
+   </div>
+  </div>
+ </div>
 </div>
 
-<!-- ── 04. KEY DESIGN DECISIONS ───────────────────── -->
-<div id="s04" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
-  <div class="sec-inner">
-    <div class="sec-head">
-      <span class="sec-num">04.</span>
-      <span class="sec-title">Key Design Decisions</span>
-    </div>
-    <div class="step-list">
-      <div class="step-row">
-        <div class="step-num">1</div>
-        <div class="step-copy">
-          <p class="h3">Conversation over Forms</p>
-          <p class="body">A chat-based flow feels natural and adapts to each user's situation, unlike a rigid form that assumes everyone plans the same way. Some travelers have fixed dates and open budgets; others have tight budgets and flexible schedules. <span class="stat-hi">Conversation handles both</span>.</p>
-        </div>
-      </div>
-      <div class="step-row">
-        <div class="step-num">2</div>
-        <div class="step-copy">
-          <p class="h3">HTML over PDF</p>
-          <p class="body">Self-contained HTML files are interactive, searchable, and work offline on any device. <span class="stat-hi">No app installation needed</span>. Maps are clickable, checklists are interactive, and the budget dashboard updates as users mark items as booked.</p>
-        </div>
-      </div>
-      <div class="step-row">
-        <div class="step-num">3</div>
-        <div class="step-copy">
-          <p class="h3">Budget-First Planning</p>
-          <p class="body">By establishing budget early and showing real prices, users make <span class="stat-hi">informed trade-offs</span> instead of discovering they've overspent after booking. The budget dashboard is central to the guide, not an afterthought.</p>
-        </div>
-      </div>
-      <div class="step-row">
-        <div class="step-num">4</div>
-        <div class="step-copy">
-          <p class="h3">Bilingual by Default</p>
-          <p class="body">Every guide includes both English and the local language for restaurant names, addresses, and transit directions. This is <span class="stat-hi">essential for non-English-speaking destinations</span> &mdash; showing a taxi driver an address in the local script makes the difference between arriving and getting lost.</p>
-        </div>
-      </div>
-    </div>
+<!-- ── 04. SYSTEM ARCHITECTURE ────────────────────── -->
+<div id="s05" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
+ <div class="sec-inner">
+  <div class="sec-head">
+   <span class="sec-num">04.</span>
+   <span class="sec-title" data-i18n="s05.title">System Architecture</span>
   </div>
+  <p class="body" data-i18n="s05.intro">The system is split into two layers: a <span class="stat-hi">conversation orchestration layer</span> (the trip-planner skill that guides the user through a structured multi-phase dialogue with explicit confirmation gates) and a <span class="stat-hi">modular skill pipeline</span> (6 specialized sub-skills, each an independent module with its own <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code>, invoked conditionally by the orchestrator).</p>
+
+  <!-- Conversation Layer -->
+  <div class="text-block" style="margin-top:16px;">
+   <p class="h3" data-i18n="s05.layer1.label">Layer 1: Conversation Orchestration</p>
+   <p class="body" data-i18n="s05.layer1.body">The trip-planner skill acts as the orchestrator. It guides the user through a <span class="stat-hi">multi-phase structured dialogue</span>, with each phase ending in an explicit confirmation gate &mdash; the system never assumes, it always asks. Phases progress from research loading, through budget and preference gathering, to attraction selection (must-go vs. if-time-permits), then route optimization. Only after every phase is confirmed does the system proceed to generation.</p>
+   <pre class="md-example"><code>Phase 0  Load Research     ← auto-read travel-collector JSON
+Phase 1  Gather Details    ← dates, budget, style, work mode
+         ↳ [conditional]   → invoke flight-intelligence
+Phase 2  Select Attractions← interactive checkbox batches
+         ↳ must-go vs. if-time-permits
+Phase 3  Route Optimization← geo-reorder + crowd-aware scheduling
+Phase 4  Generate &amp; Deploy ← ui-style → html-generator → deployer
+         ────────────────────────────────────────────────
+         Each phase ends with ✓ Confirmation Gate</code></pre>
+  </div>
+
+  <!-- Modular Pipeline -->
+  <div class="text-block" style="margin-top:16px;">
+   <p class="h3" data-i18n="s05.layer2.label">Layer 2: Modular Skill Pipeline</p>
+   <p class="body" data-i18n="s05.layer2.body">Each skill below is an independent module. The orchestrator invokes them conditionally &mdash; flight-intelligence only triggers when flights aren't booked; ui-style only when the user is ready to choose a visual identity. This means each module can evolve independently without affecting the others.</p>
+  </div>
+  <pre class="md-example"><code data-i18n="s05.layer2.code">travel-collector → flight-intelligence → trip-planner
+                                             ↓
+                            ui-style → trip-html-generator → trip-deployer
+
+Each module has its own SKILL.md; the orchestrator invokes conditionally:
+  • flight-intelligence  only when flights aren't booked
+  • ui-style             only when the user selects a visual style</code></pre>
+  <div class="step-list">
+   <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-copy">
+     <p class="h3">travel-collector</p>
+     <p class="body" data-i18n="s05.m1.body">Extracts structured data from any input &mdash; URLs, screenshots, blog posts, booking confirmations &mdash; and normalizes everything into a <span class="stat-hi">unified JSON research file</span> that pre-fills the orchestrator conversation.</p>
+     <pre class="md-example"><code>Input: blog URL / screenshot / booking email
+  ↓
+Output: busan-research.json
+  { "pois": [...], "hotels": [...], "passes": [...] }</code></pre>
+    </div>
+   </div>
+   <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-copy">
+     <p class="h3">flight-intelligence</p>
+     <p class="body" data-i18n="s05.m2.body">Analyzes flight pricing patterns, seasonal trends, and festival calendars. Returns a <span class="stat-hi">buy-now-or-wait recommendation</span> with interactive price visualization.</p>
+     <pre class="md-example"><code>TPE → PUS  Mar 30   $180  ← current
+TPE → PUS  avg.     $210  ← 6-month average
+Verdict: BUY NOW (12% below average, cherry blossom peak)</code></pre>
+    </div>
+   </div>
+   <div class="step-row">
+    <div class="step-num">3</div>
+    <div class="step-copy">
+     <p class="h3">trip-planner</p>
+     <p class="body" data-i18n="s05.m3.body">The conversational orchestrator (Layer 1). Manages all dialogue phases, maintains <span class="stat-hi">cross-round context</span>, and coordinates when to invoke other skills.</p>
+     <pre class="md-example"><code>Round 1: "Solo or group?" → Solo + Work Mode
+Round 2: "Budget range?"  → $80-120/day excl. flights
+Round 3: "Must-see?"      → Cherry blossom, local food
+  ↳ Context persists across all rounds</code></pre>
+    </div>
+   </div>
+   <div class="step-row">
+    <div class="step-num">4</div>
+    <div class="step-copy">
+     <p class="h3">ui-style</p>
+     <p class="body" data-i18n="s05.m4.body">Provides <span class="stat-hi">30+ design themes</span> (minimalist, editorial, cyberpunk, etc.). The user previews and selects before generation; the chosen style's tokens flow into the HTML generator.</p>
+     <pre class="md-example"><code data-i18n="s05.m4.code">After the user selects the "luxury-editorial" style, Style Tokens are injected:
+
+  --color-primary:   #2C2C2C       --font-heading: 'Playfair Display'
+  --color-accent:    #C8A96E       --font-body:    'Source Sans Pro'
+  --color-surface:   #FAF7F2       --border-radius: 0px
+  --shadow:          0 2px 12px rgba(0,0,0,0.08)
+
+  → These tokens are injected directly into trip-html-generator
+  → Same trip data + different style = completely different visual experience
+
+Other styles: swiss-minimalist | botanical | neo-brutalism
+              cyberpunk | newsprint | warm-editorial | ...</code></pre>
+    </div>
+   </div>
+   <div class="step-row">
+    <div class="step-num">5</div>
+    <div class="step-copy">
+     <p class="h3">trip-html-generator</p>
+     <p class="body" data-i18n="s05.m5.body">Transforms confirmed trip data into a <span class="stat-hi">self-contained travel website</span> with interactive maps, calendar views, expense tracking, booking status, and packing checklists. Single bundle, no server required.</p>
+     <pre class="md-example"><code>busan-fukuoka-2026/
+├── index.html    ← tabbed UI (Overview/Itinerary/Tickets/Places/Budget)
+├── style.css     ← design tokens from ui-style
+├── app.js        ← map, calendar, budget tracker, currency switcher
+└── data/trip.json</code></pre>
+    </div>
+   </div>
+   <div class="step-row">
+    <div class="step-num">6</div>
+    <div class="step-copy">
+     <p class="h3">trip-deployer</p>
+     <p class="body" data-i18n="s05.m6.body">One-command deployment to GitHub Pages, Netlify, Vercel, or Cloudflare Pages. Turns the local website into a <span class="stat-hi">shareable live URL</span>.</p>
+     <pre class="md-example"><code>Deploy target: GitHub Pages
+  → push to ralinzain-star/busan-fukuoka
+  → https://ralinzain-star.github.io/busan-fukuoka/</code></pre>
+    </div>
+   </div>
+  </div>
+
+ </div>
 </div>
 
-<!-- ── 05. IMPACT ─────────────────────────────────── -->
-<div id="s05" class="sec white" style="padding-top:32px;padding-bottom:32px;">
-  <div class="sec-inner">
-    <div class="sec-head">
-      <span class="sec-num">05.</span>
-      <span class="sec-title">Impact</span>
-    </div>
-    <div class="stat-grid">
-      <div class="stat-card">
-        <div class="stat-card-number">15+</div>
-        <div class="stat-card-label">Complete trip guides generated across 8 countries</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-number">&lt; 2 hrs</div>
-        <div class="stat-card-label">Average planning time, reduced from days of research</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-number">~10%</div>
-        <div class="stat-card-label">Budget accuracy within 10% of actual trip spending</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-number">5+</div>
-        <div class="stat-card-label">Countries covered &mdash; Japan, Korea, Thailand, Portugal, and more</div>
-      </div>
-    </div>
-    <p class="body">What started as a personal tool has become something friends actively request before their trips. The project pushed me to think about AI not as a chatbot, but as a <span class="stat-hi">design material</span> &mdash; one that can research, structure, and present information in ways that genuinely save time and reduce the anxiety of travel planning.</p>
+<!-- ── 04. LIVE RESULTS ────────────────────────────── -->
+<div id="s06" class="sec white" style="padding-top:32px;padding-bottom:32px;">
+ <div class="sec-inner">
+  <div class="sec-head">
+   <span class="sec-num">05.</span>
+   <span class="sec-title" data-i18n="s06.title">Live Results</span>
   </div>
+  <p class="body" data-i18n="s06.intro">This Skill generated the travel guide I actually used: <a href="https://ralinzain-star.github.io/busan-fukuoka/" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Busan &amp; Fukuoka 14-Day Trip</a>. Below are the core features of the generated app &mdash; each one emerged organically from the Markdown semantic protocol.</p>
+
+  <div class="step-list" style="margin-top:32px;">
+
+   <!-- 1. Splash & Overview -->
+   <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-copy">
+     <p class="h3" data-i18n="s06.f1.title">Splash &amp; Overview Dashboard</p>
+     <p class="body" data-i18n="s06.f1.body">A full-screen cover page with a personal travel photo backdrop opens to a <span class="stat-hi">live dashboard</span> with four stat cards, a seconds-precision countdown, and today&rsquo;s timeline. Swipe up to enter; the cover flies away with a cubic-bezier animation.</p>
+     <div class="phone-row">
+      <div class="phone-wrap">
+       <div class="phone"><img src="assets/trip-planner/showcase/m-splash.png" alt="Splash cover"></div>
+       <div class="phone-label" data-i18n="s06.f1.img1.label">Splash Cover</div>
+       <div class="phone-sublabel" data-i18n="s06.f1.img1.sub">Custom background · Swipe-up · Today preview</div>
+      </div>
+      <div class="phone-wrap">
+       <div class="phone"><img src="assets/trip-planner/showcase/m-overview.png" alt="Overview dashboard"></div>
+       <div class="phone-label" data-i18n="s06.f1.img2.label">Overview Dashboard</div>
+       <div class="phone-sublabel" data-i18n="s06.f1.img2.sub">Stat cards · Countdown · Today card · Weather</div>
+      </div>
+     </div>
+    </div>
+   </div>
+
+   <!-- 2. Smart Calendar -->
+   <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-copy">
+     <p class="h3" data-i18n="s06.f2.title">Smart Itinerary Calendar</p>
+     <p class="body" data-i18n="s06.f2.body">A week-view calendar with a real-time <span class="stat-hi">Now Line</span> red indicator that updates every 30 seconds. Events are color-coded across 8 categories, with embedded restaurant info, booking status icons, and dual KR/JP vs. TW clocks running side by side.</p>
+     <div class="phone-row">
+      <div class="phone-wrap">
+       <div class="phone"><img src="assets/trip-planner/showcase/m-calendar-nowline.png" alt="Calendar with Now Line"></div>
+       <div class="phone-label" data-i18n="s06.f2.img1.label">Now Line · Day 5</div>
+       <div class="phone-sublabel" data-i18n="s06.f2.img1.sub">Live 13:45 indicator on Apr 3</div>
+      </div>
+      <div class="phone-wrap">
+       <div class="phone"><img src="assets/trip-planner/showcase/m-calendar-w2.png" alt="Calendar Week 2"></div>
+       <div class="phone-label" data-i18n="s06.f2.img2.label">Week 2 (4/6–4/12)</div>
+       <div class="phone-sublabel" data-i18n="s06.f2.img2.sub">Fukuoka · Work Mode · Itoshima · Return</div>
+      </div>
+     </div>
+    </div>
+   </div>
+
+   <!-- 3. Booking & Budget -->
+   <div class="step-row">
+    <div class="step-num">3</div>
+    <div class="step-copy">
+     <p class="h3" data-i18n="s06.f3.title">Booking Intelligence &amp; Budget Tracker</p>
+     <p class="body" data-i18n="s06.f3.body">Flight cards with route visualization and <span class="stat-hi">historical price analysis</span> (green = below avg, red = above). Three-platform comparison (官網 / Klook / KKday) with lowest-price stars. Budget tracker toggles between estimated and actual modes, with four-currency switching (TWD/KRW/JPY/USD) and city/category bar charts.</p>
+     <div class="phone-row">
+      <div class="phone-wrap">
+       <div class="phone"><img src="assets/trip-planner/showcase/m-booking.png" alt="Booking comparison"></div>
+       <div class="phone-label" data-i18n="s06.f3.img1.label">Booking &amp; Comparison</div>
+       <div class="phone-sublabel" data-i18n="s06.f3.img1.sub">Flight · Hotel · Ferry · Activity</div>
+      </div>
+      <div class="phone-wrap">
+       <div class="phone"><img src="assets/trip-planner/showcase/m-budget.png" alt="Budget estimated"></div>
+       <div class="phone-label" data-i18n="s06.f3.img2.label">Estimated Mode</div>
+       <div class="phone-sublabel" data-i18n="s06.f3.img2.sub">Total · City ratio · Category bars</div>
+      </div>
+      <div class="phone-wrap">
+       <div class="phone"><img src="assets/trip-planner/showcase/m-budget-actual.png" alt="Budget actual"></div>
+       <div class="phone-label" data-i18n="s06.f3.img3.label">Actual Mode</div>
+       <div class="phone-sublabel" data-i18n="s06.f3.img3.sub">Real expenses grouped by date</div>
+      </div>
+     </div>
+    </div>
+   </div>
+
+   <!-- 4. Map & Checklist -->
+   <div class="step-row">
+    <div class="step-num">4</div>
+    <div class="step-copy">
+     <p class="h3" data-i18n="s06.f4.title">POI Map &amp; Pre/Post-trip Tools</p>
+     <p class="body" data-i18n="s06.f4.body">24 points of interest on an interactive Leaflet map with city and category filter chips, color-matched markers, and <span class="stat-hi">solo-traveler tips</span> (e.g., &ldquo;Sashimi platters start at 2 servings&rdquo;). A six-category pre-departure checklist persists via localStorage; the post-trip Retrospective shows footprint map, budget vs. actual, and a lessons-learned change log.</p>
+     <div class="phone-row">
+      <div class="phone-wrap">
+       <div class="phone"><img src="assets/trip-planner/showcase/m-map.png" alt="Attractions map"></div>
+       <div class="phone-label" data-i18n="s06.f4.img1.label">Attractions Map</div>
+       <div class="phone-sublabel" data-i18n="s06.f4.img1.sub">Filter chips · Color markers · Solo tips</div>
+      </div>
+      <div class="phone-wrap">
+       <div class="phone"><img src="assets/trip-planner/showcase/m-checklist.png" alt="Pre-departure checklist"></div>
+       <div class="phone-label" data-i18n="s06.f4.img2.label">Pre-departure Checklist</div>
+       <div class="phone-sublabel" data-i18n="s06.f4.img2.sub">6 categories · Persistent</div>
+      </div>
+      <div class="phone-wrap">
+       <div class="phone"><img src="assets/trip-planner/showcase/m-retro.png" alt="Trip retrospective"></div>
+       <div class="phone-label" data-i18n="s06.f4.img3.label">Retrospective</div>
+       <div class="phone-sublabel" data-i18n="s06.f4.img3.sub">Footprint · Budget review · Lessons</div>
+      </div>
+     </div>
+    </div>
+   </div>
+
+   <!-- 5. Time-aware & i18n -->
+   <div class="step-row">
+    <div class="step-num">5</div>
+    <div class="step-copy">
+     <p class="h3" data-i18n="s06.f5.title">Time-aware Features &amp; 4-Language i18n</p>
+     <p class="body" data-i18n="s06.f5.body">The site adapts to &ldquo;what time is it now&rdquo;: a full-screen Today Overlay shifts its checklist based on days-until-departure (&gt;7d / ≤7d / ≤3d / ≤1d). During the trip, today&rsquo;s timeline dims past events and highlights the current one. All UI text, 8 category names, 14-day weather descriptions, and event titles are translated across <span class="stat-hi">zh-TW / English / 한국어 / 日本語</span> &mdash; 120+ keys, switching takes effect instantly.</p>
+     <div class="phone-row">
+      <div class="phone-wrap">
+       <div class="phone"><img src="assets/trip-planner/showcase/m-overlay-before.png" alt="Pre-trip overlay"></div>
+       <div class="phone-label" data-i18n="s06.f5.img1.label">Before the Trip</div>
+       <div class="phone-sublabel" data-i18n="s06.f5.img1.sub">5 days countdown + pre-trip to-dos</div>
+      </div>
+      <div class="phone-wrap">
+       <div class="phone"><img src="assets/trip-planner/showcase/m-overlay-during.png" alt="During-trip overlay"></div>
+       <div class="phone-label" data-i18n="s06.f5.img2.label">During the Trip</div>
+       <div class="phone-sublabel" data-i18n="s06.f5.img2.sub">Day 5 · Busan→Ferry timeline</div>
+      </div>
+      <div class="phone-wrap">
+       <div class="phone"><img src="assets/trip-planner/showcase/m-overlay-after.png" alt="Post-trip overlay"></div>
+       <div class="phone-label" data-i18n="s06.f5.img3.label">After the Trip</div>
+       <div class="phone-sublabel" data-i18n="s06.f5.img3.sub">Trip Completed · 96 events · 5 cities</div>
+      </div>
+     </div>
+    </div>
+   </div>
+
+  </div>
+ </div>
+</div>
+
+<!-- ── 05. IMPACT & REFLECTION ────────────────────── -->
+<div id="s07" class="sec cream" style="padding-top:32px;padding-bottom:60px;">
+ <div class="sec-inner">
+  <div class="sec-head">
+   <span class="sec-num">06.</span>
+   <span class="sec-title" data-i18n="s07.title">Reflection</span>
+  </div>
+  <p class="body" data-i18n="s07.intro">The evolution of this project is a micro-experiment in product design &mdash; constantly &ldquo;returning to the essence.&rdquo; It started from a technology-driven exploration and ultimately arrived at an experience-centered solution.</p>
+
+  <div class="text-block" style="margin-top:16px;">
+   <p class="h3" data-i18n="s07.sub1">1. Pivot of Value</p>
+   <p class="body" data-i18n="s07.sub1.body">Looking back, this project went through three critical shifts in thinking:</p>
+  </div>
+  <div class="step-list">
+   <div class="step-row">
+    <div class="step-num">1</div>
+    <div class="step-copy">
+     <p class="h3" data-i18n="s07.r1.title">Starting from "Vibe Coding an App"</p>
+     <p class="body" data-i18n="s07.r1.body">Initially attracted by the low-barrier making power of <span class="stat-hi">Vibe Coding</span>, my goal was to quickly ship a polished UI app to share my itinerary. The value at this stage was <span class="stat-hi">visual presentation</span>.</p>
+    </div>
+   </div>
+   <div class="step-row">
+    <div class="step-num">2</div>
+    <div class="step-copy">
+     <p class="h3" data-i18n="s07.r2.title">Extending to a "Website-Generating Skill"</p>
+     <p class="body" data-i18n="s07.r2.body">With deeper use of Claude Code, I realized <span class="stat-hi">systematic capability</span> scales further than any single interface. Packaging planning logic into a Skill that lets anyone one-click deploy a site shifted the value to <span class="stat-hi">productivity liberation</span>.</p>
+    </div>
+   </div>
+   <div class="step-row">
+    <div class="step-num">3</div>
+    <div class="step-copy">
+     <p class="h3" data-i18n="s07.r3.title">Finally Anchoring on "Trip Planning Itself"</p>
+     <p class="body" data-i18n="s07.r3.body">Through constant testing, I discovered that visual websites and technical architecture are just means. The essence of trip planning is: how to reduce anxiety, control budgets, and balance the everyday with adventure. I anchored <span class="stat-hi">the planning experience and travel essence</span> as the true value core.</p>
+    </div>
+   </div>
+  </div>
+
+  <div class="text-block" style="margin-top:16px;">
+   <p class="h3" data-i18n="s07.sub2">2. A Miniature of Product Design Evolution</p>
+   <p class="body" data-i18n="s07.sub2.body">This &ldquo;App &rarr; Skill &rarr; Experience&rdquo; path mirrors the arc of contemporary product design. It tells us:</p>
+  </div>
+  <ul class="bull-list" style="margin-top:8px;">
+   <li data-i18n="s07.b1"><strong>Interfaces fade, but experiences endure:</strong> In the AI era, UI may be a byproduct of thinking. A designer&rsquo;s job is no longer just defining &ldquo;where the button goes&rdquo; but <span class="stat-hi">how the system guides users into a fluid experience</span>.</li>
+   <li data-i18n="s07.b2"><strong>Designers are value filters:</strong> Facing infinite AI possibilities, a designer&rsquo;s core competency is <span class="stat-hi">defining what truly matters</span>. In this project, I filtered out excess features and kept budget confidence and digital nomad flexibility &mdash; what users actually need.</li>
+  </ul>
+
+  <div class="text-block" style="margin-top:16px;">
+   <p class="h3" data-i18n="s07.sub3">Returning to Design&rsquo;s Origin</p>
+   <p class="body" data-i18n="s07.sub3.body">This project taught me: the best product lets technology <span class="stat-hi">elegantly disappear</span> after completing its task.</p>
+   <p class="body" style="margin-top:12px;" data-i18n="s07.conclusion">The initial Vibe Coding enthusiasm led me into the AI world; my designer&rsquo;s instinct pulled me back beyond the tech framework to the essence of travel. We are entering an era of <span class="stat-hi">customized UI</span> &mdash; designers define system frameworks, AI handles execution, and users receive the purest, worry-free joy of exploration.</p>
+  </div>
+ </div>
 </div>
 
 <!-- ── FOOTER ─────────────────────────────────────── -->
 <div class="footer">
-  <div class="footer-contact">
-    <div class="footer-item"><span>WeChat: ralinzain</span></div>
-    <div class="footer-sep"></div>
-    <div class="footer-item"><a href="https://www.instagram.com/ralinzain" target="_blank" rel="noreferrer">Instagram</a></div>
-    <div class="footer-sep"></div>
-    <div class="footer-item"><a href="https://www.linkedin.com/in/ming-hsi-h-b59182158/" target="_blank" rel="noreferrer">LinkedIn</a></div>
-    <div class="footer-sep"></div>
-    <div class="footer-item"><a href="https://wa.me/886975573947">WhatsApp: +886 975 573 947</a></div>
-    <div class="footer-sep"></div>
-    <div class="footer-item"><a href="mailto:ralinzain@gmail.com">ralinzain@gmail.com</a></div>
-  </div>
+ <div class="footer-contact">
+  <div class="footer-item"><span>WeChat: ralinzain</span></div>
+  <div class="footer-sep"></div>
+  <div class="footer-item"><a href="https://www.instagram.com/ralinzain" target="_blank" rel="noreferrer">Instagram</a></div>
+  <div class="footer-sep"></div>
+  <div class="footer-item"><a href="https://www.linkedin.com/in/ming-hsi-h-b59182158/" target="_blank" rel="noreferrer">LinkedIn</a></div>
+  <div class="footer-sep"></div>
+  <div class="footer-item"><a href="https://wa.me/886975573947">WhatsApp: +886 975 573 947</a></div>
+  <div class="footer-sep"></div>
+  <div class="footer-item"><a href="mailto:ralinzain@gmail.com">ralinzain@gmail.com</a></div>
+ </div>
 </div>
 
 <script>
-  (function() {
-    const anchors = document.querySelectorAll('.nav-anchor');
-    const sectionIds = ['intro','s01','s02','s03','s04','s05'];
-    const sections = sectionIds.map(id => document.getElementById(id));
-    const navEl = document.querySelector('.nav');
-    function update() {
-      const navH = navEl ? navEl.offsetHeight : 57;
-      const scrollY = window.scrollY + navH + 40;
-      let active = sections[0];
-      sections.forEach(sec => { if (sec && sec.offsetTop <= scrollY) active = sec; });
-      anchors.forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + (active ? active.id : ''));
-      });
-    }
-    window.addEventListener('scroll', update, { passive: true });
-    update();
-  })();
+ (function() {
+  const anchors = document.querySelectorAll('.nav-anchor');
+  const sectionIds = ['intro','s00','s03','s04','s05','s06','s07'];
+  const sections = sectionIds.map(id => document.getElementById(id));
+  const navEl = document.querySelector('.nav');
+  function update() {
+   const navH = navEl ? navEl.offsetHeight : 57;
+   const scrollY = window.scrollY + navH + 40;
+   let active = sections[0];
+   sections.forEach(sec => { if (sec && sec.offsetTop <= scrollY) active = sec; });
+   anchors.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + (active ? active.id : ''));
+   });
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+ })();
 
-  // ── Language switcher ──
-  (function() {
-    const sel = document.getElementById('nav-lang-select');
-    if (!sel) return;
-    try {
-      const saved = localStorage.getItem('portfolio-lang');
-      if (saved) sel.value = saved;
-    } catch(e) {}
-    sel.addEventListener('change', () => {
-      try { localStorage.setItem('portfolio-lang', sel.value); } catch(e) {}
+ // ── i18n ──
+ (function() {
+  const tripI18n = {
+    'en': {
+      'nav.s00': '01.Thesis',
+      'nav.s03': '02.Design Philosophy',
+      'nav.s04': '03.Key Decisions',
+      'nav.s05': '04.Architecture',
+      'nav.s06': '05.Live Results',
+      'nav.s07': '06.Reflection',
+      'page.title': 'AI Trip Planner',
+      'page.subtitle': 'A conversational Claude Code AI Skill that turns scattered travel research into structured, in-depth travel experiences.',
+      'intro.label.overview': 'Project Origin:',
+      'intro.overview.body': 'As a travel enthusiast, I wanted to share my upcoming Korea → Japan trip with friends and decided to do what everyone online was doing — <span class="stat-hi">Vibe Coding</span> a website. But as the Claude Code trend swept the tech world, and after using Claude Code Skills extensively at work, a new idea took shape: what if I turned my trip-planning method into a structured <a href="https://agentskills.io/what-are-skills" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Skill</a> — so that anyone could become their own <span class="stat-hi">travel planner</span> and set off on the journey they truly want?',
+      'intro.label.role': 'My Role:',
+      'intro.role.body': 'Product Designer, Full-stack Developer, AI Prompt Engineer. <span class="stat-hi">Claude Code Skill</span>, MCP, HTML/CSS/JS',
+      'intro.label.time': 'Timeframe:',
+      'intro.time.body': 'Side Project · 2026.Mar–Present',
+      'intro.label.repo': 'Open Source:',
+      'intro.repo.body': 'github.com/ralinzain-star/trip-planner-skill ↗',
+      's00.title': 'When design artifacts are no longer the designer’s defining axis',
+      's00.body': 'In the AI era, if the design artifact (Output) is no longer the defining axis of a designer’s work, where does a designer’s value manifest? In the past, our sense of achievement came from pixel-perfect craft — grid systems, color specs, we were the "final reviewers" of product visuals and interactions. But as generative AI and <span class="stat-hi">Vibe Coding</span> sweep in, when a prompt or a set of structured data can instantly produce a beautiful interface, we must honestly confront a shift: <span class="stat-hi">"defining problems" and "building frameworks" are becoming a designer’s most important skills</span>.',
+      's03.title': 'Design Philosophy',
+      's03.h1': 'Dialogue as Interface',
+      's03.b1': 'Trip planning is inherently fragmented and deeply personal. People rarely want to fill out cold forms — they prefer to talk through their needs. I defined <span class="stat-hi">conversation as the core interface</span>. Through natural, multi-turn contextual dialogue, the AI simulates the questioning logic of a professional tour guide, progressively refining the plan, letting the interface flow with the user\'s thinking.',
+      's03.h2': 'Experience-Driven',
+      's03.b2': 'The trip webpage is just one form of visual output — the <span class="stat-hi">planning process itself</span> is the soul of this product. The essence of travel lies in the experience: what do you want to feel in a foreign place? How in control of your budget do you feel? How do you balance the everyday with unexpected surprises? I placed the design emphasis on the guided conversation upfront. This isn\'t just data collection — it\'s helping users complete a deep process of self-clarification, reclaiming the spontaneous spirit of travel. Real design happens in the dialogue: clarifying intent, resolving anxiety, and ultimately sending someone on a trip that is truly their own.',
+      's04.title': 'Key Decisions',
+      's04.skill.label': 'What is a Skill?',
+      's04.skill.body': 'An <a href="https://agentskills.io/what-are-skills" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Agent Skill</a> is a lightweight, open format for extending AI agents. Each skill is a folder with a <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code> instruction file — plus optional scripts, templates, and reference materials. The agent reads the instructions on demand, gaining deep, specialized capabilities while staying fast.',
+      's04.intro': 'On the technical side, I made a core shift: abandoning rigid fill-in templates in favor of designing a structured <span class="stat-hi">Markdown as the semantic protocol for the UI</span>. This MD document doesn\'t just carry travel information — it directly defines the orchestration logic of the UI.',
+      's04.d1.title': 'Semantic Mapping',
+      's04.d1.body': 'I defined a mapping ruleset where different Markdown syntax tags directly trigger specific design system components. <span class="stat-hi">Data tables</span> are parsed and rendered as interactive budget dashboards with dynamic filtering. <span class="stat-hi">Lists</span> — based on content characteristics — automatically render as checkbox-equipped packing checklists. <span class="stat-hi">Geo-links</span> are recognized by the engine and automatically pinned on the underlying interactive map.',
+      's04.d2.title': 'Giving AI Orchestration Authority',
+      's04.d2.body': 'Markdown is the AI\'s native language. Through MD, I handed the orchestration authority back to the AI, letting it <span class="stat-hi">spontaneously design the layout</span> based on each trip\'s characteristics. For an international flight itinerary, the AI autonomously decides to generate a warning block. For a remote-work-focused trip, it prioritizes a Workspace Guide section. The UI structure is no longer fixed — it <span class="stat-hi">grows from the content</span>.',
+      's04.d1.ex1': 'Data Table → Budget Dashboard',
+      's04.d1.ex2': 'Geo-link → Interactive Map',
+      's04.d1.code1': 'MD Syntax                                Renders As\n──────────────────────────────────     ──────────────────────────\n| Item   | Cost  | Status    |              Interactive Budget Dashboard\n| Flight | $420 | Confirmed |        →     Filter by city / category\n| Hotel  | $850 | Pending   |              Real-time totals + remaining budget\n| Dining | $30  | —         |',
+      's04.d1.code2': 'MD Syntax                                Renders As\n──────────────────────────────────     ──────────────────────────\n[Tsukiji Market](geo:35.6654,139.7707)    Leaflet Interactive Map\n[Sensō-ji](geo:35.7148,139.7967)     →     Auto-pin coordinates\n[Shinjuku Gyoen](geo:35.6852,139.7100)    Color-coded by date + route lines',
+      's04.d2.code': 'Scenario A — International Trip (Korea → Japan)\nAI detects border crossing, auto-inserts at page top:\n\n  > ⚠️ Entry Requirements\n  > Korea: K-ETA required (apply 72hr ahead)\n  > Japan: Visa-free 90 days, but fill out Visit Japan Web\n  > Exchange: 1 TWD ≈ 42 KRW / 5 JPY\n\n─────────────────────────────────────────\nScenario B — Remote Work Trip (Fukuoka Work Mode)\nAI detects Nomad Mode, auto-prioritizes:\n\n  ## 🖥️ Workspace Guide — Fukuoka\n  | Location           | Wi-Fi  | Outlet | Hours        |\n  | Starbucks Tenjin   | 50Mbps | ✅     | 07:00–22:00  |\n  | &And Hostel Hakata | 80Mbps | ✅     | 24hr (guest) |\n\n→ The UI layout isn’t a fixed template — it grows from this trip’s characteristics',
+      's05.title': 'System Architecture',
+      's05.intro': 'The system is split into two layers: a <span class="stat-hi">conversation orchestration layer</span> (the trip-planner skill that guides the user through a structured multi-phase dialogue with explicit confirmation gates) and a <span class="stat-hi">modular skill pipeline</span> (6 specialized sub-skills, each an independent module with its own <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code>, invoked conditionally by the orchestrator).',
+      's05.layer1.label': 'Layer 1: Conversation Orchestration',
+      's05.layer1.body': 'The trip-planner skill acts as the orchestrator. It guides the user through a <span class="stat-hi">multi-phase structured dialogue</span>, with each phase ending in an explicit confirmation gate — the system never assumes, it always asks. Phases progress from research loading, through budget and preference gathering, to attraction selection (must-go vs. if-time-permits), then route optimization. Only after every phase is confirmed does the system proceed to generation.',
+      's05.layer2.label': 'Layer 2: Modular Skill Pipeline',
+      's05.layer2.body': 'Each Skill below is an independent module with its own <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code>. The orchestrator invokes them conditionally.',
+      's05.layer2.code': 'travel-collector → flight-intelligence → trip-planner\n                                             ↓\n                            ui-style → trip-html-generator → trip-deployer\n\nEach module has its own SKILL.md; the orchestrator invokes conditionally:\n  • flight-intelligence  only when flights aren’t booked\n  • ui-style             only when the user selects a visual style',
+      's05.m1.body': 'Extracts data from any input (URLs, screenshots, emails) and normalizes it into a <span class="stat-hi">unified JSON research file</span>.',
+      's05.m2.body': 'Analyzes flight pricing patterns and trends, providing <span class="stat-hi">buy recommendations</span>.',
+      's05.m3.body': 'The conversational orchestrator. Manages dialogue phases and maintains <span class="stat-hi">cross-round context</span>.',
+      's05.m4.body': 'Provides <span class="stat-hi">30+ design themes</span>. The chosen style’s design tokens flow into the generator.',
+      's05.m4.code': 'After the user selects the "luxury-editorial" style, Style Tokens are injected:\n\n  --color-primary:   #2C2C2C       --font-heading: \'Playfair Display\'\n  --color-accent:    #C8A96E       --font-body:    \'Source Sans Pro\'\n  --color-surface:   #FAF7F2       --border-radius: 0px\n  --shadow:          0 2px 12px rgba(0,0,0,0.08)\n\n  → These tokens are injected directly into trip-html-generator\n  → Same trip data + different style = completely different visual experience\n\nOther styles: swiss-minimalist | botanical | neo-brutalism\n              cyberpunk | newsprint | warm-editorial | ...',
+      's05.m5.body': 'Transforms confirmed trip data into a <span class="stat-hi">self-contained travel website</span>.',
+      's05.m6.body': 'One-command deployment to GitHub Pages or Vercel, turning the site into a <span class="stat-hi">live URL</span>.',
+      's06.title': 'Live Results',
+      's06.intro': 'This Skill generated the travel guide I actually used: <a href="https://ralinzain-star.github.io/busan-fukuoka/" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Busan & Fukuoka 14-Day Trip</a>. Below are the core features of the generated app — each one emerged organically from the Markdown semantic protocol.',
+      's06.f1.title': 'Splash & Overview Dashboard',
+      's06.f1.body': 'A full-screen cover page with a personal travel photo backdrop opens to a <span class="stat-hi">live dashboard</span> with four stat cards, a seconds-precision countdown, and today’s timeline. Swipe up to enter; the cover flies away with a cubic-bezier animation.',
+      's06.f1.img1.label': 'Splash Cover',
+      's06.f1.img1.sub': 'Custom background · Swipe-up · Today preview',
+      's06.f1.img2.label': 'Overview Dashboard',
+      's06.f1.img2.sub': 'Stat cards · Countdown · Today card · Weather',
+      's06.f2.title': 'Smart Itinerary Calendar',
+      's06.f2.body': 'A week-view calendar with a real-time <span class="stat-hi">Now Line</span> red indicator that updates every 30 seconds. Events are color-coded across 8 categories, with embedded restaurant info, booking status icons, and dual KR/JP vs. TW clocks running side by side.',
+      's06.f2.img1.label': 'Now Line · Day 5',
+      's06.f2.img1.sub': 'Live 13:45 indicator on Apr 3',
+      's06.f2.img2.label': 'Week 2 (4/6–4/12)',
+      's06.f2.img2.sub': 'Fukuoka · Work Mode · Itoshima · Return',
+      's06.f3.title': 'Booking Intelligence & Budget Tracker',
+      's06.f3.body': 'Flight cards with route visualization and <span class="stat-hi">historical price analysis</span> (green = below avg, red = above). Three-platform comparison (official / Klook / KKday) with lowest-price stars. Budget tracker toggles between estimated and actual modes, with four-currency switching (TWD/KRW/JPY/USD) and city/category bar charts.',
+      's06.f3.img1.label': 'Booking & Comparison',
+      's06.f3.img1.sub': 'Flight · Hotel · Ferry · Activity',
+      's06.f3.img2.label': 'Estimated Mode',
+      's06.f3.img2.sub': 'Total · City ratio · Category bars',
+      's06.f3.img3.label': 'Actual Mode',
+      's06.f3.img3.sub': 'Real expenses grouped by date',
+      's06.f4.title': 'POI Map & Pre/Post-trip Tools',
+      's06.f4.body': '24 points of interest on an interactive Leaflet map with city and category filter chips, color-matched markers, and <span class="stat-hi">solo-traveler tips</span> (e.g., "Sashimi platters start at 2 servings"). A six-category pre-departure checklist persists via localStorage; the post-trip Retrospective shows footprint map, budget vs. actual, and a lessons-learned change log.',
+      's06.f4.img1.label': 'Attractions Map',
+      's06.f4.img1.sub': 'Filter chips · Color markers · Solo tips',
+      's06.f4.img2.label': 'Pre-departure Checklist',
+      's06.f4.img2.sub': '6 categories · Persistent',
+      's06.f4.img3.label': 'Retrospective',
+      's06.f4.img3.sub': 'Footprint · Budget review · Lessons',
+      's06.f5.title': 'Time-aware Features & 4-Language i18n',
+      's06.f5.body': 'The site adapts to "what time is it now": a full-screen Today Overlay shifts its checklist based on days-until-departure (>7d / ≤7d / ≤3d / ≤1d). During the trip, today’s timeline dims past events and highlights the current one. All UI text, 8 category names, 14-day weather descriptions, and event titles are translated across <span class="stat-hi">zh-TW / English / 한국어 / 日本語</span> — 120+ keys, switching takes effect instantly.',
+      's06.f5.img1.label': 'Before the Trip',
+      's06.f5.img1.sub': '5 days countdown + pre-trip to-dos',
+      's06.f5.img2.label': 'During the Trip',
+      's06.f5.img2.sub': 'Day 5 · Busan→Ferry timeline',
+      's06.f5.img3.label': 'After the Trip',
+      's06.f5.img3.sub': 'Trip Completed · 96 events · 5 cities',
+      's07.title': 'Reflection',
+      's07.intro': 'The evolution of this project is a micro-experiment in "returning to the essence" — a recurring theme in product design. It began as a technology-driven exploration and ultimately arrived at an experience-centered solution.',
+      's07.sub1': '1. Pivot of Value',
+      's07.sub1.body': 'Looking back, this project went through three critical shifts in thinking:',
+      's07.r1.title': 'Starting from "Vibe Coding an App"',
+      's07.r1.body': 'Initially attracted by the low-barrier making power of <span class="stat-hi">Vibe Coding</span>, my goal was to quickly ship a polished UI app to share my itinerary. The value at this stage was <span class="stat-hi">visual presentation</span>.',
+      's07.r2.title': 'Extending to a "Website-Generating Skill"',
+      's07.r2.body': 'With deeper use of Claude Code, I realized <span class="stat-hi">systematic capability</span> scales further than any single interface. Packaging planning logic into a Skill that lets anyone one-click deploy a site shifted the value to <span class="stat-hi">productivity liberation</span>.',
+      's07.r3.title': 'Finally Anchoring on "Trip Planning Itself"',
+      's07.r3.body': 'Through constant testing, I discovered that visual websites and technical architecture are just means. The essence of Trip Planning is: how to reduce anxiety, control budgets, and balance the everyday with adventure. I anchored <span class="stat-hi">the planning experience and travel essence</span> as the true value core.',
+      's07.sub2': '2. A Miniature of Product Design Evolution',
+      's07.sub2.body': 'This "App → Skill → Experience" path mirrors the arc of contemporary product design. It tells us:',
+      's07.b1': '<strong>Interfaces fade, but experiences endure:</strong> In the AI era, UI may be a byproduct of thinking. A designer’s job is no longer just defining "where the button goes" but <span class="stat-hi">how the system guides users into a fluid experience</span>.',
+      's07.b2': '<strong>Designers are value filters:</strong> Facing infinite AI possibilities, a designer’s core competency is <span class="stat-hi">defining what truly matters</span>. In this project, I filtered out excess features and kept budget confidence and digital nomad flexibility — what users actually need.',
+      's07.sub3': 'Returning to Design’s Origin',
+      's07.sub3.body': 'This project taught me: the best product lets technology <span class="stat-hi">elegantly disappear</span> after completing its task.',
+      's07.conclusion': 'The initial Vibe Coding enthusiasm led me into the AI world; my designer’s instinct pulled me back beyond the tech framework to the essence of travel. We are entering an era of <span class="stat-hi">customized UI</span> — designers define system frameworks, AI handles execution, and users receive the purest, worry-free joy of exploration.'
+    },
+    'zh-tw': {
+      'nav.s00': '01.核心論點',
+      'nav.s03': '02.設計哲學',
+      'nav.s04': '03.關鍵決策',
+      'nav.s05': '04.系統架構',
+      'nav.s06': '05.實際成果',
+      'nav.s07': '06.反思',
+      'page.title': 'AI 旅行規劃器',
+      'page.subtitle': '一款對話式 Claude Code AI Skill，將零散的旅行研究轉化為結構化的深度體驗導覽。',
+      'intro.label.overview': '專案起源：',
+      'intro.overview.body': '作爲一個熱愛旅行的人，一開始是想要和朋友分享自己即將前往的韓國 → 日本旅行，決定要和網路上的其他人一樣，<span class="stat-hi">Vibe Coding</span> 一個網站。然而在整個科技圈吹起使用 Claude Code 的趨勢下，當我工作上充分使用 Claude Code Skill 之後，我萌生了新的想法：如果我把我規劃行程的方法變成結構化的 <a href="https://agentskills.io/what-are-skills" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Skill</a>，是不是任何人都可以成為自己的<span class="stat-hi">旅行規劃師</span>，踏上自己真正想要的旅程呢？',
+      'intro.label.role': '我的角色：',
+      'intro.role.body': '產品設計師、全端開發者、AI 指令工程師。<span class="stat-hi">Claude Code Skill</span>, MCP, HTML/CSS/JS',
+      'intro.label.time': '時程：',
+      'intro.time.body': '個人實驗專案 (Side Project) · 2026.03 – 至今',
+      'intro.label.repo': '開源專案：',
+      'intro.repo.body': 'github.com/ralinzain-star/trip-planner-skill ↗',
+      's00.title': '當設計產出物不再是設計師價值的主軸',
+      's00.body': '在 AI 時代，如果設計產出物（Output）不再是設計師價值的定義主軸，那麼設計師的價值會在哪裡體現？過去，設計師的成就感來自於對每一個像素的精雕細琢，從格線系統到色彩規範，我們是產品視覺與互動行為的「最終審查官」。但在生成式 AI 與 <span class="stat-hi">Vibe Coding</span> 席捲而來的今天，當一個 Prompt 或一組結構化的數據就能瞬間生成美觀的介面時，我們必須誠實地面對一個轉變：<span class="stat-hi">「定義問題」與「構建框架」正在變成設計師最重要的技能</span>。',
+      's03.title': '設計哲學',
+      's03.h1': '對話即介面',
+      's03.b1': '旅行規劃本質上是高度碎片化且具備個人色彩的過程。人們通常不喜歡填寫冰冷的表單，而是傾向透過交談來釐清需求。我將「對話」定義為<span class="stat-hi">核心介面</span>。透過多輪自然的來回互動（Contextual Turns），AI 模擬專業領隊的提問邏輯，在對話中逐步精煉旅行計畫，讓介面隨使用者的思緒流動。',
+      's03.h2': '體驗驅動',
+      's03.b2': '行程網頁只是一種視覺化呈現方式，而<span class="stat-hi">「規劃過程」本身才是這項產品的靈魂</span>。旅行的真諦在於體驗內容：你想要在異國感受到什麼？你對預算的掌控感如何？以及如何在日常與「日常之外」的驚喜之間找到平衡？我將設計重點放在前期的引導對話。這不只是在收集資料，而是在協助使用者完成一場深度的自我梳理，找回旅行中「隨性探索」的本質。真正的設計發生在對話中——幫助使用者釐清意圖、解決焦慮，並最終送他們踏上一場真正屬於自己的旅程。',
+      's04.title': '關鍵決策',
+      's04.skill.label': '什麼是 Skill？',
+      's04.skill.body': '<a href="https://agentskills.io/what-are-skills" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Agent Skill</a> 是一種輕量、開放的格式，用於擴展 AI 代理的能力。每個 Skill 是一個包含 <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code> 指令檔的資料夾，可搭配腳本、範本與參考資料。代理按需讀取指令，既保持快速又能獲得深度的專業能力。',
+      's04.intro': '在技術架構上，我做出了一個核心轉變：棄用死板的填鴨式模板，改為設計一套結構化的 <span class="stat-hi">Markdown 作為 UI 的語義協議</span>。這份 MD 不僅承載旅遊資訊，更直接定義了 UI 的編排邏輯。',
+      's04.d1.title': '語義映射 (Semantic Mapping)',
+      's04.d1.body': '我定義了一套映射規則，讓不同的 Markdown 語法標籤直接觸發特定的設計系統組件。<span class="stat-hi">「數據表格」</span>被解析後轉譯為具備動態過濾功能的互動式預算儀表板。<span class="stat-hi">「列表」</span>根據內容特性，自動渲染為帶有 Checkbox 的行李清單。<span class="stat-hi">「地理連結」</span>被引擎辨識後，自動在底層的互動式地圖上標註點位。',
+      's04.d2.title': '賦予 AI「編排主導權」',
+      's04.d2.body': 'Markdown 是 AI 的母語。透過 MD，我將編排的主導權交還給 AI，讓它根據這趟旅程的特性<span class="stat-hi">「自發性」地設計版面</span>。如果是一趟跨國飛行，AI 會自主決定生成警告區塊；如果是定點遠端辦公行程，則優先編排 Workspace Guide。UI 結構不再是固定的，而是<span class="stat-hi">隨內容「長」出來的</span>。',
+      's04.d1.ex1': '資料表格 → 預算儀表板',
+      's04.d1.ex2': '地理連結 → 互動地圖',
+      's04.d1.code1': 'MD 寫法                                渲染為\n──────────────────────────────────     ──────────────────────────\n| 項目 | 費用  | 狀態      |              互動式預算儀表板\n| 機票 | $420 | Confirmed |        →     可依城市/類別動態篩選\n| 飯店 | $850 | Pending   |              即時加總 + 剩餘預算顯示\n| 餐飲 | $30  | —         |',
+      's04.d1.code2': 'MD 寫法                                渲染為\n──────────────────────────────────     ──────────────────────────\n[築地市場](geo:35.6654,139.7707)        Leaflet 互動地圖\n[淺草寺](geo:35.7148,139.7967)   →     自動標記座標點位\n[新宿御苑](geo:35.6852,139.7100)        依日期色彩分群 + 路線繪製',
+      's04.d2.code': '情境 A — 跨國旅行（韓國→日本）\nAI 偵測到跨境，自動在頁首插入：\n\n  > ⚠️ 入境須知\n  > 韓國：需申請 K-ETA（72hr 前）\n  > 日本：免簽 90 天，但須填寫 Visit Japan Web\n  > 匯率：1 TWD ≈ 42 KRW / 5 JPY\n\n─────────────────────────────────────────\n情境 B — 遠端辦公行程（福岡 Work Mode）\nAI 偵測到 Nomad Mode，自動優先編排：\n\n  ## 🖥️ Workspace Guide — Fukuoka\n  | 地點              | Wi-Fi  | 插座 | 營業時間      |\n  | Starbucks 天神店   | 50Mbps | ✅   | 07:00–22:00  |\n  | &And Hostel 博多  | 80Mbps | ✅   | 24hr (住客)  |\n\n→ UI 版面不是固定模板，而是隨「這趟旅程的特性」自動生長',
+      's05.title': '系統架構',
+      's05.intro': '系統分為兩層：<span class="stat-hi">對話編排層</span>（引導使用者完成結構化多階段對話）與<span class="stat-hi">模組化 Skill 管線</span>（6 個專業 Sub-skill，每個模組都有自己的 <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code>，由編排器依條件呼叫）。',
+      's05.layer1.label': 'Layer 1：對話編排 (Conversation Orchestration)',
+      's05.layer1.body': 'trip-planner 作為編排器，引導使用者完成<span class="stat-hi">多階段結構化對話</span>，每個階段結束時都有明確確認關卡——系統從不假設，只會詢問。流程從載入研究資料開始，歷經預算與偏好收集、景點篩選（分「必去」與「有時間再去」），到路線最佳化。唯有所有階段確認完畢，系統才會進入生成步驟。',
+      's05.layer2.label': 'Layer 2：模組化 Skill 管線 (Modular Skill Pipeline)',
+      's05.layer2.body': '以下每個 Skill 都是擁有獨立 <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code> 的模組。編排器依條件呼叫。',
+      's05.layer2.code': 'travel-collector → flight-intelligence → trip-planner\n                                             ↓\n                            ui-style → trip-html-generator → trip-deployer\n\n每個模組擁有獨立 SKILL.md，編排器依條件呼叫：\n  • flight-intelligence  僅在機票未訂時觸發\n  • ui-style             僅在使用者選擇視覺風格時啟動',
+      's05.m1.body': '從任何輸入（網址、截圖、郵件）提取資料並正規化為<span class="stat-hi">統一 JSON 研究檔案</span>。',
+      's05.m2.body': '分析機票價格規律與趨勢，提供附帶價格視覺化的<span class="stat-hi">購買建議</span>。',
+      's05.m3.body': '對話編排器 (Layer 1)。管理對話階段、維持<span class="stat-hi">跨輪次上下文 (Cross-round context)</span>。',
+      's05.m4.body': '提供 <span class="stat-hi">30+ 套設計主題</span>。使用者預覽並選擇後，該風格的 Design Token 會流入生成器。',
+      's05.m4.code': '使用者選擇「luxury-editorial」風格後，Style Token 注入：\n\n  --color-primary:   #2C2C2C       --font-heading: \'Playfair Display\'\n  --color-accent:    #C8A96E       --font-body:    \'Source Sans Pro\'\n  --color-surface:   #FAF7F2       --border-radius: 0px\n  --shadow:          0 2px 12px rgba(0,0,0,0.08)\n\n  → 這些 Token 直接灌入 trip-html-generator\n  → 同一份行程資料 + 不同風格 = 完全不同的視覺體驗\n\n其他可選風格：swiss-minimalist | botanical | neo-brutalism\n              cyberpunk | newsprint | warm-editorial | ...',
+      's05.m5.body': '將確認的行程資料轉化為<span class="stat-hi">自包含 (Self-contained) 旅行網站</span>。單一打包，不需後端伺服器。',
+      's05.m6.body': '一鍵部署至 GitHub Pages、Netlify 或 Vercel，將本地端網站變成<span class="stat-hi">線上分享網址</span>。',
+      's06.title': '實際成果',
+      's06.intro': '此 Skill 生成了我實際使用的旅行指南：<a href="https://ralinzain-star.github.io/busan-fukuoka/" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">釜山 & 福岡 14 天旅程</a>。以下是生成 App 的核心功能——每一項都從 Markdown 語義協議自然長出來。',
+      's06.f1.title': 'Splash 封面與概覽儀表板',
+      's06.f1.body': '全螢幕封面頁以使用者個人的旅行照片為背景，點開後進入<span class="stat-hi">即時儀表板</span>——四格統計卡、秒級倒數、當日時間軸一目了然。上滑進入，封面以 cubic-bezier 動畫飛走。',
+      's06.f1.img1.label': 'Splash 封面',
+      's06.f1.img1.sub': '自訂背景 · 上滑進入 · 當日預覽',
+      's06.f1.img2.label': 'Overview 儀表板',
+      's06.f1.img2.sub': '統計卡 · 倒數 · Today 卡 · 天氣',
+      's06.f2.title': '智慧行程日曆',
+      's06.f2.body': '週曆視圖搭配即時 <span class="stat-hi">Now Line</span> 紅色時間指示器，每 30 秒自動更新。事件依 8 大分類色碼分群，內嵌餐廳資訊、訂位狀態圖示，並有 KR/JP 與 TW 雙時區時鐘並排顯示。',
+      's06.f2.img1.label': 'Now Line · Day 5',
+      's06.f2.img1.sub': '4/3 當下 13:45 即時指示器',
+      's06.f2.img2.label': 'Week 2 (4/6–4/12)',
+      's06.f2.img2.sub': '福岡 · Work Mode · 糸島 · 返程',
+      's06.f3.title': '訂位智慧分析與預算追蹤',
+      's06.f3.body': '航班卡片含路線視覺化與<span class="stat-hi">歷史價格分析</span>（綠色=低於均價、紅色=高於均價）。三平台比價（官網 / Klook / KKday）附最低價星標。預算追蹤器可切換預估與實際模式，支援四幣別（TWD/KRW/JPY/USD）即時換算與城市/分類橫條圖。',
+      's06.f3.img1.label': '訂位與比價',
+      's06.f3.img1.sub': '航班 · 飯店 · 渡輪 · 活動',
+      's06.f3.img2.label': '預估模式',
+      's06.f3.img2.sub': '總額 · 城市比例 · 分類橫條',
+      's06.f3.img3.label': '實際模式',
+      's06.f3.img3.sub': '實際花費按日期分群',
+      's06.f4.title': 'POI 地圖與行前行後工具',
+      's06.f4.body': '24 個景點呈現於互動式 Leaflet 地圖，支援城市與分類篩選晶片、色碼標記，並附<span class="stat-hi">獨旅提示</span>（例如「生魚片拼盤需點兩份起」）。六大分類行前清單透過 localStorage 持久化；行後回顧頁展示足跡地圖、預算對比與行程變動日誌。',
+      's06.f4.img1.label': '景點地圖',
+      's06.f4.img1.sub': '篩選晶片 · 色碼標記 · 獨旅提示',
+      's06.f4.img2.label': '行前清單',
+      's06.f4.img2.sub': '六大分類 · 持久化',
+      's06.f4.img3.label': '旅程回顧',
+      's06.f4.img3.sub': '足跡 · 預算對比 · 經驗',
+      's06.f5.title': '時間感知功能與四語 i18n',
+      's06.f5.body': '網站會根據「現在是什麼時候」自動調整：全螢幕 Today Overlay 依出發天數（>7 天 / ≤7 天 / ≤3 天 / ≤1 天）切換待辦清單；旅行中的當日時間軸會讓已過事件變淡、進行中高亮。所有 UI 文字、8 種分類、14 天天氣描述與事件名都翻譯為<span class="stat-hi">繁中 / English / 한국어 / 日本語</span>——120+ keys 切換即時生效。',
+      's06.f5.img1.label': '旅行前',
+      's06.f5.img1.sub': '出發倒數 5 天 + 行前待辦',
+      's06.f5.img2.label': '旅行中',
+      's06.f5.img2.sub': 'Day 5 · 釜山→渡輪當日時間軸',
+      's06.f5.img3.label': '旅行後',
+      's06.f5.img3.sub': 'Trip Completed · 96 事件 · 5 城市',
+      's07.title': '反思',
+      's07.intro': '這個專案的演進過程，其實是產品設計中不斷「回歸本質」的微型實驗。它從技術導向的探索出發，最終抵達了以體驗為核心的解決方案。',
+      's07.sub1': '1. 價值定位的連續轉向 (Pivot of Value)',
+      's07.sub1.body': '回頭審視，這個專案經歷了三次關鍵的思維躍遷：',
+      's07.r1.title': '從「Vibe Coding 一款 App」出發',
+      's07.r1.body': '最初，我被 <span class="stat-hi">Vibe Coding</span> 帶來的低門檻實作力吸引，目標是快速「搓」出一個具備精美 UI 的 App 來分享行程。這階段的價值在於<span class="stat-hi">視覺的呈現</span>。',
+      's07.r2.title': '延伸到「能生成 Website 的 Skill」',
+      's07.r2.body': '隨著對 Claude Code 的深度運用，我意識到<span class="stat-hi">系統化能力</span>比單一介面更有擴展性。將規劃思維封裝成 Skill，讓任何人都能一鍵部署出網站，這階段的價值轉向了<span class="stat-hi">生產力的解放</span>。',
+      's07.r3.title': '最終專注於「Trip Planning 本身」',
+      's07.r3.body': '在不斷實測中，我發現視覺化的網頁或技術架構都只是手段。旅行規劃的真諦在於：如何降低焦慮？如何掌控預算？如何平衡日常與放鬆？最終，我將<span class="stat-hi">規劃體驗與旅行本質</span>錨定為價值核心。',
+      's07.sub2': '2. 產品設計演進的縮影',
+      's07.sub2.body': '這種「App → Skill → Experience」的路徑，正是當代產品設計演進的縮影。它告訴我們：',
+      's07.b1': '<strong>介面會消失，但體驗永存：</strong>在 AI 時代，UI 或許只是思維的副產物。設計師的工作不再只是定義「按鈕在哪裡」，而是定義<span class="stat-hi">系統如何引導使用者進入流暢的體驗</span>。',
+      's07.b2': '<strong>設計師是價值的過濾器：</strong>面對無限的 AI 技術可能性，設計師的核心競爭力在於<span class="stat-hi">定義什麼是真正重要的</span>。在這個專案中，我過濾掉多餘的功能，留下了預算安全感與數位遊牧的彈性，這才是使用者真正需要的。',
+      's07.sub3': '結語：回歸設計的初衷',
+      's07.sub3.body': '這個專案讓我學會：最好的產品，是讓技術在完成任務後<span class="stat-hi">優雅地隱身</span>。',
+      's07.conclusion': '當初想用 Vibe Coding 寫 App 的熱情，引導我進入了 AI 的世界；而身為設計師的自覺，讓我最後跳脫了技術框架，回歸到旅行的初衷。我們正在進入一個<span class="stat-hi">客製化 UI</span> 的時代——設計師定義系統框架，AI 負責執行填充，而使用者得到的，是那份最純粹、無後顧之憂的探索喜悅。'
+    },
+    'zh-cn': {
+      'nav.s00': '01.核心论点',
+      'nav.s03': '02.设计哲学',
+      'nav.s04': '03.关键决策',
+      'nav.s05': '04.系统架构',
+      'nav.s06': '05.实际成果',
+      'nav.s07': '06.反思',
+      'page.title': 'AI 旅行规划器',
+      'page.subtitle': '一款对话式 Claude Code AI Skill，将零散的旅行研究转化为结构化的深度体验导览。',
+      'intro.label.overview': '项目起源：',
+      'intro.overview.body': '作为一个热爱旅行的人，一开始是想要和朋友分享自己即将前往的韩国 → 日本旅行，决定要和网络上的其他人一样，<span class="stat-hi">Vibe Coding</span> 一个网站。然而在整个科技圈吹起使用 Claude Code 的趋势下，当我工作上充分使用 Claude Code Skill 之后，我萌生了新的想法：如果我把我规划行程的方法变成结构化的 <a href="https://agentskills.io/what-are-skills" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Skill</a>，是不是任何人都可以成为自己的<span class="stat-hi">旅行规划师</span>，踏上自己真正想要的旅程呢？',
+      'intro.label.role': '我的角色：',
+      'intro.role.body': '产品设计师、全栈开发者、AI 指令工程师。<span class="stat-hi">Claude Code Skill</span>, MCP, HTML/CSS/JS',
+      'intro.label.time': '时间：',
+      'intro.time.body': '个人实验项目 (Side Project) · 2026.03 – 至今',
+      'intro.label.repo': '开源项目：',
+      'intro.repo.body': 'github.com/ralinzain-star/trip-planner-skill ↗',
+      's00.title': '当设计产出物不再是设计师价值的主轴',
+      's00.body': '在 AI 时代，如果设计产出物（Output）不再是设计师价值的定义主轴，那么设计师的价值会在哪里体现？过去，设计师的成就感来自于对每一个像素的精雕细琢，从栅格系统到色彩规范，我们是产品视觉与交互行为的“最终审查官”。但在生成式 AI 与 <span class="stat-hi">Vibe Coding</span> 席卷而来的今天，当一个 Prompt 或一组结构化的数据就能瞬间生成美观的界面时，我们必须诚实地面对一个转变：<span class="stat-hi">“定义问题”与“构建框架”正在变成设计师最重要的技能</span>。',
+      's03.title': '设计哲学',
+      's03.h1': '对话即界面',
+      's03.b1': '旅行规划本质上是高度碎片化且具备个人色彩的过程。人们通常不喜欢填写冰冷的表单，而是倾向透过交谈来厘清需求。我将“对话”定义为<span class="stat-hi">核心界面</span>。透过多轮自然的来回互动（Contextual Turns），AI 模拟专业领队的提问逻辑，在对话中逐步精炼旅行计划，让界面随用户的思绪流动。',
+      's03.h2': '体验驱动',
+      's03.b2': '行程网页只是一种可视化呈现方式，而<span class="stat-hi">“规划过程”本身才是这项产品的灵魂</span>。旅行的真谛在于体验内容：你想要在异国感受到什么？你对预算的掌控感如何？以及如何在日常与“日常之外”的惊喜之间找到平衡？我将设计重点放在前期的引导对话。这不只是在收集数据，而是在协助用户完成一场深度的自我梳理，找回旅行中“随性探索”的本质。真正的设计发生在对话中——帮助用户厘清意图、解决焦虑，并最终送他们踏上一场真正属于自己的旅程。',
+      's04.title': '关键决策',
+      's04.skill.label': '什么是 Skill？',
+      's04.skill.body': '<a href="https://agentskills.io/what-are-skills" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Agent Skill</a> 是一种轻量、开放的格式，用于扩展 AI 代理的能力。每个 Skill 是一个包含 <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code> 指令文件的文件夹，可搭配脚本、模板与参考数据。代理按需读取指令，既保持快速又能获得深度的专业能力。',
+      's04.intro': '在技术架构上，我做出了一个核心转变：弃用死板的填鸭式模板，改为设计一套结构化的 <span class="stat-hi">Markdown 作为 UI 的语义协议</span>。这份 MD 不仅承载旅游资讯，更直接定义了 UI 的编排逻辑。',
+      's04.d1.title': '语义映射 (Semantic Mapping)',
+      's04.d1.body': '我定义了一套映射规则，让不同的 Markdown 语法标签直接触发特定的设计系统组件。<span class="stat-hi">“数据表格”</span>被解析后转译为具备动态过滤功能的交互式预算仪表板。<span class="stat-hi">“列表”</span>根据内容特性，自动渲染为带有 Checkbox 的行李清单。<span class="stat-hi">“地理链接”</span>被引擎识别后，自动在底层的交互式地图上标注点位。',
+      's04.d2.title': '赋予 AI“编排主导权”',
+      's04.d2.body': 'Markdown 是 AI 的母语。透过 MD，我将编排的主导权交还给 AI，让它根据这趟旅程的特性<span class="stat-hi">“自发性”地设计版面</span>。如果是一趟跨国飞行，AI 会自主决定生成警告区块；如果是定点远程办公行程，则优先编排 Workspace Guide。UI 结构不再是固定的，而是<span class="stat-hi">随内容“长”出来的</span>。',
+      's04.d1.ex1': '数据表格 → 预算仪表板',
+      's04.d1.ex2': '地理链接 → 交互地图',
+      's04.d1.code1': 'MD 写法                                渲染为\n──────────────────────────────────     ──────────────────────────\n| 项目 | 费用  | 状态      |              交互式预算仪表板\n| 机票 | $420 | Confirmed |        →     可按城市/类别动态筛选\n| 酒店 | $850 | Pending   |              实时加总 + 剩余预算显示\n| 餐饮 | $30  | —         |',
+      's04.d1.code2': 'MD 写法                                渲染为\n──────────────────────────────────     ──────────────────────────\n[筑地市场](geo:35.6654,139.7707)        Leaflet 交互地图\n[浅草寺](geo:35.7148,139.7967)   →     自动标记坐标点位\n[新宿御苑](geo:35.6852,139.7100)        按日期色彩分群 + 路线绘制',
+      's04.d2.code': '情境 A — 跨国旅行（韩国→日本）\nAI 检测到跨境，自动在页首插入：\n\n  > ⚠️ 入境须知\n  > 韩国：需申请 K-ETA（72hr 前）\n  > 日本：免签 90 天，但须填写 Visit Japan Web\n  > 汇率：1 TWD ≈ 42 KRW / 5 JPY\n\n─────────────────────────────────────────\n情境 B — 远程办公行程（福冈 Work Mode）\nAI 检测到 Nomad Mode，自动优先编排：\n\n  ## 🖥️ Workspace Guide — Fukuoka\n  | 地点              | Wi-Fi  | 插座 | 营业时间      |\n  | Starbucks 天神店   | 50Mbps | ✅   | 07:00–22:00  |\n  | &And Hostel 博多  | 80Mbps | ✅   | 24hr (住客)  |\n\n→ UI 版面不是固定模板，而是随“这趟旅程的特性”自动生长',
+      's05.title': '系统架构',
+      's05.intro': '系统分为两层：<span class="stat-hi">对话编排层</span>（引导用户完成结构化多阶段对话）与<span class="stat-hi">模块化 Skill 管线</span>（6 个专业 Sub-skill，每个模块都有自己的 <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code>，由编排器按条件调用）。',
+      's05.layer1.label': 'Layer 1：对话编排 (Conversation Orchestration)',
+      's05.layer1.body': 'trip-planner 作为编排器，引导用户完成<span class="stat-hi">多阶段结构化对话</span>，每个阶段结束时都有明确确认关卡——系统从不假设，只会询问。流程从载入研究数据开始，历经预算与偏好收集、景点筛选（分“必去”与“有时间再去”），到路线优化。唯有所有阶段确认完毕，系统才会进入生成步骤。',
+      's05.layer2.label': 'Layer 2：模块化 Skill 管线 (Modular Skill Pipeline)',
+      's05.layer2.body': '以下每个 Skill 都是拥有独立 <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code> 的模块。编排器按条件调用。',
+      's05.layer2.code': 'travel-collector → flight-intelligence → trip-planner\n                                             ↓\n                            ui-style → trip-html-generator → trip-deployer\n\n每个模块拥有独立 SKILL.md，编排器按条件调用：\n  • flight-intelligence  仅在机票未订时触发\n  • ui-style             仅在用户选择视觉风格时启动',
+      's05.m1.body': '从任何输入（网址、截图、邮件）提取数据并规范化为<span class="stat-hi">统一 JSON 研究文件</span>。',
+      's05.m2.body': '分析机票价格规律与趋势，提供附带价格可视化的<span class="stat-hi">购买建议</span>。',
+      's05.m3.body': '对话编排器 (Layer 1)。管理对话阶段、维持<span class="stat-hi">跨轮次上下文 (Cross-round context)</span>。',
+      's05.m4.body': '提供 <span class="stat-hi">30+ 套设计主题</span>。用户预览并选择后，该风格的 Design Token 会流入生成器。',
+      's05.m4.code': '用户选择“luxury-editorial”风格后，Style Token 注入：\n\n  --color-primary:   #2C2C2C       --font-heading: \'Playfair Display\'\n  --color-accent:    #C8A96E       --font-body:    \'Source Sans Pro\'\n  --color-surface:   #FAF7F2       --border-radius: 0px\n  --shadow:          0 2px 12px rgba(0,0,0,0.08)\n\n  → 这些 Token 直接注入 trip-html-generator\n  → 同一份行程数据 + 不同风格 = 完全不同的视觉体验\n\n其他可选风格：swiss-minimalist | botanical | neo-brutalism\n              cyberpunk | newsprint | warm-editorial | ...',
+      's05.m5.body': '将确认的行程数据转化为<span class="stat-hi">自包含 (Self-contained) 旅行网站</span>。单一打包，不需后端服务器。',
+      's05.m6.body': '一键部署至 GitHub Pages、Netlify 或 Vercel，将本地端网站变成<span class="stat-hi">在线分享网址</span>。',
+      's06.title': '实际成果',
+      's06.intro': '此 Skill 生成了我实际使用的旅行指南：<a href="https://ralinzain-star.github.io/busan-fukuoka/" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">釜山 & 福冈 14 天旅程</a>。以下是生成 App 的核心功能——每一项都从 Markdown 语义协议自然生长。',
+      's06.f1.title': 'Splash 封面与概览仪表板',
+      's06.f1.body': '全屏封面页以用户个人的旅行照片为背景，点开后进入<span class="stat-hi">实时仪表板</span>——四格统计卡、秒级倒数、当日时间轴一目了然。上滑进入，封面以 cubic-bezier 动画飞走。',
+      's06.f1.img1.label': 'Splash 封面',
+      's06.f1.img1.sub': '自定义背景 · 上滑进入 · 当日预览',
+      's06.f1.img2.label': 'Overview 仪表板',
+      's06.f1.img2.sub': '统计卡 · 倒数 · Today 卡 · 天气',
+      's06.f2.title': '智能行程日历',
+      's06.f2.body': '周历视图搭配实时 <span class="stat-hi">Now Line</span> 红色时间指示器，每 30 秒自动更新。事件按 8 大分类色码分群，内嵌餐厅信息、订位状态图标，并有 KR/JP 与 TW 双时区时钟并排显示。',
+      's06.f2.img1.label': 'Now Line · Day 5',
+      's06.f2.img1.sub': '4/3 当下 13:45 实时指示器',
+      's06.f2.img2.label': 'Week 2 (4/6–4/12)',
+      's06.f2.img2.sub': '福冈 · Work Mode · 糸岛 · 返程',
+      's06.f3.title': '订位智能分析与预算追踪',
+      's06.f3.body': '航班卡片含路线可视化与<span class="stat-hi">历史价格分析</span>（绿色=低于均价、红色=高于均价）。三平台比价（官网 / Klook / KKday）附最低价星标。预算追踪器可切换预估与实际模式，支持四币种（TWD/KRW/JPY/USD）实时换算与城市/分类横条图。',
+      's06.f3.img1.label': '订位与比价',
+      's06.f3.img1.sub': '航班 · 酒店 · 渡轮 · 活动',
+      's06.f3.img2.label': '预估模式',
+      's06.f3.img2.sub': '总额 · 城市比例 · 分类横条',
+      's06.f3.img3.label': '实际模式',
+      's06.f3.img3.sub': '实际花费按日期分群',
+      's06.f4.title': 'POI 地图与行前行后工具',
+      's06.f4.body': '24 个景点呈现于交互式 Leaflet 地图，支持城市与分类筛选芯片、色码标记，并附<span class="stat-hi">独旅提示</span>（例如“刺身拼盘需点两份起”）。六大分类行前清单通过 localStorage 持久化；行后回顾页展示足迹地图、预算对比与行程变更日志。',
+      's06.f4.img1.label': '景点地图',
+      's06.f4.img1.sub': '筛选芯片 · 色码标记 · 独旅提示',
+      's06.f4.img2.label': '行前清单',
+      's06.f4.img2.sub': '六大分类 · 持久化',
+      's06.f4.img3.label': '旅程回顾',
+      's06.f4.img3.sub': '足迹 · 预算对比 · 经验',
+      's06.f5.title': '时间感知功能与四语 i18n',
+      's06.f5.body': '网站会根据“现在是什么时候”自动调整：全屏 Today Overlay 依出发天数（>7 天 / ≤7 天 / ≤3 天 / ≤1 天）切换待办清单；旅行中的当日时间轴会让已过事件变淡、进行中高亮。所有 UI 文字、8 种分类、14 天天气描述与事件名都翻译为<span class="stat-hi">简中 / English / 한국어 / 日本語</span>——120+ keys 切换即时生效。',
+      's06.f5.img1.label': '旅行前',
+      's06.f5.img1.sub': '出发倒数 5 天 + 行前待办',
+      's06.f5.img2.label': '旅行中',
+      's06.f5.img2.sub': 'Day 5 · 釜山→渡轮当日时间轴',
+      's06.f5.img3.label': '旅行后',
+      's06.f5.img3.sub': 'Trip Completed · 96 事件 · 5 城市',
+      's07.title': '反思',
+      's07.intro': '这个项目的演进过程，其实是产品设计中不断“回归本质”的微型实验。它从技术导向的探索出发，最终抵达了以体验为核心的解决方案。',
+      's07.sub1': '1. 价值定位的连续转向 (Pivot of Value)',
+      's07.sub1.body': '回头审视，这个项目经历了三次关键的思维跃迁：',
+      's07.r1.title': '从“Vibe Coding 一款 App”出发',
+      's07.r1.body': '最初，我被 <span class="stat-hi">Vibe Coding</span> 带来的低门槛实作力吸引，目标是快速“搓”出一个具备精美 UI 的 App 来分享行程。这阶段的价值在于<span class="stat-hi">视觉的呈现</span>。',
+      's07.r2.title': '延伸到“能生成 Website 的 Skill”',
+      's07.r2.body': '随着对 Claude Code 的深度运用，我意识到<span class="stat-hi">系统化能力</span>比单一界面更有扩展性。将规划思维封装成 Skill，让任何人都能一键部署出网站，这阶段的价值转向了<span class="stat-hi">生产力的解放</span>。',
+      's07.r3.title': '最终专注于“Trip Planning 本身”',
+      's07.r3.body': '在不断实测中，我发现可视化的网页或技术架构都只是手段。旅行规划的真谛在于：如何降低焦虑？如何掌控预算？如何平衡日常与放松？最终，我将<span class="stat-hi">规划体验与旅行本质</span>锚定为价值核心。',
+      's07.sub2': '2. 产品设计演进的缩影',
+      's07.sub2.body': '这种“App → Skill → Experience”的路径，正是当代产品设计演进的缩影。它告诉我们：',
+      's07.b1': '<strong>界面会消失，但体验永存：</strong>在 AI 时代，UI 或许只是思维的副产物。设计师的工作不再只是定义“按钮在哪里”，而是定义<span class="stat-hi">系统如何引导用户进入流畅的体验</span>。',
+      's07.b2': '<strong>设计师是价值的过滤器：</strong>面对无限的 AI 技术可能性，设计师的核心竞争力在于<span class="stat-hi">定义什么是真正重要的</span>。在这个项目中，我过滤掉多余的功能，留下了预算安全感与数字游牧的弹性，这才是用户真正需要的。',
+      's07.sub3': '结语：回归设计的初衷',
+      's07.sub3.body': '这个项目让我学会：最好的产品，是让技术在完成任务后<span class="stat-hi">优雅地隐身</span>。',
+      's07.conclusion': '当初想用 Vibe Coding 写 App 的热情，引导我进入了 AI 的世界；而身为设计师的自觉，让我最后跳脱了技术框架，回归到旅行的初衷。我们正在进入一个<span class="stat-hi">定制化 UI</span> 的时代——设计师定义系统框架，AI 负责执行填充，而用户得到的，是那份最纯粹、无后顾之忧的探索喜悦。'
+    },
+    'ja': {
+      'nav.s00': '01.テーゼ (Thesis)',
+      'nav.s03': '02.設計哲学',
+      'nav.s04': '03.主要な決断',
+      'nav.s05': '04.システム構成',
+      'nav.s06': '05.実際の成果',
+      'nav.s07': '06.考察',
+      'page.title': 'AI トリッププランナー',
+      'page.subtitle': '散在する旅行リサーチを構造化された深い旅行体験へと変換する、対話型 Claude Code AI Skill。',
+      'intro.label.overview': 'プロジェクトの起点：',
+      'intro.overview.body': '旅行好きとして、友達に韓国 → 日本の旅行をシェアしたくて、ネット上のみんなと同じように <span class="stat-hi">Vibe Coding</span> でウェブサイトを作ろうと思いました。しかし Claude Code のトレンドが業界を席巻し、仕事で Claude Code Skill を使い込むうちに、新たなアイデアが生まれました：自分の旅程計画の方法を構造化された <a href="https://agentskills.io/what-are-skills" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Skill</a> にすれば、誰もが自分だけの<span class="stat-hi">旅行プランナー</span>になって、本当に行きたい旅に出られるのではないか？',
+      'intro.label.role': '担当：',
+      'intro.role.body': 'プロダクトデザイナー、フルスタック開発者、AI プロンプトエンジニア。<span class="stat-hi">Claude Code Skill</span>, MCP, HTML/CSS/JS',
+      'intro.label.time': '期間：',
+      'intro.time.body': '個人実験プロジェクト (Side Project) · 2026.03 – 現在',
+      'intro.label.repo': 'オープンソース：',
+      'intro.repo.body': 'github.com/ralinzain-star/trip-planner-skill ↗',
+      's00.title': 'デザイン成果物がデザイナーの価値を定義する軸でなくなるとき',
+      's00.body': 'AI の時代、もしデザイン成果物（Output）がデザイナーの仕事を定義する軸でなくなったら、デザイナーの価値はどこに現れるのでしょうか？かつて、私たちの達成感はピクセル単位の磨き込みから生まれました。グリッドシステム、カラー仕様、私たちはプロダクトのビジュアルとインタラクションの「最終審査官」でした。しかし生成 AI と <span class="stat-hi">Vibe Coding</span> が押し寄せる今、プロンプトや構造化データが一瞬で美しいインターフェースを生成できるとき、私たちはある変化に正直に向き合わなければなりません：<span class="stat-hi">「問題の定義」と「フレームワークの構築」こそがデザイナーにとって最も重要なスキルになりつつある</span>のです。',
+      's03.title': '設計哲学',
+      's03.h1': '対話がインターフェース',
+      's03.b1': '旅行計画は本質的に断片的で個人的なプロセスです。人は冷たいフォームに記入するより、会話を通じてニーズを整理したいものです。私は「対話」を<span class="stat-hi">コアインターフェース</span>として定義しました。自然な多ターンのコンテキスト対話（Contextual Turns）を通じて、AI はプロのツアーガイドのような質問ロジックで旅行計画を段階的に磨き、インターフェースはユーザーの思考の流れに沿って動きます。',
+      's03.h2': '体験起点のデザイン',
+      's03.b2': '旅程ウェブサイトは視覚化の一形態にすぎず、<span class="stat-hi">「計画プロセス」そのものがこのプロダクトの魂</span>です。旅の本質は体験にあります：異国でどんな体験をしたいか、予算をどれだけコントロールできているか、日常と「日常を超えたサプライズ」のバランスをどう取るか。私はデザインの重点を前段階の誘導対話に置きました。単なるデータ収集ではなく、ユーザーが深い自己整理を完了し、旅行の「行き当たりばったりの探索」という本質を取り戻すための支援です。真のデザインは対話の中に宿っています：意図を明確にし、不安を解消し、ユーザーを本当に自分だけの旅へと送り出すことです。',
+      's04.title': '主要な決断',
+      's04.skill.label': 'Skill とは？',
+      's04.skill.body': '<a href="https://agentskills.io/what-are-skills" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Agent Skill</a> は AI エージェントを拡張するための軽量でオープンなフォーマットです。各 Skill は <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code> 指示ファイルを含むフォルダで、スクリプトやテンプレート、参考資料を同梱できます。エージェントはオンデマンドで指示を読み込み、高速性を保ちながら深い専門能力を発揮します。',
+      's04.intro': '技術アーキテクチャ面でコアな転換を行いました：硬直したテンプレートを捨て、構造化された <span class="stat-hi">Markdown を UI の「セマンティックプロトコル（語義規約）」</span>として設計しました。この MD は旅行情報を運ぶだけでなく、UI の編成ロジックを直接定義します。',
+      's04.d1.title': 'セマンティックマッピング (Semantic Mapping)',
+      's04.d1.body': '異なる Markdown 構文タグが特定のデザインシステムコンポーネントを直接トリガーするマッピングルールセットを定義しました。<span class="stat-hi">データテーブル</span>は動的フィルタリング機能付きのインタラクティブな予算ダッシュボードとしてレンダリングされます。<span class="stat-hi">リスト</span>はコンテンツの特性に基づき、Checkbox 付きパッキングチェックリストとして自動レンダリングされます。<span class="stat-hi">ジオリンク</span>はエンジンに認識され、インタラクティブマップ上に自動的にピン留めされます。',
+      's04.d2.title': 'AI に「編成の主導権」を渡す',
+      's04.d2.body': 'Markdown は AI の母国語です。MD を通じて、編成の主導権を AI に返し、各旅程の特性に基づいて<span class="stat-hi">「自発的に」レイアウトをデザイン</span>させます。国際フライトの旅程なら AI が自律的に警告ブロックを生成し、リモートワーク旅なら Workspace Guide を優先編成します。UI 構造はもはや固定ではなく、<span class="stat-hi">コンテンツから「育つ」</span>ものになりました。',
+      's04.d1.ex1': 'データテーブル → 予算ダッシュボード',
+      's04.d1.ex2': 'ジオリンク → インタラクティブマップ',
+      's04.d1.code1': 'MD 記法                                  レンダリング結果\n──────────────────────────────────     ──────────────────────────\n| 項目   | 費用  | ステータス |              インタラクティブ予算ダッシュボード\n| 航空券 | $420 | Confirmed |        →     都市/カテゴリで動的フィルタ\n| ホテル | $850 | Pending   |              リアルタイム合計 + 残り予算\n| 食事   | $30  | —         |',
+      's04.d1.code2': 'MD 記法                                  レンダリング結果\n──────────────────────────────────     ──────────────────────────\n[築地市場](geo:35.6654,139.7707)        Leaflet インタラクティブマップ\n[浅草寺](geo:35.7148,139.7967)   →     自動座標ピン留め\n[新宿御苑](geo:35.6852,139.7100)        日付別色分け + ルート描画',
+      's04.d2.code': 'シナリオ A — 国際旅行（韓国→日本）\nAI が国境越えを検知し、ページ先頭に自動挿入：\n\n  > ⚠️ 入国要件\n  > 韓国：K-ETA の申請が必要（72 時間前）\n  > 日本：ビザ免除 90 日、ただし Visit Japan Web の記入が必要\n  > 為替：1 TWD ≈ 42 KRW / 5 JPY\n\n─────────────────────────────────────────\nシナリオ B — リモートワーク旅（福岡 Work Mode）\nAI が Nomad Mode を検知し、自動優先編成：\n\n  ## 🖥️ Workspace Guide — Fukuoka\n  | 場所               | Wi-Fi  | コンセント | 営業時間     |\n  | Starbucks 天神店    | 50Mbps | ✅         | 07:00–22:00 |\n  | &And Hostel 博多   | 80Mbps | ✅         | 24hr (宿泊客) |\n\n→ UI レイアウトは固定テンプレートではなく、「この旅の特性」に応じて自動的に育つ',
+      's05.title': 'システム構成',
+      's05.intro': 'システムは 2 つのレイヤーで構成されています：<span class="stat-hi">会話オーケストレーション層</span>（構造化マルチフェーズ対話にユーザーを導く）と<span class="stat-hi">モジュラー Skill パイプライン</span>（6 つの専門 Sub-skill。各モジュールは独自の <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code> を持ち、条件に応じてオーケストレーターが呼び出します）。',
+      's05.layer1.label': 'Layer 1：会話オーケストレーション',
+      's05.layer1.body': 'trip-planner がオーケストレーターとして機能し、ユーザーを<span class="stat-hi">マルチフェーズ構造化対話</span>に導きます。各フェーズは明示的な確認ゲートで終わり、システムは決して推測せず、常に確認します。フローはリサーチ読み込みから始まり、予算・嗜好収集、必須 / 時間があれば優先順位付きの観光地選定、そしてルート最適化へと進みます。すべてのフェーズが確認されて初めて、システムは生成へと進みます。',
+      's05.layer2.label': 'Layer 2：モジュラー Skill パイプライン',
+      's05.layer2.body': '以下の各 Skill は独自の <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code> を持つ独立したモジュールです。オーケストレーターが条件に応じて呼び出します。',
+      's05.layer2.code': 'travel-collector → flight-intelligence → trip-planner\n                                             ↓\n                            ui-style → trip-html-generator → trip-deployer\n\n各モジュールは独自の SKILL.md を持ち、オーケストレーターが条件に応じて呼び出し：\n  • flight-intelligence  航空券が未予約の場合のみ起動\n  • ui-style             ユーザーがビジュアルスタイルを選択した場合のみ起動',
+      's05.m1.body': 'あらゆる入力（URL、スクリーンショット、メール）からデータを抽出し、<span class="stat-hi">統合 JSON リサーチファイル</span>に正規化します。',
+      's05.m2.body': '航空券の価格パターンとトレンドを分析し、価格の視覚化を伴う<span class="stat-hi">購入推奨</span>を提供します。',
+      's05.m3.body': '会話オーケストレーター（Layer 1）。対話フェーズを管理し、<span class="stat-hi">ラウンド間のコンテキスト (Cross-round context)</span> を維持します。',
+      's05.m4.body': '<span class="stat-hi">30+ のデザインテーマ</span>を提供。ユーザーがプレビューして選択後、そのスタイルの Design Token がジェネレーターに流れ込みます。',
+      's05.m4.code': 'ユーザーが「luxury-editorial」スタイルを選択後、Style Token が注入：\n\n  --color-primary:   #2C2C2C       --font-heading: \'Playfair Display\'\n  --color-accent:    #C8A96E       --font-body:    \'Source Sans Pro\'\n  --color-surface:   #FAF7F2       --border-radius: 0px\n  --shadow:          0 2px 12px rgba(0,0,0,0.08)\n\n  → これらの Token は trip-html-generator に直接注入\n  → 同じ旅程データ + 異なるスタイル = まったく異なるビジュアル体験\n\nその他のスタイル：swiss-minimalist | botanical | neo-brutalism\n              cyberpunk | newsprint | warm-editorial | ...',
+      's05.m5.body': '確定した旅程データを<span class="stat-hi">自己完結型 (Self-contained) トラベルウェブサイト</span>に変換します。単一バンドルで、サーバーは不要です。',
+      's05.m6.body': 'GitHub Pages、Netlify、または Vercel へワンコマンドでデプロイし、ローカルサイトを<span class="stat-hi">共有可能なライブ URL</span> に変換します。',
+      's06.title': '実際の成果',
+      's06.intro': 'この Skill が、私が実際に使用したトラベルガイドを生成しました：<a href="https://ralinzain-star.github.io/busan-fukuoka/" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">釜山 & 福岡 14 日間の旅</a>。以下は生成された App の主要機能——すべて Markdown セマンティックプロトコルから自然に生まれたものです。',
+      's06.f1.title': 'スプラッシュ & 概要ダッシュボード',
+      's06.f1.body': 'ユーザーがアップロードした旅行写真を背景にした全画面カバーから、<span class="stat-hi">ライブダッシュボード</span>へ。4 つの統計カード、秒精度のカウントダウン、本日のタイムラインが一目で確認できます。上スワイプで進入、カバーは cubic-bezier アニメーションで飛び去ります。',
+      's06.f1.img1.label': 'スプラッシュカバー',
+      's06.f1.img1.sub': 'カスタム背景 · 上スワイプ · 本日プレビュー',
+      's06.f1.img2.label': '概要ダッシュボード',
+      's06.f1.img2.sub': '統計カード · カウントダウン · Today カード · 天気',
+      's06.f2.title': 'スマート旅程カレンダー',
+      's06.f2.body': '週表示カレンダーに、30 秒ごとに更新されるリアルタイム <span class="stat-hi">Now Line</span> 赤色インジケーターを搭載。イベントは 8 つのカテゴリで色分けされ、レストラン情報、予約ステータスアイコン、KR/JP と TW のデュアル時計が並んで表示されます。',
+      's06.f2.img1.label': 'Now Line · Day 5',
+      's06.f2.img1.sub': '4/3 リアルタイム 13:45 インジケーター',
+      's06.f2.img2.label': 'Week 2 (4/6–4/12)',
+      's06.f2.img2.sub': '福岡 · Work Mode · 糸島 · 帰路',
+      's06.f3.title': '予約インテリジェンスと予算トラッカー',
+      's06.f3.body': '航空券カードにはルートの視覚化と<span class="stat-hi">過去の価格分析</span>（緑=平均以下、赤=平均以上）。3 プラットフォーム比較（公式 / Klook / KKday）に最安価格の星マーク付き。予算トラッカーは見積もりと実費モードを切り替え可能で、4 通貨（TWD/KRW/JPY/USD）即時換算と都市/カテゴリ棒グラフに対応します。',
+      's06.f3.img1.label': '予約と比較',
+      's06.f3.img1.sub': 'フライト · ホテル · フェリー · アクティビティ',
+      's06.f3.img2.label': '見積もりモード',
+      's06.f3.img2.sub': '合計 · 都市比率 · カテゴリ棒グラフ',
+      's06.f3.img3.label': '実費モード',
+      's06.f3.img3.sub': '実費を日付別にグループ化',
+      's06.f4.title': 'POI マップと旅前・旅後ツール',
+      's06.f4.body': '24 のスポットを Leaflet 地図にプロット。都市・カテゴリのフィルタチップ、色分けマーカーに加え、<span class="stat-hi">一人旅のヒント</span>（例：「お刺身盛り合わせは 2 人前から」）も表示。6 カテゴリの出発前チェックリストは localStorage で永続化され、旅後のレトロスペクティブでは足跡マップ、予算実績対比、学びの変更ログを閲覧できます。',
+      's06.f4.img1.label': 'スポット地図',
+      's06.f4.img1.sub': 'フィルタチップ · 色マーカー · 一人旅ヒント',
+      's06.f4.img2.label': '出発前チェックリスト',
+      's06.f4.img2.sub': '6 カテゴリ · 永続化',
+      's06.f4.img3.label': 'レトロスペクティブ',
+      's06.f4.img3.sub': '足跡 · 予算対比 · 学び',
+      's06.f5.title': '時間認識機能と 4 言語 i18n',
+      's06.f5.body': 'サイトは「今がいつか」に応じて自動調整：全画面 Today Overlay は出発までの日数（>7 日 / ≤7 日 / ≤3 日 / ≤1 日）でチェックリストを切り替え、旅行中のタイムラインは過去のイベントをフェードし、進行中を強調します。すべての UI テキスト、8 つのカテゴリ名、14 日分の天気説明、イベント名が<span class="stat-hi">繁中 / English / 한국어 / 日本語</span>に翻訳済み——120+ キー、切り替えは即座に反映されます。',
+      's06.f5.img1.label': '旅行前',
+      's06.f5.img1.sub': '出発まで 5 日 + 旅前 To-do',
+      's06.f5.img2.label': '旅行中',
+      's06.f5.img2.sub': 'Day 5 · 釜山→フェリーのタイムライン',
+      's06.f5.img3.label': '旅行後',
+      's06.f5.img3.sub': 'Trip Completed · 96 イベント · 5 都市',
+      's07.title': '考察',
+      's07.intro': 'このプロジェクトの変遷は、プロダクトデザインにおける「本質への回帰」を繰り返す微型実験です。技術主導の探求から出発し、最終的に体験を中心とした解決策へとたどり着きました。',
+      's07.sub1': '1. 価値定義の連続的なシフト (Pivot of Value)',
+      's07.sub1.body': '振り返ると、このプロジェクトは三つの重要な思考の転換を経ていました：',
+      's07.r1.title': '「Vibe Coding で App を作る」から出発',
+      's07.r1.body': '最初は <span class="stat-hi">Vibe Coding</span> がもたらす低い参入障壁の実装力に惹かれ、精美な UI を持つ App をすばやく「作り上げて」旅程をシェアすることを目標にしました。この段階の価値は<span class="stat-hi">ビジュアルの表現</span>にありました。',
+      's07.r2.title': '「Website を生成できる Skill」へと拡張',
+      's07.r2.body': 'Claude Code を深く活用するうちに、<span class="stat-hi">システム化された能力</span>は単一インターフェースよりもスケーラビリティが高いと気づきました。計画の思考を Skill としてパッケージ化し、誰でもワンクリックでサイトをデプロイできるようにしたことで、価値は<span class="stat-hi">生産性の解放</span>へとシフトしました。',
+      's07.r3.title': '最終的に「Trip Planning そのもの」に集中',
+      's07.r3.body': '絶え間ない実テストの中で、視覚的なウェブページも技術的なアーキテクチャも単なる手段にすぎないと気づきました。Trip Planning の真髄は：どうすれば不安を減らせるか、予算をコントロールできるか、日常とリラックスのバランスをとれるか。最終的に<span class="stat-hi">計画体験と旅の本質</span>を価値の核心として錨定しました。',
+      's07.sub2': '2. プロダクトデザイン進化の縮図',
+      's07.sub2.body': 'この「App → Skill → Experience」という道筋は、現代のプロダクトデザイン進化の縮図です。それは次のことを教えてくれます：',
+      's07.b1': '<strong>UI は消えても体験は残る：</strong>AI 時代において、UI は思考の副産物かもしれません。デザイナーの仕事はもはや「ボタンをどこに置くか」を定義するだけでなく、<span class="stat-hi">システムがいかにユーザーをなめらかな体験へと導くか</span>を定義することです。',
+      's07.b2': '<strong>デザイナーは価値のフィルター：</strong>無限の AI 技術の可能性に直面したとき、デザイナーのコア競争力は<span class="stat-hi">真に重要なものを定義すること</span>にあります。このプロジェクトでは余分な機能を削ぎ落とし、予算の安心感とデジタルノマドの柔軟性を残しました——それこそがユーザーが本当に必要としているものです。',
+      's07.sub3': '結び：デザインの原点へ',
+      's07.sub3.body': 'このプロジェクトが教えてくれたこと：最高のプロダクトとは、技術がタスクを完了した後に<span class="stat-hi">優雅に姿を消す</span>ものです。',
+      's07.conclusion': 'Vibe Coding で App を作りたいという最初の情熱が AI の世界へと導いてくれました。そして、デザイナーとしての自覚が最終的に技術の枠を超え、旅の本質へと立ち返らせてくれました。私たちは<span class="stat-hi">カスタマイズされた UI</span> の時代へと突入しています——デザイナーがシステムのフレームワークを定義し、AI が実行と充填を担い、ユーザーが手にするのは、最も純粋で心配のない探索の喜びです。'
+    }
+  };
+
+  const tripRichKeys = [
+   'intro.overview.body','intro.role.body',
+   's00.body',
+   's03.b1','s03.b2',
+   's04.skill.body','s04.intro','s04.d1.body','s04.d2.body',
+   's04.d1.code1','s04.d1.code2','s04.d2.code',
+   's05.intro','s05.layer1.body','s05.layer2.body',
+   's05.layer2.code','s05.m4.code',
+   's05.m1.body','s05.m2.body','s05.m3.body','s05.m4.body','s05.m5.body','s05.m6.body',
+   's06.intro',
+   's06.f1.body','s06.f2.body','s06.f3.body','s06.f4.body','s06.f5.body',
+   's07.intro','s07.r1.body','s07.r2.body','s07.r3.body','s07.sub2.body','s07.b1','s07.b2','s07.sub3.body','s07.conclusion',
+  ];
+
+  const tripOriginals = {};
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+   const key = el.getAttribute('data-i18n');
+   tripOriginals[key] = tripRichKeys.includes(key) ? el.innerHTML : el.textContent;
+  });
+
+  function applyTripLang(lang) {
+   const t = tripI18n[lang];
+   if (!t || lang === 'en') {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+     const key = el.getAttribute('data-i18n');
+     if (tripOriginals[key] !== undefined) {
+      if (tripRichKeys.includes(key)) el.innerHTML = tripOriginals[key];
+      else el.textContent = tripOriginals[key];
+     }
     });
-  })();
+    document.documentElement.lang = 'en';
+    return;
+   }
+   document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) {
+     if (tripRichKeys.includes(key)) el.innerHTML = t[key];
+     else el.textContent = t[key];
+    }
+   });
+   document.documentElement.lang = lang === 'zh-tw' ? 'zh-TW' : lang === 'zh-cn' ? 'zh-CN' : lang;
+  }
+
+  // Init
+  const sel = document.getElementById('nav-lang-select');
+  try {
+   const saved = localStorage.getItem('portfolio-lang');
+   if (saved && saved !== 'en') applyTripLang(saved);
+   if (sel) sel.value = saved || 'en';
+  } catch(e) {}
+
+  if (sel) {
+   sel.addEventListener('change', () => {
+    const lang = sel.value;
+    try { localStorage.setItem('portfolio-lang', lang); } catch(e) {}
+    applyTripLang(lang);
+   });
+  }
+ })();
 </script>
 
 </body>

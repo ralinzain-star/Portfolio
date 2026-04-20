@@ -100,7 +100,7 @@
     /* ── SECTION HEADING ──────────────────────────── */
     .sec-head {
       display: flex; gap: 28px; align-items: flex-start;
-      font-size: 32px; font-weight: 800; font-family: 'Barlow', sans-serif; line-height: 1.1;
+      font-size: 24px; font-weight: 800; font-family: 'Barlow', sans-serif; line-height: 1.15;
       letter-spacing: -0.02em; text-transform: uppercase;
     }
     .sec-num { white-space: nowrap; flex-shrink: 0; }
@@ -108,24 +108,24 @@
 
     /* ── TYPE SCALE ───────────────────────────────── */
     .h3 {
-      font-size: 11px; font-weight: 700; line-height: 1.2;
+      font-size: 11px; font-weight: 700; line-height: 1.4;
       letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Barlow', sans-serif;
     }
     .body {
       font-size: 14px; font-weight: 400; line-height: 1.75;
-      letter-spacing: 0em; font-family: 'Noto Sans', sans-serif;
+      letter-spacing: 0em; font-family: 'Noto Sans', 'Barlow', sans-serif;
     }
     .body-med {
       font-size: 14px; font-weight: 600; line-height: 1.5;
       letter-spacing: 0em; font-family: 'Noto Sans', sans-serif;
     }
     .body-sm {
-      font-size: 13px; font-weight: 400; line-height: 1.65;
+      font-size: 14px; font-weight: 400; line-height: 1.75;
       letter-spacing: 0em; font-family: 'Noto Sans', sans-serif;
     }
     .caption {
-      font-size: 10px; font-weight: 400; line-height: 1.4;
-      letter-spacing: 0.06em; font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px; font-weight: 500; line-height: 1.4;
+      letter-spacing: 0.04em; font-family: 'IBM Plex Mono', monospace;
     }
     .text-block { display: flex; flex-direction: column; gap: 8px; }
 
@@ -354,7 +354,7 @@
       .split-photo { width: 100%; }
       .feature-row { flex-direction: column; }
       .feature-copy { width: 100%; }
-      .sec-head { font-size: 22px; }
+      .sec-head { font-size: 20px; }
       .feature-title { font-size: 20px; }
       .team-photos-row { flex-direction: column; }
     }
@@ -371,7 +371,7 @@
       .quote-avatar { width: 48px; height: 48px; }
       .ptable-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
       .ptable { min-width: 480px; }
-      .title-main-heading { font-size: 22px !important; }
+      .title-main-heading { font-size: 28px !important; }
     }
   </style>
 </head>
@@ -381,11 +381,11 @@
 <nav class="nav">
   <a class="nav-back" href="/#work">← Iris Hsieh</a>
   <div class="nav-anchors">
-    <a class="nav-anchor" href="#intro">.Intro</a>
-    <a class="nav-anchor" href="#s01">01.Start</a>
-    <a class="nav-anchor" href="#s02">02.What Was Broken</a>
-    <a class="nav-anchor" href="#s03">03.Our Solution</a>
-    <a class="nav-anchor" href="#s04">04.Cool Parts</a>
+    <a class="nav-anchor" href="#intro" data-i18n="nav.intro">.Intro</a>
+    <a class="nav-anchor" href="#s01" data-i18n="nav.s01">01.Start</a>
+    <a class="nav-anchor" href="#s02" data-i18n="nav.s02">02.What Was Broken</a>
+    <a class="nav-anchor" href="#s03" data-i18n="nav.s03">03.Our Solution</a>
+    <a class="nav-anchor" href="#s04" data-i18n="nav.s04">04.Cool Parts</a>
   </div>
   <select class="nav-lang" id="nav-lang-select">
     <option value="en">EN</option>
@@ -398,13 +398,13 @@
 <!-- ── TITLE BAR ──────────────────────────────────── -->
 <div class="title-bar">
   <div class="title-bar-inner">
-    <div class="title-main-heading" style="font-size:36px;font-weight:800;line-height:1.1;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;">BumpHunter — AI Bicycle Lane Maintenance Tool</div>
-    <div style="font-size:14px;font-weight:500;line-height:1.5;font-family:'Noto Sans',sans-serif;">Turning Hamburg citizen reports into structured insight for cycling infrastructure maintenance.</div>
+    <div class="title-main-heading" style="font-size:40px;font-weight:800;line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;" data-i18n="page.title">BumpHunter — AI Bicycle Lane Maintenance Tool</div>
+    <div style="font-size:14px;font-weight:500;line-height:1.5;font-family:'Noto Sans',sans-serif;" data-i18n="page.subtitle">Turning Hamburg citizen reports into structured insight for cycling infrastructure maintenance.</div>
   </div>
 </div>
 
 <!-- ── INTRO ──────────────────────────────────────── -->
-<div id="intro" class="sec cream" style="padding-top:0;padding-bottom:0;">
+<div id="intro" class="sec cream" style="padding-top:0;padding-bottom:48px;">
   <div class="sec-inner" style="max-width:100%;padding:0;">
     <div class="intro-card">
       <div class="intro-photo">
@@ -412,15 +412,15 @@
       </div>
       <div class="intro-copy">
         <div class="text-block">
-          <p class="h3">Product Overview:</p>
-          <p class="body">BumpHunter is an AI-assisted service concept for Landesbetrieb Straßen, Brücken und Gewässer (LSBG), designed to turn citizen feedback into structured maintenance insight. By combining Google Maps, Strava activity data, and city weather information, the system helps engineers identify issues earlier, prioritize repairs, and make better-informed infrastructure decisions.</p>
+          <p class="h3" data-i18n="intro.h3.product">Product Overview:</p>
+          <p class="body" data-i18n="intro.product.body">BumpHunter is an AI-assisted service concept for Landesbetrieb Straßen, Brücken und Gewässer (LSBG), designed to turn citizen feedback into structured maintenance insight. By combining Google Maps, Strava activity data, and city weather information, the system helps engineers identify issues earlier, prioritize repairs, and make better-informed infrastructure decisions.</p>
         </div>
         <div class="text-block">
-          <p class="h3">My Role:</p>
-          <p class="body">As the interaction designer, I scoped <span class="stat-hi">two research tracks</span> covering both residents and bicycle lane engineers, and facilitated <span class="stat-hi">20+ cross-cultural interviews</span>. Throughout the project, I translated findings into design principles, built high-fidelity prototypes, and used rolling research to validate functionality and usability. I also aligned a highly international team around interaction patterns that fit Hamburg's local context.</p>
+          <p class="h3" data-i18n="intro.h3.role">My Role:</p>
+          <p class="body" data-i18n="intro.role.body">As the interaction designer, I scoped <span class="stat-hi">two research tracks</span> covering both residents and bicycle lane engineers, and facilitated <span class="stat-hi">20+ cross-cultural interviews</span>. Throughout the project, I translated findings into design principles, built high-fidelity prototypes, and used rolling research to validate functionality and usability. I also aligned a highly international team around interaction patterns that fit Hamburg's local context.</p>
         </div>
         <div class="text-block">
-          <p class="h3">Timeline:</p>
+          <p class="h3" data-i18n="intro.h3.time">Timeline:</p>
           <p class="body">2023 · UnternehmerTUM, Munich</p>
         </div>
       </div>
@@ -434,7 +434,7 @@
   <div class="sec-inner">
     <div class="sec-head">
       <span class="sec-num">01.</span>
-      <span class="sec-title">Where We Started</span>
+      <span class="sec-title" data-i18n="s01.title">Where We Started</span>
     </div>
     <div class="split-row">
       <div class="split-photo">
@@ -442,12 +442,12 @@
       </div>
       <div class="split-copy">
         <div class="text-block">
-          <p class="h3">Project Background:</p>
-          <p class="body">Inspection, maintenance, and planning of bicycle lanes require coordination across multiple government departments and inspection agencies. Although citizens can report issues, many still rely on traditional channels like email, resulting in <span class="stat-hi">fragmented information that is difficult to act on</span>. Drone-based solutions can help in some situations, but their effectiveness drops significantly during winter.</p>
+          <p class="h3" data-i18n="s01.h3.bg">Project Background:</p>
+          <p class="body" data-i18n="s01.bg.body">Inspection, maintenance, and planning of bicycle lanes require coordination across multiple government departments and inspection agencies. Although citizens can report issues, many still rely on traditional channels like email, resulting in <span class="stat-hi">fragmented information that is difficult to act on</span>. Drone-based solutions can help in some situations, but their effectiveness drops significantly during winter.</p>
         </div>
         <div class="text-block">
-          <p class="h3">Our Goal:</p>
-          <p class="body">Design a lightweight system that turns scattered signals into timely, actionable updates on bicycle lane conditions, so engineers can <span class="stat-hi">reduce on-site inspections</span>, coordinate more effectively across departments, and focus repairs where they matter most.</p>
+          <p class="h3" data-i18n="s01.h3.goal">Our Goal:</p>
+          <p class="body" data-i18n="s01.goal.body">Design a lightweight system that turns scattered signals into timely, actionable updates on bicycle lane conditions, so engineers can <span class="stat-hi">reduce on-site inspections</span>, coordinate more effectively across departments, and focus repairs where they matter most.</p>
         </div>
       </div>
     </div>
@@ -459,15 +459,15 @@
   <div class="sec-inner">
     <div class="sec-head">
       <span class="sec-num">02.</span>
-      <span class="sec-title">Research and Problem Framing</span>
+      <span class="sec-title" data-i18n="s02.title">Research and Problem Framing</span>
     </div>
 
     <!-- Preliminary Research -->
     <div class="text-block">
-      <p class="h3">Preliminary Research:</p>
-        <p class="body">We combined secondary research with primary data collection to understand the challenges and opportunities in bicycle lane planning and inspection.</p>
+      <p class="h3" data-i18n="s02.h3.research">Preliminary Research:</p>
+        <p class="body" data-i18n="s02.research.body1">We combined secondary research with primary data collection to understand the challenges and opportunities in bicycle lane planning and inspection.</p>
       <p class="body">Secondary research referenced literature on European bicycle lane infrastructure, including planning processes and inspection checkpoints (e.g., snow-related maintenance). Internal system operation documents from LSBG were also reviewed.</p>
-      <p class="body">Primary research involved interviews with bicycle lane experts, engineers, and cycling enthusiasts, as well as focus groups and on-site observations.</p>
+      <p class="body" data-i18n="s02.research.body2">Primary research involved interviews with bicycle lane experts, engineers, and cycling enthusiasts, as well as focus groups and on-site observations.</p>
         <p class="body" style="margin-top:4px;">Key interview quotes included:</p>
     </div>
 
@@ -477,33 +477,33 @@
         <div class="quote-avatar">
           <img src="/assets/lsbg/avatar-professor.png" alt="Professor Chris Brunlett" />
         </div>
-        <p class="quote-text">"The Netherlands succeeded by building a comprehensive network of dedicated cycle paths." — <strong>Professor Chris Brunlett</strong></p>
+        <p class="quote-text" data-i18n="s02.quote.1">"The Netherlands succeeded by building a comprehensive network of dedicated cycle paths." — <strong>Professor Chris Brunlett</strong></p>
       </div>
       <div class="quote-row">
         <div class="quote-avatar">
           <img src="/assets/lsbg/avatar-engineer.png" alt="LSBG Engineer" />
         </div>
-        <p class="quote-text">"What is currently lacking is the feedback from citizens regarding their riding experiences on bicycle paths." — <strong>LSBG Bike Lane Engineer</strong></p>
+        <p class="quote-text" data-i18n="s02.quote.2">"What is currently lacking is the feedback from citizens regarding their riding experiences on bicycle paths." — <strong>LSBG Bike Lane Engineer</strong></p>
       </div>
       <div class="quote-row">
         <div class="quote-avatar">
           <img src="/assets/lsbg/avatar-citizen.png" alt="Citizen" />
         </div>
-        <p class="quote-text">"If my contributions truly help improve my neighborhood, I would be more willing to report." — <strong>Citizen</strong></p>
+        <p class="quote-text" data-i18n="s02.quote.3">"If my contributions truly help improve my neighborhood, I would be more willing to report." — <strong>Citizen</strong></p>
       </div>
     </div>
 
     <!-- Key Insights -->
     <div class="text-block">
-      <p class="h3">Key Insights:</p>
-      <p class="body">Research showed that <span class="stat-hi">engineers lacked detailed information about which road segments mattered most</span> to citizens and how riders actually experienced them. At the same time, citizens wanted their reports to be acknowledged, creating an opportunity for a more proactive inspection process.</p>
+      <p class="h3" data-i18n="s02.h3.insights">Key Insights:</p>
+      <p class="body" data-i18n="s02.insights.body">Research showed that <span class="stat-hi">engineers lacked detailed information about which road segments mattered most</span> to citizens and how riders actually experienced them. At the same time, citizens wanted their reports to be acknowledged, creating an opportunity for a more proactive inspection process.</p>
     </div>
 
     <!-- Persona -->
     <div>
       <div class="text-block" style="margin-bottom:16px;">
-        <p class="h3">Persona:</p>
-        <p class="body">Our research revealed 2 key roles shaping the bicycle lane planning and inspection process: the Citizen and the Engineer.</p>
+        <p class="h3" data-i18n="s02.h3.persona">Persona:</p>
+        <p class="body" data-i18n="s02.persona.body">Our research revealed 2 key roles shaping the bicycle lane planning and inspection process: the Citizen and the Engineer.</p>
       </div>
       <div class="persona-wrap">
         <div class="ptable-wrap">
@@ -538,12 +538,12 @@
 
     <!-- Language Barrier tip -->
     <div class="text-block">
-      <p class="h3">Working Across Languages with AI Tools</p>
+      <p class="h3" data-i18n="s02.h3.tips">Working Across Languages with AI Tools</p>
       <ul class="bull-list">
-        <li><strong>Transcribe fast</strong> — Used Descript to turn German interviews into text.</li>
-        <li><strong>Summarize smart</strong> — Let Hypotenuse pull out key points with prompt-based summaries.</li>
-        <li><strong>Translate quickly</strong> — Ran outputs through online tools for English context.</li>
-        <li><strong>Visualize instantly</strong> — Used QoQo.ai in Figma to map personas &amp; journeys.</li>
+        <li data-i18n="s02.tips.li1"><strong>Transcribe fast</strong> — Used Descript to turn German interviews into text.</li>
+        <li data-i18n="s02.tips.li2"><strong>Summarize smart</strong> — Let Hypotenuse pull out key points with prompt-based summaries.</li>
+        <li data-i18n="s02.tips.li3"><strong>Translate quickly</strong> — Ran outputs through online tools for English context.</li>
+        <li data-i18n="s02.tips.li4"><strong>Visualize instantly</strong> — Used QoQo.ai in Figma to map personas &amp; journeys.</li>
       </ul>
     </div>
   </div>
@@ -554,14 +554,14 @@
   <div class="sec-inner">
     <div class="sec-head">
       <span class="sec-num">03.</span>
-      <span class="sec-title">Our Solution</span>
+      <span class="sec-title" data-i18n="s03.title">Our Solution</span>
     </div>
 
     <!-- Service Blueprint -->
     <div>
       <div class="text-block" style="margin-bottom:16px;">
-        <p class="h3">Service Blueprint:</p>
-        <p class="body">The service blueprint reframed maintenance as a <span class="stat-hi">two-way loop between engineers and residents</span>. Engineers used maps to identify risk, traffic patterns, and likely maintenance priorities; citizens responded with location-specific reports, photos, and riding feedback. Together, these inputs turned scattered observations into a clearer basis for inspection and repair decisions.</p>
+        <p class="h3" data-i18n="s03.h3.blueprint">Service Blueprint:</p>
+        <p class="body" data-i18n="s03.blueprint.body">The service blueprint reframed maintenance as a <span class="stat-hi">two-way loop between engineers and residents</span>. Engineers used maps to identify risk, traffic patterns, and likely maintenance priorities; citizens responded with location-specific reports, photos, and riding feedback. Together, these inputs turned scattered observations into a clearer basis for inspection and repair decisions.</p>
       </div>
     </div>
 
@@ -575,8 +575,8 @@
         <!-- Map View -->
         <div class="feature-row">
           <div class="feature-copy">
-            <p class="h3">Map View:</p>
-            <p class="body">Map View enables engineers to quickly pinpoint priority areas for bicycle lane maintenance by visualizing damage severity, report density, and traffic levels. Color-coded markers make it easy to distinguish between extremely dangerous, dangerous, and minor issues, while traffic overlays reveal usage intensity. This combination helps engineers decide not just where intervention is most urgent, but also where repairs will have the greatest impact.</p>
+            <p class="h3" data-i18n="s03.h3.map">Map View:</p>
+            <p class="body" data-i18n="s03.map.body">Map View enables engineers to quickly pinpoint priority areas for bicycle lane maintenance by visualizing damage severity, report density, and traffic levels. Color-coded markers make it easy to distinguish between extremely dangerous, dangerous, and minor issues, while traffic overlays reveal usage intensity. This combination helps engineers decide not just where intervention is most urgent, but also where repairs will have the greatest impact.</p>
           </div>
           <div class="feature-img-wrap">
             <video src="assets/lsbg/demo-1.mp4" autoplay loop muted playsinline></video>
@@ -586,8 +586,8 @@
         <!-- Report View -->
         <div class="feature-row">
           <div class="feature-copy">
-            <p class="h3">Report View:</p>
-            <p class="body">Report View transforms citizen feedback into structured, actionable data, presenting an at-a-glance summary of bicycle lane conditions by district. For example, in Bergstedt, the <span class="stat-hi">Uncomfortable rate is 60% and the Dangerous rate is 70%</span>, with key issues including low road traction, numerous potholes, and hazardous obstacles like tree branches. The view also shows report counts and traffic demand distribution (High 30.5%, Medium 4.5%, Low 65%), enabling engineers to quickly gauge both usage and risk levels.</p>
+            <p class="h3" data-i18n="s03.h3.report">Report View:</p>
+            <p class="body" data-i18n="s03.report.body">Report View transforms citizen feedback into structured, actionable data, presenting an at-a-glance summary of bicycle lane conditions by district. For example, in Bergstedt, the <span class="stat-hi">Uncomfortable rate is 60% and the Dangerous rate is 70%</span>, with key issues including low road traction, numerous potholes, and hazardous obstacles like tree branches. The view also shows report counts and traffic demand distribution (High 30.5%, Medium 4.5%, Low 65%), enabling engineers to quickly gauge both usage and risk levels.</p>
           </div>
           <div class="feature-img-wrap">
             <video src="assets/lsbg/demo-2.mp4" autoplay loop muted playsinline></video>
@@ -601,8 +601,8 @@
       <p class="feature-title" style="margin-bottom:24px;">Get Road Usage Information from Citizens:</p>
       <div class="feature-row">
         <div class="feature-copy">
-          <p class="h3">Send Mission:</p>
-          <p class="body">When engineers need more context to assess a specific area, they can use Send Mission to <span class="stat-hi">directly engage local residents</span>. This feature sends targeted requests to citizens in the program, asking them to capture photos, record observations, and provide detailed feedback about the road segment in question. By gathering on-the-ground insights from actual users, engineers can validate existing data, fill in missing details, and make more accurate maintenance or planning decisions.</p>
+          <p class="h3" data-i18n="s03.h3.mission">Send Mission:</p>
+          <p class="body" data-i18n="s03.mission.body">When engineers need more context to assess a specific area, they can use Send Mission to <span class="stat-hi">directly engage local residents</span>. This feature sends targeted requests to citizens in the program, asking them to capture photos, record observations, and provide detailed feedback about the road segment in question. By gathering on-the-ground insights from actual users, engineers can validate existing data, fill in missing details, and make more accurate maintenance or planning decisions.</p>
         </div>
         <div class="feature-img-wrap">
           <video src="assets/lsbg/demo-3.mp4" autoplay loop muted playsinline></video>
@@ -612,12 +612,12 @@
 
     <!-- Citizen Reporting -->
     <div>
-      <p class="feature-title" style="margin-bottom:24px;">Citizen-Assisted Reporting of Bicycle Routes:</p>
+      <p class="feature-title" style="margin-bottom:24px;" data-i18n="s03.h3.citizen">Citizen-Assisted Reporting of Bicycle Routes:</p>
       <div style="display:flex;gap:24px;align-items:flex-end;width:100%;">
         <div style="flex:1;display:flex;flex-direction:column;gap:8px;">
           <div class="text-block">
             <p class="h3">Capture cycling experience with simple clicks:</p>
-            <p class="body">Hamburg residents can play an active role in improving local cycling infrastructure by sharing real-world road usage feedback via the Road Usage Reporting Website. Each submission helps engineers better understand on-the-ground conditions and prioritize repairs that matter most to the community.</p>
+            <p class="body" data-i18n="s03.citizen.body1">Hamburg residents can play an active role in improving local cycling infrastructure by sharing real-world road usage feedback via the Road Usage Reporting Website. Each submission helps engineers better understand on-the-ground conditions and prioritize repairs that matter most to the community.</p>
           </div>
           <div class="text-block" style="margin-top:12px;">
             <p class="h3">How it works:</p>
@@ -627,7 +627,7 @@
               <li>Upload photos of the issue</li>
               <li>Indicate the level of danger and discomfort</li>
             </ol>
-            <p class="body" style="margin-top:8px;">With just a few steps, residents can <span class="stat-hi">transform their daily riding experiences into actionable insights</span>, directly influencing maintenance priorities and ensuring safer, more comfortable bike lanes.</p>
+            <p class="body" style="margin-top:8px;" data-i18n="s03.citizen.body2">With just a few steps, residents can <span class="stat-hi">transform their daily riding experiences into actionable insights</span>, directly influencing maintenance priorities and ensuring safer, more comfortable bike lanes.</p>
           </div>
         </div>
         <div style="width:160px;flex-shrink:0;">
@@ -644,21 +644,21 @@
   <div class="sec-inner">
     <div class="sec-head">
       <span class="sec-num">04.</span>
-      <span class="sec-title">Project Highlights</span>
+      <span class="sec-title" data-i18n="s04.title">Project Highlights</span>
     </div>
 
     <!-- Dev group & workflow -->
     <div class="text-block">
-      <p class="h3">Team Collaboration &amp; Workflow</p>
-      <p class="body">We ran <span class="stat-hi">Agile sprints with weekly showcases and testing</span>, using story mapping to keep the work grounded. Most collaboration happened in Figma, with Adobe tools supporting production details. I also brought AI into the workflow to accelerate early communication artifacts and keep experiments legible to the wider team.</p>
+      <p class="h3" data-i18n="s04.h3.workflow">Team Collaboration &amp; Workflow</p>
+      <p class="body" data-i18n="s04.workflow.body">We ran <span class="stat-hi">Agile sprints with weekly showcases and testing</span>, using story mapping to keep the work grounded. Most collaboration happened in Figma, with Adobe tools supporting production details. I also brought AI into the workflow to accelerate early communication artifacts and keep experiments legible to the wider team.</p>
     </div>
 
     <img src="/assets/lsbg/workflow.png" alt="Team workflow photo strip" class="full-img" />
 
     <!-- Testing, iterating -->
     <div class="text-block">
-      <p class="h3">Testing, Iterating, Failing, Partnering</p>
-      <p class="body">The most memorable part of this project was learning how differently Munich and Hamburg approached cycling infrastructure from the contexts I already knew. I once suggested posting flyers on utility poles, only to learn Munich had long buried its cables. That moment stayed with me. Working with such a diverse team sharpened my ability to spot blind spots, absorb feedback quickly, and <span class="stat-hi">refine ideas collaboratively across cultures</span>.</p>
+      <p class="h3" data-i18n="s04.h3.fail">Testing, Iterating, Failing, Partnering</p>
+      <p class="body" data-i18n="s04.fail.body">The most memorable part of this project was learning how differently Munich and Hamburg approached cycling infrastructure from the contexts I already knew. I once suggested posting flyers on utility poles, only to learn Munich had long buried its cables. That moment stayed with me. Working with such a diverse team sharpened my ability to spot blind spots, absorb feedback quickly, and <span class="stat-hi">refine ideas collaboratively across cultures</span>.</p>
     </div>
 
     <!-- Team photos -->

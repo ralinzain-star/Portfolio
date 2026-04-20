@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Closing the Loop · Wren AI · Iris Hsieh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #f0ebe2;
+      --bg-card:    #fffefb;
+      --border:     #dbd4c9;
+      --text:       #2b2520;
+      --muted:      #8c8079;
+      --accent:     #3d5a96;
+      --accent-soft:#e8eef9;
+      --danger:     #c14c3a;
+      --yellow:     #ffe033;
+    }
+
+    html, body {
+      font-family: 'Noto Sans', 'Barlow', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.4;
+    }
+    html[lang="ja"]    body { font-family: 'Noto Sans JP', 'Noto Sans', 'Barlow', sans-serif; }
+    html[lang="zh-TW"] body { font-family: 'Noto Sans TC', 'Noto Sans', 'Barlow', sans-serif; }
+    html[lang="zh-CN"] body { font-family: 'Noto Sans SC', 'Noto Sans', 'Barlow', sans-serif; }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; }
+
+    /* -- NAV -- */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(240,235,226,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(43,37,32,0.08);
+      padding: 16px 60px;
+      display: flex; align-items: center;
+    }
+    .nav-back {
+      font-size: 13px; font-weight: 600;
+      color: var(--muted); letter-spacing: 0.04em;
+      font-family: 'Barlow', sans-serif;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text); }
+    .nav-anchors {
+      display: flex; align-items: center; gap: 0;
+      margin-left: auto; overflow-x: auto; scrollbar-width: none;
+    }
+    .nav-anchors::-webkit-scrollbar { display: none; }
+    .nav-lang {
+      margin-left: 20px; flex-shrink: 0;
+      appearance: none; -webkit-appearance: none;
+      background: transparent; border: 1px solid rgba(43,37,32,0.2);
+      border-radius: 6px; padding: 3px 22px 3px 8px;
+      font-size: 11px; font-weight: 600; font-family: 'Barlow', sans-serif;
+      color: var(--muted); cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 6px center;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .nav-lang:hover { border-color: rgba(43,37,32,0.45); color: var(--text); }
+    .nav-anchor {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.01em;
+      color: var(--muted); padding: 4px 9px; border-radius: 6px;
+      white-space: nowrap; font-family: 'IBM Plex Mono', monospace;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-anchor:hover { color: var(--text); }
+    .nav-anchor.active { color: var(--text); background: rgba(43,37,32,0.07); }
+
+    /* -- SECTION WRAPPERS -- */
+    .sec {
+      width: 100%; padding: 32px 60px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .sec.white { background: var(--bg-card); }
+    .sec.cream { background: var(--bg); }
+    .sec-inner { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 32px; }
+
+    /* -- SECTION HEADING -- */
+    .sec-head {
+      display: flex; gap: 28px; align-items: flex-start;
+      font-size: 24px; font-weight: 800; font-family: 'Barlow', sans-serif;
+      line-height: 1.15; letter-spacing: -0.02em; text-transform: uppercase;
+    }
+    .sec-num { white-space: nowrap; flex-shrink: 0; }
+    .sec-title { flex: 1; }
+
+    /* -- TYPE SCALE -- */
+    .h3 { font-size: 11px; font-weight: 700; line-height: 1.4; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Barlow', sans-serif; }
+    .body { font-size: 14px; font-weight: 400; line-height: 1.75; font-family: 'Noto Sans', 'Barlow', sans-serif; }
+    .body-med { font-size: 14px; font-weight: 600; line-height: 1.5; font-family: 'Noto Sans', sans-serif; }
+    .text-block { display: flex; flex-direction: column; gap: 8px; }
+    .s04-stack { display: flex; flex-direction: column; gap: 16px; }
+    .s04-stack .dd-shot { margin-top: 4px; }
+    .s04-stack .dd-caption { margin-top: -8px; }
+
+    /* -- TITLE BAR -- */
+    .title-bar {
+      width: 100%; background: var(--bg); padding: 28px 60px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .title-bar-inner { width: 100%; max-width: 1400px; display: flex; flex-direction: column; gap: 12px; }
+    .title-big { font-size: 40px; font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; text-transform: uppercase; font-family: 'Barlow', sans-serif; }
+    .title-sub { font-size: 16px; font-weight: 500; line-height: 1.4; font-family: 'Noto Sans', sans-serif; color: var(--muted); }
+
+    /* -- INTRO SPLIT CARD -- */
+    .intro-card { width: 100%; border-radius: 20px; overflow: hidden; display: flex; align-items: stretch; min-height: 440px; }
+    .intro-photo { flex: 1; position: relative; min-height: 320px; overflow: hidden; }
+    .intro-copy {
+      flex: 1; background: var(--bg-card); padding: 28px 40px;
+      display: flex; flex-direction: column; gap: 16px; justify-content: center;
+    }
+
+    .s01-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: stretch; }
+    .s01-text { display: flex; flex-direction: column; gap: 16px; }
+    .s01-img { border-radius: 12px; overflow: hidden; position: relative; }
+    .s01-img img { width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; inset: 0; }
+
+    .stat-hi { background: var(--yellow); padding: 1px 4px; border-radius: 4px; font-weight: 600; }
+    .stat-hi-blue { background: var(--yellow); padding: 1px 6px; border-radius: 4px; font-weight: 600; }
+
+    /* -- BULL LIST / NUM LIST -- */
+    .bull-list { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+    .bull-list li { font-size: 14px; line-height: 1.75; font-family: 'Noto Sans', sans-serif; }
+    .num-list { padding-left: 28px; display: flex; flex-direction: column; gap: 6px; }
+    .num-list li { font-size: 14px; font-weight: 400; line-height: 1.75; font-family: 'Noto Sans', sans-serif; }
+    .badge-list { display: flex; flex-direction: column; gap: 24px; }
+    .badge-row { display: flex; gap: 20px; align-items: flex-start; }
+    .badge-num {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background: var(--text); color: var(--bg-card);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; font-family: 'Barlow', sans-serif;
+    }
+    .badge-copy { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+
+    /* -- TWO / THREE COL TEXT -- */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+
+    /* -- INSIGHT BOX -- */
+    .insight {
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      padding: 20px 24px; border-radius: 4px 14px 14px 4px;
+      font-family: 'Barlow', sans-serif; font-size: 19px; font-weight: 600; line-height: 1.5;
+      color: var(--text); letter-spacing: -0.005em;
+    }
+    .insight .ins-label { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 6px; }
+
+    /* -- PILL ROW -- */
+    .pill-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .pill {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px;
+      padding: 6px 14px; font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+    }
+    .sec.white .pill { background: var(--bg); border-color: transparent; }
+
+    /* -- HYPOTHESIS / FEATURE CARDS -- */
+
+    /* -- FEATURE BLOCK -- */
+    .feat-block { display: flex; flex-direction: column; gap: 20px; }
+    .feat-head { display: flex; align-items: center; gap: 14px; }
+    .feat-badge {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: var(--accent); color: var(--bg-card);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; font-family: 'Barlow', sans-serif;
+    }
+    .feat-name { font-family: 'Barlow', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.01em; text-transform: uppercase; line-height: 1.1; }
+
+    /* -- OFS STORY SPINE -- */
+    .ofs-story { display: flex; flex-direction: column; }
+    .ofs-chapter { display: grid; grid-template-columns: 40px 1fr; gap: 0 20px; }
+    .ofs-spine { display: flex; flex-direction: column; align-items: center; }
+    .ofs-badge {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background: #f8d08c; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; font-family: 'Barlow', sans-serif;
+      color: var(--text); z-index: 1;
+    }
+    .ofs-spine-line { width: 1.5px; flex: 1; min-height: 20px; background: var(--border); margin: 4px 0 0; }
+    .ofs-body { padding-bottom: 36px; }
+    .ofs-chapter-title {
+      font-family: 'Barlow', sans-serif; font-size: 18px; font-weight: 700; color: var(--text);
+      letter-spacing: -0.01em; line-height: 1.3; padding-top: 6px; margin-bottom: 10px;
+    }
+    .ofs-chapter-story { font-family: 'Noto Sans', 'Barlow', sans-serif; font-size: 14px; font-weight: 400; color: var(--text); line-height: 1.75; margin-bottom: 12px; }
+    .ofs-screenshot { width: 100%; margin-bottom: 14px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+    .ofs-screenshot img { width: 100%; display: block; }
+
+    /* -- BEFORE / AFTER COMPARISON -- */
+    .ba-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0 10px; }
+    .ba-card { display: flex; flex-direction: column; gap: 8px; }
+    .ba-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text); font-weight: 600;
+    }
+    .ba-tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--text); }
+    .ba-frame { width: 100%; border-radius: 6px; overflow: hidden; border: 1px solid #D9D9D9; }
+    .ba-frame img { width: 100%; display: block; }
+
+    /* -- DESIGN DECISION BLOCKS -- */
+    .dd-list { display: flex; flex-direction: column; gap: 28px; margin: 22px 0 6px; }
+    .dd-block { display: flex; flex-direction: column; gap: 10px; padding: 0; }
+    .dd-num {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+    }
+    .dd-title { font-size: 14.5px; font-weight: 700; color: var(--text); line-height: 1.35; margin: -2px 0 2px; }
+    .dd-body { font-size: 13px; color: var(--text); line-height: 1.75; }
+    .dd-body code {
+      font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+      background: rgba(0,0,0,0.05); padding: 1px 5px; border-radius: 3px;
+    }
+    .dd-shot { width: 100%; border-radius: 6px; overflow: hidden; border: 1px solid #D9D9D9; margin-top: 6px; background: #fff; }
+    .dd-shot img { width: 100%; display: block; }
+    .dd-caption {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); margin-top: 6px;
+    }
+
+    /* -- LOOP DIAGRAM -- */
+    .loop-wrap {
+      margin: 16px 0 28px;
+      position: relative;
+      background: #1c1917;
+      border-radius: 12px;
+      padding: 28px 24px 32px;
+    }
+    .loop-diagram {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0;
+    }
+    .loop-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 1;
+      flex-basis: 180px;
+      min-width: 0;
+      max-width: 200px;
+    }
+    .loop-node {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 20px 10px 10px;
+      position: relative;
+      z-index: 1;
+    }
+    .loop-num {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: #1c1917;
+      border: none;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px; font-weight: 600;
+      color: #ffffff;
+      flex-shrink: 0;
+    }
+    .loop-label {
+      font-size: 13px; font-weight: 600;
+      color: #1c1917;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+    .loop-caption {
+      font-size: 11px;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.55;
+      text-align: center;
+      padding: 0 4px;
+    }
+    .loop-connector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+      padding-top: 10px; /* align dot with middle of pill (~26px tall) */
+      min-width: 72px;
+    }
+    .loop-transfer-label {
+      font-size: 9.5px;
+      font-family: 'IBM Plex Mono', monospace;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      line-height: 1.3;
+      text-align: center;
+    }
+    .loop-dot {
+      --dot-color: rgba(255,255,255,0.6);
+      width: 56px;
+      height: 2px;
+      background-image: linear-gradient(to right, var(--dot-color) 50%, transparent 50%);
+      background-size: 8px 2px;
+      background-repeat: repeat-x;
+      animation: loopFlow 0.9s linear infinite;
+      position: relative;
+      opacity: 1;
+    }
+    .loop-dot::after {
+      content: '▸';
+      position: absolute;
+      right: -4px;
+      top: 50%;
+      transform: translateY(-55%);
+      font-size: 10px;
+      color: rgba(255,255,255,0.6);
+    }
+    @keyframes loopFlow {
+      to { background-position: 8px 0; }
+    }
+    .loop-return-bar {
+      border: 2px dashed rgba(255,255,255,0.35);
+      border-top: none;
+      border-radius: 0 0 16px 16px;
+      height: 32px;
+      position: relative;
+      margin-top: 10px;
+      animation: loopReturnFlow 1.4s linear infinite;
+    }
+    @keyframes loopReturnFlow {
+      0%   { border-color: rgba(255,255,255,0.25); }
+      50%  { border-color: rgba(255,255,255,0.55); }
+      100% { border-color: rgba(255,255,255,0.25); }
+    }
+    .loop-return-label {
+      position: absolute;
+      left: 50%; top: 100%;
+      transform: translate(-50%, -50%);
+      background: #1c1917;
+      padding: 0 12px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.72);
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    /* Tablet: tighter spacing, smaller connector */
+    @media (max-width: 1100px) {
+      .loop-dot { width: 34px; }
+      .loop-connector { min-width: 50px; }
+      .loop-node { padding: 9px 14px 9px 8px; gap: 8px; }
+      .loop-label { font-size: 12px; }
+      .loop-group { flex-basis: 140px; max-width: 170px; }
+      .loop-transfer-label { font-size: 9px; }
+    }
+    /* Narrow tablet: allow labels to wrap, compact further */
+    @media (max-width: 940px) {
+      .loop-dot { width: 24px; }
+      .loop-connector { min-width: 40px; }
+      .loop-transfer-label {
+        white-space: normal;
+        max-width: 60px;
+        font-size: 8.5px;
+      }
+      .loop-label {
+        white-space: normal;
+        text-align: center;
+        font-size: 11.5px;
+      }
+      .loop-node { padding: 7px 12px 7px 6px; gap: 6px; }
+      .loop-num { width: 24px; height: 24px; font-size: 10px; }
+      .loop-group { flex-basis: 110px; max-width: 130px; }
+      .loop-caption { font-size: 10.5px; padding: 0 2px; }
+    }
+    /* Mobile: stack vertically */
+    @media (max-width: 620px) {
+      .loop-diagram {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+      }
+      .loop-group {
+        max-width: none;
+        flex-basis: auto;
+        align-items: flex-start;
+        padding-left: 4px;
+      }
+      .loop-label { white-space: nowrap; }
+      .loop-caption { text-align: left; padding: 0 4px 0 0; font-size: 11px; }
+      .loop-connector {
+        flex-direction: row;
+        align-items: center;
+        padding-top: 0;
+        padding-left: 18px;
+        gap: 10px;
+        min-width: 0;
+      }
+      .loop-transfer-label { max-width: none; white-space: nowrap; }
+      .loop-dot {
+        width: 2px;
+        height: 24px;
+        background-image: linear-gradient(to bottom, var(--dot-color) 50%, transparent 50%);
+        background-size: 2px 6px;
+        background-repeat: repeat-y;
+        animation: loopFlowV 0.9s linear infinite;
+      }
+      .loop-dot::after {
+        content: '▾';
+        right: 50%;
+        top: 100%;
+        transform: translate(50%, -50%);
+      }
+      @keyframes loopFlowV {
+        to { background-position: 0 6px; }
+      }
+      .loop-return-bar { display: none; }
+    }
+
+    /* -- QUOTE ROW -- */
+    .quote-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .quote-card { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 18px; font-size: 13px; line-height: 1.65; color: var(--text); font-style: italic; }
+    .sec.cream .quote-card { background: var(--bg-card); border-color: transparent; }
+    .quote-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-style: normal; margin-bottom: 8px; display: block; }
+
+    /* -- FOOTER -- */
+    .footer { width: 100%; padding: 40px 60px; background: var(--text); color: #fffefb; display: flex; justify-content: center; }
+    .footer-contact { display: flex; align-items: center; gap: 0; flex-wrap: wrap; justify-content: center; }
+    .footer-item { font-size: 12px; font-family: 'IBM Plex Mono', monospace; padding: 4px 16px; }
+    .footer-item a { color: inherit; }
+    .footer-item a:hover { text-decoration: underline; }
+    .footer-sep { width: 1px; height: 14px; background: rgba(255,255,255,0.2); }
+
+    /* -- SCROLL REVEAL -- */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* -- RESPONSIVE -- */
+    @media (max-width: 1100px) {
+      .quote-row { grid-template-columns: 1fr; }
+      .two-col { grid-template-columns: 1fr; gap: 24px; }
+      .ba-compare { grid-template-columns: 1fr; gap: 14px; }
+    }
+    @media (max-width: 900px) {
+      .nav { padding: 12px 20px; }
+      .title-bar { padding: 28px 20px 20px; }
+      .sec { padding: 24px 20px; }
+      .sec-head { font-size: 20px; }
+      .title-big { font-size: 28px; }
+      .intro-card { flex-direction: column; }
+      .intro-photo { min-height: 260px; }
+      .two-col { grid-template-columns: 1fr; gap: 24px; }
+      .s01-grid { grid-template-columns: 1fr; }
+      .s01-img { order: -1; min-height: 240px; }
+      .footer { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- -- NAV -- -->
+<nav class="nav">
+  <a class="nav-back" href="/#work" data-i18n="nav.back">← Iris Hsieh</a>
+  <div class="nav-anchors">
+    <a class="nav-anchor" href="#intro" data-i18n="nav.intro">.Intro</a>
+    <a class="nav-anchor" href="#s01" data-i18n="nav.s01">01.Preface</a>
+    <a class="nav-anchor" href="#s02" data-i18n="nav.s02">02.Problem</a>
+    <a class="nav-anchor" href="#s03" data-i18n="nav.s03">03.Solution</a>
+    <a class="nav-anchor" href="#s04" data-i18n="nav.s04">04.Pivot</a>
+    <a class="nav-anchor" href="#s05" data-i18n="nav.s05">05.Results</a>
+  </div>
+  <select class="nav-lang" id="nav-lang-select">
+    <option value="en">EN</option>
+    <option value="ja">JA</option>
+    <option value="zh-tw">繁</option>
+    <option value="zh-cn">简</option>
+  </select>
+</nav>
+
+<!-- -- TITLE BAR -- -->
+<div class="title-bar">
+  <div class="title-bar-inner">
+    <div class="title-big" data-i18n="title.big">Thread Tracing — Building AI's Self-Evolution Feedback Loop</div>
+    <div class="title-sub" data-i18n="title.sub">How my team and I transformed blind failure rates into a structured observability pipeline — turning every user complaint into fuel for AI evolution.</div>
+  </div>
+</div>
+
+<!-- -- INTRO -- -->
+<div id="intro" class="sec cream" style="padding-top:0;padding-bottom:48px;">
+  <div class="sec-inner" style="max-width:100%;padding:0;">
+    <div class="intro-card">
+      <div class="intro-photo">
+        <img src="/assets/thread-tracing/feedback-cover.png" alt="Thread Tracing — AI feedback keyboard with thumbs up/down, chat, and AI keys" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;" />
+      </div>
+      <div class="intro-copy">
+        <div class="text-block">
+          <p class="h3" data-i18n="intro.overview.label">Project Overview</p>
+          <p class="body" data-i18n="intro.overview.body">To give enterprises greater control over their AI applications, my team and I designed <b>Thread Tracing</b> — a governance module that lets AI administrators observe organization-wide interaction data from a holistic perspective. Grounded in Google's PAIR framework, the system transforms scattered user feedback into structured, visual intelligence. Administrators can proactively identify model deviations and convert feedback into actionable instructions — closing an autonomous loop of <b>monitor, feedback, and optimize</b>.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3" data-i18n="intro.role.label">My Role</p>
+          <p class="body" data-i18n="intro.role.body"><span class="stat-hi">PM</span>, <span class="stat-hi">sole designer</span>, and <span class="stat-hi">user researcher</span>. I owned the feedback taxonomy design, the dashboard information architecture, the feedback-to-instruction pipeline, and the PAIR framework application.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3" data-i18n="intro.time.label">Company &amp; Timeframe</p>
+          <p class="body" data-i18n="intro.time.body">Wren AI &middot; 2026</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- -- 01. PREFACE -- -->
+<div id="s01" class="sec white" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head reveal">
+      <span class="sec-num">01.</span>
+      <span class="sec-title" data-i18n="s01.title">Preface — What Do We Lose When AI Enters the Enterprise?</span>
+    </div>
+    <div class="s01-grid">
+      <div class="s01-text">
+        <div class="text-block reveal">
+          <p class="body" data-i18n="s01.lede">During the design process at Wren AI, my team and I discovered that when AI systems move from the lab into enterprise environments serving <span class="stat-hi">thousands of users</span>, what administrators fear most isn't AI "not knowing the answer" — it's AI "giving the wrong answer and <span class="stat-hi-blue">nobody knows why</span>."</p>
+        </div>
+        <div class="text-block reveal">
+          <p class="h3" data-i18n="s01.blackbox.label">The current state is a "black box":</p>
+          <ol class="num-list">
+            <li data-i18n="s01.p1"><b>Broken Perception</b> — When a user hits "thumbs down," it's like a patient crying out in pain — but the administrator has no idea which nerve is damaged.</li>
+            <li data-i18n="s01.p2"><b>Open-Loop Governance</b> — The system lacks an "automated exam room" — administrators fix Error A this time, only to trigger Error B in the next update.</li>
+          </ol>
+        </div>
+        <div class="text-block reveal">
+          <p class="h3" data-i18n="s01.insight.label">Our mission</p>
+          <p class="body" data-i18n="s01.insight.body">As Senior Product Designer, my team and I set out to design a Feedback Loop that lets AI stop merely executing tasks and start learning to "evolve" from its mistakes.</p>
+        </div>
+      </div>
+      <div class="s01-img reveal">
+        <img src="/assets/thread-tracing/s01-cover.png" alt="AI door on a skyscraper — when AI enters the enterprise" />
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- -- 02. PROBLEM DEFINITION -- -->
+<div id="s02" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head reveal">
+      <span class="sec-num">02.</span>
+      <span class="sec-title" data-i18n="s02.title">Problem Definition — What "Symptoms" Are We Facing?</span>
+    </div>
+    <div class="text-block reveal">
+      <p class="body" data-i18n="s02.lede">We observed user behavior over <span class="stat-hi">three months</span>, segmenting by engagement level and query mode. Three failure patterns kept surfacing:</p>
+    </div>
+    <div class="text-block reveal">
+      <ol class="num-list">
+        <li data-i18n="s02.pA"><b>Noisy Signal</b> — When queries failed, users mostly responded with vague phrases like "this answer is useless" or "that's not what I wanted" — too ambiguous for AI to extract actionable optimization instructions. The existing thumbs-up/down was also too subtle; <span class="stat-hi-blue">almost no one used it</span>.</li>
+        <li data-i18n="s02.pB"><b>Transient Failures</b> — The team monitored traces internally via Langfuse, but offered no channel for project administrators to analyze failures on their own. Enterprises couldn't self-adjust — every optimization required post-sales intervention.</li>
+        <li data-i18n="s02.pC"><b>Misaligned Correction</b> — Even when corrections were made, there was no standardized test bank to verify whether a fix actually held across all scenarios. Administrators adjusted Instructions based on experience, but fixing Problem A often triggered Problem B in the next round — without a regression mechanism, every correction was a game of whack-a-mole.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<!-- -- 03. SOLUTION -- -->
+<div id="s03" class="sec white" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head reveal">
+      <span class="sec-num">03.</span>
+      <span class="sec-title" data-i18n="s03.title">Solution — The Feedback Loop We Designed</span>
+    </div>
+
+    <div class="text-block reveal">
+      <p class="h3" data-i18n="s01.pair.label">Why Feedback Loops Matter</p>
+      <p class="body" data-i18n="s01.pair.body">Referencing Google's <a href="https://pair.withgoogle.com/guidebook/chapters/feedback-and-controls/design-ai-feedback-loops" target="_blank" style="text-decoration:underline;">PAIR framework</a>, feedback is more than opinion collection — it's the core engine driving system evolution:</p>
+      <ol class="num-list">
+        <li data-i18n="s01.pair.p1"><b>Model Optimization (Ground Truth)</b> — Transforming user feedback into high-quality labeled data that precisely calibrates model errors.</li>
+        <li data-i18n="s01.pair.p2"><b>Personalized Perception (Personalization)</b> — Continuously learning individual preferences to craft tailored interaction experiences.</li>
+        <li data-i18n="s01.pair.p3"><b>Trust &amp; Agency</b> — Empowering users to intervene in decisions, shifting from passive acceptance to active guidance and building deep trust.</li>
+      </ol>
+    </div>
+    <div class="text-block reveal">
+      <p class="h3" data-i18n="s01.fb.label">Balancing Dual-Track Collection</p>
+      <p class="body" data-i18n="s01.fb.body">In our design, we adopted a parallel implicit-and-explicit strategy to ensure both breadth and depth of data:</p>
+      <ol class="num-list">
+        <li data-i18n="s01.fb.p1"><b>Implicit Feedback — Data Breadth:</b> Automatically monitoring clicks, dwell time, and ignore behavior as low-friction signals. Yields <span class="stat-hi">massive behavioral samples</span>, but environmental noise can mislead.</li>
+        <li data-i18n="s01.fb.p2"><b>Explicit Feedback — Intent Depth:</b> Capturing clear intent through ratings, thumbs up/down, and structured error reports. Higher interaction friction, but delivers the <span class="stat-hi-blue">purest optimization guidance</span>.</li>
+      </ol>
+    </div>
+
+    <div class="text-block reveal">
+      <p class="body" data-i18n="s03.lede">Based on the above, my team and I designed Thread Tracing as a four-stage closed loop — each stage directly targeting a gap we identified.</p>
+    </div>
+
+    <div class="loop-wrap reveal">
+      <div class="loop-diagram">
+        <div class="loop-group">
+          <div class="loop-node">
+            <div class="loop-num">01</div>
+            <div class="loop-label" data-i18n="s03.loop1">Structured Intake</div>
+          </div>
+          <div class="loop-caption" data-i18n="s03.loop1.cap">Users flag an AI error, pick an error type, and the reasoning trace is auto-captured.</div>
+        </div>
+        <div class="loop-connector">
+          <span class="loop-transfer-label" data-i18n="s03.loop.t12">trace + error type</span>
+          <div class="loop-dot"></div>
+        </div>
+        <div class="loop-group">
+          <div class="loop-node">
+            <div class="loop-num">02</div>
+            <div class="loop-label" data-i18n="s03.loop2">Error → Test Case</div>
+          </div>
+          <div class="loop-caption" data-i18n="s03.loop2.cap">Admin diagnoses the failure and normalizes it into a repeatable test case.</div>
+        </div>
+        <div class="loop-connector">
+          <span class="loop-transfer-label" data-i18n="s03.loop.t23">normalized case</span>
+          <div class="loop-dot"></div>
+        </div>
+        <div class="loop-group">
+          <div class="loop-node">
+            <div class="loop-num">03</div>
+            <div class="loop-label" data-i18n="s03.loop3">Guided Correction</div>
+          </div>
+          <div class="loop-caption" data-i18n="s03.loop3.cap">Compare wrong vs. right paths and target the fix at MDL or instructions.</div>
+        </div>
+        <div class="loop-connector">
+          <span class="loop-transfer-label" data-i18n="s03.loop.t34">updated MDL</span>
+          <div class="loop-dot"></div>
+        </div>
+        <div class="loop-group">
+          <div class="loop-node">
+            <div class="loop-num">04</div>
+            <div class="loop-label" data-i18n="s03.loop4">Regression Verification</div>
+          </div>
+          <div class="loop-caption" data-i18n="s03.loop4.cap">Re-run the full test bank to confirm the fix passes without breaking existing answers.</div>
+        </div>
+      </div>
+      <div class="loop-return-bar">
+        <span class="loop-return-label" data-i18n="s03.loop.return">↻ verified behavior feeds the next cycle</span>
+      </div>
+    </div>
+
+    <div class="ofs-story">
+      <div class="ofs-chapter reveal">
+        <div class="ofs-spine">
+          <div class="ofs-badge">01</div>
+          <div class="ofs-spine-line"></div>
+        </div>
+        <div class="ofs-body">
+          <div class="ofs-chapter-title" data-i18n="s03.st1.title">Structured Intake — Turning Noise into Signal</div>
+          <p class="ofs-chapter-story" data-i18n="s03.st1.desc">Feedback should blend naturally into the workflow. Previously the thumbs-up / thumbs-down icons sat almost invisibly in the action row, so few users ever pressed them. We made the ask explicit, extended the Yes / No click into finer-grained tags (SQL generation failure, retrieval error, instruction non-compliance, summary error, SQL-Pairs deviation), and auto-captured the AI's reasoning trace at the moment of failure — preserving the "crime scene" that had previously vanished.</p>
+          <div class="dd-list">
+            <div class="dd-block">
+              <div class="dd-num" data-i18n="s03.st1.dd0.num">Decision 01 · Make the ask explicit</div>
+              <div class="dd-title" data-i18n="s03.st1.dd0.title">Pull the question into the line of sight, not the action row.</div>
+              <p class="dd-body" data-i18n="s03.st1.dd0.body">The old design buried feedback in the generic action row — a tiny thumbs-up / thumbs-down wedged between copy, share, and regenerate. Almost nobody pressed them. We pulled the question into the answer itself with an inline <code>Was this result helpful?</code> prompt, pinned directly below every response. The Yes / No click stays low-commitment on purpose; the structured intake only unfolds when a user actually has something to report. Lifting the ask from chrome to content was the single biggest behavioral lever in this chapter — response rate climbed <b>+45%</b> once the prompt was impossible to miss.</p>
+              <div class="ba-compare">
+                <div class="ba-card">
+                  <span class="ba-tag" data-i18n="s03.st1.before">Before · icons only</span>
+                  <div class="ba-frame"><img src="/assets/thread-tracing/Old.png" alt="Previous feedback design with only inline thumb icons"></div>
+                </div>
+                <div class="ba-card">
+                  <span class="ba-tag is-after" data-i18n="s03.st1.after">After · explicit prompt</span>
+                  <div class="ba-frame"><img src="/assets/thread-tracing/New.png" alt="New feedback design with explicit Was this result helpful prompt"></div>
+                </div>
+              </div>
+            </div>
+            <div class="dd-block">
+              <div class="dd-num" data-i18n="s03.st1.dd1.num">Decision 02 · Tag taxonomy, not free text</div>
+              <div class="dd-title" data-i18n="s03.st1.dd1.title">Route noise into five named failure modes the AI team can already act on.</div>
+              <p class="dd-body" data-i18n="s03.st1.dd1.body">An early open-text version of this form taught us that unstructured feedback fragments into paraphrases of the same problem — <i>"the SQL is wrong"</i>, <i>"it used the wrong table"</i>, <i>"the query broke"</i> all meant one thing but read as three. We mapped the <span class="stat-hi">five real AI failure modes</span> — <code>SQL generation failed</code>, <code>Failed to retrieve data</code>, <code>Failed to follow instructions</code>, <code>Incorrect AI summary</code>, <code>SQL-Pairs deviation</code> — onto a fixed chip set. Users tap; the system aggregates. Signal survives the translation, and the admin dashboard can finally count apples against apples.</p>
+              <div class="dd-shot"><img src="/assets/thread-tracing/feedback-answer-modal.png" alt="Answer feedback modal with five primary issue tags"></div>
+            </div>
+            <div class="dd-block">
+              <div class="dd-num" data-i18n="s03.st1.dd2.num">Decision 03 · Depth on demand, not by default</div>
+              <div class="dd-title" data-i18n="s03.st1.dd2.title">Keep the form lean; let one tag earn the right to unfold.</div>
+              <p class="dd-body" data-i18n="s03.st1.dd2.body">A long form hurts completion rate; a short form loses specificity exactly where it matters most. The compromise: the modal stays lean by default, but when a user picks <code>Failed to follow instructions</code> — the one tag where <i>"which rule"</i> changes everything — a second dropdown reveals every project-level instruction currently configured. <code>Other</code> exists as a last resort, deliberately positioned as the least actionable option. The admin either gets a named rule to fix, or a clear signal that the instruction taxonomy is missing coverage.</p>
+              <div class="dd-shot"><img src="/assets/thread-tracing/feedback-answer-instruction-dropdown.png" alt="Conditional instruction dropdown triggered by selecting Failed to follow instructions"></div>
+            </div>
+            <div class="dd-block">
+              <div class="dd-num" data-i18n="s03.st1.dd3.num">Decision 04 · One shape, two contexts</div>
+              <div class="dd-title" data-i18n="s03.st1.dd3.title">Swap the vocabulary, preserve the muscle memory.</div>
+              <p class="dd-body" data-i18n="s03.st1.dd3.body">Answers and charts fail for different reasons, so they can't share one tag list — but they have to share one mental model, or users stop trusting the form after the second surface. Every feedback modal keeps the same three-part shape: <b>rate &rarr; tag &rarr; optional description</b>. Only the tag vocabulary swaps. A user who gave feedback on a broken SQL answer already knows what to do the first time a chart renders with the wrong axis — even though the specific options are different.</p>
+              <div class="dd-shot"><img src="/assets/thread-tracing/feedback-chart-modal.png" alt="Chart feedback modal with chart-specific issue tags"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ofs-chapter reveal">
+        <div class="ofs-spine">
+          <div class="ofs-badge">02</div>
+          <div class="ofs-spine-line"></div>
+        </div>
+        <div class="ofs-body">
+          <div class="ofs-chapter-title" data-i18n="s03.mq.title">Monitor Quality — From Count to Cause</div>
+          <p class="ofs-chapter-story" data-i18n="s03.mq.desc">The feedback modal was the producer; this dashboard is the consumer. Project owners open <code>Settings → Project → Thread tracing</code> and land on a single screen that has to answer two questions fast — is the AI getting better or worse this week, and what's the dominant failure mode right now. Everything else is a filter.</p>
+          <div class="dd-list">
+            <div class="dd-block">
+              <div class="dd-num" data-i18n="s03.mq.dd1.num">Decision 01 · Trend first, taxonomy second</div>
+              <div class="dd-title" data-i18n="s03.mq.dd1.title">Lead with the line; let the bars explain.</div>
+              <p class="dd-body" data-i18n="s03.mq.dd1.body">Admins don't want to open on a list of failures — they want to know if the needle is moving. The hero of the dashboard is a success-metrics chart (positive vs negative feedback, by day), with the failure-breakdown bar chart sitting directly underneath. The order matters: you glance at the trend line to decide whether last week's fix actually helped, then drop to the bars to see which category is spiking. Putting the breakdown first would have inverted the question into <i>"what's failing?"</i> before the admin had even decided whether anything needed fixing.</p>
+              <div class="dd-shot"><img src="/assets/thread-tracing/monitor-dashboard.png" alt="Thread tracing dashboard showing success metrics trend above a failure breakdown bar chart"></div>
+            </div>
+            <div class="dd-block">
+              <div class="dd-num" data-i18n="s03.mq.dd2.num">Decision 02 · Filter by who reported, not only what happened</div>
+              <div class="dd-title" data-i18n="s03.mq.dd2.title">Put identity on the filter shelf next to time and type.</div>
+              <p class="dd-body" data-i18n="s03.mq.dd2.body">Early prototypes filtered only by date range and trace type (<code>Answer</code> vs <code>Chart</code>). That wasn't enough once we talked to cross-team admins — marketing's failure profile looks nothing like finance's. We promoted <b>Reported-By</b> (specific members and user groups) into a first-class control rather than hiding it behind an advanced options menu, so the same bar chart can answer <i>"which team's queries is the AI struggling with?"</i> in two clicks. On the table below, a thumbs-up / thumbs-down toggle lets an admin zoom straight to explicit negative signal when they're hunting for the next correction.</p>
+              <div class="dd-shot"><img src="/assets/thread-tracing/monitor-filter-reported.png" alt="Reported-By filter listing members and user groups"></div>
+            </div>
+            <div class="dd-block">
+              <div class="dd-num" data-i18n="s03.mq.dd3.num">Decision 03 · From count to cause in one click</div>
+              <div class="dd-title" data-i18n="s03.mq.dd3.title">Collapse the table; let every row promise a deeper view.</div>
+              <p class="dd-body" data-i18n="s03.mq.dd3.body">The thread table is the bridge between <i>"a number went up"</i> and <i>"here's the actual broken query."</i> Each row collapses to Thread ID, timestamp, trace type, and sentiment. Expand it and the AI's suggested failure reasons appear inline, so admins can decide whether a full dive is worth it before opening the trace drawer. <code>Action → View</code> is where the reasoning trace, metadata, and SQL live — deep information, but gated behind the admin's intent rather than served up front.</p>
+              <div class="dd-shot"><img src="/assets/thread-tracing/monitor-table-expanded.png" alt="Thread table with an expanded row showing suggested failure reasons"></div>
+            </div>
+            <div class="dd-block">
+              <div class="dd-num" data-i18n="s03.mq.dd4.num">Decision 04 · The drawer as a crime-scene brief</div>
+              <div class="dd-title" data-i18n="s03.mq.dd4.title">Everything you need to judge the failure — without leaving the table.</div>
+              <p class="dd-body" data-i18n="s03.mq.dd4.body">The drawer opens at the moment of decision — you've scanned the expanded row, the suggested failure reason looks worth investigating, and you click <code>View</code>. What you need now isn't a new page: it's a focused brief. The drawer surfaces creator identity and the reporter who flagged it (separating who ran the thread from who noticed the error), the AI's run status (distinguishing what the machine recorded from what the user perceived as broken), the issue tags the user chose, and the thread name that gives the failure natural-language context before the SQL appears. Every field earns its place — remove the reporter and you lose the cross-team signal; remove the thread name and the SQL reads without context. The drawer is designed to be read in thirty seconds and decided on.</p>
+              <div class="dd-shot"><img src="/assets/thread-tracing/monitor-trace-details.png" alt="Trace details drawer with reasoning trace, metadata and SQL"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ofs-chapter reveal">
+        <div class="ofs-spine">
+          <div class="ofs-badge">03</div>
+          <div class="ofs-spine-line"></div>
+        </div>
+        <div class="ofs-body">
+          <div class="ofs-chapter-title" data-i18n="s03.st2.title">Error → Eval Suite — Closing the Loop on Failure</div>
+          <p class="ofs-chapter-story" data-i18n="s03.st2.desc">The feedback modal captures the signal; the trace drawer names the failure. This chapter is where that named failure becomes a repeatable test. When an admin converts a diagnosed thread into an Eval question, they're not writing a test case from scratch — they're turning a real user complaint into a permanent benchmark that runs against every future correction.</p>
+          <div class="dd-list">
+            <div class="dd-block">
+              <div class="dd-num" data-i18n="s03.st2.dd1.num">Decision 01 · Ground Truth SQL as the anchor</div>
+              <div class="dd-title" data-i18n="s03.st2.dd1.title">Pin "correct" before you measure "wrong."</div>
+              <p class="dd-body" data-i18n="s03.st2.dd1.body">A test case without a ground truth is just a question. The Eval suite requires admins to pair every natural-language question with a verified SQL — either hand-authored or AI-generated and approved. This pair is the unit of measurement. Once locked, it becomes the objective standard the AI is scored against — not a human's memory of "it used to work," but a reproducible, version-controlled definition of correct. The <code>Preview Data</code> button closes the loop at definition time: you know the SQL is valid before it ever becomes a benchmark.</p>
+              <div class="dd-shot"><img src="/assets/thread-tracing/eval-question-step1.png" alt="Step 1 — question and ground truth SQL editor with Preview Data"></div>
+            </div>
+            <div class="dd-block">
+              <div class="dd-num" data-i18n="s03.st2.dd2.num">Decision 02 · Two-step creation separates SQL accuracy from narrative accuracy</div>
+              <div class="dd-title" data-i18n="s03.st2.dd2.title">Correct SQL and correct output are two different questions.</div>
+              <p class="dd-body" data-i18n="s03.st2.dd2.body">Step 1 establishes the SQL anchor. Step 2 establishes what the answer should actually say — key findings, data sources, conclusions. Separating these steps forces admins to think about correctness at two levels: <i>"Did the AI write the right query?"</i> and <i>"Did the AI surface the right insight from it?"</i> A query can return the right data and still produce a misleading summary. The two-step model makes that distinction explicit, so regressions in either layer are caught independently.</p>
+              <div class="dd-shot"><img src="/assets/thread-tracing/eval-question-step2.png" alt="Step 2 — expected output with key findings, data sources and conclusions"></div>
+            </div>
+            <div class="dd-block">
+              <div class="dd-num" data-i18n="s03.st2.dd3.num">Decision 03 · The benchmark result is a diff, not a verdict</div>
+              <div class="dd-title" data-i18n="s03.st2.dd3.title">"Failed" is a starting point, not a finding.</div>
+              <p class="dd-body" data-i18n="s03.st2.dd3.body">The assessment view shows Pass / Fail alongside a score reason (<i>"Column count mismatch: generated is missing 1 column"</i>), a side-by-side SQL diff, a data preview comparison, and the AI's reasoning timeline. Each element answers a different diagnostic question: the score reason says <i>where</i> the divergence happened, the SQL diff shows <i>which clause</i> caused it, the data preview shows whether it mattered in practice, and the reasoning timeline reveals whether the AI misread the question or misbuilt the query. Admins leave the view knowing not just that a correction failed — but where to aim the next one.</p>
+              <div class="dd-shot"><img src="/assets/thread-tracing/eval-details.png" alt="Evaluation detail view: assessment, score reason, SQL diff and reasoning timeline"></div>
+              <div class="dd-shot"><img src="/assets/thread-tracing/eval-sql-diff.png" alt="Full-screen SQL diff comparing ground truth SQL against Wren-generated SQL"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ofs-chapter reveal">
+        <div class="ofs-spine">
+          <div class="ofs-badge">04</div>
+          <div class="ofs-spine-line"></div>
+        </div>
+        <div class="ofs-body">
+          <div class="ofs-chapter-title" data-i18n="s03.st3.title">Guided Correction — The AI Knows What to Change, Not Just What Failed</div>
+          <p class="ofs-chapter-story" data-i18n="s03.st3.desc">The Eval suite names what failed. The AI Advisor takes it from there — running a diagnostic pass on the benchmark failures, staging specific knowledge-base changes, and verifying the result before anything ships. Correction becomes targeted instead of instinctive.</p>
+          <div class="dd-list">
+            <div class="dd-block">
+              <div class="dd-num" data-i18n="s03.st3.dd1.num">Decision 01 · Select failures, not symptoms</div>
+              <div class="dd-title" data-i18n="s03.st3.dd1.title">Diagnosis starts with the benchmark, not a description.</div>
+              <p class="dd-body" data-i18n="s03.st3.dd1.body">Admins don't describe the problem to the advisor — they select the failing questions directly from the benchmark result. The advisor takes those as input and runs its own diagnostic pass across the knowledge base. The selection step matters: it scopes the diagnosis to confirmed failures, not hypotheticals, which keeps staged suggestions tightly coupled to observed regressions rather than guesswork.</p>
+              <div class="dd-shot"><img src="/assets/thread-tracing/eval-advisor-diagnosis.png" alt="AI Advisor — 3 failed benchmark questions selected for diagnosis"></div>
+            </div>
+            <div class="dd-block">
+              <div class="dd-num" data-i18n="s03.st3.dd2.num">Decision 02 · Staged changes, not one-click fixes</div>
+              <div class="dd-title" data-i18n="s03.st3.dd2.title">Every suggestion is reviewable before it becomes a commit.</div>
+              <p class="dd-body" data-i18n="s03.st3.dd2.body">The advisor surfaces schema adjustments and instruction edits as staged proposals — one change at a time, with edit and deselect controls on each. Admins can review the logic, modify the wording, or remove an item entirely before anything is applied. The separation between diagnosis and apply is intentional: it keeps human judgment in the loop on changes that touch the AI's core knowledge model, where a poorly scoped instruction can create new regressions while fixing old ones.</p>
+              <div class="dd-shot"><img src="/assets/thread-tracing/eval-advisor-staged.png" alt="AI Advisor step 1 — staged schema modifications and instruction edits with review controls"></div>
+            </div>
+            <div class="dd-block">
+              <div class="dd-num" data-i18n="s03.st3.dd3.num">Decision 03 · Verify before apply</div>
+              <div class="dd-title" data-i18n="s03.st3.dd3.title">The benchmark decides whether the fix is ready.</div>
+              <p class="dd-body" data-i18n="s03.st3.dd3.body">Before staged changes are applied, the advisor runs a verification pass against the same benchmark questions. A Before / After column shows the per-question outcome — which failures resolved, which remained, and whether anything that previously passed has regressed. Admins commit only when the verification run agrees the changes are safe. This gate means every staged fix has been tested, not just reviewed.</p>
+              <div class="dd-shot"><img src="/assets/thread-tracing/eval-advisor-verification.png" alt="AI Advisor step 2 — verification run with Before/After columns showing FAILED → Passed improvements"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ofs-chapter reveal">
+        <div class="ofs-spine">
+          <div class="ofs-badge">05</div>
+          <div class="ofs-spine-line"></div>
+        </div>
+        <div class="ofs-body">
+          <div class="ofs-chapter-title" data-i18n="s03.st4.title">Regression Verification — Pass on Every Round, Not Just This One</div>
+          <p class="ofs-chapter-story" data-i18n="s03.st4.desc">The advisor's verification pass only re-tests the questions it set out to fix. But a schema edit written to patch one failure can quietly break a question that was already green. Before anything ships to the AI system, the full benchmark runs one more time — every question, not just the failing ones — and only a clean sweep unlocks the final apply.</p>
+          <div class="dd-list">
+            <div class="dd-block">
+              <div class="dd-num" data-i18n="s03.st4.dd3.num">Decision 01 · Full apply, guarded by a full re-run</div>
+              <div class="dd-title" data-i18n="s03.st4.dd3.title">The benchmark is the final approver — not the advisor.</div>
+              <p class="dd-body" data-i18n="s03.st4.dd3.body">Apply to AI system is intentionally the end of a two-gate process. The first gate is the advisor's Before/After on the failing subset; the second gate is a full-bank re-run that surfaces any new regressions introduced by the staged edits. Only when both rows read clean does the button activate. What ships isn't a suggestion an admin approved — it's a correction that the benchmark itself has signed off on.</p>
+              <div class="dd-shot"><img src="/assets/thread-tracing/eval-advisor-apply.png" alt="AI Advisor step 3 — full apply with benchmark passing and Apply to AI system button"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ofs-chapter reveal">
+        <div class="ofs-spine">
+          <div class="ofs-badge">06</div>
+        </div>
+        <div class="ofs-body">
+          <div class="ofs-chapter-title" data-i18n="s03.st5.title">The Loop Closes — The Record Becomes the Next Starting Line</div>
+          <p class="ofs-chapter-story" data-i18n="s03.st5.desc">With apply complete, the benchmark run becomes the permanent record for the cycle. Accuracy delta, an <i>Improvement: Completed</i> stamp, every schema field the advisor touched, every instruction it added — all stitched to one timestamp. The loop doesn't just close; it leaves a signed receipt the next cycle reads from.</p>
+          <div class="dd-list">
+            <div class="dd-block">
+              <div class="dd-num" data-i18n="s03.st5.dd1.num">Decision 01 · The completed run is also the audit trail</div>
+              <div class="dd-title" data-i18n="s03.st5.dd1.title">One timestamp, one signed summary of what actually shipped.</div>
+              <p class="dd-body" data-i18n="s03.st5.dd1.body">The benchmark result page carries three things at the top — the accuracy score, the <i>Improvement: Completed</i> label, and an expandable Advisor result that inventories every schema adjustment, every Specific or Global instruction, and a per-question verdict. An admin returning three weeks later can reconstruct why the AI behaves the way it does without asking the original author. For the next correction cycle, this record is also the baseline: the next full re-run compares against this version of truth, not against memory.</p>
+              <div class="dd-shot"><img src="/assets/thread-tracing/eval-advisor-end.png" alt="Benchmark result after apply — Accuracy 80%, Improvement Completed, with Advisor result expanded showing schema modifications, Specific and Global instructions, and per-question verdicts"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<!-- -- 04. DESIGN CHALLENGES -- -->
+<div id="s04" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head reveal">
+      <span class="sec-num">04.</span>
+      <span class="sec-title" data-i18n="s04.title">Design Pivot — From One-Shot to Iterative</span>
+    </div>
+
+    <div class="s04-stack reveal">
+      <p class="body" data-i18n="s04.wrong.body">The first AI Advisor I shipped assumed correction could be a single transaction. On a failed benchmark question, the admin opened a right-side drawer, read the score reason, and saw two things directly: a proposed schema adjustment with an <code>Apply adjustment</code> button, and a recommended instruction with an <code>Add to instruction</code> button. One click per row committed the change. That was the entire user flow — no verification pass, no full re-run, no trace of whether the fix actually held across the rest of the bank. The advisor spoke, the admin clicked, the drawer closed.</p>
+
+      <div class="dd-shot">
+        <img src="/assets/thread-tracing/Before.png" alt="First version of the AI advisory drawer — Score reason, Schema adjustments with Apply adjustment button, and Recommended instructions with Add to instruction button; one click ended the flow">
+      </div>
+      <p class="dd-caption" data-i18n="s04.wrong.cap">BEFORE · One-shot AI advisory drawer — Apply and Add, then the flow ended.</p>
+
+      <p class="body" data-i18n="s04.lede" style="margin-top:20px;">Testing with real eval sets proved that mental model wrong. A schema note that fixed one failure often introduced a new one elsewhere, and the admin had no way to see it until a user complained again. <span class="stat-hi-blue">Correction isn't a transaction — it's a cycle.</span> That realization reshaped every screen that came after: we stopped designing a linear <i>diagnose → fix → done</i> flow, and started designing for repeated rounds of test, adjust, and re-verify, with the benchmark sitting between each cycle as the arbiter of whether a fix actually shipped.</p>
+
+      <p class="body" data-i18n="s04.right.body">The second version replaced the single click with a loop. Every staged schema modification and every new instruction now passes through a Before / After verification run — the same failing questions, re-executed with the edits, shown side by side so admins can see exactly which failures resolved and whether any passing question regressed. Changes aren't overwritten; they accumulate. Each round adds to a growing stack of schema adjustments and instructions that the advisor has already confirmed safe, and <code>Re-run verification</code> lets the admin add another edit and test it against that stack before anything reaches the knowledge base. A correction is no longer final after one click — it's final after the benchmark stops surfacing regressions.</p>
+
+      <div class="dd-shot">
+        <img src="/assets/thread-tracing/eval-advisor-verification.png" alt="Second version of the Advisor — Verification step with Before/After columns and a growing stack of Staged Changes (schema modifications and instructions) on the right">
+      </div>
+      <p class="dd-caption" data-i18n="s04.right.cap">AFTER · A multi-round Before / After verification loop — every schema modification and instruction earns its place only after repeated re-runs.</p>
+
+      <p class="body" data-i18n="s04.d1.body" style="margin-top:20px;">This was the most critical — and most labor-intensive — part of engineering collaboration. When each correction round may trigger new side effects, the interface can no longer be a one-way conveyor belt. We had to design every step for "what if this needs to be done again": error classification needed to support re-tagging, the test bank needed incremental expansion rather than full replacement, and correction results needed immediate comparison with previous rounds rather than simply overwriting them.</p>
+
+      <p class="body" data-i18n="s04.d2.body">This mindset shift also changed how we presented AI reasoning paths to administrators. In the initial linear model, we only needed to show "here's the error, here's the fix." But in an iterative model, administrators need to understand why the same issue recurs, which previous corrections may have introduced new problems, and which areas still haven't been covered by the test bank. Information architecture evolved from a simple diagnostic report into a multi-round correction history with contextual comparison.</p>
+
+      <p class="body" data-i18n="s04.d3.body">The most valuable lesson: <span class="stat-hi-blue">once we accepted that correction is a cycle rather than a destination, design decisions became much clearer</span>. Every feature needed to answer one question — <span class="stat-hi-blue">"Does this help the next iteration go more smoothly?"</span> — rather than "Does this solve the problem once and for all?"</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- -- 05. RESULTS & REFLECTIONS -- -->
+<div id="s05" class="sec white" style="padding-top:32px;padding-bottom:60px;">
+  <div class="sec-inner">
+    <div class="sec-head reveal">
+      <span class="sec-num">05.</span>
+      <span class="sec-title" data-i18n="s05.title">Results &amp; Reflections — From Passive Observation to Active Governance</span>
+    </div>
+    <div class="text-block reveal">
+      <p class="body" data-i18n="s05.lede">Thread Tracing turned what had been scattered, headache-inducing user errors into a core data asset that drives the product's evolution.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="text-block reveal">
+        <p class="h3" data-i18n="s05.result.label">A Systemic Shift in Collaboration Efficiency</p>
+        <p class="body" data-i18n="s05.result.body">Building the Test Set mechanism standardized the language my team uses for AI troubleshooting. It dissolved the gap between engineering and design over <i>what the error actually was</i>, shrinking a correction cycle that used to take <span class="stat-hi">days</span> of back-and-forth down to <span class="stat-hi">minutes</span>-long exercises of targeted diagnosis and fix.</p>
+      </div>
+      <div class="text-block reveal">
+        <p class="h3" data-i18n="s05.next.label">Redefining the Designer's Role</p>
+        <p class="body" data-i18n="s05.next.body">This project reshaped how I see my role. In an AI product, a designer's job reaches beyond the surface of the interface — it becomes the work of building the governance logic. I wasn't just fixing a bug; I was building a framework that made the AI's black-box reasoning transparent and controllable.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- -- FOOTER -- -->
+<div class="footer">
+  <div class="footer-contact">
+    <div class="footer-item"><span>WeChat: ralinzain</span></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.instagram.com/ralinzain" target="_blank" rel="noreferrer">Instagram</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.linkedin.com/in/ming-hsi-h-b59182158/" target="_blank" rel="noreferrer">LinkedIn</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://wa.me/886975573947">WhatsApp: +886 975 573 947</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="mailto:ralinzain@gmail.com">ralinzain@gmail.com</a></div>
+  </div>
+</div>
+
+<script>
+  // -- NAV active state + scroll reveal --
+  (function() {
+    const anchors = document.querySelectorAll('.nav-anchor');
+    const sectionIds = ['intro','s01','s02','s03','s04','s05'];
+    const sections = sectionIds.map(id => document.getElementById(id));
+    const navEl = document.querySelector('.nav');
+    function update() {
+      const navH = navEl ? navEl.offsetHeight : 57;
+      const scrollY = window.scrollY + navH + 40;
+      let active = sections[0];
+      sections.forEach(sec => { if (sec && sec.offsetTop <= scrollY) active = sec; });
+      // When the page is scrolled to the bottom, force the last section active —
+      // otherwise a short final section never crosses the probe line.
+      const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 80;
+      if (nearBottom && sections[sections.length - 1]) active = sections[sections.length - 1];
+      anchors.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + (active ? active.id : ''));
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+
+    // Scroll reveal
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  })();
+
+  // -- i18n --
+  const I18N = {
+    en: {},
+    ja: {
+      'nav.back': '← Iris Hsieh',
+      'nav.intro': '.イントロ',
+      'nav.s01': '01.序文',
+      'nav.s02': '02.課題',
+      'nav.s03': '03.ソリューション',
+      'nav.s04': '04.設計転換',
+      'nav.s05': '05.成果',
+      'title.big': 'Thread Tracing:AI の自己進化フィードバックループの構築',
+      'title.sub': '盲目的な失敗率を構造化された可観測性パイプラインに変えた方法、すべてのユーザーの苦情を AI 進化の燃料に。',
+      'intro.overview.label': 'プロジェクト概要',
+      'intro.overview.body': '企業の AI 活用における統制力を高めるために、私とチームは <b>Thread Tracing</b> ガバナンスモジュールを設計しました。AI 管理者が組織全体のインタラクションデータを俯瞰的に観測できるシステムです。Google の PAIR フレームワークに基づき、散在するユーザーフィードバックを構造化されたビジュアルインテリジェンスに変換。管理者はモデルの偏差を能動的に特定し、フィードバックを実行可能なインストラクションに転換できます。<b>監視・フィードバック・最適化</b>の自律ループを実現します。',
+      'intro.role.label': '担当範囲',
+      'intro.role.body': '<span class="stat-hi">PM</span>、<span class="stat-hi">唯一のデザイナー</span>、<span class="stat-hi">ユーザーリサーチャー</span>。フィードバック分類体系の設計、ダッシュボードの情報アーキテクチャ、フィードバックからインストラクションへのパイプライン、PAIR フレームワークの適用を担当しました。',
+      'intro.time.label': '会社と時期',
+      'intro.time.body': 'Wren AI · 2026',
+      's01.title': '序文:AI が企業に入ったとき、何を失ったのか？',
+      's01.lede': 'Wren AI の設計プロセスで、私たちはあることに気づきました。AI システムが実験室から<span class="stat-hi">数千人規模</span>の企業環境に移行するとき、管理者が最も恐れるのは AI が「答えを知らない」ことではなく、AI が「間違った答えを出して、<span class="stat-hi-blue">なぜだか誰もわからない</span>」ことでした。',
+      's01.blackbox.label': '現状は「ブラックボックス」：',
+      's01.p1': '<b>断裂した知覚</b>、ユーザーが「低評価」を押すのは患者が痛みを訴えるようなものですが、管理者にはどの神経が問題なのかわかりません。',
+      's01.p2': '<b>オープンループの統制</b>、システムには「自動化された試験室」がなく、管理者が今回エラー A を修正しても、次のアップデートでエラー B を引き起こしてしまいます。',
+      's01.insight.label': '私たちのミッション',
+      's01.insight.body': 'シニアプロダクトデザイナーとして、チームの目標は、AI がタスクを単に実行するだけでなく、ミスから「進化」することを学ぶフィードバックループを設計することでした。',
+      's01.pair.label': 'なぜフィードバックループが重要なのか',
+      's01.pair.body': 'Google の <a href="https://pair.withgoogle.com/guidebook/chapters/feedback-and-controls/design-ai-feedback-loops" target="_blank" style="text-decoration:underline;">PAIR フレームワーク</a>を参照すると、フィードバックは意見収集にとどまらず、システム進化を駆動するコアエンジンです：',
+      's01.pair.p1': '<b>モデル最適化（Ground Truth）</b>、ユーザーフィードバックを高品質なラベル付きデータに変換し、モデルエラーを精密に校正します。',
+      's01.pair.p2': '<b>パーソナライズ知覚（Personalization）</b>、個人の好みを継続的に学習し、カスタマイズされたインタラクション体験を構築します。',
+      's01.pair.p3': '<b>信頼と主導権（Agency）</b>、ユーザーに意思決定への介入力を与え、受動的な受容から能動的な誘導へ転換し、深い信頼を構築します。',
+      's01.fb.label': 'デュアルトラック収集のバランス',
+      's01.fb.body': '設計において、データの広さと深さの両方を確保するため「暗黙と明示の並行」戦略を採用しました：',
+      's01.fb.p1': '<b>暗黙的フィードバック(データの広さ):</b>クリック、滞在時間、無視行動などの低摩擦シグナルを自動監視。<span class="stat-hi">大量の行動サンプル</span>が得られますが、環境ノイズによるシグナルの誤誘導に注意が必要です。',
+      's01.fb.p2': '<b>明示的フィードバック(意図の深さ):</b>評価、いいね/わるいね、構造化エラー報告で明確な意図を取得。操作摩擦は高いですが、<span class="stat-hi-blue">最も純度の高い最適化指針</span>を提供します。',
+      's02.title': '課題定義:私たちが直面する「病症」とは？',
+      's02.lede': '<span class="stat-hi">約3ヶ月間</span>のユーザー行動を観察し、エンゲージメントレベルとクエリモードでセグメント化しました。3つの障害パターンが繰り返し浮上しました：',
+      's02.pA': '<b>ノイジーなシグナル（Noisy Signal）</b>、クエリが失敗した際、ユーザーの大半は「この回答は使えない」「求めていたのはこれじゃない」等の曖昧なフレーズで反応し、AI が実行可能な最適化指示を抽出するには曖昧すぎました。既存の thumbs up/down も目立たず、<span class="stat-hi-blue">ほぼ誰も利用していませんでした</span>。',
+      's02.pB': '<b>一過性の障害（Transient Failures）</b>、チームは Langfuse で内部的にトレースを監視していましたが、プロジェクト管理者が自ら分析するチャネルがありませんでした。企業は自主的に調整できず、毎回ポストセールスの介入が必要でした。',
+      's02.pC': '<b>焦点のずれた処方（Misaligned Correction）</b>、修正を行っても、その修正がすべてのシナリオで有効かを検証する標準化された問題集がありませんでした。管理者は経験に基づいて Instruction を調整しましたが、問題 A を修正すると次のラウンドで問題 B が発生することが多く、リグレッションテストの仕組みがないため、毎回モグラ叩きのような状態でした。',
+      's03.title': 'ソリューション:私たちが設計したフィードバックループ',
+      's03.lede': '上記に基づき、チームと共に Thread Tracing を4段階のクローズドループとして設計しました。各段階が発見したギャップに直接対応しています。',
+      's03.loop1': '構造化インテーク',
+      's03.loop2': 'エラー → テストケース',
+      's03.loop3': 'ガイド付き校正',
+      's03.loop4': '回帰検証',
+      's03.loop.return': '↻ 検証済みの挙動が次のサイクルへ',
+      's03.loop1.cap': 'ユーザーが AI のエラーを報告し、エラータイプを選択。推論トレースは自動で添付される。',
+      's03.loop2.cap': '管理者が失敗を診断し、再現可能なテストケースとして正規化する。',
+      's03.loop3.cap': '誤答と正解の経路を比較し、MDL または Instruction に的確に修正を入れる。',
+      's03.loop4.cap': 'テストバンク全体を再実行し、既存の正答を壊さずに修正が通ることを確認する。',
+      's03.loop.t12': 'トレース + エラータイプ',
+      's03.loop.t23': '正規化されたケース',
+      's03.loop.t34': '更新された MDL',
+      's03.st1.title': '構造化インテーク:ノイズをシグナルに',
+      's03.st1.desc': 'フィードバックはワークフローに自然に溶け込むべきです。以前は「いいね / わるいね」アイコンがアクション行の中にほとんど目立たずに置かれていたため、ほとんどのユーザーが押すことはありませんでした。そこで問いかけを明示化し、Yes / No クリックの奥で、より細かいタグ（SQL 生成失敗、取得エラー、指示未遵守、要約エラー、SQL-Pairs 偏差）へと展開。同時に、障害発生時の AI 推論トレースを自動キャプチャし、以前は消えていた「犯行現場」を保存するようにしました。',
+      's03.st1.before': '旧デザイン · アイコンのみ',
+      's03.st1.after': '新デザイン · 明示的な問いかけ',
+      's03.st1.dd0.num': '決定 01 · 問いかけを明示化する',
+      's03.st1.dd0.title': '問いかけをアクション列ではなく、視線の中に置く。',
+      's03.st1.dd0.body': '以前の設計ではフィードバックが汎用アクション列（コピー、シェア、再生成と並ぶ小さな thumbs-up / thumbs-down）に埋もれており、ほとんど誰も押しませんでした。そこで問いかけ自体を回答領域の中へ引き上げ、各回答の直下に <code>Was this result helpful?</code> というインラインプロンプトを常設化しました。Yes / No のクリックは意図的に低コミットに設計し、実際に伝えたい何かがあるときだけ構造化フォームが展開します。「問い」を chrome から content へ移す、この 1 手が、このチャプターで最も行動を変えた変更でした。プロンプトを見落としようがなくなった瞬間、回答率は <b>+45%</b> 跳ね上がりました。',
+      's03.st1.dd1.num': '決定 02 · 自由記述ではなく、タグの分類体系',
+      's03.st1.dd1.title': 'ノイズを AI チームが即座に動ける 5 つの失敗モードに振り分ける。',
+      's03.st1.dd1.body': '初期の自由記述版でわかったのは、構造化されていないフィードバックは同じ問題の言い換えに分裂してしまうということでした。<i>「SQL が違う」</i>、<i>「テーブルが間違っている」</i>、<i>「クエリが壊れた」</i> は同じ 1 件を 3 件に見せてしまう。そこで AI の実在する <span class="stat-hi">5 つの失敗モード</span>(<code>SQL 生成失敗</code>、<code>データ取得失敗</code>、<code>指示未遵守</code>、<code>AI 要約誤り</code>、<code>SQL-Pairs 逸脱</code>)を固定タグに写像しました。ユーザーはタップするだけ、システムは集計するだけ。翻訳のロスを挟まないので、管理ダッシュボードでようやく「りんご対りんご」で比較できるようになります。',
+      's03.st1.dd2.num': '決定 03 · 既定は短く、必要な時だけ展開',
+      's03.st1.dd2.title': 'フォームを軽く保ち、一つのタグに「展開する権利」を与える。',
+      's03.st1.dd2.body': '長いフォームは完了率を落とし、短いフォームは肝心な部分で具体性を失う。妥協案:モーダルは既定で軽く保ち、ユーザーが <code>指示未遵守</code>(「どのルールか」が一変する唯一のタグ)を選んだときだけ、プロジェクトで設定されている Instruction を列挙する 2 つ目のドロップダウンが開きます。<code>その他</code> も残してはいますが、最もアクションを取りにくい位置に意図的に配置しています。管理者が得るのは修正すべき具体的なルール名か、もしくは「instruction の体系に抜けがある」という明確なシグナルのどちらかです。',
+      's03.st1.dd3.num': '決定 04 · 形は一つ、文脈は二つ',
+      's03.st1.dd3.title': '語彙を入れ替え、マッスルメモリは守る。',
+      's03.st1.dd3.body': '回答とチャートは異なる理由で失敗するため、1 つのタグリストを共有することはできません。しかし 1 つのメンタルモデルは共有しなければ、ユーザーは 2 つ目の面でフォームを信じなくなります。すべてのフィードバックモーダルは <b>評価 &rarr; タグ &rarr; 任意の記述</b> という同じ 3 段構成を保ち、入れ替わるのはタグの語彙だけ。壊れた SQL にフィードバックを付けたことのあるユーザーは、初めてチャートで軸がおかしい瞬間に出会っても、選択肢は違えどやるべき事はもう分かっています。',
+      's03.mq.title': 'モニタリング品質:件数から原因へ',
+      's03.mq.desc': 'フィードバックモーダルが生産者なら、このダッシュボードは消費者です。プロジェクトオーナーは <code>Settings → Project → Thread tracing</code> から 1 つの画面を開き、そこで 2 つの問いに瞬時に答えなければなりません。今週 AI は良くなっているのか悪くなっているのか、そして今いちばん目立つ失敗モードは何か。それ以外はすべてフィルタです。',
+      's03.mq.dd1.num': '決定 01 · まず推移、次に分類',
+      's03.mq.dd1.title': 'まず 1 本の線、そして棒で理由を語らせる。',
+      's03.mq.dd1.body': '管理者は失敗のリストから入りたくありません。まず針が動いているかを知りたい。ダッシュボードの主役は、ポジティブ / ネガティブ評価の日別推移を見せる成功指標のラインチャート。その真下に失敗分類別の棒グラフが置かれます。順番が重要で、先に推移を見て「先週の修正は効いたのか」を判断し、その後で棒に降りて「どのカテゴリが跳ねているか」を見る。分類を先に置いてしまえば、管理者が「そもそも何かを直す必要があるのか」と決める前に、<i>「何が壊れた？」</i> という問いに反転させてしまっていたでしょう。',
+      's03.mq.dd2.num': '決定 02 · 誰が報告したか、でも絞り込む',
+      's03.mq.dd2.title': '「時間」「種別」と同じ棚に「発信者」を置く。',
+      's03.mq.dd2.body': '初期試作では、フィルタは日付と trace 種別（<code>Answer</code> / <code>Chart</code>）だけでした。部門横断の管理者と話す中でそれでは不十分だと判明。マーケティングの失敗プロファイルと財務のそれはまったく違います。そこで <b>Reported-By</b>（特定メンバー・ユーザーグループ）を「詳細オプション」の下ではなく第一級のコントロールに昇格。同じ棒グラフで <i>「どのチームのクエリで AI が躓いているか」</i> を 2 クリックで答えられるようにしました。下のテーブルでは Yes / No トグルで、明示的なネガティブシグナルだけに瞬時にズームでき、次の校正先を探すときノイズを挟まずに済みます。',
+      's03.mq.dd3.num': '決定 03 · 件数から原因まで、ワンクリックで',
+      's03.mq.dd3.title': 'テーブルは畳み、各行に「深掘りの約束」を持たせる。',
+      's03.mq.dd3.body': 'スレッドテーブルは「数字が上がった」と「これが実際に壊れたクエリ」をつなぐ橋です。各行は Thread ID、タイムスタンプ、trace 種別、フィードバック極性だけに畳まれており、展開すると AI が推定した失敗理由がインラインで現れる。管理者はその段階で「ドロワーを開くほどか」を判断できます。<code>Action → View</code> の先に置かれるのが reasoning trace・メタデータ・SQL。深い情報は、最前面に置くのではなく、管理者の意図の一段奥に畳んでおきました。',
+      's03.mq.dd4.num': '決定 04 · ドロワーを「犯行現場のブリーフ」として',
+      's03.mq.dd4.title': 'テーブルを離れずに、失敗を判断するのに必要なすべてを。',
+      's03.mq.dd4.body': 'ドロワーが開くのは意思決定の瞬間です。展開した行をスキャンし、推定された失敗理由が調査に値すると判断して <code>View</code> をクリックした。今必要なのは別ページではなく、焦点を絞ったブリーフです。ドロワーが提示するのは:作成者の身元とフラグを立てたレポーター(スレッドを実行したのが誰か、エラーに気づいたのが誰かを分離)、AI の実行ステータス(機械が記録したことと、ユーザーが「壊れた」と感じたことを区別)、ユーザーが選んだ問題タグ、そして SQL が登場する前に失敗を自然言語でコンテキスト化するスレッド名。各フィールドが存在理由を持ちます。レポーターを外せば部門横断シグナルが失われ、スレッド名を外せば SQL がコンテキストなしで読まれることになる。このドロワーは、30 秒で読んで判断できることを設計の目標としました。',
+      's03.st2.title': 'エラー → Eval スイート:失敗のループを閉じる',
+      's03.st2.desc': '管理者はワンクリックで診断済みの障害を Eval スイートにインポートし、実際のエラーを標準化された再現可能なテストケースに変換できます。ユーザーは自分のフィードバックが AI 改善をどう駆動するかを即座に確認でき、参加を促す目に見えるループが生まれます。AI ガバナンスが受動的な消火活動から体系的な評価へと移行します。',
+      's03.st2.dd1.num': 'Decision 01 · グラウンドトゥルース SQL を基準のアンカーとして',
+      's03.st2.dd1.title': '「正しい」を定義してから「誤り」を測定する。',
+      's03.st2.dd1.body': 'グラウンドトゥルースのないテストケースは、単なる質問に過ぎません。Eval スイートでは、管理者がすべての自然言語の質問を検証済み SQL とペアにする必要があります(手動で作成するか、AI が生成して承認するかのいずれかです)。このペアが測定の単位となります。一度ロックされると、「以前は動いていた」という人間の記憶ではなく、再現可能でバージョン管理された「正しい」の定義として、AI が採点される客観的な基準になります。<code>Preview Data</code> ボタンは定義段階でループを閉じます:ベンチマークになる前に SQL が有効であることがわかります。',
+      's03.st2.dd2.num': 'Decision 02 · 2 ステップの作成で SQL の精度と叙述の精度を分離',
+      's03.st2.dd2.title': 'SQL が正しいことと、出力が正しいことは別の問題です。',
+      's03.st2.dd2.body': 'ステップ 1 では SQL アンカーを確立します。ステップ 2 では回答が実際に何を言うべきかを確立します(主要な発見、データソース、結論)。これらのステップを分けることで、管理者は 2 つのレベルで正確性を考えることが強制されます:<i>「AI は正しいクエリを書いたか？」</i>と<i>「AI はそこから正しい洞察を引き出したか？」</i>クエリは正しいデータを返しながらも、誤解を招くサマリーを生成することがあります。2 ステップモデルはその区別を明確にするため、どちらのレイヤーの回帰も独立して捕捉できます。',
+      's03.st2.dd3.num': 'Decision 03 · ベンチマーク結果は差分であり、判決ではない',
+      's03.st2.dd3.title': '「失敗」は出発点であり、結論ではありません。',
+      's03.st2.dd3.body': '評価ビューでは、合格/不合格の横にスコアの理由(<i>「列数の不一致:生成結果に 1 列不足」</i>)、並列 SQL 差分、データプレビュー比較、AI の推論タイムラインが表示されます。各要素は異なる診断上の問いに答えます:スコアの理由は乖離が<i>どこで</i>起きたかを示し、SQL 差分は<i>どの句</i>が原因かを示し、データプレビューは実際に影響があったかどうかを示し、推論タイムラインは AI が質問を誤解したのかクエリの構築を誤ったのかを明らかにします。管理者はビューを離れるとき、ある修正が失敗したことだけでなく、次の修正をどこに向けるべきかを把握しています。',
+      's03.st3.title': 'AI ガイド付き校正:失敗を特定するだけでなく、何を変えるかを知っている',
+      's03.st3.desc': 'Eval スイートが失敗を特定します。AI Advisor がその先を担います(ベンチマークの失敗に対して診断を実行し、具体的なナレッジベースの変更を段階的に提案し、適用前に結果を検証します)。校正が直感から目標設定に変わります。',
+      's03.st3.dd1.num': 'Decision 01 · 症状ではなく失敗を選択する',
+      's03.st3.dd1.title': '診断はベンチマークから始まり、説明からではありません。',
+      's03.st3.dd1.body': '管理者はアドバイザーに問題を説明するのではなく、ベンチマーク結果から失敗した質問を直接選択します。アドバイザーはそれらを入力として受け取り、ナレッジベース全体に対して独自の診断を実行します。この選択ステップが重要です:診断の範囲を確認済みの失敗に絞り込み、仮説ではなく、観察された回帰に対して段階的な提案を密に結びつけます。',
+      's03.st3.dd2.num': 'Decision 02 · ワンクリック修正ではなく、段階的な変更',
+      's03.st3.dd2.title': 'すべての提案はコミットになる前に確認できます。',
+      's03.st3.dd2.body': 'アドバイザーはスキーマ調整と指示の編集を段階的な提案として表示します。各変更に編集・選択解除のコントロール付きで、一度に一項目ずつ。管理者は、何も適用される前に、ロジックを確認し、表現を修正し、項目を完全に削除することができます。診断と適用の分離は意図的な設計です:AI のコアナレッジモデルに触れる変更において、人間の判断をループに残すためです。',
+      's03.st3.dd3.num': 'Decision 03 · 適用前に検証する',
+      's03.st3.dd3.title': 'ベンチマークが修正の準備ができているかどうかを判断します。',
+      's03.st3.dd3.body': '段階的な変更が適用される前に、アドバイザーは同じベンチマーク質問に対して検証を実行します。前後カラムが質問ごとの結果を示します。どの失敗が解決されたか、どれが残ったか、以前合格していたものが回帰していないか。管理者は検証が変更の安全性を確認した場合にのみコミットします。',
+      's03.st4.title': '回帰検証:今回だけでなく、毎回合格する',
+      's03.st4.desc': 'アドバイザーの検証パスは、修正対象の質問だけを再テストします。しかし、ある失敗を修正するためのスキーマ編集が、すでに合格していた質問を静かに壊すこともあります。AI システムへの適用前に、失敗した質問だけではなく全問を対象としたベンチマーク全量の再実行が走り、全問クリアしたときだけ最終適用のボタンが解放されます。',
+      's03.st4.dd3.num': 'Decision 01 · 完全適用は、全問再実行でのみ解放される',
+      's03.st4.dd3.title': '最終承認者はアドバイザーではなく、ベンチマーク自身です。',
+      's03.st4.dd3.body': 'AI システムへの適用は、意図的に 2 段ゲートの終点に置かれています。1 段目は失敗サブセットに対するアドバイザーの Before/After、2 段目は段階的編集が持ち込んだ新たな回帰を炙り出す全量再実行。どちらも白紙でなければ、ボタンは有効化されません。適用される変更は「管理者が承認した提案」ではなく、「ベンチマーク自身が署名した修正」です。',
+      's03.st5.title': 'ループが閉じる:この記録が次サイクルの出発点',
+      's03.st5.desc': '適用が完了した瞬間、そのベンチマーク実行はこのサイクルの恒久的な記録になります。精度差分、<i>Improvement: Completed</i> スタンプ、アドバイザーが触れたすべてのスキーマフィールド、追加したすべての指示。それらが 1 つのタイムスタンプに縫い合わせられます。ループは閉じるだけでなく、次のサイクルが読む署名済みレシートを残します。',
+      's03.st5.dd1.num': 'Decision 01 · 完了ランはそのまま監査証跡',
+      's03.st5.dd1.title': '1 つのタイムスタンプに、実際に出荷された内容の署名済みサマリー。',
+      's03.st5.dd1.body': 'ベンチマーク結果ページの最上部には 3 つの要素が揃います。精度スコア、<i>Improvement: Completed</i> ラベル、そして展開すればすべてのスキーマ調整・Specific と Global の指示・質問ごとの合否を一覧できる Advisor result。3 週間後に戻ってきた管理者でも、元の著者に尋ねずに AI の今の振る舞いの理由を再構成できます。次の校正サイクルにとって、このレコードは同時にベースラインでもあります:次の全量再実行はこのバージョンと比較され、誰かの記憶とは比較されません。',
+      's04.title': '設計の転換:ワンショットから反復へ',
+      's04.wrong.body': '最初にリリースした AI Advisor は、校正を 1 回のトランザクションで済ませられると想定していました。失敗したベンチマーク質問で、管理者は右側ドロワーを開き、スコア理由を読み、そこから直接 2 つを目にする:<code>Apply adjustment</code> ボタン付きのスキーマ調整案と、<code>Add to instruction</code> ボタン付きの推奨指示。行ごとにワンクリックで変更が確定する。それがユーザーフローの全てでした。検証パスなし、全量再実行なし、その修正が題庫の他の部分で本当に成立しているかを見る手段もなし。Advisor が話し、管理者がクリックし、ドロワーが閉じる。それで終わり。',
+      's04.wrong.cap': 'BEFORE · ワンショットの AI Advisory ドロワー、Apply と Add を押せば、フローはそこで終わった。',
+      's04.lede': '実際の評価セットでテストした結果、その前提は間違いだと判明しました。ある失敗を修正するためのスキーマノートが、別の場所に新しい失敗を引き起こすことがよくあり、次にユーザーが苦情を言ってくるまで管理者はそれに気づけない。<span class="stat-hi-blue">校正はトランザクションではなく、サイクルだったのです。</span>この気づきが、以降すべての画面を刷新しました:線形の <i>diagnose → fix → done</i> フローの設計をやめ、テスト・調整・再検証を繰り返すサイクルとして設計し直し、各サイクルの間にベンチマークを置いて「修正が本当に出荷できるか」の裁定者にしました。',
+      's04.right.body': '第 2 版では、ワンクリックをループで置き換えました。段階的に追加されるスキーマ修正と新しい指示は、すべて Before / After の検証ランを通ります。同じ失敗質問を編集後に再実行し、左右に並べて表示することで、どの失敗が解決され、合格していた質問に回帰が発生していないかを管理者が正確に確認できる。変更は上書きではなく、積み上げです:各ラウンドで、アドバイザーがすでに安全と確認したスキーマ調整と指示のスタックが増えていき、<code>Re-run verification</code> で管理者は新たな編集を追加して、ナレッジベースに届く前にそのスタックに対してテストできます。校正はワンクリックでは完了せず、ベンチマークが回帰を指摘しなくなって初めて完了します。',
+      's04.right.cap': 'AFTER · 複数ラウンドの Before / After 検証ループ。追加されるスキーマ修正と指示は、何度もの再実行を経てはじめて居場所を得る。',
+      's04.d1.body': 'これはエンジニアリング協業で最も重要かつ最も労力を要した部分でした。各校正ラウンドが新たな副作用を引き起こす可能性がある場合、インターフェースはもはや一方通行のベルトコンベアではいられません。すべてのステップを「これをもう一度やる必要があったら？」を前提に設計する必要がありました:エラー分類は再タグ付けに対応し、テストバンクは全置換ではなく増分拡張をサポートし、校正結果は単純な上書きではなく前回との即時比較が必要でした。',
+      's04.d2.body': 'この意識の転換は、管理者への AI 推論パスの提示方法も変えました。最初の線形モデルでは「ここがエラー、これが修正」と示すだけで十分でした。しかし反復モデルでは、管理者は同じ問題がなぜ再発するのか、以前のどの校正が新たな問題を引き起こした可能性があるのか、テストバンクがまだカバーしていない領域はどこかを理解する必要があります。情報アーキテクチャは単純な診断レポートから、文脈比較付きの複数ラウンド校正履歴へと進化しました。',
+      's04.d3.body': '最も価値ある教訓:<span class="stat-hi-blue">校正は目的地ではなくサイクルだと受け入れた途端、設計判断がはるかに明確になりました</span>。すべての機能が一つの問いに答える必要がありました、<span class="stat-hi-blue">「これは次の反復をよりスムーズにするか？」</span>であり「これで問題は一発解決するか？」ではなく。',
+      's05.title': '成果と振り返り:受動的な観測から、能動的なガバナンスへ',
+      's05.lede': 'Thread Tracing の実践は、各所に散らばっていた頭痛の種だったユーザーエラーを、プロダクト進化を駆動する中核データ資産へと転化させました。',
+      's05.result.label': '協業効率の構造的変化',
+      's05.result.body': 'Test Set の仕組みを築くことで、AI トラブルシュートにおけるチームの言語が標準化されました。エンジニアとデザイナーの間で「そのエラーの実体は何か」に対する認識のずれが解消され、かつては<span class="stat-hi">何日も</span>の往復を要した校正サイクルが、<span class="stat-hi">数分</span>で的を射た診断と修正を完了できるものへと短縮されました。',
+      's05.next.label': 'デザイナーの役割の再定義',
+      's05.next.body': '今回のプロジェクトは、私自身の役割の見方を変えました。AI プロダクトにおいて、デザイナーの仕事はインターフェースの表層を超えて、ガバナンスロジックそのものを構築する営みになります。私はバグを直していたのではなく、AI のブラックボックスな推論過程を透明かつ統制可能にするフレームワークを作っていたのです。',
+    },
+    'zh-tw': {
+      'nav.back': '← Iris Hsieh',
+      'nav.intro': '.簡介',
+      'nav.s01': '01.序言',
+      'nav.s02': '02.問題',
+      'nav.s03': '03.解決方案',
+      'nav.s04': '04.設計轉折',
+      'nav.s05': '05.成果',
+      'title.big': 'Thread Tracing：我與團隊如何構建 AI 的自我演進閉環',
+      'title.sub': '如何將盲目的失敗率轉化為結構化的可觀測性管道，讓每一筆用戶投訴都成為 AI 進化的燃料。',
+      'intro.overview.label': '專案概述',
+      'intro.overview.body': '為了提升企業對 AI 應用的掌控力，我與團隊設計了 <b>Thread Tracing</b> 治理模組。這套架構讓企業端的 AI 管理員能從全局視角觀測組織內的互動數據。基於 Google PAIR 框架，我們將散亂的用戶反饋轉化為結構化的可視化情報，管理者不僅能主動辨識模型偏差，更能將反饋轉化為可執行的行動，實現「<b>監測、反饋、優化</b>」的自主閉環管理。',
+      'intro.role.label': '我的角色',
+      'intro.role.body': '<span class="stat-hi">PM</span>、<span class="stat-hi">唯一的設計師</span>，以及<span class="stat-hi">用戶研究員</span>。負責回饋分類體系設計、儀表板資訊架構、回饋到指令的管道，以及 PAIR 框架的應用。',
+      'intro.time.label': '公司與時程',
+      'intro.time.body': 'Wren AI · 2026',
+      's01.title': '序言：當 AI 進入企業後，我們失去了什麼？',
+      's01.lede': '在 Wren AI 的設計過程中，我與團隊發現當 AI 系統從實驗室走向<span class="stat-hi">數千人</span>的企業場景時，管理員最恐懼的不是 AI「不知道答案」，而是 AI「給了錯的答案卻<span class="stat-hi-blue">沒人知道為什麼</span>」。',
+      's01.blackbox.label': '目前的現狀就像是一個「黑盒子」：',
+      's01.p1': '<b>斷裂的感知</b>，用戶點了「倒讚」就像病人在喊痛，但管理員不知道是哪條神經出了問題。',
+      's01.p2': '<b>開迴路的治理</b>，系統缺乏一個「自動化考場」，導致管理員這次修好了 A 錯誤，下次更新卻又引發了 B 錯誤。',
+      's01.insight.label': '我們的使命',
+      's01.insight.body': '身為 Senior Product Designer，我與團隊的目標是設計一套 Feedback Loop（回饋閉環），讓 AI 不再只是重複執行任務，而是學會從錯誤中「進化」。',
+      's01.pair.label': '為什麼回饋迴圈（Feedback Loop）至關重要？',
+      's01.pair.body': '參考 Google 的 <a href="https://pair.withgoogle.com/guidebook/chapters/feedback-and-controls/design-ai-feedback-loops" target="_blank" style="text-decoration:underline;">PAIR 框架</a>，反饋不僅是意見收集，更是驅動系統進化的核心引擎：',
+      's01.pair.p1': '<b>模型優化（Ground Truth）</b>，將用戶反饋轉化為高品質標記數據，精準校正模型錯誤。',
+      's01.pair.p2': '<b>個人化感官（Personalization）</b>，透過持續學習個體偏好，打造量身定制的交互體驗。',
+      's01.pair.p3': '<b>建立信任與主導權（Agency）</b>，賦予用戶介入決策的能力，從被動接受轉向主動引導，建立深層信任。',
+      's01.fb.label': '平衡雙軌收集模式',
+      's01.fb.body': '在設計中，我們採取「隱式與顯式並行」的策略，以確保數據的廣度與深度：',
+      's01.fb.p1': '<b>隱式反饋（Implicit Feedback）（數據廣度）：</b>自動監測點擊、停留時間、忽略行為等低摩擦信號。獲得<span class="stat-hi">海量行為樣本</span>，但需注意環境噪音導致的訊號誤導。',
+      's01.fb.p2': '<b>顯式反饋（Explicit Feedback）（意圖深度）：</b>透過評分、讚/踩、結構化錯誤回報獲取明確意圖。雖然操作摩擦力較高，但能提供<span class="stat-hi-blue">最高純度的優化指引</span>。',
+      's02.title': '問題定義：我們面對的是什麼樣的「病症」？',
+      's02.lede': '我們觀測了<span class="stat-hi">近三個月</span>的用戶使用習慣，並依使用者活躍程度與查詢模式進行分群。三個失敗模式反覆浮現：',
+      's02.pA': '<b>無效的投訴（Noisy Signal）</b>，使用者遇到錯誤時，多半只回覆「這答案沒用」、「我不是要這個」等模糊短句，AI 無法從中提取可執行的優化指令。加上原本的 thumbs up / down 設計不夠凸顯，<span class="stat-hi-blue">幾乎沒有用戶使用</span>。',
+      's02.pB': '<b>轉瞬即逝的錯誤（Transient Failures）</b>，團隊雖以 Langfuse 進行內部觀測，卻未提供管道讓專案管理員自行分析。企業無法自主調整與優化，每次都仰賴售後人員介入。',
+      's02.pC': '<b>缺乏對焦的藥方（Misaligned Correction）</b>，即使進行了修正，也缺乏一套標準化的題庫來驗證修正是否在所有情境下都有效。管理員憑經驗調整 Instruction，但往往修好了 A 問題，卻在下一輪觸發了 B 問題，沒有迴歸測試機制，每次修正都像在打地鼠。',
+      's03.title': '解決方案：我們設計的回饋閉環',
+      's03.lede': '基於上述，我與團隊將 Thread Tracing 設計為四階段的閉環流程，每一階段都直接對應我們發現的缺口。',
+      's03.loop1': '結構化收集',
+      's03.loop2': '錯誤 → 考題',
+      's03.loop3': '引導式校正',
+      's03.loop4': '迴歸驗證',
+      's03.loop.return': '↻ 驗證過的新行為進入下一輪',
+      's03.loop1.cap': '用戶回報 AI 出錯時，選擇錯誤類型，系統自動附上 reasoning trace。',
+      's03.loop2.cap': '管理員診斷後，將失敗案例標準化為可重複執行的測試。',
+      's03.loop3.cap': '對照錯誤與正確路徑，針對性修改 MDL 或 Instruction。',
+      's03.loop4.cap': '用完整題庫重跑，確認修正通過且沒破壞既有正確答案。',
+      's03.loop.t12': 'trace + 錯誤分類',
+      's03.loop.t23': '標準化案例',
+      's03.loop.t34': '更新後的 MDL',
+      's03.st1.title': '結構化收集：將噪音轉化為訊號',
+      's03.st1.desc': '反饋機制應自然融入使用者流程中。過去「讚 / 踩」圖示幾乎隱身在動作列裡，幾乎沒有使用者會去按。我們把提問拉進回答區塊，並讓 Yes / No 之後的結構化表單只在使用者真的有話要說時才展開；同時，系統會自動擷取 AI 出錯瞬間的推理路徑（Trace Data），保留過去總是消失的「犯罪現場」。',
+      's03.st1.before': '舊版設計 · 僅有圖示',
+      's03.st1.after': '新版設計 · 顯性提問',
+      's03.st1.dd0.num': '決策 01 · 把提問變得明顯',
+      's03.st1.dd0.title': '把問題從動作列抬進使用者視線裡。',
+      's03.st1.dd0.body': '舊版把反饋埋在通用動作列裡（一個小小的讚 / 踩，擠在複製、分享、重新生成旁邊），幾乎沒有人會去按。我們把提問本身拉進回答區塊，在每一則回答正下方加上一行 inline 的 <code>這個回覆有幫助嗎？</code>。Yes / No 的點擊刻意設計為低門檻；只有當使用者真的有話要說時，後面的結構化表單才會展開。把「提問」從 chrome 搬進 content，是這一章裡對行為影響最大的單一改動，當提問不可能被忽略的那一刻，回覆率上升了 <b>+45%</b>。',
+      's03.st1.dd1.num': '決策 02 · 用分類標籤取代自由文字',
+      's03.st1.dd1.title': '把雜訊導進 AI 團隊能直接動手的五種失敗類型。',
+      's03.st1.dd1.body': '早期曾做過自由填寫版本，結果很清楚：非結構化的反饋會碎裂成同一個問題的不同說法，<i>「SQL 錯了」</i>、<i>「用錯資料表」</i>、<i>「查詢壞掉」</i> 意思是同一件事，但在系統眼裡是三筆。我們把 AI 實際會發生的<span class="stat-hi">五種失敗模式</span>（<code>SQL 生成失敗</code>、<code>資料檢索失敗</code>、<code>未遵循指令</code>、<code>AI 摘要錯誤</code>、<code>SQL-Pairs 偏差</code>）對映到固定的標籤集合。使用者點選，系統彙整。翻譯過程中的訊號不會再被稀釋，管理員儀表板終於能把「蘋果和蘋果」拿來比。',
+      's03.st1.dd2.num': '決策 03 · 預設簡短，必要時才展開',
+      's03.st1.dd2.title': '讓表單保持輕量，只讓一個標籤有「展開的資格」。',
+      's03.st1.dd2.body': '表單太長會壓低完成率；表單太短又會在最關鍵的地方失去精細度。折衷方式：表單預設保持精簡，只有當使用者勾選 <code>未遵循指令</code>（這個「是哪一條 rule」會影響後續一切的標籤）時，才展開第二層下拉選單，列出專案當下配置的所有 Instruction。<code>其他</code> 選項保留，但刻意被排在最難動手的位置。管理員最後拿到的要嘛是一條可以直接修的具體 rule，要嘛是一個明確訊號：「目前的 instruction 體系缺了一塊」。',
+      's03.st1.dd3.num': '決策 04 · 一個形狀，兩種情境',
+      's03.st1.dd3.title': '換掉詞彙，留住肌肉記憶。',
+      's03.st1.dd3.body': '回答和圖表會因為不同的原因失敗，不可能共用同一組標籤；但如果連一套心智模型都不能共用，使用者到第二個介面就會開始不信任這張表單。所有反饋表單都維持同一個 <b>評分 &rarr; 選標籤 &rarr; 補描述（選填）</b> 的三段結構，只有標籤詞彙會換。為錯誤 SQL 回報過一次的使用者，第一次看到圖表軸線異常時雖然選項不同，但下一步要做什麼他已經很清楚。',
+      's03.mq.title': '監測品質：從筆數到原因',
+      's03.mq.desc': '反饋表單是生產者，這個儀表板是消費者。專案管理員打開 <code>Settings → Project → Thread tracing</code>，會看到一個必須在一眼內回答兩個問題的畫面：這週 AI 是變好還是變壞、現在最主要的失敗模式是哪一種。剩下的一切都是篩選器。',
+      's03.mq.dd1.num': '決策 01 · 先看趨勢，再看分類',
+      's03.mq.dd1.title': '先給一條線，讓長條圖解釋原因。',
+      's03.mq.dd1.body': '管理員不會想一打開就面對一整排失敗，他們想先知道「指針有沒有在動」。儀表板的主角是成功指標線圖（每日正向 / 負向評分），失敗分類的長條圖直接緊貼在下方。順序很重要：先掃一眼趨勢線，判斷「上週那個修正有沒有用」，再往下看長條圖，找「哪一類正在飆」。如果把分類排在上面，就等於在管理員還沒決定「需不需要修」之前，就把問題反轉成 <i>「到底是什麼壞了？」</i>。',
+      's03.mq.dd2.num': '決策 02 · 篩選不只看「發生什麼」，也看「誰回報的」',
+      's03.mq.dd2.title': '把「使用者身分」放上和「時間、種類」同一層的篩選架。',
+      's03.mq.dd2.body': '早期 prototype 的篩選只有日期區間跟 trace 類型（<code>Answer</code> / <code>Chart</code>），和跨部門管理員聊過之後發現這樣不夠，行銷部門的失敗樣貌跟財務部門完全不一樣。我們把 <b>Reported-By</b>（個別成員、使用者群組）從「進階選項」升級為第一層的篩選控制，讓同一張長條圖在兩次點擊內就能回答 <i>「哪個部門的提問 AI 最難搞？」</i>。下方的 thread 表格再加上一個 thumbs-up / thumbs-down 切換，管理員想找下一個校正目標時，能直接跳到有明確負向訊號的那一批。',
+      's03.mq.dd3.num': '決策 03 · 從筆數到原因，只要一次點擊',
+      's03.mq.dd3.title': '先把表格收摺起來，每一列都藏著一個「更深的入口」。',
+      's03.mq.dd3.body': 'thread 表格是「一個數字上升了」和「這裡就是那句壞掉的 query」之間的橋。每一列收摺起來只剩 Thread ID、時間戳、trace 類型、反饋極性。點開之後，系統推測的失敗原因會 inline 展開，管理員就能在這一層先決定「值不值得打開完整 trace」。再下一步 <code>Action → View</code> 才是 reasoning trace、metadata 跟 SQL，最深的資訊不放在最前面，而是收在管理員「真的想看」的那一步後面。',
+      's03.mq.dd4.num': '決策 04 · 把 trace drawer 設計成「犯罪現場速報」',
+      's03.mq.dd4.title': '不需要跳頁，就能在這裡判斷這筆失敗值不值得深挖。',
+      's03.mq.dd4.body': 'drawer 在決策的那一刻展開：你掃了一眼展開的那一列、推測出的失敗原因看起來值得查，然後點了 <code>View</code>。這時你需要的不是一個新頁面，而是一份聚焦的速報。drawer 呈現的內容是：創建者身分和回報者（把「誰跑了這個 thread」和「誰發現錯誤」分開）、AI 的執行狀態（區分機器記錄的事實和使用者感知到的「出錯了」）、使用者選的問題標籤，還有在 SQL 出現之前讓失敗有自然語言脈絡的 thread 名稱。每一個欄位都有它存在的理由：拿掉回報者，你就失去了跨部門的訊號；拿掉 thread 名稱，SQL 就變成沒有脈絡的字串。這個 drawer 的設計目標是：三十秒讀完，直接決定。',
+      's03.st2.title': '將錯誤變成考題',
+      's03.st2.desc': '管理員可一鍵將診斷後的失敗案例匯入 Eval 套件，使真實錯誤轉化為標準化、可重複執行的測試案例。使用者能即時看到自己的反饋如何驅動 AI 改進，形成可見的參與循環。AI 治理從被動救火轉為系統性評估。',
+      's03.st2.dd1.num': 'Decision 01 · 以 Ground Truth SQL 作為基準錨點',
+      's03.st2.dd1.title': '先定義「正確」，再衡量「錯誤」。',
+      's03.st2.dd1.body': '沒有標準答案的測試案例只是一個問題。Eval 套件要求管理員將每個自然語言問題與一組已驗證的 SQL 配對（可以手動撰寫，也可以由 AI 生成後人工核准）。這個配對就是衡量單位。一旦鎖定，它就成為 AI 被評分的客觀標準，不是「以前能跑」的人類記憶，而是可重複執行、版本控制的正確定義。<code>Preview Data</code> 按鈕在定義階段就完成閉環：在它成為基準測試之前，你就知道這條 SQL 是有效的。',
+      's03.st2.dd2.num': 'Decision 02 · 兩步驟建立將 SQL 準確性與敘述準確性分開',
+      's03.st2.dd2.title': 'SQL 正確與輸出正確是兩個不同的問題。',
+      's03.st2.dd2.body': '步驟一建立 SQL 錨點；步驟二確立答案實際上應該說什麼（關鍵發現、資料來源、結論）。將這兩個步驟分開，迫使管理員從兩個層面思考正確性：<i>「AI 寫對了查詢嗎？」</i>以及<i>「AI 從中提取了正確的洞察嗎？」</i>查詢可以返回正確的資料，卻仍然產出誤導性的摘要。兩步驟模型使這個區別變得明確，因此任一層的回歸都能被獨立捕捉。',
+      's03.st2.dd3.num': 'Decision 03 · 基準測試結果是差異，不是判決',
+      's03.st2.dd3.title': '「失敗」是起點，不是結論。',
+      's03.st2.dd3.body': '評估視圖在通過/失敗旁邊顯示評分原因（<i>「欄位數不符：生成結果少了 1 欄」</i>）、並排 SQL 差異、資料預覽比較，以及 AI 的推理時間軸。每個元素回答不同的診斷問題：評分原因說明分歧發生在<i>哪裡</i>，SQL 差異顯示是<i>哪個子句</i>造成的，資料預覽顯示實際上是否有影響，推理時間軸則揭示 AI 是誤讀了問題還是寫錯了查詢。管理員離開視圖時，不只知道某次修正失敗了，還知道下一次應該從哪裡著手。',
+      's03.st3.title': 'AI 引導式校正：知道要改什麼，而不只是哪裡出錯',
+      's03.st3.desc': 'Eval 套件指出了失敗的地方。AI Advisor 接手後續：對基準測試的失敗案例執行診斷，提出具體的知識庫修改建議，並在套用前完成驗證。校正從直覺轉為有根據的目標操作。',
+      's03.st3.dd1.num': 'Decision 01 · 選定失敗案例，而非描述症狀',
+      's03.st3.dd1.title': '從基準測試開始診斷，而非從描述開始。',
+      's03.st3.dd1.body': '管理員不需要向 Advisor 描述問題，他們直接從基準測試結果中選取失敗的問題。Advisor 將這些作為輸入，對知識庫進行自己的診斷。這個選取步驟很重要：它將診斷範圍限定在已確認的失敗案例，而非假設情境，使提出的修改建議與觀察到的回歸緊密對應，而非憑猜測。',
+      's03.st3.dd2.num': 'Decision 02 · 分步暫存，而非一鍵套用',
+      's03.st3.dd2.title': '每項建議在成為提交前都可審閱。',
+      's03.st3.dd2.body': 'Advisor 以分步暫存的方式呈現 schema 調整和指令修改：每項修改附帶編輯和取消選擇的控制項，一次一個。管理員可以審閱邏輯、修改表述，或在套用前完全移除某項目。診斷與套用之間的分離是刻意設計的：確保人工判斷仍在迴圈中，尤其是涉及 AI 核心知識模型的修改。',
+      's03.st3.dd3.num': 'Decision 03 · 套用前先驗證',
+      's03.st3.dd3.title': '由基準測試決定修正是否就緒。',
+      's03.st3.dd3.body': '暫存的修改套用前，Advisor 會對相同的基準測試問題執行驗證。前後欄位顯示每道題的結果：哪些失敗已解決、哪些仍存在、是否有原本通過的題目發生了回歸。只有當驗證確認修改安全後，管理員才進行提交。',
+      's03.st4.title': '迴歸驗證：不只這輪，每輪都要通過',
+      's03.st4.desc': 'Advisor 的驗證階段只會重測它本來要修的那幾題。但為了修復某題所寫的 schema 調整，可能悄悄破壞另一題原本通過的結果。所以在套用到 AI 系統之前，完整題庫會再跑一次（不只是失敗的那幾題，而是全部），唯有整排乾淨，最終的套用鍵才會開啟。',
+      's03.st4.dd3.num': 'Decision 01 · 完整套用，必須靠全量重跑把關',
+      's03.st4.dd3.title': '最終核准者是基準測試本身，不是 Advisor。',
+      's03.st4.dd3.body': '「套用到 AI 系統」被刻意放在兩道關卡的終點。第一道是 Advisor 對失敗題的 Before / After，第二道是題庫全量重跑，用來抓出暫存修改可能新引入的回歸。兩排都乾淨，按鈕才會開啟。最後送出的，不是「管理員批准的建議」，而是「基準測試自己簽核過的修正」。',
+      's03.st5.title': '閉環完成：這份記錄就是下一輪的起點',
+      's03.st5.desc': '套用完成的那一刻，這次基準測試的執行紀錄就成為本輪校正的永久記錄：準確率差、<i>Improvement: Completed</i> 印記、Advisor 動過的每個 schema 欄位、新增的每條 instruction，全部縫在同一個時間戳下。閉環不只是關上，還留下一張下輪會讀的簽收單。',
+      's03.st5.dd1.num': 'Decision 01 · 完成的那次執行，就是審計軌跡',
+      's03.st5.dd1.title': '一個時間戳，一份簽核過的「實際上線內容」摘要。',
+      's03.st5.dd1.body': '基準測試結果頁面最上方帶著三個東西：準確率分數、<i>Improvement: Completed</i> 標籤、以及可展開的 Advisor result（展開後列出所有 schema 調整、所有 Specific / Global 層級的 instruction、以及每道題目的通過狀態）。三週後回來的管理員，不用問原作者就能重建出「AI 為什麼變成現在這樣」。對下一輪校正而言，這份記錄同時也是基線：下次的全量重跑會對著這個版本比較，而不是對著某個人的記憶。',
+      's04.title': '設計轉折：從一次到位到反覆迭代',
+      's04.wrong.body': '第一版上線的 AI Advisor，預設校正可以一次到位。管理員在失敗的 benchmark 題目上開啟右側抽屜，讀完 score reason 之後，直接看到兩樣東西：一條 schema 調整建議配一顆 <code>Apply adjustment</code> 按鈕，一條推薦 instruction 配一顆 <code>Add to instruction</code> 按鈕。一列一個按鈕，按下去修改就生效，這就是全部的使用流程：沒有驗證關卡、沒有全量重跑、也看不到這個修正是否真的在題庫其他地方站得住腳。Advisor 給建議，管理員點下去，抽屜關上，結束。',
+      's04.wrong.cap': 'BEFORE · 一次性的 AI Advisory 抽屜，按下 Apply 與 Add，流程就到此為止。',
+      's04.lede': '實際拿評估題組跑過以後，這個假設就被推翻了。為了修某題寫下的 schema 註記，常常會在另一題上製造新的失敗，而管理員要等到下一次用戶抱怨才會發現。<span class="stat-hi-blue">校正不是一筆交易，而是一個循環。</span>這個認知重塑了之後每一個畫面：我們不再設計線性的「<i>診斷 → 修正 → 完成</i>」，而是為反覆測試、調整、再驗證的循環重新設計，把 benchmark 放在每輪循環之間，當成「這次修正能不能真的上線」的裁決者。',
+      's04.right.body': '第二版把單擊換成一個循環。每一條暫存的 schema 修改、每一條新加的 instruction，都要跑一次 Before / After 驗證：把原本失敗的那幾題套上編輯後重新執行，左右並排顯示，讓管理員清楚看見哪些失敗被修好、原本通過的題目有沒有被新編輯搞回歸。變更不是覆蓋，而是累積：每一輪都會往「Advisor 已確認安全」的 schema 調整和 instruction 堆疊上新增一層，<code>Re-run verification</code> 讓管理員可以再加一條編輯，在進入知識庫之前先把它跟現有堆疊一起再驗證一次。一次校正不會因為按下去就結束，它會在 benchmark 再也挑不出回歸時才結束。',
+      's04.right.cap': 'AFTER · 多輪反覆的 Before / After 驗證循環：每一條新加的 schema 修改與 instruction，都要經過好幾輪重跑才能真的留下來。',
+      's04.d1.body': '這是與工程團隊協作中最關鍵、也最費力的部分。當每一輪校正都可能觸發新的副作用時，介面不能再是單向的輸送帶。我們必須為每一個步驟預設「如果需要再做一次呢？」：錯誤分類要支援重新標記、題庫要支援增量擴充而非全量替換、校正結果要能即時與前一輪比對，而非單純覆蓋。',
+      's04.d2.body': '這個認知轉變也改變了我們向管理員呈現 AI 推理路徑的方式。在最初的線性模型裡，只需要告訴管理員「這裡出錯了，這是修正」。但在迭代模型裡，管理員需要理解：為什麼同一個問題反覆出現、先前的哪些校正可能引入了新問題、以及哪些區域還沒被題庫覆蓋。資訊架構從簡單的診斷報告，進化成了帶有上下文比對的多輪校正歷程。',
+      's04.d3.body': '最有價值的一課：<span class="stat-hi-blue">一旦接受校正是循環而非終點，設計決策就變得清晰許多</span>。每個功能都只需要回答一個問題，<span class="stat-hi-blue">「這能讓下一輪迭代更順利嗎？」</span>而不是「這能一次解決問題嗎？」',
+      's05.title': '成果與反思：從被動觀測轉向主動治理',
+      's05.lede': 'Thread Tracing 的實踐，成功將原本散落在各處、令人頭痛的用戶錯誤，轉化為驅動產品進化的核心數據資產。',
+      's05.result.label': '系統化協作的效率變革',
+      's05.result.body': '透過 Test Set 機制的建立，我與團隊將 AI 故障排除的溝通語言標準化。這消弭了開發與設計之間對「錯誤原因」的認知落差，修復週期從原本需耗時<span class="stat-hi">數天</span>的反覆溝通，縮短至<span class="stat-hi">分鐘級</span>的精準定位與校正。',
+      's05.next.label': '設計者的角色重塑',
+      's05.next.body': '這次經驗讓我體會到，在 AI 產品中，設計師的角色已超越了介面呈現，而是治理邏輯的建構者。我們不只是在修復一個 Bug，而是建立一套系統化的框架，讓 AI 的黑盒子推理過程變得透明且可受控。',
+    },
+    'zh-cn': {
+      'nav.back': '← Iris Hsieh',
+      'nav.intro': '.简介',
+      'nav.s01': '01.序言',
+      'nav.s02': '02.问题',
+      'nav.s03': '03.解决方案',
+      'nav.s04': '04.设计转折',
+      'nav.s05': '05.成果',
+      'title.big': 'Thread Tracing：我与团队如何构建 AI 的自我演进闭环',
+      'title.sub': '如何将盲目的失败率转化为结构化的可观测性管道，让每一笔用户投诉都成为 AI 进化的燃料。',
+      'intro.overview.label': '项目概述',
+      'intro.overview.body': '为了提升企业对 AI 应用的掌控力，我与团队设计了 <b>Thread Tracing</b> 治理模块。这套架构让企业端的 AI 管理员能从全局视角观测组织内的交互数据。基于 Google PAIR 框架，我们将散乱的用户反馈转化为结构化的可视化情报，管理者不仅能主动识别模型偏差，更能将反馈转化为可执行的行动，实现「<b>监测、反馈、优化</b>」的自主闭环管理。',
+      'intro.role.label': '我的角色',
+      'intro.role.body': '<span class="stat-hi">PM</span>、<span class="stat-hi">唯一的设计师</span>，以及<span class="stat-hi">用户研究员</span>。负责反馈分类体系设计、仪表板信息架构、反馈到指令的管道，以及 PAIR 框架的应用。',
+      'intro.time.label': '公司与时间',
+      'intro.time.body': 'Wren AI · 2026',
+      's01.title': '序言：当 AI 进入企业后，我们失去了什么？',
+      's01.lede': '在 Wren AI 的设计过程中，我与团队发现当 AI 系统从实验室走向<span class="stat-hi">数千人</span>的企业场景时，管理员最恐惧的不是 AI「不知道答案」，而是 AI「给了错的答案却<span class="stat-hi-blue">没人知道为什么</span>」。',
+      's01.blackbox.label': '目前的现状就像是一个「黑盒子」：',
+      's01.p1': '<b>断裂的感知</b>，用户点了「踩」就像病人在喊痛，但管理员不知道是哪条神经出了问题。',
+      's01.p2': '<b>开回路的治理</b>，系统缺乏一个「自动化考场」，导致管理员这次修好了 A 错误，下次更新却又引发了 B 错误。',
+      's01.insight.label': '我们的使命',
+      's01.insight.body': '身为 Senior Product Designer，我与团队的目标是设计一套 Feedback Loop（反馈闭环），让 AI 不再只是重复执行任务，而是学会从错误中「进化」。',
+      's01.pair.label': '为什么回馈回圈（Feedback Loop）至关重要？',
+      's01.pair.body': '参考 Google 的 <a href="https://pair.withgoogle.com/guidebook/chapters/feedback-and-controls/design-ai-feedback-loops" target="_blank" style="text-decoration:underline;">PAIR 框架</a>，反馈不仅是意见收集，更是驱动系统进化的核心引擎：',
+      's01.pair.p1': '<b>模型优化（Ground Truth）</b>，将用户反馈转化为高品质标记数据，精准校正模型错误。',
+      's01.pair.p2': '<b>个性化感官（Personalization）</b>，通过持续学习个体偏好，打造量身定制的交互体验。',
+      's01.pair.p3': '<b>建立信任与主导权（Agency）</b>，赋予用户介入决策的能力，从被动接受转向主动引导，建立深层信任。',
+      's01.fb.label': '平衡双轨收集模式',
+      's01.fb.body': '在设计中，我们采取「隐式与显式并行」的策略，以确保数据的广度与深度：',
+      's01.fb.p1': '<b>隐式反馈（Implicit Feedback）（数据广度）：</b>自动监测点击、停留时间、忽略行为等低摩擦信号。获得<span class="stat-hi">海量行为样本</span>，但需注意环境噪音导致的信号误导。',
+      's01.fb.p2': '<b>显式反馈（Explicit Feedback）（意图深度）：</b>通过评分、赞/踩、结构化错误回报获取明确意图。虽然操作摩擦力较高，但能提供<span class="stat-hi-blue">最高纯度的优化指引</span>。',
+      's02.title': '问题定义：我们面对的是什么样的「病症」？',
+      's02.lede': '我们观测了<span class="stat-hi">近三个月</span>的用户使用习惯，并按用户活跃程度与查询模式进行分群。三个失败模式反复浮现：',
+      's02.pA': '<b>无效的投诉（Noisy Signal）</b>，用户遇到错误时，多半只回复「这答案没用」、「我不是要这个」等模糊短句，AI 无法从中提取可执行的优化指令。加上原本的 thumbs up / down 设计不够凸显，<span class="stat-hi-blue">几乎没有用户使用</span>。',
+      's02.pB': '<b>转瞬即逝的错误（Transient Failures）</b>，团队虽以 Langfuse 进行内部观测，却未提供管道让项目管理员自行分析。企业无法自主调整与优化，每次都仰赖售后人员介入。',
+      's02.pC': '<b>缺乏对焦的药方（Misaligned Correction）</b>，即使进行了修正，也缺乏一套标准化的题库来验证修正是否在所有情境下都有效。管理员凭经验调整 Instruction，但往往修好了 A 问题，却在下一轮触发了 B 问题，没有回归测试机制，每次修正都像在打地鼠。',
+      's03.title': '解决方案：我们设计的反馈闭环',
+      's03.lede': '基于上述，我与团队将 Thread Tracing 设计为四阶段的闭环流程，每一阶段都直接对应我们发现的缺口。',
+      's03.loop1': '结构化收集',
+      's03.loop2': '错误 → 考题',
+      's03.loop3': '引导式校正',
+      's03.loop4': '回归验证',
+      's03.loop.return': '↻ 验证过的新行为进入下一轮',
+      's03.loop1.cap': '用户回报 AI 出错时，选择错误类型，系统自动附上 reasoning trace。',
+      's03.loop2.cap': '管理员诊断后，将失败案例标准化为可重复执行的测试。',
+      's03.loop3.cap': '对照错误与正确路径，针对性修改 MDL 或 Instruction。',
+      's03.loop4.cap': '用完整题库重跑，确认修正通过且没破坏既有正确答案。',
+      's03.loop.t12': 'trace + 错误分类',
+      's03.loop.t23': '标准化案例',
+      's03.loop.t34': '更新后的 MDL',
+      's03.st1.title': '结构化收集：将噪音转化为信号',
+      's03.st1.desc': '反馈机制应自然融入用户流程中。过去「赞 / 踩」图标几乎隐身在动作行里，几乎没有用户会去按。我们把提问拉进回答区块，并让 Yes / No 之后的结构化表单只在用户真的有话要说时才展开；同时，系统会自动捕获 AI 出错瞬间的推理路径（Trace Data），保留过去总是消失的「犯罪现场」。',
+      's03.st1.before': '旧版设计 · 仅有图标',
+      's03.st1.after': '新版设计 · 显性提问',
+      's03.st1.dd0.num': '决策 01 · 把提问变得明显',
+      's03.st1.dd0.title': '把问题从动作栏抬进用户视线里。',
+      's03.st1.dd0.body': '旧版把反馈埋在通用动作栏里（一个小小的赞 / 踩，挤在复制、分享、重新生成旁边），几乎没人会去按。我们把提问本身拉进回答区块，在每一则回答正下方加上一行 inline 的 <code>这个回复有帮助吗？</code>。Yes / No 的点击刻意设计为低门槛；只有当用户真的有话要说时，后面的结构化表单才会展开。把「提问」从 chrome 搬进 content，是这一章里对行为影响最大的单一改动，当提问不可能被忽略的那一刻，回复率上升了 <b>+45%</b>。',
+      's03.st1.dd1.num': '决策 02 · 用分类标签取代自由文字',
+      's03.st1.dd1.title': '把噪音导进 AI 团队能直接动手的五种失败类型。',
+      's03.st1.dd1.body': '早期做过自由填写版本，结果很清楚：非结构化反馈会碎裂成同一个问题的不同说法，<i>「SQL 错了」</i>、<i>「用错数据表」</i>、<i>「查询坏掉」</i> 意思是同一件事，但在系统眼里是三笔。我们把 AI 实际会发生的<span class="stat-hi">五种失败模式</span>（<code>SQL 生成失败</code>、<code>数据检索失败</code>、<code>未遵循指令</code>、<code>AI 摘要错误</code>、<code>SQL-Pairs 偏差</code>）映射到固定的标签集合。用户点选，系统汇总。翻译过程中的信号不会再被稀释，管理员仪表板终于能把「苹果和苹果」拿来比。',
+      's03.st1.dd2.num': '决策 03 · 默认简短，必要时才展开',
+      's03.st1.dd2.title': '让表单保持轻量，只让一个标签有「展开的资格」。',
+      's03.st1.dd2.body': '表单太长会压低完成率；表单太短又会在最关键的地方失去精细度。折衷方式：表单默认保持精简，只有当用户勾选 <code>未遵循指令</code>（这个「是哪一条 rule」会影响后续一切的标签）时，才展开第二层下拉菜单，列出项目当下配置的所有 Instruction。<code>其他</code> 选项保留，但刻意被排在最难动手的位置。管理员最后拿到的要么是一条可以直接修的具体 rule，要么是一个明确信号：「当前的 instruction 体系缺了一块」。',
+      's03.st1.dd3.num': '决策 04 · 一个形状，两种情境',
+      's03.st1.dd3.title': '换掉词汇，留住肌肉记忆。',
+      's03.st1.dd3.body': '回答和图表会因为不同的原因失败，不可能共用同一组标签；但如果连一套心智模型都不能共用，用户到第二个界面就会开始不信任这张表单。所有反馈表单都保持同一个 <b>评分 &rarr; 选标签 &rarr; 补描述（选填）</b> 的三段结构，只有标签词汇会换。为错误 SQL 反馈过一次的用户，第一次看到图表轴线异常时虽然选项不同，但下一步要做什么他已经很清楚。',
+      's03.mq.title': '监测质量：从笔数到原因',
+      's03.mq.desc': '反馈表单是生产者，这个仪表板是消费者。项目管理员打开 <code>Settings → Project → Thread tracing</code>，会看到一个必须在一眼内回答两个问题的画面：这周 AI 是变好还是变坏、现在最主要的失败模式是哪一种。剩下的一切都是筛选器。',
+      's03.mq.dd1.num': '决策 01 · 先看趋势，再看分类',
+      's03.mq.dd1.title': '先给一条线，让条形图解释原因。',
+      's03.mq.dd1.body': '管理员不会想一打开就面对一整排失败，他们想先知道「指针有没有在动」。仪表板的主角是成功指标线图（每日正向 / 负向评分），失败分类的条形图直接紧贴在下方。顺序很重要：先扫一眼趋势线，判断「上周那个修正有没有用」，再往下看条形图，找「哪一类正在飙」。如果把分类排在上面，就等于在管理员还没决定「需不需要修」之前，就把问题反转成 <i>「到底是什么坏了？」</i>。',
+      's03.mq.dd2.num': '决策 02 · 筛选不只看「发生什么」，也看「谁反馈的」',
+      's03.mq.dd2.title': '把「用户身份」放上和「时间、种类」同一层的筛选架。',
+      's03.mq.dd2.body': '早期 prototype 的筛选只有日期区间跟 trace 类型（<code>Answer</code> / <code>Chart</code>），和跨部门管理员聊过之后发现这样不够，营销部门的失败样貌跟财务部门完全不一样。我们把 <b>Reported-By</b>（单个成员、用户群组）从「高级选项」升级为第一层的筛选控制，让同一张条形图在两次点击内就能回答 <i>「哪个部门的提问 AI 最难搞？」</i>。下方的 thread 表格再加上一个 thumbs-up / thumbs-down 切换，管理员想找下一个校正目标时，能直接跳到有明确负向信号的那一批。',
+      's03.mq.dd3.num': '决策 03 · 从笔数到原因，只要一次点击',
+      's03.mq.dd3.title': '先把表格收折起来，每一列都藏着一个「更深的入口」。',
+      's03.mq.dd3.body': 'thread 表格是「一个数字上升了」和「这里就是那句坏掉的 query」之间的桥。每一列收折起来只剩 Thread ID、时间戳、trace 类型、反馈极性。点开之后，系统推测的失败原因会 inline 展开，管理员就能在这一层先决定「值不值得打开完整 trace」。再下一步 <code>Action → View</code> 才是 reasoning trace、metadata 跟 SQL，最深的信息不放在最前面，而是收在管理员「真的想看」的那一步后面。',
+      's03.mq.dd4.num': '决策 04 · 把 trace drawer 设计成「犯罪现场速报」',
+      's03.mq.dd4.title': '不需要跳页，就能在这里判断这笔失败值不值得深挖。',
+      's03.mq.dd4.body': 'drawer 在决策的那一刻展开：你扫了一眼展开的那一列、推测出的失败原因看起来值得查，然后点了 <code>View</code>。这时你需要的不是一个新页面，而是一份聚焦的速报。drawer 呈现的内容是：创建者身份和反馈者（把「谁跑了这个 thread」和「谁发现错误」分开）、AI 的执行状态（区分机器记录的事实和用户感知到的「出错了」）、用户选的问题标签，还有在 SQL 出现之前让失败有自然语言脉络的 thread 名称。每一个字段都有它存在的理由：拿掉反馈者，你就失去了跨部门的信号；拿掉 thread 名称，SQL 就变成没有脉络的字符串。这个 drawer 的设计目标是：三十秒读完，直接决定。',
+      's03.st2.title': '将错误变成考题',
+      's03.st2.desc': '管理员可一键将诊断后的失败案例导入 Eval 套件，使真实错误转化为标准化、可重复执行的测试案例。用户能即时看到自己的反馈如何驱动 AI 改进，形成可见的参与循环。AI 治理从被动救火转为系统性评估。',
+      's03.st2.dd1.num': 'Decision 01 · 以 Ground Truth SQL 作为基准锚点',
+      's03.st2.dd1.title': '先定义「正确」，再衡量「错误」。',
+      's03.st2.dd1.body': '没有标准答案的测试案例只是一个问题。Eval 套件要求管理员将每个自然语言问题与一组已验证的 SQL 配对（可以手动撰写，也可以由 AI 生成后人工审核）。这个配对就是衡量单位。一旦锁定，它就成为 AI 被评分的客观标准，不是「以前能跑」的人类记忆，而是可重复执行、版本控制的正确定义。<code>Preview Data</code> 按钮在定义阶段就完成闭环：在它成为基准测试之前，你就知道这条 SQL 是有效的。',
+      's03.st2.dd2.num': 'Decision 02 · 两步骤创建将 SQL 准确性与叙述准确性分开',
+      's03.st2.dd2.title': 'SQL 正确与输出正确是两个不同的问题。',
+      's03.st2.dd2.body': '步骤一建立 SQL 锚点；步骤二确立答案实际上应该说什么（关键发现、数据来源、结论）。将这两个步骤分开，迫使管理员从两个层面思考正确性：<i>「AI 写对了查询吗？」</i>以及<i>「AI 从中提取了正确的洞察吗？」</i>查询可以返回正确的数据，却仍然产出误导性的摘要。两步骤模型使这个区别变得明确，因此任一层的回归都能被独立捕捉。',
+      's03.st2.dd3.num': 'Decision 03 · 基准测试结果是差异，不是判决',
+      's03.st2.dd3.title': '「失败」是起点，不是结论。',
+      's03.st2.dd3.body': '评估视图在通过/失败旁边显示评分原因（<i>「列数不符：生成结果少了 1 列」</i>）、并排 SQL 差异、数据预览比较，以及 AI 的推理时间轴。每个元素回答不同的诊断问题：评分原因说明分歧发生在<i>哪里</i>，SQL 差异显示是<i>哪个子句</i>造成的，数据预览显示实际上是否有影响，推理时间轴则揭示 AI 是误读了问题还是写错了查询。管理员离开视图时，不只知道某次修正失败了，还知道下一次应该从哪里着手。',
+      's03.st3.title': 'AI 引导式校正：知道要改什么，而不只是哪里出错',
+      's03.st3.desc': 'Eval 套件指出了失败的地方。AI Advisor 接手后续：对基准测试的失败案例执行诊断，提出具体的知识库修改建议，并在应用前完成验证。校正从直觉转为有根据的目标操作。',
+      's03.st3.dd1.num': 'Decision 01 · 选定失败案例，而非描述症状',
+      's03.st3.dd1.title': '从基准测试开始诊断，而非从描述开始。',
+      's03.st3.dd1.body': '管理员不需要向 Advisor 描述问题，他们直接从基准测试结果中选取失败的问题。Advisor 将这些作为输入，对知识库进行自己的诊断。这个选取步骤很重要：它将诊断范围限定在已确认的失败案例，而非假设情境，使提出的修改建议与观察到的回归紧密对应，而非凭猜测。',
+      's03.st3.dd2.num': 'Decision 02 · 分步暂存，而非一键应用',
+      's03.st3.dd2.title': '每项建议在成为提交前都可审阅。',
+      's03.st3.dd2.body': 'Advisor 以分步暂存的方式呈现 schema 调整和指令修改：每项修改附带编辑和取消选择的控制项，一次一个。管理员可以审阅逻辑、修改表述，或在应用前完全移除某项目。诊断与应用之间的分离是刻意设计的：确保人工判断仍在循环中，尤其是涉及 AI 核心知识模型的修改。',
+      's03.st3.dd3.num': 'Decision 03 · 应用前先验证',
+      's03.st3.dd3.title': '由基准测试决定修正是否就绪。',
+      's03.st3.dd3.body': '暂存的修改应用前，Advisor 会对相同的基准测试问题执行验证。前后栏位显示每道题的结果：哪些失败已解决、哪些仍存在、是否有原本通过的题目发生了回归。只有当验证确认修改安全后，管理员才进行提交。',
+      's03.st4.title': '回归验证：不只这轮，每轮都要通过',
+      's03.st4.desc': 'Advisor 的验证阶段只会重测它本来要修的那几题。但为了修复某题所写的 schema 调整，可能悄悄破坏另一题原本通过的结果。所以在应用到 AI 系统之前，完整题库会再跑一次（不只是失败的那几题，而是全部），唯有整排干净，最终的应用键才会开启。',
+      's03.st4.dd3.num': 'Decision 01 · 完整应用，必须靠全量重跑把关',
+      's03.st4.dd3.title': '最终核准者是基准测试本身，不是 Advisor。',
+      's03.st4.dd3.body': '「应用到 AI 系统」被刻意放在两道关卡的终点。第一道是 Advisor 对失败题的 Before / After，第二道是题库全量重跑，用来抓出暂存修改可能新引入的回归。两排都干净，按钮才会开启。最后送出的，不是「管理员批准的建议」，而是「基准测试自己签核过的修正」。',
+      's03.st5.title': '闭环完成：这份记录就是下一轮的起点',
+      's03.st5.desc': '应用完成的那一刻，这次基准测试的执行记录就成为本轮校正的永久记录：准确率差、<i>Improvement: Completed</i> 印记、Advisor 动过的每个 schema 字段、新增的每条 instruction，全部缝在同一个时间戳下。闭环不只是关上，还留下一张下轮会读的签收单。',
+      's03.st5.dd1.num': 'Decision 01 · 完成的那次执行，就是审计轨迹',
+      's03.st5.dd1.title': '一个时间戳，一份签核过的「实际上线内容」摘要。',
+      's03.st5.dd1.body': '基准测试结果页面最上方带着三个东西：准确率分数、<i>Improvement: Completed</i> 标签、以及可展开的 Advisor result（展开后列出所有 schema 调整、所有 Specific / Global 层级的 instruction、以及每道题目的通过状态）。三周后回来的管理员，不用问原作者就能重建出「AI 为什么变成现在这样」。对下一轮校正而言，这份记录同时也是基线：下次的全量重跑会对着这个版本比较，而不是对着某个人的记忆。',
+      's04.title': '设计转折：从一次到位到反复迭代',
+      's04.wrong.body': '第一版上线的 AI Advisor，预设校正可以一次到位。管理员在失败的 benchmark 题目上开启右侧抽屉，读完 score reason 之后，直接看到两样东西：一条 schema 调整建议配一颗 <code>Apply adjustment</code> 按钮，一条推荐 instruction 配一颗 <code>Add to instruction</code> 按钮。一列一个按钮，按下去修改就生效，这就是全部的使用流程：没有验证关卡、没有全量重跑、也看不到这个修正是否真的在题库其他地方站得住脚。Advisor 给建议，管理员点下去，抽屉关上，结束。',
+      's04.wrong.cap': 'BEFORE · 一次性的 AI Advisory 抽屉，按下 Apply 与 Add，流程就到此为止。',
+      's04.lede': '实际拿评估题组跑过以后，这个假设就被推翻了。为了修某题写下的 schema 批注，常常会在另一题上制造新的失败，而管理员要等到下一次用户抱怨才会发现。<span class="stat-hi-blue">校正不是一笔交易，而是一个循环。</span>这个认知重塑了之后每一个画面：我们不再设计线性的「<i>诊断 → 修正 → 完成</i>」，而是为反复测试、调整、再验证的循环重新设计，把 benchmark 放在每轮循环之间，当成「这次修正能不能真的上线」的裁决者。',
+      's04.right.body': '第二版把单击换成一个循环。每一条暂存的 schema 修改、每一条新加的 instruction，都要跑一次 Before / After 验证：把原本失败的那几题套上编辑后重新执行，左右并排显示，让管理员清楚看见哪些失败被修好、原本通过的题目有没有被新编辑搞回归。变更不是覆盖，而是累积：每一轮都会往「Advisor 已确认安全」的 schema 调整和 instruction 堆叠上新增一层，<code>Re-run verification</code> 让管理员可以再加一条编辑，在进入知识库之前先把它跟现有堆叠一起再验证一次。一次校正不会因为按下去就结束，它会在 benchmark 再也挑不出回归时才结束。',
+      's04.right.cap': 'AFTER · 多轮反复的 Before / After 验证循环：每一条新加的 schema 修改与 instruction，都要经过好几轮重跑才能真的留下来。',
+      's04.d1.body': '这是与工程团队协作中最关键、也最费力的部分。当每一轮校正都可能触发新的副作用时，界面不能再是单向的输送带。我们必须为每一个步骤预设「如果需要再做一次呢？」：错误分类要支持重新标记、题库要支持增量扩充而非全量替换、校正结果要能即时与前一轮比对，而非单纯覆盖。',
+      's04.d2.body': '这个认知转变也改变了我们向管理员呈现 AI 推理路径的方式。在最初的线性模型里，只需要告诉管理员「这里出错了，这是修正」。但在迭代模型里，管理员需要理解：为什么同一个问题反复出现、先前的哪些校正可能引入了新问题、以及哪些区域还没被题库覆盖。信息架构从简单的诊断报告，进化成了带有上下文比对的多轮校正历程。',
+      's04.d3.body': '最有价值的一课：<span class="stat-hi-blue">一旦接受校正是循环而非终点，设计决策就变得清晰许多</span>。每个功能都只需要回答一个问题，<span class="stat-hi-blue">「这能让下一轮迭代更顺利吗？」</span>而不是「这能一次解决问题吗？」',
+      's05.title': '成果与反思：从被动观测转向主动治理',
+      's05.lede': 'Thread Tracing 的实践，成功将原本散落在各处、令人头痛的用户错误，转化为驱动产品进化的核心数据资产。',
+      's05.result.label': '系统化协作的效率变革',
+      's05.result.body': '通过 Test Set 机制的建立，我与团队将 AI 故障排除的沟通语言标准化。这消弭了开发与设计之间对「错误原因」的认知落差，修复周期从原本需耗时<span class="stat-hi">数天</span>的反复沟通，缩短至<span class="stat-hi">分钟级</span>的精准定位与校正。',
+      's05.next.label': '设计者的角色重塑',
+      's05.next.body': '这次经验让我体会到，在 AI 产品中，设计师的角色已超越了界面呈现，而是治理逻辑的建构者。我们不只是在修复一个 Bug，而是建立一套系统化的框架，让 AI 的黑盒子推理过程变得透明且可受控。',
+    }
+  };
+
+  function applyLang(lang) {
+    const dict = I18N[lang] || {};
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (lang === 'en') {
+        const orig = el.getAttribute('data-i18n-orig');
+        if (orig != null) el.innerHTML = orig;
+      } else if (dict[key] != null) {
+        if (!el.hasAttribute('data-i18n-orig')) el.setAttribute('data-i18n-orig', el.innerHTML);
+        el.innerHTML = dict[key];
+      }
+    });
+    const htmlEl = document.documentElement;
+    if (lang === 'en') htmlEl.setAttribute('lang', 'en');
+    else if (lang === 'ja') htmlEl.setAttribute('lang', 'ja');
+    else if (lang === 'zh-tw') htmlEl.setAttribute('lang', 'zh-TW');
+    else if (lang === 'zh-cn') htmlEl.setAttribute('lang', 'zh-CN');
+  }
+
+  // -- Loop return bar alignment --
+  function alignLoopBar() {
+    const wrap = document.querySelector('.loop-wrap');
+    if (!wrap) return;
+    const nodes = wrap.querySelectorAll('.loop-node');
+    const bar = wrap.querySelector('.loop-return-bar');
+    if (nodes.length < 2 || !bar) return;
+    const wrapRect = wrap.getBoundingClientRect();
+    const firstRect = nodes[0].getBoundingClientRect();
+    const lastRect = nodes[nodes.length - 1].getBoundingClientRect();
+    const left = firstRect.left - wrapRect.left + firstRect.width / 2;
+    const right = wrapRect.width - (lastRect.left - wrapRect.left + lastRect.width / 2);
+    bar.style.marginLeft = left + 'px';
+    bar.style.marginRight = right + 'px';
+  }
+  window.addEventListener('load', alignLoopBar);
+  window.addEventListener('resize', alignLoopBar);
+
+  // -- Language switcher --
+  (function() {
+    const sel = document.getElementById('nav-lang-select');
+    if (!sel) return;
+    try {
+      const saved = localStorage.getItem('portfolio-lang');
+      if (saved) { sel.value = saved; applyLang(saved); }
+    } catch(e) {}
+    sel.addEventListener('change', () => {
+      try { localStorage.setItem('portfolio-lang', sel.value); } catch(e) {}
+      applyLang(sel.value);
+      requestAnimationFrame(alignLoopBar);
+    });
+  })();
+</script>
+
+</body>
+</html>

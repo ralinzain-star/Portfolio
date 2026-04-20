@@ -71,7 +71,7 @@
     /* ── SECTION HEADING ──────────────────────────── */
     .sec-head {
       display: flex; gap: 28px; align-items: flex-start;
-      font-size: 32px; font-weight: 800; font-family: 'Barlow', sans-serif; line-height: 1.1;
+      font-size: 24px; font-weight: 800; font-family: 'Barlow', sans-serif; line-height: 1.15;
       letter-spacing: -0.02em; text-transform: uppercase;
     }
     .sec-num { white-space: nowrap; flex-shrink: 0; }
@@ -79,24 +79,24 @@
 
     /* ── TYPE SCALE ───────────────────────────────── */
     .h3 {
-      font-size: 11px; font-weight: 700; line-height: 1.2;
+      font-size: 11px; font-weight: 700; line-height: 1.4;
       letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Barlow', sans-serif;
     }
     .body {
       font-size: 14px; font-weight: 400; line-height: 1.75;
-      letter-spacing: 0em; font-family: 'Noto Sans', sans-serif;
+      letter-spacing: 0em; font-family: 'Noto Sans', 'Barlow', sans-serif;
     }
     .body-med {
       font-size: 14px; font-weight: 600; line-height: 1.5;
       letter-spacing: 0em; font-family: 'Noto Sans', sans-serif;
     }
     .body-sm {
-      font-size: 13px; font-weight: 400; line-height: 1.65;
+      font-size: 14px; font-weight: 400; line-height: 1.75;
       letter-spacing: 0em; font-family: 'Noto Sans', sans-serif;
     }
     .caption {
-      font-size: 10px; font-weight: 400; line-height: 1.4;
-      letter-spacing: 0.06em; font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px; font-weight: 500; line-height: 1.4;
+      letter-spacing: 0.04em; font-family: 'IBM Plex Mono', monospace;
     }
     .text-block { display: flex; flex-direction: column; gap: 8px; }
 
@@ -383,7 +383,7 @@
       .results-row { grid-template-columns: 1fr; }
       .preview-grid { grid-template-columns: 1fr; }
       .conv-row { grid-template-columns: 1fr; }
-      .sec-head { font-size: 22px; }
+      .sec-head { font-size: 20px; }
       .feature-title { font-size: 20px; }
     }
 
@@ -667,11 +667,11 @@
       display: flex; flex-direction: column; align-items: center;
     }
     .ofs-badge {
-      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      width: 32px; height: 32px; flex-shrink: 0;
+      background: #f8d08c; border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
-      background: var(--bg); border: 1.5px solid var(--border);
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px; font-weight: 600; color: var(--muted);
+      font-size: 14px; font-weight: 700; font-family: 'Barlow', sans-serif;
+      color: var(--text);
       z-index: 1;
     }
     .ofs-spine-line {
@@ -682,11 +682,12 @@
     /* Right: content */
     .ofs-body { padding-bottom: 36px; }
     .ofs-chapter-title {
-      font-size: 15px; font-weight: 700; color: var(--text);
-      line-height: 1.3; padding-top: 6px; margin-bottom: 10px;
+      font-family: 'Barlow', sans-serif; font-size: 18px; font-weight: 700; color: var(--text);
+      letter-spacing: -0.01em; line-height: 1.3; padding-top: 6px; margin-bottom: 10px;
     }
     .ofs-chapter-story {
-      font-size: 13px; color: var(--text); line-height: 1.7;
+      font-family: 'Noto Sans', 'Barlow', sans-serif;
+      font-size: 14px; font-weight: 400; color: var(--text); line-height: 1.75;
       margin-bottom: 12px;
     }
     .ofs-chapter-story.dim { color: var(--muted); }
@@ -1283,7 +1284,7 @@
       .results-row { gap: 12px; }
 
       /* Title heading */
-      .title-main-heading { font-size: 22px !important; }
+      .title-main-heading { font-size: 28px !important; }
 
       /* Old flow steps · stack to 2 columns on mobile */
       .ofs-steps { grid-template-columns: repeat(2, 1fr); }
@@ -1315,7 +1316,7 @@
 <!-- ── TITLE BAR ────────────────────────────────────── -->
 <div class="title-bar">
   <div class="title-bar-inner">
-    <div class="title-main-heading" data-i18n="page.title" style="font-size:36px;font-weight:800;line-height:1.1;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;">KKday Rezio SaaS Service</div>
+    <div class="title-main-heading" data-i18n="page.title" style="font-size:40px;font-weight:800;line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;">KKday Rezio SaaS Service</div>
     <div data-i18n="page.subtitle" style="font-size:14px;font-weight:500;line-height:1.5;letter-spacing:0em;font-family:'Noto Sans',sans-serif;">Redesigning the OTA product listing experience</div>
   </div>
 </div>
