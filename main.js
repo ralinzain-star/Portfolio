@@ -390,7 +390,7 @@
         'intro.bio3': 'AI とデザインについての考え方は、<a href="#island-writing">Playground</a>、とりわけ、並行プロジェクトを横断しながら一人のデザイナーが 6〜8 FTE 分のスコープを担うワークフローをまとめた <a href="designing-with-ai.html">Designing with AI</a> をご覧ください。目下は、旅行リサーチをインタラクティブな HTML ガイドに変換する Claude Code Skill、<a href="trip-planner.html">Trip Planner</a> を育てています。',
         'intro.pill.resume': '履歴書 ↓',
         'intro.pill.linkedin': 'LinkedIn',
-        'intro.pill.email': 'メール',
+        'intro.pill.email': 'ralinzain@gmail.com',
         'work.badge': '作品',
         'wcard1.co': 'LSBG · 2023',
         'wcard1.title': '自転車レーン検査最適化',
