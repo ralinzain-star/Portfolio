@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Notification Framework · Iris Hsieh</title>
+  <link rel="icon" type="image/png" href="Logo.png" />
+  <link rel="apple-touch-icon" href="Logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -39,7 +41,7 @@
       padding: 16px 60px;
       display: flex; align-items: center;
     }
-    .nav-back {
+    .nav-back { white-space: nowrap; flex-shrink: 0;
       font-size: 13px; font-weight: 600;
       color: var(--muted); letter-spacing: 0.04em;
       font-family: 'Barlow', sans-serif;
@@ -301,7 +303,7 @@
 
 <!-- ── NAV ────────────────────────────────────────── -->
 <nav class="nav">
-  <a class="nav-back" href="#work" data-i18n="nav.back">← Iris Hsieh</a>
+  <a class="nav-back" href="index.html#island-work" data-i18n="nav.back">← Iris Hsieh</a>
   <div class="nav-anchors">
     <a class="nav-anchor" href="#intro" data-i18n="nav.intro">.Intro</a>
     <a class="nav-anchor" href="#s01" data-i18n="nav.s01">01.Where We Started</a>
@@ -369,9 +371,9 @@
         <div class="text-block">
           <p class="h3" data-i18n="s01.goal.label">Our Goal:</p>
           <ul class="bull-list" style="margin-top:4px;">
-            <li data-i18n="s01.goal.li1"><strong>Build the foundation</strong> — Create a unified framework that designers and product managers can reference together.</li>
-            <li data-i18n="s01.goal.li2"><strong>Ensure consistency</strong> — Reduce redundancy and conflicting messages across features.</li>
-            <li data-i18n="s01.goal.li3"><strong>Enable better work</strong> — Establish shared standards so teams can move faster with confidence.</li>
+            <li data-i18n="s01.goal.li1"><strong>Build the foundation</strong>, Create a unified framework that designers and product managers can reference together.</li>
+            <li data-i18n="s01.goal.li2"><strong>Ensure consistency</strong>, Reduce redundancy and conflicting messages across features.</li>
+            <li data-i18n="s01.goal.li3"><strong>Enable better work</strong>, Establish shared standards so teams can move faster with confidence.</li>
           </ul>
         </div>
       </div>
@@ -386,19 +388,19 @@
       <span class="sec-num">02.</span>
       <span class="sec-title" data-i18n="s02.title">Our Process</span>
     </div>
-    <p class="body" data-i18n="s02.lede">The framework was built on two pillars, each refined iteratively: <strong>Categorization &amp; Usage</strong> — informed by platform-level notification policies and adjusted through multiple rounds of review with stakeholders; and <strong>Notification Frequency Types</strong> — grounded in the existing design system to ensure visual and behavioral consistency.</p>
+    <p class="body" data-i18n="s02.lede">The framework was built on two pillars, each refined iteratively: <strong>Categorization &amp; Usage</strong>, informed by platform-level notification policies and adjusted through multiple rounds of review with stakeholders; and <strong>Notification Frequency Types</strong>, grounded in the existing design system to ensure visual and behavioral consistency.</p>
     <div style="display:flex;flex-direction:column;gap:20px;">
       <div class="text-block">
-        <p class="h3" data-i18n="s02.step1.label">Step 1 — Notification Audit</p>
+        <p class="h3" data-i18n="s02.step1.label">Step 1, Notification Audit</p>
         <p class="body" data-i18n="s02.step1.body">We began with a comprehensive audit of notifications across 6 core features on the platform. Notifications were scattered across separate design files with no single source of truth. Each one was mapped by trigger, urgency, and frequency, then translated into flowcharts to reconstruct the end-to-end user journey.</p>
       </div>
       <div class="text-block">
-        <p class="h3" data-i18n="s02.step2.label">Step 2 — Classification &amp; Rules</p>
+        <p class="h3" data-i18n="s02.step2.label">Step 2, Classification &amp; Rules</p>
         <p class="body" data-i18n="s02.step2.body">From the audit, we designed a classification tree that asked simple but systematic questions: Is this user-initiated? Is it a device health warning? Is it contextual? Each answer led to a category, a frequency type, and an importance level.</p>
       </div>
       <div class="text-block">
-        <p class="h3" data-i18n="s02.step3.label">Step 3 — Cross-Functional Alignment</p>
-        <p class="body" data-i18n="s02.step3.body">We partnered closely with PMs and engineers, running design reviews and scenario testing to pressure-test the framework against real use cases. These sessions revealed where redundancy was most painful and where consistency mattered most — shaping the framework into <span class="stat-hi">something practical, not just theoretical</span>.</p>
+        <p class="h3" data-i18n="s02.step3.label">Step 3, Cross-Functional Alignment</p>
+        <p class="body" data-i18n="s02.step3.body">We partnered closely with PMs and engineers, running design reviews and scenario testing to pressure-test the framework against real use cases. These sessions revealed where redundancy was most painful and where consistency mattered most, shaping the framework into <span class="stat-hi">something practical, not just theoretical</span>.</p>
       </div>
     </div>
   </div>
@@ -437,7 +439,7 @@
         <div class="step-num">4</div>
         <div class="step-copy">
           <p class="h3" data-i18n="s03.step4.label">Notification Helper Tool</p>
-          <p class="body" data-i18n="s03.step4.body">A static framework alone wasn't enough — we needed a way for teams to actually use it in daily workflows. To solve this, I designed the <span class="stat-hi">AI-powered notification classifier</span>, a structured system that turned design rules into actionable outputs across different input types (PRDs, mocks, screenshots, flowcharts).</p>
+          <p class="body" data-i18n="s03.step4.body">A static framework alone wasn't enough, we needed a way for teams to actually use it in daily workflows. To solve this, I designed the <span class="stat-hi">AI-powered notification classifier</span>, a structured system that turned design rules into actionable outputs across different input types (PRDs, mocks, screenshots, flowcharts).</p>
         </div>
       </div>
     </div>
@@ -458,7 +460,7 @@
           <div class="prd-hline"></div>
           <div class="prd-node prd-node-info">
             <div class="prd-node-info-title" data-i18n="s03.tree.step1.tag">Step 1</div>
-            <div class="prd-node-info-sub" data-i18n="s03.tree.step1.sub">Categorization &amp; Usage — Select the category that best describes the notification's purpose.</div>
+            <div class="prd-node-info-sub" data-i18n="s03.tree.step1.sub">Categorization &amp; Usage, Select the category that best describes the notification's purpose.</div>
           </div>
           <div class="prd-hline" style="width:40px;"></div>
           <div class="cat-grid">
@@ -476,12 +478,12 @@
         <div class="flow-row" style="padding-left:184px;">
           <div class="prd-node prd-node-info">
             <div class="prd-node-info-title" data-i18n="s03.tree.step2.tag">Step 2</div>
-            <div class="prd-node-info-sub" data-i18n="s03.tree.step2.sub">Frequency Type — Determine how often and under what conditions it should appear.</div>
+            <div class="prd-node-info-sub" data-i18n="s03.tree.step2.sub">Frequency Type, Determine how often and under what conditions it should appear.</div>
           </div>
           <div class="prd-hline"></div>
           <div class="prd-node prd-node-info">
             <div class="prd-node-info-title" data-i18n="s03.tree.step3.tag">Step 3</div>
-            <div class="prd-node-info-sub" data-i18n="s03.tree.step3.sub">Importance Level — Assign a priority based on urgency and user impact.</div>
+            <div class="prd-node-info-sub" data-i18n="s03.tree.step3.sub">Importance Level, Assign a priority based on urgency and user impact.</div>
           </div>
           <div class="prd-hline"></div>
           <div class="prd-node">
@@ -499,7 +501,7 @@
   <div class="sec-inner">
     <div class="sec-head">
       <span class="sec-num">04.</span>
-      <span class="sec-title" data-i18n="s04.title">Designing the AI-Powered Classifier — Use Gemini Gem</span>
+      <span class="sec-title" data-i18n="s04.title">Designing the AI-Powered Classifier, Use Gemini Gem</span>
     </div>
     <div class="step-list">
       <div class="step-row">
@@ -520,7 +522,7 @@
         <div class="step-num">3</div>
         <div class="step-copy">
           <p class="h3" data-i18n="s04.step3.label">Anchoring to Core Documents</p>
-          <p class="body" data-i18n="s04.step3.body">The classifier was anchored to three authoritative sources — Categories &amp; Usage, Frequency Types, and the Decision Tree. Each classification referenced these definitions and included a summary, ensuring <span class="stat-hi">consistency with the framework</span> instead of language-based guesswork.</p>
+          <p class="body" data-i18n="s04.step3.body">The classifier was anchored to three authoritative sources, Categories &amp; Usage, Frequency Types, and the Decision Tree. Each classification referenced these definitions and included a summary, ensuring <span class="stat-hi">consistency with the framework</span> instead of language-based guesswork.</p>
         </div>
       </div>
       <div class="step-row">
@@ -553,7 +555,7 @@
         <p class="h3" data-i18n="s05.impact1.label">Build the Foundation</p>
         <ul class="bull-list" style="margin-top:4px;">
           <li data-i18n="s05.impact1.goal"><strong>Goal:</strong> Establish a unified notification framework to give the team a consistent way to classify and govern notifications.</li>
-          <li data-i18n="s05.impact1.body"><strong>Impact:</strong> Grounding the work in three core documents — Categories, Frequency Types, and Decision Tree — gave the team a <span class="stat-hi">shared language</span>. Review discussions shifted from individual interpretation to a more consistent decision process.</li>
+          <li data-i18n="s05.impact1.body"><strong>Impact:</strong> Grounding the work in three core documents, Categories, Frequency Types, and Decision Tree, gave the team a <span class="stat-hi">shared language</span>. Review discussions shifted from individual interpretation to a more consistent decision process.</li>
         </ul>
       </div>
       <div class="text-block">
@@ -570,7 +572,7 @@
           <li data-i18n="s05.impact3.body"><strong>Impact:</strong> The classifier introduced MVP/long-term splits, explainable importance rules, and alternative suggestions, helping product planning <span class="stat-hi">move earlier and with clearer rationale</span>.</li>
         </ul>
       </div>
-      <p class="body" data-i18n="s05.summary">The framework, combined with AI-assisted tooling, lowered the effort required to design well-considered notifications. In the end, it turned a scattered notification problem into a <span class="stat-hi">repeatable process</span> — giving the team a <span class="stat-hi">shared foundation</span> for design reviews, trade-off discussions, and clearer accountability across features.</p>
+      <p class="body" data-i18n="s05.summary">The framework, combined with AI-assisted tooling, lowered the effort required to design well-considered notifications. In the end, it turned a scattered notification problem into a <span class="stat-hi">repeatable process</span>, giving the team a <span class="stat-hi">shared foundation</span> for design reviews, trade-off discussions, and clearer accountability across features.</p>
     </div>
   </div>
 </div>
@@ -631,19 +633,19 @@
         'intro.company.body': '大型消費電子平台 · 2025',
         's01.title': '我們的起點',
         's01.bg.label': '專案背景：',
-        's01.bg.body': '我們先從平台上 <span class="stat-hi">6 個核心功能</span>的通知進行全面盤點。通知散落在不同的設計檔案中，沒有單一真實來源——每個團隊都各自為政。盤點揭露了訊息重疊、語氣不一致，以及關鍵通知完全缺席的斷層。',
+        's01.bg.body': '我們先從平台上 <span class="stat-hi">6 個核心功能</span>的通知進行全面盤點。通知散落在不同的設計檔案中，沒有單一真實來源，每個團隊都各自為政。盤點揭露了訊息重疊、語氣不一致，以及關鍵通知完全缺席的斷層。',
         's01.goal.label': '我們的目標：',
-        's01.goal.li1': '<strong>奠定基礎</strong> — 建立一套設計師與 PM 能共同參照的統一框架。',
-        's01.goal.li2': '<strong>確保一致性</strong> — 減少跨功能間的冗餘與衝突訊息。',
-        's01.goal.li3': '<strong>賦能更好的工作方式</strong> — 建立共享標準，讓團隊能更有自信地加速推進。',
+        's01.goal.li1': '<strong>奠定基礎</strong>, 建立一套設計師與 PM 能共同參照的統一框架。',
+        's01.goal.li2': '<strong>確保一致性</strong>, 減少跨功能間的冗餘與衝突訊息。',
+        's01.goal.li3': '<strong>賦能更好的工作方式</strong>, 建立共享標準，讓團隊能更有自信地加速推進。',
         's02.title': '我們的流程',
-        's02.lede': '框架建立在兩大支柱上，並透過迭代持續優化：<strong>分類與使用情境</strong>——以平台級通知政策為依據，經過多輪利害關係人審查調整；以及<strong>通知頻率類型</strong>——植基於既有設計系統，確保視覺與行為的一致性。',
-        's02.step1.label': '步驟 1 — 通知盤點',
+        's02.lede': '框架建立在兩大支柱上，並透過迭代持續優化：<strong>分類與使用情境</strong>，以平台級通知政策為依據，經過多輪利害關係人審查調整；以及<strong>通知頻率類型</strong>，植基於既有設計系統，確保視覺與行為的一致性。',
+        's02.step1.label': '步驟 1, 通知盤點',
         's02.step1.body': '我們從 6 個核心功能的通知盤點開始。通知散落在不同設計檔案中，沒有單一真實來源。我逐一以觸發條件、緊急性與頻率標記每一則，再轉化為流程圖，重建端到端的使用者旅程。',
-        's02.step2.label': '步驟 2 — 分類與規則',
+        's02.step2.label': '步驟 2, 分類與規則',
         's02.step2.body': '基於盤點結果，我們設計出一棵分類樹，透過簡單但系統化的提問定位每一則通知：這是使用者觸發的嗎？這是裝置健康警告嗎？這具備情境脈絡嗎？每個答案都會指向特定類別、頻率類型與重要性等級。',
-        's02.step3.label': '步驟 3 — 跨職能對齊',
-        's02.step3.body': '我與 PM 和工程師緊密合作，舉辦設計審查與情境測試，用真實使用案例壓力測試這套框架。這些會議揭露了冗餘最痛的所在、一致性最關鍵的節點——把框架塑造成<span class="stat-hi">實際可用、而非只是理論</span>的工具。',
+        's02.step3.label': '步驟 3, 跨職能對齊',
+        's02.step3.body': '我與 PM 和工程師緊密合作，舉辦設計審查與情境測試，用真實使用案例壓力測試這套框架。這些會議揭露了冗餘最痛的所在、一致性最關鍵的節點，把框架塑造成<span class="stat-hi">實際可用、而非只是理論</span>的工具。',
         's03.title': '我們的產出',
         's03.step1.label': '分類與使用指引',
         's03.step1.body': '我們定義了 <span class="stat-hi">8 個類別</span>，以平台級通知政策為依據（例如：嚴重裝置健康警告、安全與隱私、背景動作、情境洞察）。這讓團隊擁有共同的詞彙，能一致地描述自己正在送出哪種訊息。',
@@ -652,13 +654,13 @@
         's03.step3.label': '排序與優先級指引',
         's03.step3.body': '每則通知都被指派一個重要性等級，決定它的視覺呈現與中斷行為。我們把通知對應到 <span class="stat-hi">4 個等級（緊急、高、中、低）</span>，確保語氣一致，也與系統行為（聲音、震動、橫幅彈出等）對齊。',
         's03.step4.label': '通知輔助工具',
-        's03.step4.body': '靜態的框架還不夠——我們需要一種讓團隊能在日常工作流中真正使用它的方式。為了解決這點，我設計了<span class="stat-hi">AI 驅動的通知分類器</span>：一套結構化系統，能把設計規則轉化為可執行的產出，適用於多種輸入型態（PRD、設計稿、截圖、流程圖）。',
+        's03.step4.body': '靜態的框架還不夠，我們需要一種讓團隊能在日常工作流中真正使用它的方式。為了解決這點，我設計了<span class="stat-hi">AI 驅動的通知分類器</span>：一套結構化系統，能把設計規則轉化為可執行的產出，適用於多種輸入型態（PRD、設計稿、截圖、流程圖）。',
         's03.tree.label': '分類樹',
         's03.tree.body': '框架採用決策樹結構，讓任何通知都能被一致地分類。這套序列化流程確保了每則通知都以相同的視角被檢視，無論是哪個團隊設計的。',
         's03.tree.start.tag': '開始',
         's03.tree.start.name': '新通知',
         's03.tree.step1.tag': '步驟 1',
-        's03.tree.step1.sub': '分類與使用 — 選擇最能描述通知目的的類別。',
+        's03.tree.step1.sub': '分類與使用, 選擇最能描述通知目的的類別。',
         's03.tree.cat1': '1. 嚴重裝置健康警告',
         's03.tree.cat2': '2. 安全、防護與隱私',
         's03.tree.cat3': '3. 使用者觸發',
@@ -668,18 +670,18 @@
         's03.tree.cat7': '7. 情境洞察與提醒',
         's03.tree.cat8': '8. 促銷',
         's03.tree.step2.tag': '步驟 2',
-        's03.tree.step2.sub': '頻率類型 — 判斷出現頻率與條件。',
+        's03.tree.step2.sub': '頻率類型, 判斷出現頻率與條件。',
         's03.tree.step3.tag': '步驟 3',
-        's03.tree.step3.sub': '重要性等級 — 根據緊急性與使用者影響指派優先級。',
+        's03.tree.step3.sub': '重要性等級, 根據緊急性與使用者影響指派優先級。',
         's03.tree.end.tag': '結束',
         's03.tree.end.name': '完成分類',
-        's04.title': '設計 AI 分類器 — 使用 Gemini Gem',
+        's04.title': '設計 AI 分類器, 使用 Gemini Gem',
         's04.step1.label': '定義角色與模式',
         's04.step1.body': '我為分類器設定了明確的角色，並導入<span class="stat-hi">由輸入驅動的模式切換</span>。依據輸入是文字、規劃文件還是流程圖，分類器會自動套用對應的邏輯。這降低了模糊地帶，確保每種情境都被適當處理。',
         's04.step2.label': '標準化審查表',
         's04.step2.body': '為了讓產出能被直接使用，我建立了一張固定欄位的審查表：功能、觸發、類別、頻率、重要性、優先級、消失條件、版面／動作、顯示方式。任何推論填補的欄位都必須標記為 (AI Addition)，讓結果<span class="stat-hi">可追溯、可稽核、可供審查</span>。',
         's04.step3.label': '錨定核心文件',
-        's04.step3.body': '分類器被錨定在三份權威文件上——分類與使用、頻率類型、決策樹。每次分類都會回扣這些定義並附上摘要，確保<span class="stat-hi">與框架一致</span>，而非以語言層面的猜測代替。',
+        's04.step3.body': '分類器被錨定在三份權威文件上，分類與使用、頻率類型、決策樹。每次分類都會回扣這些定義並附上摘要，確保<span class="stat-hi">與框架一致</span>，而非以語言層面的猜測代替。',
         's04.step4.label': '處理複雜輸入',
         's04.step4.body': '我為容易出現雜訊的流程圖審查寫了嚴格規則。流程圖輸入時，<span class="stat-hi">只處理黃色卡片</span>，一卡一列，非通知元素一律忽略。即使是文字相同但觸發不同的條目也會被拆成獨立項目，讓討論聚焦在通知本身。',
         's04.step5.label': '可解釋的規則與反饋迴圈',
@@ -687,14 +689,14 @@
         's05.title': '影響',
         's05.impact1.label': '奠定基礎',
         's05.impact1.goal': '<strong>目標：</strong>建立統一的通知框架，讓團隊有一致的方式分類與治理通知。',
-        's05.impact1.body': '<strong>影響：</strong>把工作扎根在三份核心文件上——分類、頻率類型、決策樹——讓團隊擁有<span class="stat-hi">共同語言</span>。審查討論從個人詮釋，轉為更一致的決策流程。',
+        's05.impact1.body': '<strong>影響：</strong>把工作扎根在三份核心文件上，分類、頻率類型、決策樹，讓團隊擁有<span class="stat-hi">共同語言</span>。審查討論從個人詮釋，轉為更一致的決策流程。',
         's05.impact2.label': '確保一致性',
         's05.impact2.goal': '<strong>目標：</strong>避免使用者收到重複或衝突的訊息，提升整體體驗的一致性。',
         's05.impact2.body': '<strong>影響：</strong>結構化規則讓去重成為工作流的一環。AI 分類器會檢查觸發條件是否重疊，並標記推論欄位，<span class="stat-hi">同時降低遺漏與審查摩擦</span>。',
         's05.impact3.label': '賦能更好的工作方式',
         's05.impact3.goal': '<strong>目標：</strong>協助設計師與 PM 在流程早期就做出更清晰的決策。',
         's05.impact3.body': '<strong>影響：</strong>分類器導入了 MVP／長期切分、可解釋的重要性規則、替代建議，讓產品規劃<span class="stat-hi">能更早行動、理由也更清楚</span>。',
-        's05.summary': '框架結合 AI 輔助工具，降低了設計良好通知所需的力氣。最終，它把一個散亂的通知問題，轉化為一套<span class="stat-hi">可重複執行的流程</span>——為團隊提供了設計審查、取捨討論，以及跨功能權責的<span class="stat-hi">共享基礎</span>。'
+        's05.summary': '框架結合 AI 輔助工具，降低了設計良好通知所需的力氣。最終，它把一個散亂的通知問題，轉化為一套<span class="stat-hi">可重複執行的流程</span>，為團隊提供了設計審查、取捨討論，以及跨功能權責的<span class="stat-hi">共享基礎</span>。'
       },
       'zh-cn': {
         'nav.back': '← Iris Hsieh',
@@ -715,19 +717,19 @@
         'intro.company.body': '大型消费电子平台 · 2025',
         's01.title': '我们的起点',
         's01.bg.label': '项目背景：',
-        's01.bg.body': '我们先从平台上 <span class="stat-hi">6 个核心功能</span>的通知进行全面盘点。通知散落在不同的设计文件中，没有单一真实来源——每个团队都各自为政。盘点揭露了消息重叠、语气不一致，以及关键通知完全缺席的断层。',
+        's01.bg.body': '我们先从平台上 <span class="stat-hi">6 个核心功能</span>的通知进行全面盘点。通知散落在不同的设计文件中，没有单一真实来源，每个团队都各自为政。盘点揭露了消息重叠、语气不一致，以及关键通知完全缺席的断层。',
         's01.goal.label': '我们的目标：',
-        's01.goal.li1': '<strong>奠定基础</strong> — 建立一套设计师与 PM 能共同参照的统一框架。',
-        's01.goal.li2': '<strong>确保一致性</strong> — 减少跨功能间的冗余与冲突消息。',
-        's01.goal.li3': '<strong>赋能更好的工作方式</strong> — 建立共享标准，让团队能更有自信地加速推进。',
+        's01.goal.li1': '<strong>奠定基础</strong>, 建立一套设计师与 PM 能共同参照的统一框架。',
+        's01.goal.li2': '<strong>确保一致性</strong>, 减少跨功能间的冗余与冲突消息。',
+        's01.goal.li3': '<strong>赋能更好的工作方式</strong>, 建立共享标准，让团队能更有自信地加速推进。',
         's02.title': '我们的流程',
-        's02.lede': '框架建立在两大支柱上，并通过迭代持续优化：<strong>分类与使用情境</strong>——以平台级通知政策为依据，经过多轮利益相关者审查调整；以及<strong>通知频率类型</strong>——植基于既有设计系统，确保视觉与行为的一致性。',
-        's02.step1.label': '步骤 1 — 通知盘点',
+        's02.lede': '框架建立在两大支柱上，并通过迭代持续优化：<strong>分类与使用情境</strong>，以平台级通知政策为依据，经过多轮利益相关者审查调整；以及<strong>通知频率类型</strong>，植基于既有设计系统，确保视觉与行为的一致性。',
+        's02.step1.label': '步骤 1, 通知盘点',
         's02.step1.body': '我们从 6 个核心功能的通知盘点开始。通知散落在不同设计文件中，没有单一真实来源。我逐一以触发条件、紧急性与频率标记每一则，再转化为流程图，重建端到端的用户旅程。',
-        's02.step2.label': '步骤 2 — 分类与规则',
+        's02.step2.label': '步骤 2, 分类与规则',
         's02.step2.body': '基于盘点结果，我们设计出一棵分类树，通过简单但系统化的提问定位每一则通知：这是用户触发的吗？这是设备健康警告吗？这具备情境脉络吗？每个答案都会指向特定类别、频率类型与重要性等级。',
-        's02.step3.label': '步骤 3 — 跨职能对齐',
-        's02.step3.body': '我与 PM 和工程师紧密合作，举办设计评审与情境测试，用真实用例压力测试这套框架。这些会议揭露了冗余最痛的所在、一致性最关键的节点——把框架塑造成<span class="stat-hi">实际可用、而非只是理论</span>的工具。',
+        's02.step3.label': '步骤 3, 跨职能对齐',
+        's02.step3.body': '我与 PM 和工程师紧密合作，举办设计评审与情境测试，用真实用例压力测试这套框架。这些会议揭露了冗余最痛的所在、一致性最关键的节点，把框架塑造成<span class="stat-hi">实际可用、而非只是理论</span>的工具。',
         's03.title': '我们的产出',
         's03.step1.label': '分类与使用指南',
         's03.step1.body': '我们定义了 <span class="stat-hi">8 个类别</span>，以平台级通知政策为依据（例如：严重设备健康警告、安全与隐私、后台动作、情境洞察）。这让团队拥有共同的词汇，能一致地描述自己正在发送哪种消息。',
@@ -736,13 +738,13 @@
         's03.step3.label': '排序与优先级指南',
         's03.step3.body': '每则通知都被指派一个重要性等级，决定它的视觉呈现与中断行为。我们把通知对应到 <span class="stat-hi">4 个等级（紧急、高、中、低）</span>，确保语气一致，也与系统行为（声音、震动、横幅弹出等）对齐。',
         's03.step4.label': '通知辅助工具',
-        's03.step4.body': '静态的框架还不够——我们需要一种让团队能在日常工作流中真正使用它的方式。为了解决这点，我设计了<span class="stat-hi">AI 驱动的通知分类器</span>：一套结构化系统，能把设计规则转化为可执行的产出，适用于多种输入型态（PRD、设计稿、截图、流程图）。',
+        's03.step4.body': '静态的框架还不够，我们需要一种让团队能在日常工作流中真正使用它的方式。为了解决这点，我设计了<span class="stat-hi">AI 驱动的通知分类器</span>：一套结构化系统，能把设计规则转化为可执行的产出，适用于多种输入型态（PRD、设计稿、截图、流程图）。',
         's03.tree.label': '分类树',
         's03.tree.body': '框架采用决策树结构，让任何通知都能被一致地分类。这套序列化流程确保了每则通知都以相同的视角被审视，无论是哪个团队设计的。',
         's03.tree.start.tag': '开始',
         's03.tree.start.name': '新通知',
         's03.tree.step1.tag': '步骤 1',
-        's03.tree.step1.sub': '分类与使用 — 选择最能描述通知目的的类别。',
+        's03.tree.step1.sub': '分类与使用, 选择最能描述通知目的的类别。',
         's03.tree.cat1': '1. 严重设备健康警告',
         's03.tree.cat2': '2. 安全、防护与隐私',
         's03.tree.cat3': '3. 用户触发',
@@ -752,18 +754,18 @@
         's03.tree.cat7': '7. 情境洞察与提醒',
         's03.tree.cat8': '8. 促销',
         's03.tree.step2.tag': '步骤 2',
-        's03.tree.step2.sub': '频率类型 — 判断出现频率与条件。',
+        's03.tree.step2.sub': '频率类型, 判断出现频率与条件。',
         's03.tree.step3.tag': '步骤 3',
-        's03.tree.step3.sub': '重要性等级 — 根据紧急性与用户影响指派优先级。',
+        's03.tree.step3.sub': '重要性等级, 根据紧急性与用户影响指派优先级。',
         's03.tree.end.tag': '结束',
         's03.tree.end.name': '完成分类',
-        's04.title': '设计 AI 分类器 — 使用 Gemini Gem',
+        's04.title': '设计 AI 分类器, 使用 Gemini Gem',
         's04.step1.label': '定义角色与模式',
         's04.step1.body': '我为分类器设定了明确的角色，并引入<span class="stat-hi">由输入驱动的模式切换</span>。依据输入是文字、规划文档还是流程图，分类器会自动套用对应的逻辑。这降低了模糊地带，确保每种情境都被适当处理。',
         's04.step2.label': '标准化审查表',
         's04.step2.body': '为了让产出能被直接使用，我建立了一张固定字段的审查表：功能、触发、类别、频率、重要性、优先级、消失条件、版面／动作、显示方式。任何推论填补的字段都必须标记为 (AI Addition)，让结果<span class="stat-hi">可追溯、可审计、可供审查</span>。',
         's04.step3.label': '锚定核心文档',
-        's04.step3.body': '分类器被锚定在三份权威文档上——分类与使用、频率类型、决策树。每次分类都会回扣这些定义并附上摘要，确保<span class="stat-hi">与框架一致</span>，而非以语言层面的猜测代替。',
+        's04.step3.body': '分类器被锚定在三份权威文档上，分类与使用、频率类型、决策树。每次分类都会回扣这些定义并附上摘要，确保<span class="stat-hi">与框架一致</span>，而非以语言层面的猜测代替。',
         's04.step4.label': '处理复杂输入',
         's04.step4.body': '我为容易出现噪音的流程图审查写了严格规则。流程图输入时，<span class="stat-hi">只处理黄色卡片</span>，一卡一行，非通知元素一律忽略。即使是文字相同但触发不同的条目也会被拆成独立项目，让讨论聚焦在通知本身。',
         's04.step5.label': '可解释的规则与反馈回路',
@@ -771,14 +773,14 @@
         's05.title': '影响',
         's05.impact1.label': '奠定基础',
         's05.impact1.goal': '<strong>目标：</strong>建立统一的通知框架，让团队有一致的方式分类与治理通知。',
-        's05.impact1.body': '<strong>影响：</strong>把工作扎根在三份核心文档上——分类、频率类型、决策树——让团队拥有<span class="stat-hi">共同语言</span>。审查讨论从个人诠释，转为更一致的决策流程。',
+        's05.impact1.body': '<strong>影响：</strong>把工作扎根在三份核心文档上，分类、频率类型、决策树，让团队拥有<span class="stat-hi">共同语言</span>。审查讨论从个人诠释，转为更一致的决策流程。',
         's05.impact2.label': '确保一致性',
         's05.impact2.goal': '<strong>目标：</strong>避免用户收到重复或冲突的消息，提升整体体验的一致性。',
         's05.impact2.body': '<strong>影响：</strong>结构化规则让去重成为工作流的一环。AI 分类器会检查触发条件是否重叠，并标记推论字段，<span class="stat-hi">同时降低遗漏与审查摩擦</span>。',
         's05.impact3.label': '赋能更好的工作方式',
         's05.impact3.goal': '<strong>目标：</strong>协助设计师与 PM 在流程早期就做出更清晰的决策。',
         's05.impact3.body': '<strong>影响：</strong>分类器引入了 MVP／长期切分、可解释的重要性规则、替代建议，让产品规划<span class="stat-hi">能更早行动、理由也更清楚</span>。',
-        's05.summary': '框架结合 AI 辅助工具，降低了设计良好通知所需的力气。最终，它把一个散乱的通知问题，转化为一套<span class="stat-hi">可重复执行的流程</span>——为团队提供了设计评审、取舍讨论，以及跨功能权责的<span class="stat-hi">共享基础</span>。'
+        's05.summary': '框架结合 AI 辅助工具，降低了设计良好通知所需的力气。最终，它把一个散乱的通知问题，转化为一套<span class="stat-hi">可重复执行的流程</span>，为团队提供了设计评审、取舍讨论，以及跨功能权责的<span class="stat-hi">共享基础</span>。'
       },
       ja: {
         'nav.back': '← Iris Hsieh',
@@ -801,16 +803,16 @@
         's01.bg.label': 'プロジェクトの背景：',
         's01.bg.body': 'プラットフォーム内の <span class="stat-hi">6 つのコア機能</span>にわたる通知の包括的な監査から始めました。通知は別々のデザインファイルに散在しており、信頼できる唯一の情報源（Single Source of Truth）がなく、各チームが孤立してデザインしていました。監査により、重複するメッセージ、ばらついたトーン、重要な通知がまったく存在しない空白が明らかになりました。',
         's01.goal.label': '私たちの目標：',
-        's01.goal.li1': '<strong>基盤を構築する</strong> — デザイナーと PM が共通して参照できる統一フレームワークを作る。',
-        's01.goal.li2': '<strong>一貫性を確保する</strong> — 機能間の冗長性と矛盾するメッセージを減らす。',
-        's01.goal.li3': '<strong>より良い働き方を支援する</strong> — 共通基準を整え、チームが自信を持ってスピードを上げられるようにする。',
+        's01.goal.li1': '<strong>基盤を構築する</strong>, デザイナーと PM が共通して参照できる統一フレームワークを作る。',
+        's01.goal.li2': '<strong>一貫性を確保する</strong>, 機能間の冗長性と矛盾するメッセージを減らす。',
+        's01.goal.li3': '<strong>より良い働き方を支援する</strong>, 共通基準を整え、チームが自信を持ってスピードを上げられるようにする。',
         's02.title': '私たちのプロセス',
-        's02.lede': 'このフレームワークは 2 つの柱の上に構築され、それぞれ反復的に磨き上げられました。<strong>カテゴリと利用シーン</strong>——プラットフォームレベルの通知ポリシーに基づき、ステークホルダーレビューを何度も経て調整。そして<strong>通知の頻度タイプ</strong>——視覚的・振る舞いの一貫性を担保するため、既存のデザインシステムに基づいています。',
-        's02.step1.label': 'ステップ 1 — 通知の監査',
+        's02.lede': 'このフレームワークは 2 つの柱の上に構築され、それぞれ反復的に磨き上げられました。<strong>カテゴリと利用シーン</strong>、プラットフォームレベルの通知ポリシーに基づき、ステークホルダーレビューを何度も経て調整。そして<strong>通知の頻度タイプ</strong>、視覚的・振る舞いの一貫性を担保するため、既存のデザインシステムに基づいています。',
+        's02.step1.label': 'ステップ 1, 通知の監査',
         's02.step1.body': '6 つのコア機能にわたる通知の包括的な監査から始めました。通知は別々のデザインファイルに散在しており、信頼できる唯一の情報源は存在しませんでした。一件ずつトリガー、緊急性、頻度でマッピングし、フローチャートに変換してエンドツーエンドのユーザージャーニーを再構築しました。',
-        's02.step2.label': 'ステップ 2 — 分類とルール',
+        's02.step2.label': 'ステップ 2, 分類とルール',
         's02.step2.body': '監査結果から、シンプルだが体系的な問いを投げる分類ツリーを設計しました。これはユーザーが起点か？ デバイス健康警告か？ コンテキスト依存か？ 各回答がカテゴリ、頻度タイプ、重要度レベルへと導きます。',
-        's02.step3.label': 'ステップ 3 — 職能横断の整合',
+        's02.step3.label': 'ステップ 3, 職能横断の整合',
         's02.step3.body': 'PM やエンジニアと密に連携し、デザインレビューとシナリオテストを行って、実際のユースケースでフレームワークにストレステストをかけました。これらのセッションで、冗長性が最も痛い箇所と一貫性が最も重要な箇所が明らかになり、フレームワークを<span class="stat-hi">理論ではなく実用的なもの</span>へと形作っていきました。',
         's03.title': '構築したもの',
         's03.step1.label': 'カテゴリと利用ガイドライン',
@@ -820,13 +822,13 @@
         's03.step3.label': 'ランキングと優先度のガイドライン',
         's03.step3.body': '各通知には重要度レベルが割り当てられ、視覚的扱いと割り込み動作を決定します。通知を <span class="stat-hi">4 段階（緊急、高、中、低）</span>にマッピングし、トーンの一貫性と、システム挙動（音、バイブレーション、ヘッズアップなど）との整合を両立させました。',
         's03.step4.label': '通知ヘルパーツール',
-        's03.step4.body': '静的なフレームワークだけでは足りませんでした——チームが日々のワークフローで実際に使える仕組みが必要でした。これを解決するため、<span class="stat-hi">AI 駆動の通知分類器</span>を設計しました。デザインルールを、さまざまな入力タイプ（PRD、モック、スクリーンショット、フローチャート）にまたがる実行可能な出力へと変換する構造化システムです。',
+        's03.step4.body': '静的なフレームワークだけでは足りませんでした、チームが日々のワークフローで実際に使える仕組みが必要でした。これを解決するため、<span class="stat-hi">AI 駆動の通知分類器</span>を設計しました。デザインルールを、さまざまな入力タイプ（PRD、モック、スクリーンショット、フローチャート）にまたがる実行可能な出力へと変換する構造化システムです。',
         's03.tree.label': '分類ツリー',
         's03.tree.body': 'フレームワークは決定木構造を用い、どんな通知も一貫して分類できるようにしています。この順序立てたフローにより、どのチームが設計したかに関わらず、すべての通知が同じ視点で評価されることを保証します。',
         's03.tree.start.tag': '開始',
         's03.tree.start.name': '新しい通知',
         's03.tree.step1.tag': 'ステップ 1',
-        's03.tree.step1.sub': 'カテゴリと利用 — 通知の目的を最もよく表すカテゴリを選択。',
+        's03.tree.step1.sub': 'カテゴリと利用, 通知の目的を最もよく表すカテゴリを選択。',
         's03.tree.cat1': '1. 重大なデバイス健康警告',
         's03.tree.cat2': '2. セキュリティ、安全性、プライバシー',
         's03.tree.cat3': '3. ユーザー起点',
@@ -836,18 +838,18 @@
         's03.tree.cat7': '7. コンテキスト洞察とアラート',
         's03.tree.cat8': '8. プロモーション',
         's03.tree.step2.tag': 'ステップ 2',
-        's03.tree.step2.sub': '頻度タイプ — 表示頻度と条件を判定。',
+        's03.tree.step2.sub': '頻度タイプ, 表示頻度と条件を判定。',
         's03.tree.step3.tag': 'ステップ 3',
-        's03.tree.step3.sub': '重要度レベル — 緊急性とユーザー影響に基づき優先度を割り当てる。',
+        's03.tree.step3.sub': '重要度レベル, 緊急性とユーザー影響に基づき優先度を割り当てる。',
         's03.tree.end.tag': '終了',
         's03.tree.end.name': '分類完了',
-        's04.title': 'AI 分類器の設計 — Gemini Gem を活用',
+        's04.title': 'AI 分類器の設計, Gemini Gem を活用',
         's04.step1.label': '役割とモードの定義',
         's04.step1.body': '分類器に明確な役割を設定し、<span class="stat-hi">入力駆動のモード切り替え</span>を導入しました。入力がテキストか、企画文書か、フローチャートかに応じて、分類器が適切なロジックを自動適用します。これにより曖昧さが減り、各コンテキストが適切に扱われるようになりました。',
         's04.step2.label': '標準化されたレビュー表',
         's04.step2.body': '出力をそのまま使えるよう、固定フィールドのレビュー表を作成しました：機能、トリガー、カテゴリ、頻度、重要度、優先度、消える条件、レイアウト／アクション、表示方法。推論されたデータは (AI Addition) として必ずフラグを立て、結果を<span class="stat-hi">追跡可能・監査可能・レビュー可能</span>にしました。',
         's04.step3.label': 'コアドキュメントへの固定',
-        's04.step3.body': '分類器は 3 つの権威あるドキュメント——カテゴリと利用、頻度タイプ、決定木——に固定されています。各分類はこれらの定義を参照し、サマリーを付けることで、言語ベースの推測ではなく<span class="stat-hi">フレームワークとの一貫性</span>を担保しました。',
+        's04.step3.body': '分類器は 3 つの権威あるドキュメント、カテゴリと利用、頻度タイプ、決定木、に固定されています。各分類はこれらの定義を参照し、サマリーを付けることで、言語ベースの推測ではなく<span class="stat-hi">フレームワークとの一貫性</span>を担保しました。',
         's04.step4.label': '複雑な入力の処理',
         's04.step4.body': 'ノイズが多くなりがちなフローチャートレビューには、厳格なルールを書きました。フローチャート入力では、<span class="stat-hi">黄色いカードのみを処理</span>し、行ごとに 1 件、非通知要素は無視します。テキストが同じでもトリガーが異なれば別エントリとして扱い、議論を通知に厳密にフォーカスさせます。',
         's04.step5.label': '説明可能なルールとフィードバックループ',
@@ -855,7 +857,7 @@
         's05.title': 'インパクト',
         's05.impact1.label': '基盤の構築',
         's05.impact1.goal': '<strong>目標：</strong>統一された通知フレームワークを確立し、チームが一貫した方法で通知を分類・統治できるようにする。',
-        's05.impact1.body': '<strong>インパクト：</strong>仕事を 3 つのコアドキュメント——カテゴリ、頻度タイプ、決定木——に根付かせることで、チームに<span class="stat-hi">共通の言語</span>を与えました。レビューの議論は、個人の解釈から、より一貫した意思決定プロセスへと変わりました。',
+        's05.impact1.body': '<strong>インパクト：</strong>仕事を 3 つのコアドキュメント、カテゴリ、頻度タイプ、決定木、に根付かせることで、チームに<span class="stat-hi">共通の言語</span>を与えました。レビューの議論は、個人の解釈から、より一貫した意思決定プロセスへと変わりました。',
         's05.impact2.label': '一貫性の確保',
         's05.impact2.goal': '<strong>目標：</strong>ユーザーが重複や矛盾したメッセージを受け取るのを防ぎ、全体の体験の一貫性を高める。',
         's05.impact2.body': '<strong>インパクト：</strong>構造化されたルールにより、重複排除がワークフローの一部になりました。AI 分類器はトリガーの重複をチェックし、推論されたフィールドにフラグを立て、<span class="stat-hi">抜け漏れとレビューの摩擦の両方を低減</span>しました。',

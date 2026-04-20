@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BumpHunter · Iris Hsieh</title>
+  <link rel="icon" type="image/png" href="Logo.png" />
+  <link rel="apple-touch-icon" href="Logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -39,7 +41,7 @@
       padding: 16px 60px;
       display: flex; align-items: center;
     }
-    .nav-back {
+    .nav-back { white-space: nowrap; flex-shrink: 0;
       font-size: 13px; font-weight: 600;
       color: var(--muted);
       letter-spacing: 0.04em;
@@ -361,7 +363,7 @@
 
     @media (max-width: 640px) {
       .nav { padding: 12px 16px; gap: 12px; }
-      .nav-back { font-size: 11px; }
+      .nav-back { white-space: nowrap; flex-shrink: 0; font-size: 11px; }
       .nav-anchor { font-size: 10px; padding: 3px 7px; }
       .title-bar { padding: 28px 20px 20px; }
       .sec { padding: 20px 20px; }
@@ -379,7 +381,7 @@
 
 <!-- ── NAV ────────────────────────────────────────── -->
 <nav class="nav">
-  <a class="nav-back" href="#work">← Iris Hsieh</a>
+  <a class="nav-back" href="index.html#island-work">← Iris Hsieh</a>
   <div class="nav-anchors">
     <a class="nav-anchor" href="#intro" data-i18n="nav.intro">.Intro</a>
     <a class="nav-anchor" href="#s01" data-i18n="nav.s01">01.Start</a>
@@ -398,7 +400,7 @@
 <!-- ── TITLE BAR ──────────────────────────────────── -->
 <div class="title-bar">
   <div class="title-bar-inner">
-    <div class="title-main-heading" style="font-size:40px;font-weight:800;line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;" data-i18n="page.title">BumpHunter — AI Bicycle Lane Maintenance Tool</div>
+    <div class="title-main-heading" style="font-size:40px;font-weight:800;line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;" data-i18n="page.title">BumpHunter, AI Bicycle Lane Maintenance Tool</div>
     <div style="font-size:14px;font-weight:500;line-height:1.5;font-family:'Noto Sans',sans-serif;" data-i18n="page.subtitle">Turning Hamburg citizen reports into structured insight for cycling infrastructure maintenance.</div>
   </div>
 </div>
@@ -477,19 +479,19 @@
         <div class="quote-avatar">
           <img src="assets/lsbg/avatar-professor.png" alt="Professor Chris Brunlett" />
         </div>
-        <p class="quote-text" data-i18n="s02.quote.1">"The Netherlands succeeded by building a comprehensive network of dedicated cycle paths." — <strong>Professor Chris Brunlett</strong></p>
+        <p class="quote-text" data-i18n="s02.quote.1">"The Netherlands succeeded by building a comprehensive network of dedicated cycle paths.", <strong>Professor Chris Brunlett</strong></p>
       </div>
       <div class="quote-row">
         <div class="quote-avatar">
           <img src="assets/lsbg/avatar-engineer.png" alt="LSBG Engineer" />
         </div>
-        <p class="quote-text" data-i18n="s02.quote.2">"What is currently lacking is the feedback from citizens regarding their riding experiences on bicycle paths." — <strong>LSBG Bike Lane Engineer</strong></p>
+        <p class="quote-text" data-i18n="s02.quote.2">"What is currently lacking is the feedback from citizens regarding their riding experiences on bicycle paths.", <strong>LSBG Bike Lane Engineer</strong></p>
       </div>
       <div class="quote-row">
         <div class="quote-avatar">
           <img src="assets/lsbg/avatar-citizen.png" alt="Citizen" />
         </div>
-        <p class="quote-text" data-i18n="s02.quote.3">"If my contributions truly help improve my neighborhood, I would be more willing to report." — <strong>Citizen</strong></p>
+        <p class="quote-text" data-i18n="s02.quote.3">"If my contributions truly help improve my neighborhood, I would be more willing to report.", <strong>Citizen</strong></p>
       </div>
     </div>
 
@@ -540,10 +542,10 @@
     <div class="text-block">
       <p class="h3" data-i18n="s02.h3.tips">Working Across Languages with AI Tools</p>
       <ul class="bull-list">
-        <li data-i18n="s02.tips.li1"><strong>Transcribe fast</strong> — Used Descript to turn German interviews into text.</li>
-        <li data-i18n="s02.tips.li2"><strong>Summarize smart</strong> — Let Hypotenuse pull out key points with prompt-based summaries.</li>
-        <li data-i18n="s02.tips.li3"><strong>Translate quickly</strong> — Ran outputs through online tools for English context.</li>
-        <li data-i18n="s02.tips.li4"><strong>Visualize instantly</strong> — Used QoQo.ai in Figma to map personas &amp; journeys.</li>
+        <li data-i18n="s02.tips.li1"><strong>Transcribe fast</strong>, Used Descript to turn German interviews into text.</li>
+        <li data-i18n="s02.tips.li2"><strong>Summarize smart</strong>, Let Hypotenuse pull out key points with prompt-based summaries.</li>
+        <li data-i18n="s02.tips.li3"><strong>Translate quickly</strong>, Ran outputs through online tools for English context.</li>
+        <li data-i18n="s02.tips.li4"><strong>Visualize instantly</strong>, Used QoQo.ai in Figma to map personas &amp; journeys.</li>
       </ul>
     </div>
   </div>
@@ -714,7 +716,7 @@
     const lsbgI18n = {
       en: {}, // keep English as HTML fallback
       'zh-tw': {
-        'page.title': 'BumpHunter — AI 自行車道維護工具',
+        'page.title': 'BumpHunter, AI 自行車道維護工具',
         'page.subtitle': '將漢堡市民的通報數據，轉化為自行車基礎設施維護的結構化洞察。',
         'nav.intro': '.介紹',
         'nav.s01': '01.起點',
@@ -735,18 +737,18 @@
         's02.h3.research': '初步研究',
         's02.research.body1': '我們結合了次級資料分析與第一手田野調查，以深入了解自行車道規劃與巡檢的挑戰與機會。次級研究涵蓋了歐洲自行車道基礎設施文獻，包含規劃流程與巡檢重點（如除雪維護），並審閱了 LSBG 的內部系統操作文件。',
         's02.research.body2': '第一手研究則包含了針對自行車道專家、工程師與自行車愛好者的深度訪談，以及焦點小組與實地觀察。',
-        's02.quote.1': '「荷蘭的成功，在於他們建立了一個全面且專用的自行車道網絡。」 — <strong>Chris Brunlett 教授</strong>',
-        's02.quote.2': '「目前最缺乏的，是市民對於自行車道實際騎乘體驗的真實反饋。」 — <strong>LSBG 自行車道工程師</strong>',
-        's02.quote.3': '「如果我的通報真的能幫助改善社區環境，我會更願意回報。」 — <strong>在地市民</strong>',
+        's02.quote.1': '「荷蘭的成功，在於他們建立了一個全面且專用的自行車道網絡。」, <strong>Chris Brunlett 教授</strong>',
+        's02.quote.2': '「目前最缺乏的，是市民對於自行車道實際騎乘體驗的真實反饋。」, <strong>LSBG 自行車道工程師</strong>',
+        's02.quote.3': '「如果我的通報真的能幫助改善社區環境，我會更願意回報。」, <strong>在地市民</strong>',
         's02.h3.insights': '關鍵洞察',
         's02.insights.body': '研究顯示，<span class="stat-hi">工程師缺乏市民最在意的關鍵路段資訊，也無法掌握騎士的真實體驗</span>。同時，市民渴望他們的通報能被重視並獲得回應。這兩者的落差，為建立更主動的巡檢流程創造了絕佳機會。',
         's02.h3.persona': '用戶人物誌 (Persona)',
         's02.persona.body': '我們的研究揭示了塑造自行車道規劃與巡檢流程的兩個關鍵角色：市民與工程師。雖然雙方視角不同，但都面臨相同的結構性困境：溝通受限、數據不完整，且缺乏有效的資訊交換管道來影響實質的規劃決策。',
         's02.h3.tips': '運用 AI 工具跨越語言隔閡',
-        's02.tips.li1': '<strong>快速逐字稿</strong> — 使用 Descript 將德語訪談轉換為文本。',
-        's02.tips.li2': '<strong>智能摘要</strong> — 透過 Hypotenuse 提取關鍵洞察。',
-        's02.tips.li3': '<strong>即時翻譯</strong> — 透過線上工具還原英文語境。',
-        's02.tips.li4': '<strong>視覺化</strong> — 在 Figma 中使用 QoQo.ai 快速繪製人物誌與旅程地圖。',
+        's02.tips.li1': '<strong>快速逐字稿</strong>, 使用 Descript 將德語訪談轉換為文本。',
+        's02.tips.li2': '<strong>智能摘要</strong>, 透過 Hypotenuse 提取關鍵洞察。',
+        's02.tips.li3': '<strong>即時翻譯</strong>, 透過線上工具還原英文語境。',
+        's02.tips.li4': '<strong>視覺化</strong>, 在 Figma 中使用 QoQo.ai 快速繪製人物誌與旅程地圖。',
         's03.title': '我們的解決方案',
         's03.h3.blueprint': '服務藍圖 (Service Blueprint)',
         's03.blueprint.body': '服務藍圖將維護工作重構為<span class="stat-hi">工程師與居民之間的雙向循環</span>。工程師透過地圖識別風險、交通模式與維護優先級；市民則回傳特定地點的通報、照片與騎乘反饋。雙方的資訊交匯，將零散的觀察轉化為清晰的巡檢與維修決策依據。',
@@ -766,7 +768,7 @@
         's04.fail.body': '這個專案最令人難忘的，是發現慕尼黑和漢堡在自行車基礎設施上的思維差異。我曾提議在電線桿上張貼傳單，卻得知慕尼黑早已將電纜地下化。與如此多元的團隊合作，磨練了我察覺盲點、快速吸收反饋，並<span class="stat-hi">在跨文化情境下協同淬鍊想法</span>的能力。'
       },
       'zh-cn': {
-        'page.title': 'BumpHunter — AI 自行车道维护工具',
+        'page.title': 'BumpHunter, AI 自行车道维护工具',
         'page.subtitle': '将汉堡市民的反馈数据，转化为自行车基础设施维护的结构化洞察。',
         'nav.intro': '.简介',
         'nav.s01': '01.起点',
@@ -787,18 +789,18 @@
         's02.h3.research': '前期调研',
         's02.research.body1': '我们结合了案头调研与一手田野调查，以深入了解自行车道规划与巡检的挑战与机会。案头调研涵盖了欧洲自行车道基础设施文献，包含规划流程与巡检重点（如除雪维护），并审阅了 LSBG 的内部系统操作文档。',
         's02.research.body2': '一手调研则包含了针对自行车道专家、工程师与自行车爱好者的深度访谈，以及焦点小组与实地观察。',
-        's02.quote.1': '"荷兰的成功，在于他们建立了一个全面且专用的自行车道网络。" — <strong>Chris Brunlett 教授</strong>',
-        's02.quote.2': '"目前最缺乏的，是市民对于自行车道实际骑行体验的真实反馈。" — <strong>LSBG 自行车道工程师</strong>',
-        's02.quote.3': '"如果我的上报真的能帮助改善社区环境，我会更愿意反馈。" — <strong>当地市民</strong>',
+        's02.quote.1': '"荷兰的成功，在于他们建立了一个全面且专用的自行车道网络。", <strong>Chris Brunlett 教授</strong>',
+        's02.quote.2': '"目前最缺乏的，是市民对于自行车道实际骑行体验的真实反馈。", <strong>LSBG 自行车道工程师</strong>',
+        's02.quote.3': '"如果我的上报真的能帮助改善社区环境，我会更愿意反馈。", <strong>当地市民</strong>',
         's02.h3.insights': '核心洞察',
         's02.insights.body': '调研显示，<span class="stat-hi">工程师缺乏市民最在意的关键路段信息，也无法掌握骑行者的真实体验</span>。同时，市民渴望他们的上报能被重视并获得回应。这两者的落差，为建立更主动的巡检流程创造了绝佳机会。',
         's02.h3.persona': '用户画像 (Persona)',
         's02.persona.body': '我们的调研揭示了塑造自行车道规划与巡检流程的两个关键角色：市民与工程师。虽然双方视角不同，但都面临相同的结构性困境：沟通受限、数据不完整，且缺乏有效的信息交换渠道来影响实质的规划决策。',
         's02.h3.tips': '运用 AI 工具跨越语言隔阂',
-        's02.tips.li1': '<strong>快速逐字稿</strong> — 使用 Descript 将德语访谈转换为文本。',
-        's02.tips.li2': '<strong>智能摘要</strong> — 通过 Hypotenuse 提取关键洞察。',
-        's02.tips.li3': '<strong>实时翻译</strong> — 通过在线工具还原英文语境。',
-        's02.tips.li4': '<strong>可视化</strong> — 在 Figma 中使用 QoQo.ai 快速绘制用户画像与旅程地图。',
+        's02.tips.li1': '<strong>快速逐字稿</strong>, 使用 Descript 将德语访谈转换为文本。',
+        's02.tips.li2': '<strong>智能摘要</strong>, 通过 Hypotenuse 提取关键洞察。',
+        's02.tips.li3': '<strong>实时翻译</strong>, 通过在线工具还原英文语境。',
+        's02.tips.li4': '<strong>可视化</strong>, 在 Figma 中使用 QoQo.ai 快速绘制用户画像与旅程地图。',
         's03.title': '我们的解决方案',
         's03.h3.blueprint': '服务蓝图 (Service Blueprint)',
         's03.blueprint.body': '服务蓝图将维护工作重构为<span class="stat-hi">工程师与居民之间的双向循环</span>。工程师通过地图识别风险、交通模式与维护优先级；市民则回传特定地点的上报、照片与骑行反馈。双方的信息交汇，将零散的观察转化为清晰的巡检与维修决策依据。',
@@ -818,7 +820,7 @@
         's04.fail.body': '这个项目最令人难忘的，是发现慕尼黑和汉堡在自行车基础设施上的思维差异。我曾提议在电线杆上张贴传单，却得知慕尼黑早已将电缆地下化。与如此多元的团队合作，磨练了我察觉盲点、快速吸收反馈，并<span class="stat-hi">在跨文化情境下协同淬炼想法</span>的能力。'
       },
       ja: {
-        'page.title': 'BumpHunter — AI 自転車道メンテナンスツール',
+        'page.title': 'BumpHunter, AI 自転車道メンテナンスツール',
         'page.subtitle': 'ハンブルク市民の報告を、自転車インフラの保守管理に役立つ構造化されたインサイトに変換。',
         'nav.intro': '.イントロ',
         'nav.s01': '01.出発点',
@@ -839,18 +841,18 @@
         's02.h3.research': '予備調査',
         's02.research.body1': '自転車道の計画と点検における課題と機会を理解するため、二次調査と一次データを組み合わせました。',
         's02.research.body2': '専門家、エンジニア、サイクリストへのインタビュー、フォーカスグループ、現地観察を実施しました。',
-        's02.quote.1': '「オランダの成功は、自転車専用の包括的なネットワークを構築したことにあります。」 — <strong>Chris Brunlett 教授</strong>',
-        's02.quote.2': '「現在欠けているのは、自転車道での実際の走行体験に関する市民からのフィードバックです。」 — <strong>LSBG 自転車道エンジニア</strong>',
-        's02.quote.3': '「自分の報告が本当に地域の改善に役立つなら、もっと報告したいと思います。」 — <strong>地域住民</strong>',
+        's02.quote.1': '「オランダの成功は、自転車専用の包括的なネットワークを構築したことにあります。」, <strong>Chris Brunlett 教授</strong>',
+        's02.quote.2': '「現在欠けているのは、自転車道での実際の走行体験に関する市民からのフィードバックです。」, <strong>LSBG 自転車道エンジニア</strong>',
+        's02.quote.3': '「自分の報告が本当に地域の改善に役立つなら、もっと報告したいと思います。」, <strong>地域住民</strong>',
         's02.h3.insights': 'キーインサイト',
         's02.insights.body': 'リサーチの結果、<span class="stat-hi">エンジニアは市民が最も重視する道路区間や実際の走行体験に関する詳細情報を把握できていない</span>ことが判明しました。同時に、市民は自身の報告が認識されることを望んでおり、よりプロアクティブな点検プロセスを構築する機会が浮かび上がりました。',
         's02.h3.persona': 'ペルソナ (Persona)',
         's02.persona.body': 'インフラ計画の意思決定プロセスに関わる2つの主要な役割、「市民」と「エンジニア」を定義しました。視点は異なりますが、どちらもコミュニケーションの制限や不完全なデータという同じ構造的な壁に直面していました。',
         's02.h3.tips': 'AIツールを活用した言語の壁の克服',
-        's02.tips.li1': '<strong>文字起こし</strong> — Descriptを使用してドイツ語のインタビューをテキスト化。',
-        's02.tips.li2': '<strong>スマート要約</strong> — Hypotenuseで要点を抽出。',
-        's02.tips.li3': '<strong>翻訳</strong> — オンラインツールで英語のコンテキストに変換。',
-        's02.tips.li4': '<strong>視覚化</strong> — FigmaのQoQo.aiでペルソナとジャーニーマップを迅速に作成。',
+        's02.tips.li1': '<strong>文字起こし</strong>, Descriptを使用してドイツ語のインタビューをテキスト化。',
+        's02.tips.li2': '<strong>スマート要約</strong>, Hypotenuseで要点を抽出。',
+        's02.tips.li3': '<strong>翻訳</strong>, オンラインツールで英語のコンテキストに変換。',
+        's02.tips.li4': '<strong>視覚化</strong>, FigmaのQoQo.aiでペルソナとジャーニーマップを迅速に作成。',
         's03.title': 'ソリューション',
         's03.h3.blueprint': 'サービスブループリント',
         's03.blueprint.body': 'メンテナンスを<span class="stat-hi">エンジニアと住民の双方向のループ</span>として再構築しました。エンジニアは地図を使用してリスクや優先順位を特定し、市民は特定場所の報告や写真を提供します。',

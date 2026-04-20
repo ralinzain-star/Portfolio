@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Designing with AI · Iris Hsieh</title>
+  <link rel="icon" type="image/png" href="Logo.png" />
+  <link rel="apple-touch-icon" href="Logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -64,7 +66,7 @@
       padding: 16px 60px;
       display: flex; align-items: center;
     }
-    .nav-back {
+    .nav-back { white-space: nowrap; flex-shrink: 0;
       font-size: 13px; font-weight: 600;
       color: var(--muted); letter-spacing: 0.04em;
       font-family: 'Barlow', sans-serif;
@@ -608,7 +610,7 @@
     .footer-item a:hover { color: rgba(255,255,255,0.9); }
     .footer-sep { width: 1px; height: 12px; background: rgba(255,255,255,0.12); flex-shrink: 0; }
 
-    /* Reveal animation disabled — content is visible by default */
+    /* Reveal animation disabled, content is visible by default */
     .reveal-on-scroll {
       opacity: 1; transform: none;
     }
@@ -634,7 +636,7 @@
 
     @media (max-width: 640px) {
       .nav { padding: 12px 16px; }
-      .nav-back { font-size: 11px; }
+      .nav-back { white-space: nowrap; flex-shrink: 0; font-size: 11px; }
       .nav-anchor { font-size: 10px; padding: 3px 7px; }
       .title-bar { padding: 28px 20px 20px; }
       .sec { padding: 20px 20px; }
@@ -653,7 +655,7 @@
 
   <!-- NAV -->
   <nav class="nav">
-    <a class="nav-back" href="#writing">← Iris Hsieh</a>
+    <a class="nav-back" href="index.html#island-writing">← Iris Hsieh</a>
     <div class="nav-anchors">
       <a class="nav-anchor" href="#intro" data-i18n="nav.intro">.Intro</a>
       <a class="nav-anchor" href="#s02" data-i18n="nav.s02">01.Context</a>
@@ -677,7 +679,7 @@
       </div>
       <div data-i18n="page.subtitle"
            style="font-size:14px;font-weight:500;line-height:1.5;font-family:'Noto Sans',sans-serif;">
-        A systems-level workflow for solo designers — rebuilt around Claude Code at Wren AI.
+        A systems-level workflow for solo designers, rebuilt around Claude Code at Wren AI.
       </div>
     </div>
   </div>
@@ -687,12 +689,12 @@
     <div class="sec-inner" style="max-width:100%;padding:0;">
       <div class="intro-card">
         <div class="intro-photo">
-          <img src="assets/designing-with-ai/cover.png" alt="Design with AI — keyboard keys spelling DESIGN WITH AI" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;" />
+          <img src="assets/designing-with-ai/cover.png" alt="Design with AI, keyboard keys spelling DESIGN WITH AI" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;" />
         </div>
         <div class="intro-copy">
           <div class="text-block">
             <p class="h3" data-i18n="intro.h3.product">The premise</p>
-            <p class="body" data-i18n="intro.product.body">In early 2026, a designer at Anthropic declared that the traditional design process was dead. At the same time, I was a solo product designer at Wren AI — one person holding product design for a B2B AI platform, with <span class="stat-hi">16 hours</span> of my week swallowed by meetings and <span class="stat-hi">3–4 projects</span> running in parallel at any moment. This case study documents the 11-step AI workflow I built to make that actually possible.</p>
+            <p class="body" data-i18n="intro.product.body">In early 2026, a designer at Anthropic declared that the traditional design process was dead. At the same time, I was a solo product designer at Wren AI, one person holding product design for a B2B AI platform, with <span class="stat-hi">16 hours</span> of my week swallowed by meetings and <span class="stat-hi">3–4 projects</span> running in parallel at any moment. This case study documents the 11-step AI workflow I built to make that actually possible.</p>
           </div>
           <div class="text-block">
             <p class="h3" data-i18n="intro.h3.role">My Role</p>
@@ -717,22 +719,22 @@
 
       <div class="text-block" style="max-width:820px;">
         <p class="h3" data-i18n="s02.h3.moment">The moment</p>
-        <p class="body" data-i18n="s02.moment.body">Early 2026. An Anthropic designer publishes a post arguing that the traditional design process — discovery → research → wireframe → mockup → spec → handoff — is obsolete. Models can generate working interfaces faster than a designer can sketch one. The artifact (the Figma file) is no longer where the value lives.</p>
+        <p class="body" data-i18n="s02.moment.body">Early 2026. An Anthropic designer publishes a post arguing that the traditional design process, discovery → research → wireframe → mockup → spec → handoff, is obsolete. Models can generate working interfaces faster than a designer can sketch one. The artifact (the Figma file) is no longer where the value lives.</p>
         <p class="body" data-i18n="s02.moment.body2">I read it at a B2B AI startup where I was the only product designer. I didn't have the luxury of disagreeing. The reality was already pressing against me:</p>
       </div>
 
       <ul class="bull-list" style="max-width:820px;">
         <li data-i18n="s02.li1">A <span class="stat-hi">single designer</span> covering product design, visual design, prototyping, research, and brand for an entire product.</li>
         <li data-i18n="s02.li2"><span class="stat-hi">16 hours/week</span> structurally committed to meetings that couldn't be eliminated.</li>
-        <li data-i18n="s02.li3"><span class="stat-hi">A new release every week</span> — each feature moves from brief to ship in under a week and a half of actual design time.</li>
-        <li data-i18n="s02.li4">Engineers who were already using Claude Code daily — if my handoffs weren't compatible with their workflow, I was the bottleneck.</li>
+        <li data-i18n="s02.li3"><span class="stat-hi">A new release every week</span>, each feature moves from brief to ship in under a week and a half of actual design time.</li>
+        <li data-i18n="s02.li4">Engineers who were already using Claude Code daily, if my handoffs weren't compatible with their workflow, I was the bottleneck.</li>
         <li data-i18n="s02.li5">A startup budget that ruled out hiring.</li>
       </ul>
 
       <div class="text-block" style="max-width:820px;">
         <p class="h3" data-i18n="s02.h3.reframe">The reframe</p>
-        <p class="body" data-i18n="s02.reframe.body">The old question — <em>"How do I get more time to design?"</em> — had no answer. The week was full. The new question became: <em>"How do I make every hour of mine count for five?"</em> That only worked if I stopped being the person making artifacts and started being the person directing a system that made them.</p>
-        <p class="body" data-i18n="s02.reframe.body2">Claude Code became that system. Not as a tool I reach for occasionally, but as the central orchestration layer — the thing specs, prototypes, research summaries, marketing videos, Notion updates, and product docs all flow through. Below is the pipeline I ended up with.</p>
+        <p class="body" data-i18n="s02.reframe.body">The old question, <em>"How do I get more time to design?"</em>, had no answer. The week was full. The new question became: <em>"How do I make every hour of mine count for five?"</em> That only worked if I stopped being the person making artifacts and started being the person directing a system that made them.</p>
+        <p class="body" data-i18n="s02.reframe.body2">Claude Code became that system. Not as a tool I reach for occasionally, but as the central orchestration layer, the thing specs, prototypes, research summaries, marketing videos, Notion updates, and product docs all flow through. Below is the pipeline I ended up with.</p>
       </div>
     </div>
   </div>
@@ -747,7 +749,7 @@
 
       <div class="text-block" style="max-width:820px;">
         <p class="h3" data-i18n="s03.h3">Steps 00 → 11</p>
-        <p class="body" data-i18n="s03.body">Each step is a Claude Code skill, a plugin, or a scripted handoff. Six of them run on the <em>design</em> skill pack — <code>user-research</code>, <code>design-critique</code>, <code>design-system-management</code>, <code>design-handoff</code>, <code>accessibility-review</code>, and <code>ux-writing</code> — each a focused playbook rather than an open prompt.</p>
+        <p class="body" data-i18n="s03.body">Each step is a Claude Code skill, a plugin, or a scripted handoff. Six of them run on the <em>design</em> skill pack, <code>user-research</code>, <code>design-critique</code>, <code>design-system-management</code>, <code>design-handoff</code>, <code>accessibility-review</code>, and <code>ux-writing</code>, each a focused playbook rather than an open prompt.</p>
       </div>
 
       <div class="ofs-story reveal-on-scroll">
@@ -757,7 +759,7 @@
           <div class="ofs-spine"><div class="ofs-badge">00</div><div class="ofs-spine-line"></div></div>
           <div class="ofs-body">
             <div class="ofs-chapter-title" data-i18n="s03.step0.title">Behavior analysis &amp; backtest</div>
-            <p class="ofs-chapter-story" data-i18n="s03.step0.story">The <code>user-research</code> skill ingests analytics events, session recordings, and support tickets and applies its synthesis framework — affinity mapping, impact/effort, jobs-to-be-done — to produce a behavior report with funnel drops, friction patterns, and anomalies. It then backtests them against the last round of design changes to show what actually moved.</p>
+            <p class="ofs-chapter-story" data-i18n="s03.step0.story">The <code>user-research</code> skill ingests analytics events, session recordings, and support tickets and applies its synthesis framework, affinity mapping, impact/effort, jobs-to-be-done, to produce a behavior report with funnel drops, friction patterns, and anomalies. It then backtests them against the last round of design changes to show what actually moved.</p>
             <div class="step-kv">
               <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step0.tool"><code>user-research</code> skill</span></div>
               <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step0.output">Weekly behavior report + design delta review</span></div>
@@ -770,13 +772,13 @@
                 <span class="skill-arch-sub">behavior mode · weekly cadence</span>
               </div>
               <ol class="skill-arch-steps">
-                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Pull raw signals — analytics events, session recordings, support tickets</span></li>
-                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Synthesize — affinity map → impact/effort → jobs-to-be-done</span></li>
-                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Surface patterns — funnel drops, friction motifs, anomalies</span></li>
-                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Backtest — diff against last design changes, measure actual lift</span></li>
-                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Write behavior report — ranked findings + design delta review</span></li>
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Pull raw signals, analytics events, session recordings, support tickets</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Synthesize, affinity map → impact/effort → jobs-to-be-done</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Surface patterns, funnel drops, friction motifs, anomalies</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Backtest, diff against last design changes, measure actual lift</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Write behavior report, ranked findings + design delta review</span></li>
               </ol>
-              <div class="skill-arch-foot">Runs every Monday. Report feeds step 01 — every new spec starts from what the data actually showed.</div>
+              <div class="skill-arch-foot">Runs every Monday. Report feeds step 01, every new spec starts from what the data actually showed.</div>
             </div>
           </div>
         </div>
@@ -786,7 +788,7 @@
           <div class="ofs-spine"><div class="ofs-badge">01</div><div class="ofs-spine-line"></div></div>
           <div class="ofs-body">
             <div class="ofs-chapter-title" data-i18n="s03.step1.title">Spec writing &amp; feature brainstorm</div>
-            <p class="ofs-chapter-story" data-i18n="s03.step1.story">A one-line brief from the CEO becomes a full spec — problem statement, scope, edge cases, acceptance criteria, risk list — inside a Claude Code skill that knows the product surface, pulls signals from the <code>user-research</code> output above, and respects the existing design system. I edit the shape of the argument, not the prose.</p>
+            <p class="ofs-chapter-story" data-i18n="s03.step1.story">A one-line brief from the CEO becomes a full spec, problem statement, scope, edge cases, acceptance criteria, risk list, inside a Claude Code skill that knows the product surface, pulls signals from the <code>user-research</code> output above, and respects the existing design system. I edit the shape of the argument, not the prose.</p>
             <div class="step-kv">
               <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step1.tool">Claude Code skill + <code>user-research</code> context</span></div>
               <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step1.output">PRD-grade spec with edge cases &amp; criteria</span></div>
@@ -800,11 +802,11 @@
               </div>
               <ol class="skill-arch-steps">
                 <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Executive summary</span></li>
-                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Problem statement — evidence-backed customer pain</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Problem statement, evidence-backed customer pain</span></li>
                 <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Target users &amp; personas</span></li>
-                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Strategic context — OKR, market, why now</span></li>
-                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Solution overview — high-level shape, flows</span></li>
-                <li><span class="skill-arch-no">06</span><span class="skill-arch-ph">Success metrics — primary / secondary / guardrail</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Strategic context, OKR, market, why now</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Solution overview, high-level shape, flows</span></li>
+                <li><span class="skill-arch-no">06</span><span class="skill-arch-ph">Success metrics, primary / secondary / guardrail</span></li>
                 <li><span class="skill-arch-no">07</span><span class="skill-arch-ph">User stories &amp; requirements</span></li>
                 <li><span class="skill-arch-no">08</span><span class="skill-arch-ph">Out of scope &amp; dependencies</span></li>
               </ol>
@@ -818,7 +820,7 @@
           <div class="ofs-spine"><div class="ofs-badge">02</div><div class="ofs-spine-line"></div></div>
           <div class="ofs-body">
             <div class="ofs-chapter-title" data-i18n="s03.step2.title">User journey as HTML</div>
-            <p class="ofs-chapter-story" data-i18n="s03.step2.story">The spec feeds into the <code>user-research</code> skill's journey-mapping mode, which produces an interactive HTML user journey — stages, actions, emotions, pain points, and opportunity moments. It's shareable as a link, survives review edits, and becomes the single source of truth every downstream step references.</p>
+            <p class="ofs-chapter-story" data-i18n="s03.step2.story">The spec feeds into the <code>user-research</code> skill's journey-mapping mode, which produces an interactive HTML user journey, stages, actions, emotions, pain points, and opportunity moments. It's shareable as a link, survives review edits, and becomes the single source of truth every downstream step references.</p>
             <div class="step-kv">
               <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step2.tool"><code>user-research</code> skill → HTML</span></div>
               <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step2.output">Interactive journey map (standalone link)</span></div>
@@ -831,11 +833,11 @@
                 <span class="skill-arch-sub">6-step builder</span>
               </div>
               <ol class="skill-arch-steps">
-                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Input source — conversation / file / Figma</span></li>
-                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Gather journey data — stages, actions, responses, tags</span></li>
-                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Confirmation loop — tree summary, iterate</span></li>
-                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Generate JSON — <code>docs/journeys/{slug}.json</code></span></li>
-                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Generate HTML — styled, data-driven render</span></li>
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Input source, conversation / file / Figma</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Gather journey data, stages, actions, responses, tags</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Confirmation loop, tree summary, iterate</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Generate JSON, <code>docs/journeys/{slug}.json</code></span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Generate HTML, styled, data-driven render</span></li>
                 <li><span class="skill-arch-no">06</span><span class="skill-arch-ph">Completion → hand off to <code>/dogfooding</code></span></li>
               </ol>
               <div class="skill-arch-foot">Outputs a single source of truth every downstream step references.</div>
@@ -848,7 +850,7 @@
           <div class="ofs-spine"><div class="ofs-badge">03</div><div class="ofs-spine-line"></div></div>
           <div class="ofs-body">
             <div class="ofs-chapter-title" data-i18n="s03.step3.title">Prototype from user journey + Storybook</div>
-            <p class="ofs-chapter-story" data-i18n="s03.step3.story">I feed the journey HTML plus the team's Storybook into a skill that respects <code>design-system-management</code> — correct tokens, variants, sizes, and states, not new invention. It outputs a working HTML/CSS/JS prototype with routing, states, interactions, and fake data.</p>
+            <p class="ofs-chapter-story" data-i18n="s03.step3.story">I feed the journey HTML plus the team's Storybook into a skill that respects <code>design-system-management</code>, correct tokens, variants, sizes, and states, not new invention. It outputs a working HTML/CSS/JS prototype with routing, states, interactions, and fake data.</p>
             <div class="step-kv">
               <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step3.tool">Claude Code + <code>design-system-management</code> + Storybook</span></div>
               <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step3.output">Runnable HTML/CSS/JS prototype</span></div>
@@ -861,14 +863,14 @@
                 <span class="skill-arch-sub">what&rsquo;s inside</span>
               </div>
               <ol class="skill-arch-steps">
-                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Foundations — design tokens (color, typography, spacing, radius, motion)</span></li>
-                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Components — every UI primitive with every variant × state (default, hover, active, disabled, loading, error)</span></li>
-                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Patterns — composed blocks (toolbars, empty states, onboarding, side panels)</span></li>
-                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Interaction stories — play functions capture hover / focus / loading / error paths</span></li>
-                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Docs — auto-generated prop tables + usage guidelines per component</span></li>
-                <li><span class="skill-arch-no">06</span><span class="skill-arch-ph">A11y addon — contrast, keyboard nav, aria roles checked on every story</span></li>
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Foundations, design tokens (color, typography, spacing, radius, motion)</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Components, every UI primitive with every variant × state (default, hover, active, disabled, loading, error)</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Patterns, composed blocks (toolbars, empty states, onboarding, side panels)</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Interaction stories, play functions capture hover / focus / loading / error paths</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Docs, auto-generated prop tables + usage guidelines per component</span></li>
+                <li><span class="skill-arch-no">06</span><span class="skill-arch-ph">A11y addon, contrast, keyboard nav, aria roles checked on every story</span></li>
               </ol>
-              <div class="skill-arch-foot">Claude reads Storybook as the ground truth for what can be reused. If a component already exists, it must be used — no reinvention in the prototype.</div>
+              <div class="skill-arch-foot">Claude reads Storybook as the ground truth for what can be reused. If a component already exists, it must be used, no reinvention in the prototype.</div>
             </div>
           </div>
         </div>
@@ -878,7 +880,7 @@
           <div class="ofs-spine"><div class="ofs-badge">04</div><div class="ofs-spine-line"></div></div>
           <div class="ofs-body">
             <div class="ofs-chapter-title" data-i18n="s03.step4.title">Iterate in Claude Code</div>
-            <p class="ofs-chapter-story" data-i18n="s03.step4.story">I walk the prototype through the <code>design-critique</code> framework — first impression, usability, visual hierarchy, consistency, accessibility — and fix issues directly in Claude Code. I rework flows, tighten states, and fill empty / error / loading branches. Interaction design happens here now: in running code, not in Figma frames. The prototype becomes the design artifact of record. In parallel, I assess whether existing components cover the need — if they don't, I spin up the <code>design-system</code> agent to co-author new ones.</p>
+            <p class="ofs-chapter-story" data-i18n="s03.step4.story">I walk the prototype through the <code>design-critique</code> framework, first impression, usability, visual hierarchy, consistency, accessibility, and fix issues directly in Claude Code. I rework flows, tighten states, and fill empty / error / loading branches. Interaction design happens here now: in running code, not in Figma frames. The prototype becomes the design artifact of record. In parallel, I assess whether existing components cover the need, if they don't, I spin up the <code>design-system</code> agent to co-author new ones.</p>
             <div class="step-kv">
               <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step4.tool">Claude Code + <code>design-critique</code></span></div>
               <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step4.output">Reviewable prototype v1</span></div>
@@ -891,11 +893,11 @@
                 <span class="skill-arch-sub">5-option menu agent</span>
               </div>
               <ol class="skill-arch-steps">
-                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Prior art lookup — reuse check before building</span></li>
-                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Component analysis — 6-phase spec (breakdown → status → interaction)</span></li>
-                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Prototype builder — interactive HTML output</span></li>
-                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Figma component doc — spec page authoring</span></li>
-                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Handoff eval — readiness check before frontend</span></li>
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Prior art lookup, reuse check before building</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Component analysis, 6-phase spec (breakdown → status → interaction)</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Prototype builder, interactive HTML output</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Figma component doc, spec page authoring</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Handoff eval, readiness check before frontend</span></li>
               </ol>
               <div class="skill-arch-foot">Reads <code>DESIGN-COMPONENTS.md</code> + <code>DESIGN-TOKENS.md</code> on demand; pulls Figma context via MCP. One skill per run, no phases skipped.</div>
             </div>
@@ -907,7 +909,7 @@
           <div class="ofs-spine"><div class="ofs-badge">05</div><div class="ofs-spine-line"></div></div>
           <div class="ofs-body">
             <div class="ofs-chapter-title" data-i18n="s03.step5.title">Sync to Figma → Figma Make → back to prototype</div>
-            <p class="ofs-chapter-story" data-i18n="s03.step5.story">I pull the prototype into Figma and run <code>design-system-management</code> checks — correct token references, component variants, and states against the library. Figma Make then explores display states and alternative layouts at speed. Whatever wins comes back into Claude Code as a prompt to update the prototype. This is the only step where I still touch pixels directly — and it's the shortest.</p>
+            <p class="ofs-chapter-story" data-i18n="s03.step5.story">I pull the prototype into Figma and run <code>design-system-management</code> checks, correct token references, component variants, and states against the library. Figma Make then explores display states and alternative layouts at speed. Whatever wins comes back into Claude Code as a prompt to update the prototype. This is the only step where I still touch pixels directly, and it's the shortest.</p>
             <div class="step-kv">
               <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step5.tool">Figma + Figma Make + <code>design-system-management</code></span></div>
               <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step5.output">Design-system-aligned prototype v2</span></div>
@@ -920,11 +922,11 @@
                 <span class="skill-arch-sub">pixel-exploration detour</span>
               </div>
               <ol class="skill-arch-steps">
-                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Import prototype into Figma — via Figma MCP connector sync, layout gets regrouped + snapped to design-system tokens</span></li>
-                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Paste the HTML file straight into Figma Make — skips rebuild, explores states &amp; alternates instantly</span></li>
-                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Generate variants — 3–5 layouts / state combos in parallel, same input prompt</span></li>
-                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Pick the winner — side-by-side against design-system fit, not aesthetics-first</span></li>
-                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Write back with prompt — Claude Code updates the prototype, keeping parity with Figma</span></li>
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Import prototype into Figma, via Figma MCP connector sync, layout gets regrouped + snapped to design-system tokens</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Paste the HTML file straight into Figma Make, skips rebuild, explores states &amp; alternates instantly</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Generate variants, 3–5 layouts / state combos in parallel, same input prompt</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Pick the winner, side-by-side against design-system fit, not aesthetics-first</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Write back with prompt, Claude Code updates the prototype, keeping parity with Figma</span></li>
               </ol>
               <div class="skill-arch-foot">Connector sync is the default loop. Direct HTML paste is the escape hatch when I want fast exploration instead of committed moves.</div>
             </div>
@@ -936,7 +938,7 @@
           <div class="ofs-spine"><div class="ofs-badge">06</div><div class="ofs-spine-line"></div></div>
           <div class="ofs-body">
             <div class="ofs-chapter-title" data-i18n="s03.step6.title">Handoff: Figma + prototype → engineer → Claude</div>
-            <p class="ofs-chapter-story" data-i18n="s03.step6.story">Engineers receive Figma <em>and</em> a working prototype, plus a <code>design-handoff</code> spec sheet — tokens, variants and states, interaction timing, content limits, edge cases, and accessibility notes. They feed the prototype into their own Claude Code session to generate production code, treating my prototype as executable spec, not as a mockup to reinterpret. Handoff ambiguity drops to near zero because there's nothing to translate.</p>
+            <p class="ofs-chapter-story" data-i18n="s03.step6.story">Engineers receive Figma <em>and</em> a working prototype, plus a <code>design-handoff</code> spec sheet, tokens, variants and states, interaction timing, content limits, edge cases, and accessibility notes. They feed the prototype into their own Claude Code session to generate production code, treating my prototype as executable spec, not as a mockup to reinterpret. Handoff ambiguity drops to near zero because there's nothing to translate.</p>
             <div class="step-kv">
               <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step6.tool"><code>design-handoff</code> + prototype → engineer's Claude</span></div>
               <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step6.output">Production-ready feature branch</span></div>
@@ -949,13 +951,13 @@
                 <span class="skill-arch-sub">copy review · en / zh-TW / ja</span>
               </div>
               <ol class="skill-arch-steps">
-                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Load voice profile — <code>voice-profile-en.md</code> + <code>patterns.md</code> for tone + standard phrasings</span></li>
-                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Apply patterns — buttons, errors, empty states, confirmations, validation</span></li>
-                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Check glossary — <code>i18n/glossary.md</code> enforces consistent term mapping across locales</span></li>
-                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Localize — <code>i18n/zh-tw.md</code> / <code>i18n/ja.md</code> rewrites, not word-for-word translations</span></li>
-                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Review pass — <code>review.md</code> checks voice, clarity, consistency before handoff</span></li>
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Load voice profile, <code>voice-profile-en.md</code> + <code>patterns.md</code> for tone + standard phrasings</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Apply patterns, buttons, errors, empty states, confirmations, validation</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Check glossary, <code>i18n/glossary.md</code> enforces consistent term mapping across locales</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Localize, <code>i18n/zh-tw.md</code> / <code>i18n/ja.md</code> rewrites, not word-for-word translations</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Review pass, <code>review.md</code> checks voice, clarity, consistency before handoff</span></li>
               </ol>
-              <div class="skill-arch-foot">Runs on the prototype copy and the eng branch. Output: polished, glossary-aligned strings in EN / zh-TW / ja — ready to ship without a round of copy edits in code review.</div>
+              <div class="skill-arch-foot">Runs on the prototype copy and the eng branch. Output: polished, glossary-aligned strings in EN / zh-TW / ja, ready to ship without a round of copy edits in code review.</div>
             </div>
           </div>
         </div>
@@ -965,7 +967,7 @@
           <div class="ofs-spine"><div class="ofs-badge">07</div><div class="ofs-spine-line"></div></div>
           <div class="ofs-body">
             <div class="ofs-chapter-title" data-i18n="s03.step7.title">Marketing video via Remotion</div>
-            <p class="ofs-chapter-story" data-i18n="s03.step7.story">Claude Code wraps the same prototype with Remotion to produce a launch video — scripted scene timing, on-screen callouts, voiceover stubs. Marketing gets a ready-to-edit MP4 without me opening After Effects. The design artifact and the marketing artifact share the same source.</p>
+            <p class="ofs-chapter-story" data-i18n="s03.step7.story">Claude Code wraps the same prototype with Remotion to produce a launch video, scripted scene timing, on-screen callouts, voiceover stubs. Marketing gets a ready-to-edit MP4 without me opening After Effects. The design artifact and the marketing artifact share the same source.</p>
             <div class="step-kv">
               <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step7.tool">Claude Code + Remotion</span></div>
               <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step7.output">Launch video (MP4) for marketing</span></div>
@@ -978,13 +980,13 @@
                 <span class="skill-arch-sub">React → MP4</span>
               </div>
               <ol class="skill-arch-steps">
-                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Compose in React/TS — scene = component, time = props</span></li>
-                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Parametrize — <code>inputProps</code> drive copy, data, colors</span></li>
-                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Preview in Studio — hot-reload timeline with real data</span></li>
-                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Render to MP4 — CLI, server, or Remotion Lambda</span></li>
-                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Embed via Player — same composition inside apps (optional)</span></li>
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Compose in React/TS, scene = component, time = props</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Parametrize, <code>inputProps</code> drive copy, data, colors</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Preview in Studio, hot-reload timeline with real data</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Render to MP4, CLI, server, or Remotion Lambda</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Embed via Player, same composition inside apps (optional)</span></li>
               </ol>
-              <div class="skill-arch-foot">Source = the prototype. Same React components power the design artifact and the marketing MP4 — no After Effects.</div>
+              <div class="skill-arch-foot">Source = the prototype. Same React components power the design artifact and the marketing MP4, no After Effects.</div>
             </div>
           </div>
         </div>
@@ -994,14 +996,14 @@
           <div class="ofs-spine"><div class="ofs-badge">08</div><div class="ofs-spine-line"></div></div>
           <div class="ofs-body">
             <div class="ofs-chapter-title" data-i18n="s03.step8.title">Brand: mascot, banners, teaser video</div>
-            <p class="ofs-chapter-story" data-i18n="s03.step8.story">Gemini, Weave, and Lovart (free tiers only) cover the brand layer — company mascot illustrations, campaign banners, short teaser videos.</p>
+            <p class="ofs-chapter-story" data-i18n="s03.step8.story">Gemini, Weave, and Lovart (free tiers only) cover the brand layer, company mascot illustrations, campaign banners, short teaser videos.</p>
             <div class="step-kv">
               <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step8.tool">Gemini + Weave + Lovart (free)</span></div>
               <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step8.output">Mascot, banner set, teaser video</span></div>
               <div class="step-kv-cell"><span class="step-kv-key">Replaces</span><span class="step-kv-val" data-i18n="s03.step8.replaces">Illustrator / brand designer</span></div>
             </div>
             <div class="step-media">
-              <img src="assets/designing-with-ai/Illustration.png" alt="Wren AI mascot — three brand scenes generated with Gemini, Weave, Lovart" />
+              <img src="assets/designing-with-ai/Illustration.png" alt="Wren AI mascot, three brand scenes generated with Gemini, Weave, Lovart" />
             </div>
           </div>
         </div>
@@ -1011,7 +1013,7 @@
           <div class="ofs-spine"><div class="ofs-badge">09</div><div class="ofs-spine-line"></div></div>
           <div class="ofs-body">
             <div class="ofs-chapter-title" data-i18n="s03.step9.title">Dogfooding → summary → task assignment</div>
-            <p class="ofs-chapter-story" data-i18n="s03.step9.story">The same journey map that drove the prototype generates a <code>user-research</code>-style dogfooding checklist (usability-test structure: warm-up → context → deep dive → reaction → wrap-up). An <code>accessibility-review</code> pass runs alongside it for WCAG 2.1 AA — contrast, keyboard, focus, touch targets. A Claude Code skill then consolidates findings, ranks by severity, proposes fixes, and drafts task assignments by owner. By Monday morning, a sprint-ready backlog I didn't hand-write.</p>
+            <p class="ofs-chapter-story" data-i18n="s03.step9.story">The same journey map that drove the prototype generates a <code>user-research</code>-style dogfooding checklist (usability-test structure: warm-up → context → deep dive → reaction → wrap-up). An <code>accessibility-review</code> pass runs alongside it for WCAG 2.1 AA, contrast, keyboard, focus, touch targets. A Claude Code skill then consolidates findings, ranks by severity, proposes fixes, and drafts task assignments by owner. By Monday morning, a sprint-ready backlog I didn't hand-write.</p>
             <div class="step-kv">
               <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step9.tool"><code>user-research</code> + <code>accessibility-review</code> + Claude Code</span></div>
               <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step9.output">Dogfooding summary + ranked tasks</span></div>
@@ -1024,14 +1026,14 @@
                 <span class="skill-arch-sub">6-step form generator</span>
               </div>
               <ol class="skill-arch-steps">
-                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Source selection — existing journey / file / fresh</span></li>
-                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Analysis &amp; conversion — regroup into 4–5 testable sections</span></li>
-                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Confirmation loop — structural summary, iterate</span></li>
-                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Output destination — Notion page / local Markdown</span></li>
-                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Generate the form — sections + bugs / ratings / exit criteria</span></li>
-                <li><span class="skill-arch-no">06</span><span class="skill-arch-ph">Language — EN default, zh-TW per journey</span></li>
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Source selection, existing journey / file / fresh</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Analysis &amp; conversion, regroup into 4–5 testable sections</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Confirmation loop, structural summary, iterate</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Output destination, Notion page / local Markdown</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Generate the form, sections + bugs / ratings / exit criteria</span></li>
+                <li><span class="skill-arch-no">06</span><span class="skill-arch-ph">Language, EN default, zh-TW per journey</span></li>
               </ol>
-              <div class="skill-arch-foot">20-minute budget per tester. Pulls from <code>docs/journeys/{slug}.json</code> — the same source that drove the prototype.</div>
+              <div class="skill-arch-foot">20-minute budget per tester. Pulls from <code>docs/journeys/{slug}.json</code>, the same source that drove the prototype.</div>
             </div>
           </div>
         </div>
@@ -1054,11 +1056,11 @@
                 <span class="skill-arch-sub">5-phase workflow</span>
               </div>
               <ol class="skill-arch-steps">
-                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Gather inputs — business goals, customer problems, constraints</span></li>
-                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Define initiatives — epics with hypotheses &amp; metrics</span></li>
-                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Prioritize — rank by impact / effort / strategic fit</span></li>
-                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Sequence — releases or quarters with dependencies</span></li>
-                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Communicate — Now / Next / Later narrative for stakeholders</span></li>
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Gather inputs, business goals, customer problems, constraints</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Define initiatives, epics with hypotheses &amp; metrics</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Prioritize, rank by impact / effort / strategic fit</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Sequence, releases or quarters with dependencies</span></li>
+                <li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Communicate, Now / Next / Later narrative for stakeholders</span></li>
               </ol>
               <div class="skill-arch-foot">Outcome-driven, not a feature list. Syncs to Notion so the roadmap, backlog, and workload math live in one surface.</div>
             </div>
@@ -1070,7 +1072,7 @@
           <div class="ofs-spine"><div class="ofs-badge">11</div><div class="ofs-spine-line"></div></div>
           <div class="ofs-body">
             <div class="ofs-chapter-title" data-i18n="s03.step11.title">External product documentation</div>
-            <p class="ofs-chapter-story" data-i18n="s03.step11.story">The journey map + the <code>ux-writing</code> skill + the Claude Chrome plugin produce the customer-facing docs — help-center pages, API reference stubs, release-note drafts, plus in-product microcopy (CTAs, empty states, error messages, confirmations). The same source that drove the prototype now drives the words users read when the feature ships, with a consistent voice and tone.</p>
+            <p class="ofs-chapter-story" data-i18n="s03.step11.story">The journey map + the <code>ux-writing</code> skill + the Claude Chrome plugin produce the customer-facing docs, help-center pages, API reference stubs, release-note drafts, plus in-product microcopy (CTAs, empty states, error messages, confirmations). The same source that drove the prototype now drives the words users read when the feature ships, with a consistent voice and tone.</p>
             <div class="step-kv">
               <div class="step-kv-cell"><span class="step-kv-key">Tool</span><span class="step-kv-val" data-i18n="s03.step11.tool">Journey + <code>ux-writing</code> + Claude Chrome plugin</span></div>
               <div class="step-kv-cell"><span class="step-kv-key">Output</span><span class="step-kv-val" data-i18n="s03.step11.output">External product documentation</span></div>
@@ -1083,12 +1085,12 @@
                 <span class="skill-arch-sub">PRD → 4-section Markdown</span>
               </div>
               <ol class="skill-arch-steps">
-                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Ask for PRD source — paste or Notion URL</span></li>
-                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Confirm tone — friendly / technical / formal</span></li>
-                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Parse PRD &amp; apply rewrite rules — strip internal language</span></li>
-                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Generate four sections — Overview · How It Works · Using · Tips</span></li>
+                <li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Ask for PRD source, paste or Notion URL</span></li>
+                <li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Confirm tone, friendly / technical / formal</span></li>
+                <li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Parse PRD &amp; apply rewrite rules, strip internal language</span></li>
+                <li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Generate four sections, Overview · How It Works · Using · Tips</span></li>
               </ol>
-              <div class="skill-arch-foot">Reads the PRD, rewrites from the user's perspective, drops engineering/PM framing. Help-center &amp; manual format — not tooltips or release notes.</div>
+              <div class="skill-arch-foot">Reads the PRD, rewrites from the user's perspective, drops engineering/PM framing. Help-center &amp; manual format, not tooltips or release notes.</div>
             </div>
           </div>
         </div>
@@ -1106,7 +1108,7 @@
       </div>
 
       <div class="text-block" style="max-width:820px;">
-        <p class="body" data-i18n="s01.body">These are my real numbers at Wren AI — proof that the pipeline above actually runs. They don't record the limits of my stamina. They record what's possible once the question stops being "how do I get more time to design" and becomes "how do I direct a system that designs."</p>
+        <p class="body" data-i18n="s01.body">These are my real numbers at Wren AI, proof that the pipeline above actually runs. They don't record the limits of my stamina. They record what's possible once the question stops being "how do I get more time to design" and becomes "how do I direct a system that designs."</p>
       </div>
 
       <ul class="metric-list reveal-on-scroll">
@@ -1115,28 +1117,28 @@
             <span class="metric-li-value">6–8<span class="metric-li-unit">FTE</span></span>
             <span class="metric-li-label" data-i18n="s01.m1.label">I'm a designer, and an army</span>
           </div>
-          <p class="metric-li-note" data-i18n="s01.m1.note">Before, this took 6–8 different minds — PM, researcher, UI/UX, tech writer, even motion designer. Now those boundaries collapse inside me. With AI as leverage, one person can run the whole production line.</p>
+          <p class="metric-li-note" data-i18n="s01.m1.note">Before, this took 6–8 different minds, PM, researcher, UI/UX, tech writer, even motion designer. Now those boundaries collapse inside me. With AI as leverage, one person can run the whole production line.</p>
         </li>
         <li class="metric-li">
           <div class="metric-li-head">
             <span class="metric-li-value">3–4</span>
             <span class="metric-li-label" data-i18n="s01.m2.label">Parallel universes with no queue</span>
           </div>
-          <p class="metric-li-note" data-i18n="s01.m2.note">No "waiting on design" dead time here. 3–4 fronts advance simultaneously: Agent Mode's logic, Embedded Threads' experience, Design System maintenance — all in active motion, not queued and idle.</p>
+          <p class="metric-li-note" data-i18n="s01.m2.note">No "waiting on design" dead time here. 3–4 fronts advance simultaneously: Agent Mode's logic, Embedded Threads' experience, Design System maintenance, all in active motion, not queued and idle.</p>
         </li>
         <li class="metric-li">
           <div class="metric-li-head">
             <span class="metric-li-value">16<span class="metric-li-unit">hrs/wk</span></span>
             <span class="metric-li-label" data-i18n="s01.m3.label">Time sliced by structure</span>
           </div>
-          <p class="metric-li-note" data-i18n="s01.m3.note">16 hours a week — this is the communication tax I pay as a "human." 40% of my time is locked to meetings, non-negotiable. Which means every remaining minute has to deliver several times its weight.</p>
+          <p class="metric-li-note" data-i18n="s01.m3.note">16 hours a week, this is the communication tax I pay as a "human." 40% of my time is locked to meetings, non-negotiable. Which means every remaining minute has to deliver several times its weight.</p>
         </li>
         <li class="metric-li">
           <div class="metric-li-head">
             <span class="metric-li-value">24<span class="metric-li-unit">hrs/wk</span></span>
             <span class="metric-li-label" data-i18n="s01.m4.label">24 hours as conductor</span>
           </div>
-          <p class="metric-li-note" data-i18n="s01.m4.note">Meetings deducted, the 24 hours that remain each week are my real battlefield. Each project gets less than 6 hours. Sounds crazy? But when I'm no longer the craftsman drawing frames — when I'm the system owner directing Claude Code to execute the vision — a week's workload really does land inside 6 hours.</p>
+          <p class="metric-li-note" data-i18n="s01.m4.note">Meetings deducted, the 24 hours that remain each week are my real battlefield. Each project gets less than 6 hours. Sounds crazy? But when I'm no longer the craftsman drawing frames, when I'm the system owner directing Claude Code to execute the vision, a week's workload really does land inside 6 hours.</p>
         </li>
       </ul>
 
@@ -1177,9 +1179,9 @@
         's01.m4.label': '24 時間、指揮者として',
         's01.m4.note': '会議を差し引いて、週に残る 24 時間こそが私の本当の戦場。1 プロジェクトあたり平均 6 時間にも満たない。狂気の沙汰?いいえ、図面を描く職人ではなく、Claude Code を指揮して構想を実装するシステムオーナーになったとき、1 週間分のワークロードは本当に 6 時間の中に収まります。',
         'page.title': 'AI と共にデザインする',
-        'page.subtitle': 'ソロデザイナーのためのシステムレベルのワークフロー — Wren AI で Claude Code を中心に再構築。',
+        'page.subtitle': 'ソロデザイナーのためのシステムレベルのワークフロー, Wren AI で Claude Code を中心に再構築。',
         'intro.h3.product': '前提',
-        'intro.product.body': '2026年初頭、Anthropic のあるデザイナーが「従来のデザインプロセスは死んだ」と宣言した。同じ頃、私は Wren AI のただ一人のプロダクトデザイナーだった — B2B AI プラットフォームのプロダクトデザインを一人で担い、週<span class="stat-hi">16時間</span>が会議で消え、常に<span class="stat-hi">3〜4件</span>のプロジェクトを並行して抱えていた。このケーススタディは、それを現実に可能にするために構築した 11 ステップの AI ワークフローを記録している。',
+        'intro.product.body': '2026年初頭、Anthropic のあるデザイナーが「従来のデザインプロセスは死んだ」と宣言した。同じ頃、私は Wren AI のただ一人のプロダクトデザイナーだった, B2B AI プラットフォームのプロダクトデザインを一人で担い、週<span class="stat-hi">16時間</span>が会議で消え、常に<span class="stat-hi">3〜4件</span>のプロジェクトを並行して抱えていた。このケーススタディは、それを現実に可能にするために構築した 11 ステップの AI ワークフローを記録している。',
         'intro.h3.role': '私の役割',
         'intro.role.body': 'Wren AI のシニアプロダクトデザイナー。そして必然的に、PM、リサーチャー、プロトタイパー、モーションデザイナー、イラストレーター、テクニカルライター、ドッグフーディングリード。このワークフローは、一人のデザイナーが従来<span class="stat-hi">〜6〜8 FTE</span>相当の職域を品質を保ちつつこなす方法です。',
         'intro.h3.time': 'タイムライン',
@@ -1190,30 +1192,30 @@
         's02.moment.body2': '私はそれを、たった一人のプロダクトデザイナーとして B2B AI スタートアップで読んだ。反対する余裕はなかった。現実はすでに私を押しつぶしていた：',
         's02.li1': '<span class="stat-hi">一人のデザイナー</span>が、プロダクトデザイン、ビジュアルデザイン、プロトタイピング、リサーチ、ブランドを全プロダクトでカバー。',
         's02.li2': '週<span class="stat-hi">16 時間</span>が構造的に会議に拘束され、削減不能。',
-        's02.li3': '<span class="stat-hi">毎週リリース</span> — 機能 1 件がブリーフからリリースまで、実作業時間は平均 1 週半以内。',
-        's02.li4': 'エンジニアはすでに日常的に Claude Code を使用中 — 私のハンドオフがその流れに合わなければ、私がボトルネックになる。',
+        's02.li3': '<span class="stat-hi">毎週リリース</span>, 機能 1 件がブリーフからリリースまで、実作業時間は平均 1 週半以内。',
+        's02.li4': 'エンジニアはすでに日常的に Claude Code を使用中, 私のハンドオフがその流れに合わなければ、私がボトルネックになる。',
         's02.li5': '採用を排除するスタートアップ予算。',
         's02.h3.reframe': '視点の転換',
-        's02.reframe.body': '古い問い — <em>「どうやってデザインの時間を増やすか？」</em> — には答えがなかった。週は満杯だった。新しい問いはこうなった：<em>「自分の 1 時間を 5 倍に働かせるには？」</em> それは、私が成果物を作る人であることをやめ、成果物を作るシステムを指揮する人になった場合にのみ機能する。',
-        's02.reframe.body2': 'Claude Code がそのシステムになった。時折触れるツールではなく、中央のオーケストレーション層として — スペック、prototype、リサーチサマリー、マーケティング動画、Notion 更新、プロダクトドキュメントがすべて通過する場所として。以下が辿り着いたパイプラインです。',
+        's02.reframe.body': '古い問い, <em>「どうやってデザインの時間を増やすか？」</em>, には答えがなかった。週は満杯だった。新しい問いはこうなった：<em>「自分の 1 時間を 5 倍に働かせるには？」</em> それは、私が成果物を作る人であることをやめ、成果物を作るシステムを指揮する人になった場合にのみ機能する。',
+        's02.reframe.body2': 'Claude Code がそのシステムになった。時折触れるツールではなく、中央のオーケストレーション層として, スペック、prototype、リサーチサマリー、マーケティング動画、Notion 更新、プロダクトドキュメントがすべて通過する場所として。以下が辿り着いたパイプラインです。',
         's03.title': '11 ステップの AI パイプライン',
         's03.h3': 'ステップ 00 → 11',
-        's03.body': '各ステップは Claude Code のスキル、プラグイン、またはツール間のスクリプト化されたハンドオフです。下の縦の背骨は時系列で読めます — 分析から始まり、スペック、journey、prototype、Figma、ハンドオフ、動画、ブランド、ドッグフーディング、PM オプス、外部ドキュメントまで。',
+        's03.body': '各ステップは Claude Code のスキル、プラグイン、またはツール間のスクリプト化されたハンドオフです。下の縦の背骨は時系列で読めます, 分析から始まり、スペック、journey、prototype、Figma、ハンドオフ、動画、ブランド、ドッグフーディング、PM オプス、外部ドキュメントまで。',
         's03.step0.title': '行動分析＆バックテスト',
         's03.step0.story': 'Claude Code のスキルが、アナリティクスイベント、セッションレコーディング、サポートチケットを取り込む。ファネル離脱、摩擦パターン、異常値を含む行動レポートを生成し、前回のデザイン変更と突き合わせて実際に何が動いたかを検証する。',
         's03.step0.tool': 'Claude Code スキル',
         's03.step0.output': '週次行動レポート＋デザイン差分レビュー',
         's03.step0.replaces': 'データアナリスト＋UX リサーチャー',
-        's03.step0.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">user-research</span><span class="skill-arch-sub">行動モード · 週次</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">生シグナル収集 — 分析イベント、セッション録画、サポートチケット</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">統合 — 親和図 → インパクト／工数 → ジョブ理論</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">パターン抽出 — ファネル離脱、フリクション、異常値</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">バックテスト — 前回のデザイン変更と差分を取り、実リフトを測定</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">行動レポート作成 — ランク付け所見＋デザイン差分レビュー</span></li></ol><div class="skill-arch-foot">毎週月曜に実行。レポートはステップ 01 に供給される — 新規スペックはすべてデータが実際に示したものから始まる。</div>',
+        's03.step0.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">user-research</span><span class="skill-arch-sub">行動モード · 週次</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">生シグナル収集, 分析イベント、セッション録画、サポートチケット</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">統合, 親和図 → インパクト／工数 → ジョブ理論</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">パターン抽出, ファネル離脱、フリクション、異常値</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">バックテスト, 前回のデザイン変更と差分を取り、実リフトを測定</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">行動レポート作成, ランク付け所見＋デザイン差分レビュー</span></li></ol><div class="skill-arch-foot">毎週月曜に実行。レポートはステップ 01 に供給される, 新規スペックはすべてデータが実際に示したものから始まる。</div>',
         's03.step1.title': 'スペック作成＆機能ブレスト',
-        's03.step1.story': 'CEO からの一行ブリーフが、フルスペックになる — 課題定義、スコープ、エッジケース、受け入れ基準、リスクリスト — プロダクトの面と既存のデザインシステムを把握している Claude Code スキル内で。私は文章ではなく、議論の形を編集する。',
+        's03.step1.story': 'CEO からの一行ブリーフが、フルスペックになる, 課題定義、スコープ、エッジケース、受け入れ基準、リスクリスト, プロダクトの面と既存のデザインシステムを把握している Claude Code スキル内で。私は文章ではなく、議論の形を編集する。',
         's03.step1.tool': 'Claude Code スキル',
         's03.step1.output': 'PRD 水準のスペック＋エッジケース＆受け入れ基準',
         's03.step1.replaces': 'プロダクトマネージャー',
-        's03.step1.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">prd-development</span><span class="skill-arch-sub">8 フェーズのワークフロー</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">エグゼクティブサマリー</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">課題定義 — エビデンスに基づく顧客の痛み</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">ターゲットユーザー＆ペルソナ</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">戦略コンテキスト — OKR、市場、Why now</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">ソリューション概要 — 高レベルの形、フロー</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">成功指標 — プライマリ / セカンダリ / ガードレール</span></li><li><span class="skill-arch-no">07</span><span class="skill-arch-ph">user journey＆要件</span></li><li><span class="skill-arch-no">08</span><span class="skill-arch-ph">スコープ外＆依存関係</span></li></ol><div class="skill-arch-foot">2〜4 日で 8 つ以上のコンポーネント／インタラクティブ スキルをオーケストレーション。</div>',
-        's03.step2.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">journey-map</span><span class="skill-arch-sub">6 ステップのビルダー</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">入力ソース — 会話 / ファイル / Figma</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">journeyデータ収集 — ステージ、アクション、レスポンス、タグ</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">確認ループ — ツリー要約で反復</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">JSON 生成 — <code>docs/journeys/{slug}.json</code></span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">HTML 生成 — データ駆動のスタイル付きレンダリング</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">完了 → <code>/dogfooding</code> に引き継ぎ</span></li></ol><div class="skill-arch-foot">以降のすべてのステップが参照する単一の事実ソースを出力。</div>',
+        's03.step1.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">prd-development</span><span class="skill-arch-sub">8 フェーズのワークフロー</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">エグゼクティブサマリー</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">課題定義, エビデンスに基づく顧客の痛み</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">ターゲットユーザー＆ペルソナ</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">戦略コンテキスト, OKR、市場、Why now</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">ソリューション概要, 高レベルの形、フロー</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">成功指標, プライマリ / セカンダリ / ガードレール</span></li><li><span class="skill-arch-no">07</span><span class="skill-arch-ph">user journey＆要件</span></li><li><span class="skill-arch-no">08</span><span class="skill-arch-ph">スコープ外＆依存関係</span></li></ol><div class="skill-arch-foot">2〜4 日で 8 つ以上のコンポーネント／インタラクティブ スキルをオーケストレーション。</div>',
+        's03.step2.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">journey-map</span><span class="skill-arch-sub">6 ステップのビルダー</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">入力ソース, 会話 / ファイル / Figma</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">journeyデータ収集, ステージ、アクション、レスポンス、タグ</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">確認ループ, ツリー要約で反復</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">JSON 生成, <code>docs/journeys/{slug}.json</code></span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">HTML 生成, データ駆動のスタイル付きレンダリング</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">完了 → <code>/dogfooding</code> に引き継ぎ</span></li></ol><div class="skill-arch-foot">以降のすべてのステップが参照する単一の事実ソースを出力。</div>',
         's03.step2.title': 'HTML としてのuser journey',
-        's03.step2.story': 'スペックがスキルに流れ込み、インタラクティブな HTML user journeyを生み出す — ステージ、アクション、感情、ペインポイント、機会の瞬間。リンクで共有でき、レビュー編集に耐え、以降のすべてのステップが参照する単一の真実源になる。',
+        's03.step2.story': 'スペックがスキルに流れ込み、インタラクティブな HTML user journeyを生み出す, ステージ、アクション、感情、ペインポイント、機会の瞬間。リンクで共有でき、レビュー編集に耐え、以降のすべてのステップが参照する単一の真実源になる。',
         's03.step2.tool': 'Claude Code スキル → HTML',
         's03.step2.output': 'インタラクティブなjourney map（スタンドアロンリンク）',
         's03.step2.replaces': 'サービスデザイナー / UX リサーチャー',
@@ -1222,33 +1224,33 @@
         's03.step3.tool': 'Claude Code スキル＋Storybook',
         's03.step3.output': '実行可能な HTML/CSS/JS prototype',
         's03.step3.replaces': 'プロトタイパー / フロントエンドデザイナー',
-        's03.step3.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Reference</span><span class="skill-arch-slug">storybook</span><span class="skill-arch-sub">中身</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">ファウンデーション — デザイントークン（カラー、タイポグラフィ、スペーシング、ラディアス、モーション）</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">コンポーネント — 全 UI プリミティブを variant × state（default、hover、active、disabled、loading、error）網羅</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">パターン — 組み合わせブロック（ツールバー、空状態、オンボーディング、サイドパネル）</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">インタラクション stories — play 関数で hover / focus / loading / error のパスを再現</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">ドキュメント — 自動生成の prop テーブル＋利用ガイドライン</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">A11y アドオン — コントラスト、キーボード操作、aria ロールを全 story でチェック</span></li></ol><div class="skill-arch-foot">Claude は Storybook を「何が再利用できるか」の事実ソースとして読む。既存コンポーネントがあるなら、それを使う — prototype で再発明しない。</div>',
+        's03.step3.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Reference</span><span class="skill-arch-slug">storybook</span><span class="skill-arch-sub">中身</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">ファウンデーション, デザイントークン（カラー、タイポグラフィ、スペーシング、ラディアス、モーション）</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">コンポーネント, 全 UI プリミティブを variant × state（default、hover、active、disabled、loading、error）網羅</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">パターン, 組み合わせブロック（ツールバー、空状態、オンボーディング、サイドパネル）</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">インタラクション stories, play 関数で hover / focus / loading / error のパスを再現</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">ドキュメント, 自動生成の prop テーブル＋利用ガイドライン</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">A11y アドオン, コントラスト、キーボード操作、aria ロールを全 story でチェック</span></li></ol><div class="skill-arch-foot">Claude は Storybook を「何が再利用できるか」の事実ソースとして読む。既存コンポーネントがあるなら、それを使う, prototype で再発明しない。</div>',
         's03.step4.title': 'Claude Code で反復',
-        's03.step4.story': 'prototypeを Claude Code 上で直接修正する — フローを練り直し、ステートを締め、空 / エラー / ロード分岐を埋める。インタラクションデザインが起きる場所はもうここです — Figma のフレームではなく、動くコードの中。prototypeが正式なデザイン成果物になります。並行して、既存コンポーネントでニーズを満たせるか評価し、足りない場合は <code>design-system</code> エージェントを起動して新コンポーネントを共同で作成する。',
+        's03.step4.story': 'prototypeを Claude Code 上で直接修正する, フローを練り直し、ステートを締め、空 / エラー / ロード分岐を埋める。インタラクションデザインが起きる場所はもうここです, Figma のフレームではなく、動くコードの中。prototypeが正式なデザイン成果物になります。並行して、既存コンポーネントでニーズを満たせるか評価し、足りない場合は <code>design-system</code> エージェントを起動して新コンポーネントを共同で作成する。',
         's03.step4.tool': 'Claude Code（手動ディレクション）',
         's03.step4.output': 'レビュー可能なprototype v1',
         's03.step4.replaces': 'インタラクションデザイナー',
-        's03.step4.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Agent</span><span class="skill-arch-slug">design-system</span><span class="skill-arch-sub">5 オプションのメニュー型エージェント</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">既存コンポーネント検索 — 作る前に再利用をチェック</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">コンポーネント分析 — 6 フェーズのスペック（分解 → 状態 → インタラクション）</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">prototypeビルダー — インタラクティブ HTML を生成</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Figma コンポーネントドキュメント — スペックページの作成</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">ハンドオフ評価 — フロントエンド引き渡し前の準備度チェック</span></li></ol><div class="skill-arch-foot">必要時に <code>DESIGN-COMPONENTS.md</code> ＋ <code>DESIGN-TOKENS.md</code> を読み、Figma MCP でデザインコンテキストを取得。1 回 1 スキル、フェーズ省略なし。</div>',
+        's03.step4.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Agent</span><span class="skill-arch-slug">design-system</span><span class="skill-arch-sub">5 オプションのメニュー型エージェント</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">既存コンポーネント検索, 作る前に再利用をチェック</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">コンポーネント分析, 6 フェーズのスペック（分解 → 状態 → インタラクション）</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">prototypeビルダー, インタラクティブ HTML を生成</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Figma コンポーネントドキュメント, スペックページの作成</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">ハンドオフ評価, フロントエンド引き渡し前の準備度チェック</span></li></ol><div class="skill-arch-foot">必要時に <code>DESIGN-COMPONENTS.md</code> ＋ <code>DESIGN-TOKENS.md</code> を読み、Figma MCP でデザインコンテキストを取得。1 回 1 スキル、フェーズ省略なし。</div>',
         's03.step5.title': 'Figma → Figma Make → prototypeへ戻す',
-        's03.step5.story': 'prototypeを Figma に取り込み、レイアウトを整え、デザインシステムに対するコンポーネント利用を修正する。次に Figma Make に入れ、表示ステートの探索と代替レイアウトの高速テストを行う。勝ち残ったものは Claude Code にプロンプトとして戻し、prototypeを更新する。ピクセルに直接触れるのはここだけ — そして一番短いステップです。',
+        's03.step5.story': 'prototypeを Figma に取り込み、レイアウトを整え、デザインシステムに対するコンポーネント利用を修正する。次に Figma Make に入れ、表示ステートの探索と代替レイアウトの高速テストを行う。勝ち残ったものは Claude Code にプロンプトとして戻し、prototypeを更新する。ピクセルに直接触れるのはここだけ, そして一番短いステップです。',
         's03.step5.tool': 'Figma ＋ Figma Make ⇄ Claude Code',
         's03.step5.output': 'デザインシステム整合済みprototype v2',
         's03.step5.replaces': 'UI デザイナー',
-        's03.step5.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Loop</span><span class="skill-arch-slug">figma ⇄ claude-code</span><span class="skill-arch-sub">ピクセル探索の回り道</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">prototype を Figma に取り込み — Figma MCP コネクターで同期、レイアウトを再編成してデザインシステムのトークンに合わせる</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">HTML ファイルをそのまま Figma Make に貼る — 再構築せずに状態や代替版面を即探索</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">バリアント生成 — 同じプロンプトで 3〜5 種のレイアウト／ステート組み合わせを並列で</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">勝者を選ぶ — 見た目ではなくデザインシステムとの整合性で横並び比較</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">プロンプトで書き戻す — Claude Code が prototype を更新し、Figma とパリティを保つ</span></li></ol><div class="skill-arch-foot">コネクター同期がデフォルトのループ。HTML 直貼りは、コミットされた変更ではなく高速探索が欲しいときのエスケープハッチ。</div>',
+        's03.step5.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Loop</span><span class="skill-arch-slug">figma ⇄ claude-code</span><span class="skill-arch-sub">ピクセル探索の回り道</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">prototype を Figma に取り込み, Figma MCP コネクターで同期、レイアウトを再編成してデザインシステムのトークンに合わせる</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">HTML ファイルをそのまま Figma Make に貼る, 再構築せずに状態や代替版面を即探索</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">バリアント生成, 同じプロンプトで 3〜5 種のレイアウト／ステート組み合わせを並列で</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">勝者を選ぶ, 見た目ではなくデザインシステムとの整合性で横並び比較</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">プロンプトで書き戻す, Claude Code が prototype を更新し、Figma とパリティを保つ</span></li></ol><div class="skill-arch-foot">コネクター同期がデフォルトのループ。HTML 直貼りは、コミットされた変更ではなく高速探索が欲しいときのエスケープハッチ。</div>',
         's03.step6.title': 'ハンドオフ：Figma＋prototype → エンジニア → Claude',
-        's03.step6.story': 'エンジニアは Figma <em>と</em>動くprototypeの両方を受け取る。prototypeを自分の Claude Code セッションに投入して本番コードを生成する — 私のprototypeをモックではなく、実行可能なスペックとして扱う。翻訳すべきものが無いので、ハンドオフの曖昧さはほぼゼロに落ちる。',
+        's03.step6.story': 'エンジニアは Figma <em>と</em>動くprototypeの両方を受け取る。prototypeを自分の Claude Code セッションに投入して本番コードを生成する, 私のprototypeをモックではなく、実行可能なスペックとして扱う。翻訳すべきものが無いので、ハンドオフの曖昧さはほぼゼロに落ちる。',
         's03.step6.tool': 'スペックとしてのprototype → エンジニアの Claude',
         's03.step6.output': '本番投入可能なフィーチャーブランチ',
         's03.step6.replaces': 'デザインエンジニア / デザインオプス',
-        's03.step6.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">wren-ux-writing</span><span class="skill-arch-sub">コピーレビュー · en / zh-TW / ja</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">ボイスプロファイルをロード — <code>voice-profile-en.md</code> ＋ <code>patterns.md</code>（トーン＋標準文言）</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">パターン適用 — ボタン、エラー、空状態、確認、バリデーション</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">グロッサリー確認 — <code>i18n/glossary.md</code> で用語マッピングをロケール横断で統一</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">ローカライズ — <code>i18n/zh-tw.md</code> / <code>i18n/ja.md</code> のリライト、逐語訳ではない</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">レビューパス — <code>review.md</code> で声・明瞭さ・一貫性をハンドオフ前にチェック</span></li></ol><div class="skill-arch-foot">prototype のコピーとエンジニアリング branch の両方で走る。出力はグロッサリー整合済みの EN / zh-TW / ja 文字列 — コードレビューで文言修正ラウンドを挟まずにリリース可能。</div>',
+        's03.step6.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">wren-ux-writing</span><span class="skill-arch-sub">コピーレビュー · en / zh-TW / ja</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">ボイスプロファイルをロード, <code>voice-profile-en.md</code> ＋ <code>patterns.md</code>（トーン＋標準文言）</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">パターン適用, ボタン、エラー、空状態、確認、バリデーション</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">グロッサリー確認, <code>i18n/glossary.md</code> で用語マッピングをロケール横断で統一</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">ローカライズ, <code>i18n/zh-tw.md</code> / <code>i18n/ja.md</code> のリライト、逐語訳ではない</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">レビューパス, <code>review.md</code> で声・明瞭さ・一貫性をハンドオフ前にチェック</span></li></ol><div class="skill-arch-foot">prototype のコピーとエンジニアリング branch の両方で走る。出力はグロッサリー整合済みの EN / zh-TW / ja 文字列, コードレビューで文言修正ラウンドを挟まずにリリース可能。</div>',
         's03.step7.title': 'Remotion でマーケティング動画',
-        's03.step7.story': 'Claude Code が同じprototypeを Remotion でラップし、ローンチ動画を生成する — シーンタイミング、画面上のキャプション、ボイスオーバー下書きまで。私が After Effects を開かなくても、マーケは編集即可能な MP4 を手にする。デザイン成果物とマーケ成果物が同じ源を共有する。',
+        's03.step7.story': 'Claude Code が同じprototypeを Remotion でラップし、ローンチ動画を生成する, シーンタイミング、画面上のキャプション、ボイスオーバー下書きまで。私が After Effects を開かなくても、マーケは編集即可能な MP4 を手にする。デザイン成果物とマーケ成果物が同じ源を共有する。',
         's03.step7.tool': 'Claude Code ＋ Remotion',
         's03.step7.output': 'マーケティング用ローンチ動画（MP4）',
         's03.step7.replaces': 'モーションデザイナー / 動画編集者',
-        's03.step7.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Framework</span><span class="skill-arch-slug">remotion</span><span class="skill-arch-sub">React → MP4</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">React/TS で構成 — シーン = コンポーネント、タイム = props</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">パラメータ化 — <code>inputProps</code> でコピー／データ／色を差し替え</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Studio でプレビュー — ホットリロードのタイムライン</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">MP4 にレンダリング — CLI、サーバー、Remotion Lambda</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Player で埋め込み — 同じコンポジションをアプリ内に（任意）</span></li></ol><div class="skill-arch-foot">ソース = prototype。同じ React コンポーネントでデザイン成果物とマーケティング MP4 を両立、After Effects 不要。</div>',
+        's03.step7.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Framework</span><span class="skill-arch-slug">remotion</span><span class="skill-arch-sub">React → MP4</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">React/TS で構成, シーン = コンポーネント、タイム = props</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">パラメータ化, <code>inputProps</code> でコピー／データ／色を差し替え</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Studio でプレビュー, ホットリロードのタイムライン</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">MP4 にレンダリング, CLI、サーバー、Remotion Lambda</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Player で埋め込み, 同じコンポジションをアプリ内に（任意）</span></li></ol><div class="skill-arch-foot">ソース = prototype。同じ React コンポーネントでデザイン成果物とマーケティング MP4 を両立、After Effects 不要。</div>',
         's03.step8.title': 'ブランド：マスコット、バナー、ティザー動画',
-        's03.step8.story': 'Gemini、Weave、Lovart（フリーティアのみ）がブランドレイヤーをカバーする — 会社マスコットのイラスト、キャンペーンバナー、短いティザー動画。',
+        's03.step8.story': 'Gemini、Weave、Lovart（フリーティアのみ）がブランドレイヤーをカバーする, 会社マスコットのイラスト、キャンペーンバナー、短いティザー動画。',
         's03.step8.tool': 'Gemini ＋ Weave ＋ Lovart（無料）',
         's03.step8.output': 'マスコット、バナー一式、ティザー動画',
         's03.step8.replaces': 'イラストレーター / ブランドデザイナー',
@@ -1257,19 +1259,19 @@
         's03.step9.tool': 'journey map＋ Claude Code スキル',
         's03.step9.output': 'ドッグフーディングサマリー＋優先度順タスク',
         's03.step9.replaces': 'UX リサーチャー＋プログラムマネージャー',
-        's03.step9.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">dogfooding</span><span class="skill-arch-sub">6 ステップのフォーム生成</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">ソース選択 — 既存journey / ファイル / ゼロから</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">分析＆変換 — 4〜5 個のテスト可能なセクションに再編成</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">確認ループ — 構造サマリーで反復</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">出力先 — Notion ページ / ローカル Markdown</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">フォーム生成 — セクション＋バグ／評価／Exit 基準</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">言語 — デフォルト英語、journeyに応じて zh-TW</span></li></ol><div class="skill-arch-foot">テスター 1 人 20 分が予算。<code>docs/journeys/{slug}.json</code> を参照 — prototypeを駆動した同じソース。</div>',
+        's03.step9.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">dogfooding</span><span class="skill-arch-sub">6 ステップのフォーム生成</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">ソース選択, 既存journey / ファイル / ゼロから</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">分析＆変換, 4〜5 個のテスト可能なセクションに再編成</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">確認ループ, 構造サマリーで反復</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">出力先, Notion ページ / ローカル Markdown</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">フォーム生成, セクション＋バグ／評価／Exit 基準</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">言語, デフォルト英語、journeyに応じて zh-TW</span></li></ol><div class="skill-arch-foot">テスター 1 人 20 分が予算。<code>docs/journeys/{slug}.json</code> を参照, prototypeを駆動した同じソース。</div>',
         's03.step10.title': 'PM オプス：Notion 同期と作業負荷計算',
         's03.step10.story': 'Claude が Notion のプロダクトロードマップをバックログに照らして更新し、各メンバーの作業負荷を再計算し、爆発する前に過密週をあぶり出す。週次ロードマップレビューは、2 時間のスプレッドシート作業ではなく、Claude の下書きを 10 分で確認するだけの仕事になる。',
         's03.step10.tool': 'Claude ＋ Notion MCP',
         's03.step10.output': '更新済みロードマップ＋作業負荷アラート',
         's03.step10.replaces': 'プロデューサー / PM オプス',
-        's03.step10.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">roadmap-planning</span><span class="skill-arch-sub">5 フェーズのワークフロー</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">インプット収集 — 事業目標、顧客課題、制約</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">イニシアチブ定義 — 仮説＆指標付きのエピック</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">優先順位付け — インパクト／工数／戦略適合で評価</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">シーケンス — 依存関係を踏まえたリリース／四半期配置</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">コミュニケーション — Now / Next / Later のナラティブ</span></li></ol><div class="skill-arch-foot">機能リストではなく成果ドリブン。Notion に同期され、ロードマップ・バックログ・作業負荷計算が 1 つの面に集約される。</div>',
+        's03.step10.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">roadmap-planning</span><span class="skill-arch-sub">5 フェーズのワークフロー</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">インプット収集, 事業目標、顧客課題、制約</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">イニシアチブ定義, 仮説＆指標付きのエピック</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">優先順位付け, インパクト／工数／戦略適合で評価</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">シーケンス, 依存関係を踏まえたリリース／四半期配置</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">コミュニケーション, Now / Next / Later のナラティブ</span></li></ol><div class="skill-arch-foot">機能リストではなく成果ドリブン。Notion に同期され、ロードマップ・バックログ・作業負荷計算が 1 つの面に集約される。</div>',
         's03.step11.title': '外部プロダクトドキュメント',
-        's03.step11.story': 'journey map＋ Claude Code スキル＋ Claude Chrome プラグインが、顧客向けドキュメントを生み出す — ヘルプセンターページ、API リファレンスの雛形、リリースノート下書き。prototypeを駆動したのと同じ源が、機能ローンチ時にユーザーが読む言葉も駆動する。',
+        's03.step11.story': 'journey map＋ Claude Code スキル＋ Claude Chrome プラグインが、顧客向けドキュメントを生み出す, ヘルプセンターページ、API リファレンスの雛形、リリースノート下書き。prototypeを駆動したのと同じ源が、機能ローンチ時にユーザーが読む言葉も駆動する。',
         's03.step11.tool': 'journey＋ Claude スキル＋ Claude Chrome プラグイン',
         's03.step11.output': '外部プロダクトドキュメント',
         's03.step11.replaces': 'テクニカルライター / コンテンツデザイナー',
-        's03.step11.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">user-facing-docs</span><span class="skill-arch-sub">PRD → 4 セクションの Markdown</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">PRD ソースを尋ねる — 貼り付け or Notion URL</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">トーン確認 — フレンドリー／テクニカル／フォーマル</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">PRD 解析＆書き換えルール適用 — 社内言葉を削除</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">4 セクション生成 — Overview · How It Works · Using · Tips</span></li></ol><div class="skill-arch-foot">PRD を読み、ユーザー視点で書き直し、エンジニアリング／PM フレーミングを落とす。ヘルプセンターおよびマニュアル向け — ツールチップやリリースノートではない。</div>',
+        's03.step11.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">user-facing-docs</span><span class="skill-arch-sub">PRD → 4 セクションの Markdown</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">PRD ソースを尋ねる, 貼り付け or Notion URL</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">トーン確認, フレンドリー／テクニカル／フォーマル</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">PRD 解析＆書き換えルール適用, 社内言葉を削除</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">4 セクション生成, Overview · How It Works · Using · Tips</span></li></ol><div class="skill-arch-foot">PRD を読み、ユーザー視点で書き直し、エンジニアリング／PM フレーミングを落とす。ヘルプセンターおよびマニュアル向け, ツールチップやリリースノートではない。</div>',
       },
       'zh-tw': {
         'nav.intro': '.簡介',
@@ -1287,9 +1289,9 @@
         's01.m4.label': '24 小時的「指揮家」時刻',
         's01.m4.note': '扣掉會議，每週剩下的 24 小時是我真正的戰場。每個專案平均分不到 6 小時。聽起來很瘋狂？但當我不再是畫圖的工匠，而是指揮 Claude Code 實踐構思的系統負責人，一週的工作量，確實在 6 小時內落地。',
         'page.title': '與 AI 一起設計',
-        'page.subtitle': '為獨立設計師打造的系統級工作流 — 在 Wren AI 以 Claude Code 為核心重構。',
+        'page.subtitle': '為獨立設計師打造的系統級工作流, 在 Wren AI 以 Claude Code 為核心重構。',
         'intro.h3.product': '起點',
-        'intro.product.body': '2026 年初，一位 Anthropic 的設計師宣告：傳統設計流程已死。那時我正是 Wren AI 唯一的產品設計師 — 一個人扛著一整個 B2B AI 平台的產品設計，每週<span class="stat-hi">16 小時</span>被會議吞掉，同時還有<span class="stat-hi">3–4 個專案</span>並行推進。這份案例記錄了我為了讓這件事真的可行，親手搭起來的 11 步 AI 工作流。',
+        'intro.product.body': '2026 年初，一位 Anthropic 的設計師宣告：傳統設計流程已死。那時我正是 Wren AI 唯一的產品設計師, 一個人扛著一整個 B2B AI 平台的產品設計，每週<span class="stat-hi">16 小時</span>被會議吞掉，同時還有<span class="stat-hi">3–4 個專案</span>並行推進。這份案例記錄了我為了讓這件事真的可行，親手搭起來的 11 步 AI 工作流。',
         'intro.h3.role': '我的角色',
         'intro.role.body': 'Wren AI 資深產品設計師。也因為現實需要:PM、研究員、prototype製作者、動效設計師、插畫師、技術文件寫手、dogfooding 負責人。這套工作流是一個人如何扛下<span class="stat-hi">約 6–8 個 FTE</span>的傳統職能範圍，又不讓作品品質掉下來的方法。',
         'intro.h3.time': '時間',
@@ -1308,57 +1310,57 @@
         's02.reframe.body2': '答案只有一個：我不再是生產零件的人，而是指揮系統運作的人,而 Claude Code，就是那個系統。規格、prototype、研究摘要、行銷影片、Notion 更新、產品文件，全部都流經它。以下就是我最後落地的這套流程。',
         's03.title': '11 步 AI 流程',
         's03.h3': 'Steps 00 → 11',
-        's03.body': '每一步都是一個 Claude Code skill、一個外掛，或是工具之間寫好的腳本交接。下方這條縱向主幹按時間順序讀 — 從頂端的行為數據開始，依序經過規格、journey、prototype、Figma、交付、影片、品牌、dogfooding、PM ops,到外部文件。',
+        's03.body': '每一步都是一個 Claude Code skill、一個外掛，或是工具之間寫好的腳本交接。下方這條縱向主幹按時間順序讀, 從頂端的行為數據開始，依序經過規格、journey、prototype、Figma、交付、影片、品牌、dogfooding、PM ops,到外部文件。',
         's03.step0.title': '行為分析與回測',
-        's03.step0.story': '一個 Claude Code skill 吃進數據事件、session 錄影和客服 ticket,產出一份行為報告 — 漏斗流失、摩擦模式、異常點 — 再拿它跟上一輪設計改動做回測，看看什麼東西真的有動。',
+        's03.step0.story': '一個 Claude Code skill 吃進數據事件、session 錄影和客服 ticket,產出一份行為報告, 漏斗流失、摩擦模式、異常點, 再拿它跟上一輪設計改動做回測，看看什麼東西真的有動。',
         's03.step0.tool': 'Claude Code skill',
         's03.step0.output': '週度行為報告＋設計差異檢視',
         's03.step0.replaces': '資料分析師＋UX 研究員',
-        's03.step0.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">user-research</span><span class="skill-arch-sub">行為模式 · 週節奏</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">抓原始訊號 — 分析事件、session 錄影、客服 ticket</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">整合 — 親和圖 → 影響力 / 成本 → Jobs-to-be-done</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">撈出模式 — 漏斗流失、摩擦、異常點</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">回測 — 跟上一輪設計改動做 diff,量真實有動的部分</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">寫行為報告 — 排序後的發現＋設計差異檢視</span></li></ol><div class="skill-arch-foot">每週一跑一次。報告會餵進 step 01 — 每一份新規格都從「資料真的有動的那塊」開始。</div>',
+        's03.step0.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">user-research</span><span class="skill-arch-sub">行為模式 · 週節奏</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">抓原始訊號, 分析事件、session 錄影、客服 ticket</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">整合, 親和圖 → 影響力 / 成本 → Jobs-to-be-done</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">撈出模式, 漏斗流失、摩擦、異常點</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">回測, 跟上一輪設計改動做 diff,量真實有動的部分</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">寫行為報告, 排序後的發現＋設計差異檢視</span></li></ol><div class="skill-arch-foot">每週一跑一次。報告會餵進 step 01, 每一份新規格都從「資料真的有動的那塊」開始。</div>',
         's03.step1.title': '規格撰寫與功能發想',
-        's03.step1.story': 'CEO 丟來的一句話 brief,會變成一份完整規格 — 問題陳述、範圍、邊界案例、驗收條件、風險清單 — 在一個了解產品切面與現有設計系統的 Claude Code skill 裡完成。我修改論述的結構，而不是逐字潤稿。',
+        's03.step1.story': 'CEO 丟來的一句話 brief,會變成一份完整規格, 問題陳述、範圍、邊界案例、驗收條件、風險清單, 在一個了解產品切面與現有設計系統的 Claude Code skill 裡完成。我修改論述的結構，而不是逐字潤稿。',
         's03.step1.tool': 'Claude Code skill',
         's03.step1.output': 'PRD 等級規格，含邊界案例與驗收條件',
         's03.step1.replaces': '產品經理',
-        's03.step1.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">prd-development</span><span class="skill-arch-sub">8 階段工作流</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">執行摘要</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">問題陳述 — 有證據的客戶痛點</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">目標用戶與 Persona</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">策略脈絡 — OKR、市場、為何是現在</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">解法概觀 — 高層次輪廓與流程</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">成功指標 — 主指標 / 次指標 / 防守指標</span></li><li><span class="skill-arch-no">07</span><span class="skill-arch-ph">user journey與需求</span></li><li><span class="skill-arch-no">08</span><span class="skill-arch-ph">範圍外與依賴</span></li></ol><div class="skill-arch-foot">在 2–4 天內串起 8+ 個元件與互動子 skill。</div>',
-        's03.step2.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">journey-map</span><span class="skill-arch-sub">6 步驟建構器</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">輸入來源 — 對話 / 檔案 / Figma</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">蒐集 user journey 資料 — 階段、行為、系統反應、標籤</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">確認回圈 — 樹狀摘要反覆校正</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">輸出 JSON — <code>docs/journeys/{slug}.json</code></span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">輸出 HTML — 資料驅動的樣式渲染</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">完成 → 交棒給 <code>/dogfooding</code></span></li></ol><div class="skill-arch-foot">產出是後續每一步都會參照的單一事實來源。</div>',
+        's03.step1.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">prd-development</span><span class="skill-arch-sub">8 階段工作流</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">執行摘要</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">問題陳述, 有證據的客戶痛點</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">目標用戶與 Persona</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">策略脈絡, OKR、市場、為何是現在</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">解法概觀, 高層次輪廓與流程</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">成功指標, 主指標 / 次指標 / 防守指標</span></li><li><span class="skill-arch-no">07</span><span class="skill-arch-ph">user journey與需求</span></li><li><span class="skill-arch-no">08</span><span class="skill-arch-ph">範圍外與依賴</span></li></ol><div class="skill-arch-foot">在 2–4 天內串起 8+ 個元件與互動子 skill。</div>',
+        's03.step2.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">journey-map</span><span class="skill-arch-sub">6 步驟建構器</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">輸入來源, 對話 / 檔案 / Figma</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">蒐集 user journey 資料, 階段、行為、系統反應、標籤</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">確認回圈, 樹狀摘要反覆校正</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">輸出 JSON, <code>docs/journeys/{slug}.json</code></span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">輸出 HTML, 資料驅動的樣式渲染</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">完成 → 交棒給 <code>/dogfooding</code></span></li></ol><div class="skill-arch-foot">產出是後續每一步都會參照的單一事實來源。</div>',
         's03.step2.title': '以 HTML 呈現的user journey',
-        's03.step2.story': '規格餵進一個 skill,產出一份互動式 HTML user journey — 階段、行為、情緒、痛點、機會時刻。它可以用連結分享、經得起 review 修改，並成為後面每一步都會參照的單一事實來源。',
+        's03.step2.story': '規格餵進一個 skill,產出一份互動式 HTML user journey, 階段、行為、情緒、痛點、機會時刻。它可以用連結分享、經得起 review 修改，並成為後面每一步都會參照的單一事實來源。',
         's03.step2.tool': 'Claude Code skill → HTML',
         's03.step2.output': '互動式journey map(獨立連結)',
         's03.step2.replaces': '服務設計師 / UX 研究員',
         's03.step3.title': '用 User Journey + Storybook 做 Prototype',
-        's03.step3.story': '我把journey HTML 和團隊的 Storybook 元件文件一起丟進一個 skill,它會生出一份可運行的 HTML/CSS/JS prototype — 路由、狀態、互動、假資料都齊全。',
+        's03.step3.story': '我把journey HTML 和團隊的 Storybook 元件文件一起丟進一個 skill,它會生出一份可運行的 HTML/CSS/JS prototype, 路由、狀態、互動、假資料都齊全。',
         's03.step3.tool': 'Claude Code skill＋Storybook',
         's03.step3.output': '可執行的 HTML/CSS/JS prototype',
         's03.step3.replaces': 'prototype製作者 / 前端設計師',
-        's03.step3.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Reference</span><span class="skill-arch-slug">storybook</span><span class="skill-arch-sub">裡面有什麼</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Foundations — design tokens（色、字體、間距、圓角、動效）</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Components — 所有 UI primitive,含每個 variant × state（default、hover、active、disabled、loading、error）</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Patterns — 組合區塊（toolbar、空狀態、onboarding、side panel）</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Interaction stories — 用 play 函式還原 hover / focus / loading / error 的路徑</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Docs — 自動生成的 prop 表＋每個元件的使用指南</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">A11y addon — 對比、鍵盤操作、aria role 每個 story 都跑一次</span></li></ol><div class="skill-arch-foot">Claude 把 Storybook 當成「什麼可以重用」的事實來源。既有元件存在就得用 — 不在 prototype 裡重造。</div>',
+        's03.step3.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Reference</span><span class="skill-arch-slug">storybook</span><span class="skill-arch-sub">裡面有什麼</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Foundations, design tokens（色、字體、間距、圓角、動效）</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Components, 所有 UI primitive,含每個 variant × state（default、hover、active、disabled、loading、error）</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Patterns, 組合區塊（toolbar、空狀態、onboarding、side panel）</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Interaction stories, 用 play 函式還原 hover / focus / loading / error 的路徑</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Docs, 自動生成的 prop 表＋每個元件的使用指南</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">A11y addon, 對比、鍵盤操作、aria role 每個 story 都跑一次</span></li></ol><div class="skill-arch-foot">Claude 把 Storybook 當成「什麼可以重用」的事實來源。既有元件存在就得用, 不在 prototype 裡重造。</div>',
         's03.step4.title': '在 Claude Code 裡迭代',
-        's03.step4.story': '我直接在 Claude Code 裡修prototype — 重做流程、收緊狀態、補齊 empty / error / loading 分支。互動設計現在就發生在這裡：在會跑的程式碼裡，不在 Figma 畫框裡。prototype就是正式的設計產物。同時間,我也會同步評估舊有元件能不能滿足需求 — 若無法滿足,就叫出 <code>design-system</code> agent 協作製作新元件。',
+        's03.step4.story': '我直接在 Claude Code 裡修prototype, 重做流程、收緊狀態、補齊 empty / error / loading 分支。互動設計現在就發生在這裡：在會跑的程式碼裡，不在 Figma 畫框裡。prototype就是正式的設計產物。同時間,我也會同步評估舊有元件能不能滿足需求, 若無法滿足,就叫出 <code>design-system</code> agent 協作製作新元件。',
         's03.step4.tool': 'Claude Code(手動引導)',
         's03.step4.output': '可被 review 的prototype v1',
         's03.step4.replaces': '互動設計師',
-        's03.step4.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Agent</span><span class="skill-arch-slug">design-system</span><span class="skill-arch-sub">5 選單 agent</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">既有元件搜尋 — 動手前先確認能不能重用</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">元件分析 — 6 階段規格（拆解 → 狀態 → 互動）</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">prototype建構 — 產出互動式 HTML</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Figma 元件文件 — 規格頁撰寫</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">交付評估 — 前端接手前的準備度檢查</span></li></ol><div class="skill-arch-foot">需要時才讀 <code>DESIGN-COMPONENTS.md</code> ＋ <code>DESIGN-TOKENS.md</code>，並透過 Figma MCP 取得設計脈絡。一次跑一個 skill,不跳階段。</div>',
+        's03.step4.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Agent</span><span class="skill-arch-slug">design-system</span><span class="skill-arch-sub">5 選單 agent</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">既有元件搜尋, 動手前先確認能不能重用</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">元件分析, 6 階段規格（拆解 → 狀態 → 互動）</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">prototype建構, 產出互動式 HTML</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Figma 元件文件, 規格頁撰寫</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">交付評估, 前端接手前的準備度檢查</span></li></ol><div class="skill-arch-foot">需要時才讀 <code>DESIGN-COMPONENTS.md</code> ＋ <code>DESIGN-TOKENS.md</code>，並透過 Figma MCP 取得設計脈絡。一次跑一個 skill,不跳階段。</div>',
         's03.step5.title': '同步到 Figma → Figma Make → 回到prototype',
-        's03.step5.story': '我把prototype拉進 Figma 重新整理版面、對齊設計系統的元件使用，再丟進 Figma Make 快速探索不同顯示狀態和替代版面。哪個贏，我就帶著 prompt 回到 Claude Code 更新prototype。這是整個流程裡唯一我還在直接動像素的一步 — 也是最短的一步。',
+        's03.step5.story': '我把prototype拉進 Figma 重新整理版面、對齊設計系統的元件使用，再丟進 Figma Make 快速探索不同顯示狀態和替代版面。哪個贏，我就帶著 prompt 回到 Claude Code 更新prototype。這是整個流程裡唯一我還在直接動像素的一步, 也是最短的一步。',
         's03.step5.tool': 'Figma＋Figma Make ⇄ Claude Code',
         's03.step5.output': '對齊設計系統的prototype v2',
         's03.step5.replaces': 'UI 設計師',
-        's03.step5.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Loop</span><span class="skill-arch-slug">figma ⇄ claude-code</span><span class="skill-arch-sub">像素探索的繞路</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">把 prototype 拉進 Figma — 走 Figma MCP connector sync,版面重新分組並對齊 design system tokens</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">直接把 HTML 檔貼進 Figma Make — 跳過重建,立刻探索狀態與替代版面</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">產生變體 — 同一組 prompt 並行生出 3–5 種排版／狀態組合</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">挑出贏家 — 不比美感,比跟 design system 的契合度</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">帶 prompt 寫回去 — Claude Code 更新 prototype,跟 Figma 維持同步</span></li></ol><div class="skill-arch-foot">Connector sync 是預設迴圈。直接貼 HTML 是逃生門 — 我想快探索、不想先 commit 時才用。</div>',
+        's03.step5.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Loop</span><span class="skill-arch-slug">figma ⇄ claude-code</span><span class="skill-arch-sub">像素探索的繞路</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">把 prototype 拉進 Figma, 走 Figma MCP connector sync,版面重新分組並對齊 design system tokens</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">直接把 HTML 檔貼進 Figma Make, 跳過重建,立刻探索狀態與替代版面</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">產生變體, 同一組 prompt 並行生出 3–5 種排版／狀態組合</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">挑出贏家, 不比美感,比跟 design system 的契合度</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">帶 prompt 寫回去, Claude Code 更新 prototype,跟 Figma 維持同步</span></li></ol><div class="skill-arch-foot">Connector sync 是預設迴圈。直接貼 HTML 是逃生門, 我想快探索、不想先 commit 時才用。</div>',
         's03.step6.title': '交付:Figma＋prototype → 工程師 → Claude',
-        's03.step6.story': '工程師同時拿到 Figma <em>和</em>一份會動的prototype。他們把prototype餵進自己的 Claude Code session 產出正式程式碼 — 把我的prototype當成可執行的規格，而不是一張要重新詮釋的視覺稿。交付的模糊地帶趨近於零，因為已經沒有需要翻譯的東西。',
+        's03.step6.story': '工程師同時拿到 Figma <em>和</em>一份會動的prototype。他們把prototype餵進自己的 Claude Code session 產出正式程式碼, 把我的prototype當成可執行的規格，而不是一張要重新詮釋的視覺稿。交付的模糊地帶趨近於零，因為已經沒有需要翻譯的東西。',
         's03.step6.tool': '以prototype作為規格 → 工程師的 Claude',
         's03.step6.output': '可上線的 feature branch',
         's03.step6.replaces': '設計工程師 / 設計 ops',
-        's03.step6.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">wren-ux-writing</span><span class="skill-arch-sub">文案審查 · en / zh-TW / ja</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">載入語氣檔 — <code>voice-profile-en.md</code> ＋ <code>patterns.md</code>（語氣＋標準句型）</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">套用 pattern — 按鈕、錯誤、空狀態、確認、驗證</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">對照 glossary — <code>i18n/glossary.md</code> 讓術語對應跨語系一致</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">在地化 — <code>i18n/zh-tw.md</code> / <code>i18n/ja.md</code> 重寫,不是逐字翻譯</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Review 一遍 — 用 <code>review.md</code> 在交付前檢查語氣、清晰度、一致性</span></li></ol><div class="skill-arch-foot">同一份 skill 跑 prototype 文案,也跑工程 branch。輸出:對齊 glossary 的 EN / zh-TW / ja 文字 — 不用在 code review 再跑一輪文案修訂就能上線。</div>',
+        's03.step6.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">wren-ux-writing</span><span class="skill-arch-sub">文案審查 · en / zh-TW / ja</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">載入語氣檔, <code>voice-profile-en.md</code> ＋ <code>patterns.md</code>（語氣＋標準句型）</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">套用 pattern, 按鈕、錯誤、空狀態、確認、驗證</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">對照 glossary, <code>i18n/glossary.md</code> 讓術語對應跨語系一致</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">在地化, <code>i18n/zh-tw.md</code> / <code>i18n/ja.md</code> 重寫,不是逐字翻譯</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Review 一遍, 用 <code>review.md</code> 在交付前檢查語氣、清晰度、一致性</span></li></ol><div class="skill-arch-foot">同一份 skill 跑 prototype 文案,也跑工程 branch。輸出:對齊 glossary 的 EN / zh-TW / ja 文字, 不用在 code review 再跑一輪文案修訂就能上線。</div>',
         's03.step7.title': '用 Remotion 產行銷影片',
-        's03.step7.story': 'Claude Code 用 Remotion 把同一份prototype包起來，產出一支上線影片 — 場景節奏、畫面上的註解、旁白草稿都齊全。行銷拿到一個可以直接剪的 MP4,而我不用打開 After Effects。設計產物和行銷產物共用同一個來源。',
+        's03.step7.story': 'Claude Code 用 Remotion 把同一份prototype包起來，產出一支上線影片, 場景節奏、畫面上的註解、旁白草稿都齊全。行銷拿到一個可以直接剪的 MP4,而我不用打開 After Effects。設計產物和行銷產物共用同一個來源。',
         's03.step7.tool': 'Claude Code＋Remotion',
         's03.step7.output': '供行銷使用的上線影片(MP4)',
         's03.step7.replaces': '動效設計師 / 影片剪輯',
-        's03.step7.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Framework</span><span class="skill-arch-slug">remotion</span><span class="skill-arch-sub">React → MP4</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">以 React/TS 組合 — 場景 = component,時間 = props</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">參數化 — 用 <code>inputProps</code> 換文案、資料、顏色</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Studio 預覽 — 熱重載的時間軸、用真實資料迭代</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">渲染成 MP4 — CLI、Server,或 Remotion Lambda</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">用 Player 內嵌 — 同一份 composition 放回 app（可選）</span></li></ol><div class="skill-arch-foot">來源 = prototype。同一套 React 元件同時驅動設計產物與行銷 MP4，不再開 After Effects。</div>',
+        's03.step7.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Framework</span><span class="skill-arch-slug">remotion</span><span class="skill-arch-sub">React → MP4</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">以 React/TS 組合, 場景 = component,時間 = props</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">參數化, 用 <code>inputProps</code> 換文案、資料、顏色</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Studio 預覽, 熱重載的時間軸、用真實資料迭代</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">渲染成 MP4, CLI、Server,或 Remotion Lambda</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">用 Player 內嵌, 同一份 composition 放回 app（可選）</span></li></ol><div class="skill-arch-foot">來源 = prototype。同一套 React 元件同時驅動設計產物與行銷 MP4，不再開 After Effects。</div>',
         's03.step8.title': '品牌：吉祥物、Banner、預告影片',
-        's03.step8.story': 'Gemini、Weave 和 Lovart(都只用免費額度)負責品牌層 — 公司吉祥物插畫、活動 banner、短預告影片。',
+        's03.step8.story': 'Gemini、Weave 和 Lovart(都只用免費額度)負責品牌層, 公司吉祥物插畫、活動 banner、短預告影片。',
         's03.step8.tool': 'Gemini＋Weave＋Lovart(免費)',
         's03.step8.output': '吉祥物、一組 banner、預告影片',
         's03.step8.replaces': '插畫師 / 品牌設計師',
@@ -1367,19 +1369,19 @@
         's03.step9.tool': 'journey map＋Claude Code skill',
         's03.step9.output': 'Dogfooding 摘要＋排序後的任務',
         's03.step9.replaces': 'UX 研究員＋專案經理',
-        's03.step9.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">dogfooding</span><span class="skill-arch-sub">6 步驟表單生成器</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">來源選擇 — 既有journey / 檔案 / 從零開始</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">分析與轉換 — 重新分成 4–5 個可測試區段</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">確認回圈 — 用結構摘要反覆校正</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">輸出目的地 — Notion 頁面 / 本地 Markdown</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">產出表單 — 區段＋Bugs/評分/Exit 條件</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">語言 — 預設英文，journey為中文時用 zh-TW</span></li></ol><div class="skill-arch-foot">一位測試者 20 分鐘為預算。讀 <code>docs/journeys/{slug}.json</code> — 和驅動prototype同一份來源。</div>',
+        's03.step9.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">dogfooding</span><span class="skill-arch-sub">6 步驟表單生成器</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">來源選擇, 既有journey / 檔案 / 從零開始</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">分析與轉換, 重新分成 4–5 個可測試區段</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">確認回圈, 用結構摘要反覆校正</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">輸出目的地, Notion 頁面 / 本地 Markdown</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">產出表單, 區段＋Bugs/評分/Exit 條件</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">語言, 預設英文，journey為中文時用 zh-TW</span></li></ol><div class="skill-arch-foot">一位測試者 20 分鐘為預算。讀 <code>docs/journeys/{slug}.json</code>, 和驅動prototype同一份來源。</div>',
         's03.step10.title': 'PM ops:Notion 同步與工時計算',
         's03.step10.story': 'Claude 依 backlog 更新 Notion 上的產品路線圖，重新計算每個人的工時，並在過載週爆炸前先把它撈出來。週度路線圖會議從 2 小時的試算表作業，變成花 10 分鐘 review Claude 的草稿。',
         's03.step10.tool': 'Claude＋Notion MCP',
         's03.step10.output': '更新後的路線圖＋工時警示',
         's03.step10.replaces': 'Producer / PM ops',
-        's03.step10.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">roadmap-planning</span><span class="skill-arch-sub">5 階段工作流</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">蒐集輸入 — 商業目標、客戶痛點、技術限制</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">定義 Initiatives — 含假設與指標的 Epic</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">排優先序 — 以影響力 / 成本 / 策略契合度評分</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">排序 — 依相依性放進 release 或季度</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">溝通 — Now / Next / Later 敘事給利害關係人</span></li></ol><div class="skill-arch-foot">結果導向,不是功能清單。同步回 Notion,讓路線圖、backlog、工時計算活在同一個介面。</div>',
+        's03.step10.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">roadmap-planning</span><span class="skill-arch-sub">5 階段工作流</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">蒐集輸入, 商業目標、客戶痛點、技術限制</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">定義 Initiatives, 含假設與指標的 Epic</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">排優先序, 以影響力 / 成本 / 策略契合度評分</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">排序, 依相依性放進 release 或季度</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">溝通, Now / Next / Later 敘事給利害關係人</span></li></ol><div class="skill-arch-foot">結果導向,不是功能清單。同步回 Notion,讓路線圖、backlog、工時計算活在同一個介面。</div>',
         's03.step11.title': '對外產品文件',
-        's03.step11.story': 'journey map＋一個 Claude Code skill＋ Claude Chrome plugin，產出對客戶的文件 — 幫助中心頁面、API reference 雛形、release note 草稿。驅動prototype的那份來源，現在也在驅動功能上線時使用者會讀到的那些字。',
+        's03.step11.story': 'journey map＋一個 Claude Code skill＋ Claude Chrome plugin，產出對客戶的文件, 幫助中心頁面、API reference 雛形、release note 草稿。驅動prototype的那份來源，現在也在驅動功能上線時使用者會讀到的那些字。',
         's03.step11.tool': 'journey＋Claude skill＋Claude Chrome plugin',
         's03.step11.output': '對外產品文件',
         's03.step11.replaces': '技術文件寫手 / 內容設計師',
-        's03.step11.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">user-facing-docs</span><span class="skill-arch-sub">PRD → 4 段 Markdown</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">詢問 PRD 來源 — 貼上或 Notion URL</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">確認語氣 — 親切／技術／正式</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">解析 PRD 並套改寫規則 — 把內部用語洗掉</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">產出四段 — Overview · How It Works · Using · Tips</span></li></ol><div class="skill-arch-foot">讀 PRD,用使用者視角重寫,把工程／PM 的框架拿掉。適用於幫助中心與產品手冊 — 不是 tooltip 或 release note。</div>',
+        's03.step11.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">user-facing-docs</span><span class="skill-arch-sub">PRD → 4 段 Markdown</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">詢問 PRD 來源, 貼上或 Notion URL</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">確認語氣, 親切／技術／正式</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">解析 PRD 並套改寫規則, 把內部用語洗掉</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">產出四段, Overview · How It Works · Using · Tips</span></li></ol><div class="skill-arch-foot">讀 PRD,用使用者視角重寫,把工程／PM 的框架拿掉。適用於幫助中心與產品手冊, 不是 tooltip 或 release note。</div>',
       },
       'zh-cn': {
         'nav.intro': '.简介',
@@ -1397,78 +1399,78 @@
         's01.m4.label': '24 小时的「指挥家」时刻',
         's01.m4.note': '扣掉会议，每周剩下的 24 小时是我真正的战场。每个项目平均分不到 6 小时。听起来很疯狂？但当我不再是画图的工匠，而是指挥 Claude Code 实践构思的系统负责人，一周的工作量，确实在 6 小时内落地。',
         'page.title': '与 AI 一起设计',
-        'page.subtitle': '为独立设计师打造的系统级工作流 — 在 Wren AI 以 Claude Code 为核心重构。',
+        'page.subtitle': '为独立设计师打造的系统级工作流, 在 Wren AI 以 Claude Code 为核心重构。',
         'intro.h3.product': '起点',
-        'intro.product.body': '2026 年初，一位 Anthropic 的设计师宣告：传统设计流程已死。那时我正是 Wren AI 唯一的产品设计师 — 一个人扛着一整个 B2B AI 平台的产品设计，每周<span class="stat-hi">16 小时</span>被会议吞掉，同时还有<span class="stat-hi">3–4 个项目</span>并行推进。这份案例记录了我为了让这件事真的可行，亲手搭起来的 11 步 AI 工作流。',
+        'intro.product.body': '2026 年初，一位 Anthropic 的设计师宣告：传统设计流程已死。那时我正是 Wren AI 唯一的产品设计师, 一个人扛着一整个 B2B AI 平台的产品设计，每周<span class="stat-hi">16 小时</span>被会议吞掉，同时还有<span class="stat-hi">3–4 个项目</span>并行推进。这份案例记录了我为了让这件事真的可行，亲手搭起来的 11 步 AI 工作流。',
         'intro.h3.role': '我的角色',
         'intro.role.body': 'Wren AI 资深产品设计师。也因为现实需要:PM、研究员、prototype制作者、动效设计师、插画师、技术文档撰写者、dogfooding 负责人。这套工作流是一个人如何扛下<span class="stat-hi">约 6–8 个 FTE</span>的传统职能范围，又不让作品品质掉下来的方法。',
         'intro.h3.time': '时间',
         'intro.time.body': '2026 → 至今',
         's02.title': '为什么会长出这套工作流',
         's02.h3.moment': '那一刻',
-        's02.moment.body': '2026 年初。一位 Anthropic 的设计师发表了一篇文章，主张传统设计流程 — 探索 → 研究 → 线框 → 视觉稿 → 规格 → 交付 — 已经过时。模型产出可运行界面的速度，比设计师画草图还快。产物(那个 Figma 档)不再是价值所在。',
+        's02.moment.body': '2026 年初。一位 Anthropic 的设计师发表了一篇文章，主张传统设计流程, 探索 → 研究 → 线框 → 视觉稿 → 规格 → 交付, 已经过时。模型产出可运行界面的速度，比设计师画草图还快。产物(那个 Figma 档)不再是价值所在。',
         's02.moment.body2': '我是在一间我是唯一产品设计师的 B2B AI 创业公司里读到这篇文章的。我没有不同意的余地。现实早就压过来了:',
         's02.li1': '<span class="stat-hi">一位设计师</span>扛起整个产品的产品设计、视觉、prototype、研究与品牌。',
         's02.li2': '每周<span class="stat-hi">16 小时</span>结构性地被会议占走，无法砍掉。',
         's02.li3': '<span class="stat-hi">每周都有新 release</span>,一个功能从 brief 到上线，实际设计时间平均不超过一周半。',
-        's02.li4': '工程师早就每天使用 Claude Code — 如果我的交付跟他们的流程接不起来，我就是瓶颈。',
+        's02.li4': '工程师早就每天使用 Claude Code, 如果我的交付跟他们的流程接不起来，我就是瓶颈。',
         's02.li5': '创业公司预算排除了招人。',
         's02.h3.reframe': '视角转换',
-        's02.reframe.body': '旧问题 — <em>"我要怎么挤出更多时间来设计?"</em> — 没有答案。那周已经满了。新问题变成:<em>"我要怎么让自己的一小时发挥五小时的效果?"</em>这只在一种情况下成立：我不再是那个做产物的人，而是指挥一个会产出这些产物的系统的人。',
-        's02.reframe.body2': 'Claude Code 成了那个系统。不是偶尔拿起来用的工具，而是中央的协作层 — 规格、prototype、研究摘要、营销视频、Notion 更新、产品文档，全部都流经它。以下就是我最后落地的这套流程。',
+        's02.reframe.body': '旧问题, <em>"我要怎么挤出更多时间来设计?"</em>, 没有答案。那周已经满了。新问题变成:<em>"我要怎么让自己的一小时发挥五小时的效果?"</em>这只在一种情况下成立：我不再是那个做产物的人，而是指挥一个会产出这些产物的系统的人。',
+        's02.reframe.body2': 'Claude Code 成了那个系统。不是偶尔拿起来用的工具，而是中央的协作层, 规格、prototype、研究摘要、营销视频、Notion 更新、产品文档，全部都流经它。以下就是我最后落地的这套流程。',
         's03.title': '11 步 AI 流程',
         's03.h3': 'Steps 00 → 11',
-        's03.body': '每一步都是一个 Claude Code skill、一个插件，或是工具之间写好的脚本交接。下方这条纵向主干按时间顺序读 — 从顶端的行为数据开始，依次经过规格、journey、prototype、Figma、交付、视频、品牌、dogfooding、PM ops,到外部文档。',
+        's03.body': '每一步都是一个 Claude Code skill、一个插件，或是工具之间写好的脚本交接。下方这条纵向主干按时间顺序读, 从顶端的行为数据开始，依次经过规格、journey、prototype、Figma、交付、视频、品牌、dogfooding、PM ops,到外部文档。',
         's03.step0.title': '行为分析与回测',
-        's03.step0.story': '一个 Claude Code skill 吃进数据事件、session 录像和客服 ticket,产出一份行为报告 — 漏斗流失、摩擦模式、异常点 — 再拿它跟上一轮设计改动做回测，看看什么东西真的有动。',
+        's03.step0.story': '一个 Claude Code skill 吃进数据事件、session 录像和客服 ticket,产出一份行为报告, 漏斗流失、摩擦模式、异常点, 再拿它跟上一轮设计改动做回测，看看什么东西真的有动。',
         's03.step0.tool': 'Claude Code skill',
         's03.step0.output': '周度行为报告＋设计差异检视',
         's03.step0.replaces': '数据分析师＋UX 研究员',
-        's03.step0.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">user-research</span><span class="skill-arch-sub">行为模式 · 周节奏</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">抓原始信号 — 分析事件、session 录影、客服 ticket</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">整合 — 亲和图 → 影响力 / 成本 → Jobs-to-be-done</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">捞出模式 — 漏斗流失、摩擦、异常点</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">回测 — 跟上一轮设计改动做 diff,量真实有动的部分</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">写行为报告 — 排序后的发现＋设计差异检视</span></li></ol><div class="skill-arch-foot">每周一跑一次。报告会喂进 step 01 — 每一份新规格都从"数据真的有动的那块"开始。</div>',
+        's03.step0.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">user-research</span><span class="skill-arch-sub">行为模式 · 周节奏</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">抓原始信号, 分析事件、session 录影、客服 ticket</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">整合, 亲和图 → 影响力 / 成本 → Jobs-to-be-done</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">捞出模式, 漏斗流失、摩擦、异常点</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">回测, 跟上一轮设计改动做 diff,量真实有动的部分</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">写行为报告, 排序后的发现＋设计差异检视</span></li></ol><div class="skill-arch-foot">每周一跑一次。报告会喂进 step 01, 每一份新规格都从"数据真的有动的那块"开始。</div>',
         's03.step1.title': '规格撰写与功能发想',
-        's03.step1.story': 'CEO 丢来的一句话 brief,会变成一份完整规格 — 问题陈述、范围、边界案例、验收条件、风险清单 — 在一个了解产品切面与现有设计系统的 Claude Code skill 里完成。我修改论述的结构，而不是逐字润稿。',
+        's03.step1.story': 'CEO 丢来的一句话 brief,会变成一份完整规格, 问题陈述、范围、边界案例、验收条件、风险清单, 在一个了解产品切面与现有设计系统的 Claude Code skill 里完成。我修改论述的结构，而不是逐字润稿。',
         's03.step1.tool': 'Claude Code skill',
         's03.step1.output': 'PRD 等级规格，含边界案例与验收条件',
         's03.step1.replaces': '产品经理',
-        's03.step1.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">prd-development</span><span class="skill-arch-sub">8 阶段工作流</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">执行摘要</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">问题陈述 — 有证据的客户痛点</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">目标用户与 Persona</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">战略语境 — OKR、市场、为何是现在</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">解法概览 — 高层轮廓与流程</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">成功指标 — 主指标 / 次指标 / 防守指标</span></li><li><span class="skill-arch-no">07</span><span class="skill-arch-ph">user journey与需求</span></li><li><span class="skill-arch-no">08</span><span class="skill-arch-ph">范围外与依赖</span></li></ol><div class="skill-arch-foot">在 2–4 天内串起 8+ 个组件与交互子 skill。</div>',
-        's03.step2.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">journey-map</span><span class="skill-arch-sub">6 步构建器</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">输入来源 — 对话 / 文件 / Figma</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">搜集 user journey 数据 — 阶段、行为、系统反应、标签</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">确认循环 — 树状摘要反复校对</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">输出 JSON — <code>docs/journeys/{slug}.json</code></span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">输出 HTML — 数据驱动的样式渲染</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">完成 → 交棒给 <code>/dogfooding</code></span></li></ol><div class="skill-arch-foot">产出是后续每一步都会参照的单一事实来源。</div>',
+        's03.step1.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">prd-development</span><span class="skill-arch-sub">8 阶段工作流</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">执行摘要</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">问题陈述, 有证据的客户痛点</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">目标用户与 Persona</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">战略语境, OKR、市场、为何是现在</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">解法概览, 高层轮廓与流程</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">成功指标, 主指标 / 次指标 / 防守指标</span></li><li><span class="skill-arch-no">07</span><span class="skill-arch-ph">user journey与需求</span></li><li><span class="skill-arch-no">08</span><span class="skill-arch-ph">范围外与依赖</span></li></ol><div class="skill-arch-foot">在 2–4 天内串起 8+ 个组件与交互子 skill。</div>',
+        's03.step2.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">journey-map</span><span class="skill-arch-sub">6 步构建器</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">输入来源, 对话 / 文件 / Figma</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">搜集 user journey 数据, 阶段、行为、系统反应、标签</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">确认循环, 树状摘要反复校对</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">输出 JSON, <code>docs/journeys/{slug}.json</code></span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">输出 HTML, 数据驱动的样式渲染</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">完成 → 交棒给 <code>/dogfooding</code></span></li></ol><div class="skill-arch-foot">产出是后续每一步都会参照的单一事实来源。</div>',
         's03.step2.title': '以 HTML 呈现的user journey',
-        's03.step2.story': '规格喂进一个 skill,产出一份互动式 HTML user journey — 阶段、行为、情绪、痛点、机会时刻。它可以用链接分享、经得起 review 修改，并成为后面每一步都会参照的单一事实来源。',
+        's03.step2.story': '规格喂进一个 skill,产出一份互动式 HTML user journey, 阶段、行为、情绪、痛点、机会时刻。它可以用链接分享、经得起 review 修改，并成为后面每一步都会参照的单一事实来源。',
         's03.step2.tool': 'Claude Code skill → HTML',
         's03.step2.output': '互动式journey map(独立链接)',
         's03.step2.replaces': '服务设计师 / UX 研究员',
         's03.step3.title': '用 User Journey + Storybook 做 Prototype',
-        's03.step3.story': '我把journey HTML 和团队的 Storybook 组件文档一起丢进一个 skill,它会生出一份可运行的 HTML/CSS/JS prototype — 路由、状态、交互、假数据都齐全。',
+        's03.step3.story': '我把journey HTML 和团队的 Storybook 组件文档一起丢进一个 skill,它会生出一份可运行的 HTML/CSS/JS prototype, 路由、状态、交互、假数据都齐全。',
         's03.step3.tool': 'Claude Code skill＋Storybook',
         's03.step3.output': '可执行的 HTML/CSS/JS prototype',
         's03.step3.replaces': 'prototype制作者 / 前端设计师',
-        's03.step3.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Reference</span><span class="skill-arch-slug">storybook</span><span class="skill-arch-sub">里面有什么</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Foundations — design tokens（色、字体、间距、圆角、动效）</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Components — 所有 UI primitive,含每个 variant × state（default、hover、active、disabled、loading、error）</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Patterns — 组合区块（toolbar、空状态、onboarding、side panel）</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Interaction stories — 用 play 函数还原 hover / focus / loading / error 的路径</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Docs — 自动生成的 prop 表＋每个组件的使用指南</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">A11y addon — 对比度、键盘操作、aria role 每个 story 都跑一次</span></li></ol><div class="skill-arch-foot">Claude 把 Storybook 当成"什么可以复用"的事实来源。既有组件存在就得用 — 不在 prototype 里重造。</div>',
+        's03.step3.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Reference</span><span class="skill-arch-slug">storybook</span><span class="skill-arch-sub">里面有什么</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">Foundations, design tokens（色、字体、间距、圆角、动效）</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">Components, 所有 UI primitive,含每个 variant × state（default、hover、active、disabled、loading、error）</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Patterns, 组合区块（toolbar、空状态、onboarding、side panel）</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Interaction stories, 用 play 函数还原 hover / focus / loading / error 的路径</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Docs, 自动生成的 prop 表＋每个组件的使用指南</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">A11y addon, 对比度、键盘操作、aria role 每个 story 都跑一次</span></li></ol><div class="skill-arch-foot">Claude 把 Storybook 当成"什么可以复用"的事实来源。既有组件存在就得用, 不在 prototype 里重造。</div>',
         's03.step4.title': '在 Claude Code 里迭代',
-        's03.step4.story': '我直接在 Claude Code 里改prototype — 重做流程、收紧状态、补齐 empty / error / loading 分支。交互设计现在就发生在这里：在会跑的代码里，不在 Figma 画框里。prototype就是正式的设计产物。同时,我也会同步评估旧有组件能不能满足需求 — 若无法满足,就叫出 <code>design-system</code> agent 协作制作新组件。',
+        's03.step4.story': '我直接在 Claude Code 里改prototype, 重做流程、收紧状态、补齐 empty / error / loading 分支。交互设计现在就发生在这里：在会跑的代码里，不在 Figma 画框里。prototype就是正式的设计产物。同时,我也会同步评估旧有组件能不能满足需求, 若无法满足,就叫出 <code>design-system</code> agent 协作制作新组件。',
         's03.step4.tool': 'Claude Code(手动引导)',
         's03.step4.output': '可被 review 的prototype v1',
         's03.step4.replaces': '交互设计师',
-        's03.step4.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Agent</span><span class="skill-arch-slug">design-system</span><span class="skill-arch-sub">5 菜单 agent</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">既有组件搜索 — 动手前先确认能不能复用</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">组件分析 — 6 阶段规格（拆解 → 状态 → 交互）</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">prototype构建 — 产出交互式 HTML</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Figma 组件文档 — 规格页撰写</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">交付评估 — 前端接手前的准备度检查</span></li></ol><div class="skill-arch-foot">需要时才读 <code>DESIGN-COMPONENTS.md</code> ＋ <code>DESIGN-TOKENS.md</code>，并通过 Figma MCP 获取设计上下文。一次跑一个 skill,不跳阶段。</div>',
+        's03.step4.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Agent</span><span class="skill-arch-slug">design-system</span><span class="skill-arch-sub">5 菜单 agent</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">既有组件搜索, 动手前先确认能不能复用</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">组件分析, 6 阶段规格（拆解 → 状态 → 交互）</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">prototype构建, 产出交互式 HTML</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">Figma 组件文档, 规格页撰写</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">交付评估, 前端接手前的准备度检查</span></li></ol><div class="skill-arch-foot">需要时才读 <code>DESIGN-COMPONENTS.md</code> ＋ <code>DESIGN-TOKENS.md</code>，并通过 Figma MCP 获取设计上下文。一次跑一个 skill,不跳阶段。</div>',
         's03.step5.title': '同步到 Figma → Figma Make → 回到prototype',
-        's03.step5.story': '我把prototype拉进 Figma 重新整理版面、对齐设计系统的组件使用，再丢进 Figma Make 快速探索不同显示状态和替代版面。哪个赢，我就带着 prompt 回到 Claude Code 更新prototype。这是整个流程里唯一我还在直接动像素的一步 — 也是最短的一步。',
+        's03.step5.story': '我把prototype拉进 Figma 重新整理版面、对齐设计系统的组件使用，再丢进 Figma Make 快速探索不同显示状态和替代版面。哪个赢，我就带着 prompt 回到 Claude Code 更新prototype。这是整个流程里唯一我还在直接动像素的一步, 也是最短的一步。',
         's03.step5.tool': 'Figma＋Figma Make ⇄ Claude Code',
         's03.step5.output': '对齐设计系统的prototype v2',
         's03.step5.replaces': 'UI 设计师',
-        's03.step5.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Loop</span><span class="skill-arch-slug">figma ⇄ claude-code</span><span class="skill-arch-sub">像素探索的绕路</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">把 prototype 拉进 Figma — 走 Figma MCP connector sync,版面重新分组并对齐 design system tokens</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">直接把 HTML 文件贴进 Figma Make — 跳过重建,立刻探索状态与替代版面</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">产生变体 — 同一组 prompt 并行生出 3–5 种排版／状态组合</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">挑出赢家 — 不比美感,比跟 design system 的契合度</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">带 prompt 写回去 — Claude Code 更新 prototype,跟 Figma 维持同步</span></li></ol><div class="skill-arch-foot">Connector sync 是默认循环。直接贴 HTML 是逃生门 — 我想快速探索、不想先 commit 时才用。</div>',
+        's03.step5.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Loop</span><span class="skill-arch-slug">figma ⇄ claude-code</span><span class="skill-arch-sub">像素探索的绕路</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">把 prototype 拉进 Figma, 走 Figma MCP connector sync,版面重新分组并对齐 design system tokens</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">直接把 HTML 文件贴进 Figma Make, 跳过重建,立刻探索状态与替代版面</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">产生变体, 同一组 prompt 并行生出 3–5 种排版／状态组合</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">挑出赢家, 不比美感,比跟 design system 的契合度</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">带 prompt 写回去, Claude Code 更新 prototype,跟 Figma 维持同步</span></li></ol><div class="skill-arch-foot">Connector sync 是默认循环。直接贴 HTML 是逃生门, 我想快速探索、不想先 commit 时才用。</div>',
         's03.step6.title': '交付:Figma＋prototype → 工程师 → Claude',
-        's03.step6.story': '工程师同时拿到 Figma <em>和</em>一份会动的prototype。他们把prototype喂进自己的 Claude Code session 产出正式代码 — 把我的prototype当成可执行的规格，而不是一张要重新诠释的视觉稿。交付的模糊地带趋近于零，因为已经没有需要翻译的东西。',
+        's03.step6.story': '工程师同时拿到 Figma <em>和</em>一份会动的prototype。他们把prototype喂进自己的 Claude Code session 产出正式代码, 把我的prototype当成可执行的规格，而不是一张要重新诠释的视觉稿。交付的模糊地带趋近于零，因为已经没有需要翻译的东西。',
         's03.step6.tool': '以prototype作为规格 → 工程师的 Claude',
         's03.step6.output': '可上线的 feature branch',
         's03.step6.replaces': '设计工程师 / 设计 ops',
-        's03.step6.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">wren-ux-writing</span><span class="skill-arch-sub">文案审查 · en / zh-TW / ja</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">载入语气档 — <code>voice-profile-en.md</code> ＋ <code>patterns.md</code>（语气＋标准句型）</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">套用 pattern — 按钮、错误、空状态、确认、验证</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">对照 glossary — <code>i18n/glossary.md</code> 让术语对应跨语系一致</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">本地化 — <code>i18n/zh-tw.md</code> / <code>i18n/ja.md</code> 重写,不是逐字翻译</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Review 一遍 — 用 <code>review.md</code> 在交付前检查语气、清晰度、一致性</span></li></ol><div class="skill-arch-foot">同一份 skill 跑 prototype 文案,也跑工程 branch。输出:对齐 glossary 的 EN / zh-TW / ja 文字 — 不用在 code review 再跑一轮文案修订就能上线。</div>',
+        's03.step6.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">wren-ux-writing</span><span class="skill-arch-sub">文案审查 · en / zh-TW / ja</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">载入语气档, <code>voice-profile-en.md</code> ＋ <code>patterns.md</code>（语气＋标准句型）</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">套用 pattern, 按钮、错误、空状态、确认、验证</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">对照 glossary, <code>i18n/glossary.md</code> 让术语对应跨语系一致</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">本地化, <code>i18n/zh-tw.md</code> / <code>i18n/ja.md</code> 重写,不是逐字翻译</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">Review 一遍, 用 <code>review.md</code> 在交付前检查语气、清晰度、一致性</span></li></ol><div class="skill-arch-foot">同一份 skill 跑 prototype 文案,也跑工程 branch。输出:对齐 glossary 的 EN / zh-TW / ja 文字, 不用在 code review 再跑一轮文案修订就能上线。</div>',
         's03.step7.title': '用 Remotion 产营销视频',
-        's03.step7.story': 'Claude Code 用 Remotion 把同一份prototype包起来，产出一支上线视频 — 场景节奏、画面上的注解、旁白草稿都齐全。营销拿到一个可以直接剪的 MP4,而我不用打开 After Effects。设计产物和营销产物共用同一个来源。',
+        's03.step7.story': 'Claude Code 用 Remotion 把同一份prototype包起来，产出一支上线视频, 场景节奏、画面上的注解、旁白草稿都齐全。营销拿到一个可以直接剪的 MP4,而我不用打开 After Effects。设计产物和营销产物共用同一个来源。',
         's03.step7.tool': 'Claude Code＋Remotion',
         's03.step7.output': '供营销使用的上线视频(MP4)',
         's03.step7.replaces': '动效设计师 / 视频剪辑',
-        's03.step7.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Framework</span><span class="skill-arch-slug">remotion</span><span class="skill-arch-sub">React → MP4</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">以 React/TS 组合 — 场景 = component,时间 = props</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">参数化 — 用 <code>inputProps</code> 换文案、数据、颜色</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Studio 预览 — 热重载时间线,用真实数据迭代</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">渲染为 MP4 — CLI、Server,或 Remotion Lambda</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">用 Player 嵌入 — 同一份 composition 放回 app（可选）</span></li></ol><div class="skill-arch-foot">来源 = prototype。同一套 React 组件同时驱动设计产物与营销 MP4,不再打开 After Effects。</div>',
+        's03.step7.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Framework</span><span class="skill-arch-slug">remotion</span><span class="skill-arch-sub">React → MP4</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">以 React/TS 组合, 场景 = component,时间 = props</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">参数化, 用 <code>inputProps</code> 换文案、数据、颜色</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">Studio 预览, 热重载时间线,用真实数据迭代</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">渲染为 MP4, CLI、Server,或 Remotion Lambda</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">用 Player 嵌入, 同一份 composition 放回 app（可选）</span></li></ol><div class="skill-arch-foot">来源 = prototype。同一套 React 组件同时驱动设计产物与营销 MP4,不再打开 After Effects。</div>',
         's03.step8.title': '品牌：吉祥物、Banner、预告视频',
-        's03.step8.story': 'Gemini、Weave 和 Lovart(都只用免费额度)负责品牌层 — 公司吉祥物插画、活动 banner、短预告视频。',
+        's03.step8.story': 'Gemini、Weave 和 Lovart(都只用免费额度)负责品牌层, 公司吉祥物插画、活动 banner、短预告视频。',
         's03.step8.tool': 'Gemini＋Weave＋Lovart(免费)',
         's03.step8.output': '吉祥物、一组 banner、预告视频',
         's03.step8.replaces': '插画师 / 品牌设计师',
@@ -1477,19 +1479,19 @@
         's03.step9.tool': 'journey map＋Claude Code skill',
         's03.step9.output': 'Dogfooding 摘要＋排序后的任务',
         's03.step9.replaces': 'UX 研究员＋项目经理',
-        's03.step9.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">dogfooding</span><span class="skill-arch-sub">6 步表单生成器</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">来源选择 — 既有journey / 文件 / 从零开始</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">分析与转换 — 重新分成 4–5 个可测试区段</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">确认循环 — 用结构摘要反复校对</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">输出目的地 — Notion 页面 / 本地 Markdown</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">产出表单 — 区段＋Bugs/评分/Exit 条件</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">语言 — 默认英文，journey为中文时用 zh-TW</span></li></ol><div class="skill-arch-foot">一位测试者 20 分钟为预算。读 <code>docs/journeys/{slug}.json</code> — 和驱动prototype同一份来源。</div>',
+        's03.step9.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">dogfooding</span><span class="skill-arch-sub">6 步表单生成器</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">来源选择, 既有journey / 文件 / 从零开始</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">分析与转换, 重新分成 4–5 个可测试区段</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">确认循环, 用结构摘要反复校对</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">输出目的地, Notion 页面 / 本地 Markdown</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">产出表单, 区段＋Bugs/评分/Exit 条件</span></li><li><span class="skill-arch-no">06</span><span class="skill-arch-ph">语言, 默认英文，journey为中文时用 zh-TW</span></li></ol><div class="skill-arch-foot">一位测试者 20 分钟为预算。读 <code>docs/journeys/{slug}.json</code>, 和驱动prototype同一份来源。</div>',
         's03.step10.title': 'PM ops:Notion 同步与工时计算',
         's03.step10.story': 'Claude 依 backlog 更新 Notion 上的产品路线图，重新计算每个人的工时，并在过载周爆炸前先把它捞出来。周度路线图会议从 2 小时的表格作业，变成花 10 分钟 review Claude 的草稿。',
         's03.step10.tool': 'Claude＋Notion MCP',
         's03.step10.output': '更新后的路线图＋工时警示',
         's03.step10.replaces': 'Producer / PM ops',
-        's03.step10.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">roadmap-planning</span><span class="skill-arch-sub">5 阶段工作流</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">搜集输入 — 商业目标、客户痛点、技术约束</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">定义 Initiatives — 含假设与指标的 Epic</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">排优先序 — 以影响力 / 成本 / 战略契合度评分</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">排序 — 按相依性放入 release 或季度</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">沟通 — Now / Next / Later 叙事给利益相关人</span></li></ol><div class="skill-arch-foot">结果导向,不是功能清单。同步回 Notion,让路线图、backlog、工时计算活在同一个界面。</div>',
+        's03.step10.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">roadmap-planning</span><span class="skill-arch-sub">5 阶段工作流</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">搜集输入, 商业目标、客户痛点、技术约束</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">定义 Initiatives, 含假设与指标的 Epic</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">排优先序, 以影响力 / 成本 / 战略契合度评分</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">排序, 按相依性放入 release 或季度</span></li><li><span class="skill-arch-no">05</span><span class="skill-arch-ph">沟通, Now / Next / Later 叙事给利益相关人</span></li></ol><div class="skill-arch-foot">结果导向,不是功能清单。同步回 Notion,让路线图、backlog、工时计算活在同一个界面。</div>',
         's03.step11.title': '对外产品文档',
-        's03.step11.story': 'journey map＋一个 Claude Code skill＋ Claude Chrome plugin，产出对客户的文档 — 帮助中心页面、API reference 雏形、release note 草稿。驱动prototype的那份来源，现在也在驱动功能上线时用户会读到的那些字。',
+        's03.step11.story': 'journey map＋一个 Claude Code skill＋ Claude Chrome plugin，产出对客户的文档, 帮助中心页面、API reference 雏形、release note 草稿。驱动prototype的那份来源，现在也在驱动功能上线时用户会读到的那些字。',
         's03.step11.tool': 'journey＋Claude skill＋Claude Chrome plugin',
         's03.step11.output': '对外产品文档',
         's03.step11.replaces': '技术文档撰写者 / 内容设计师',
-        's03.step11.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">user-facing-docs</span><span class="skill-arch-sub">PRD → 4 段 Markdown</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">询问 PRD 来源 — 粘贴或 Notion URL</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">确认语气 — 亲切／技术／正式</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">解析 PRD 并套用改写规则 — 把内部用语洗掉</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">产出四段 — Overview · How It Works · Using · Tips</span></li></ol><div class="skill-arch-foot">读 PRD,用用户视角重写,把工程／PM 的框架拿掉。适用于帮助中心与产品手册 — 不是 tooltip 或 release note。</div>',
+        's03.step11.arch': '<div class="skill-arch-head"><span class="skill-arch-tag">Skill</span><span class="skill-arch-slug">user-facing-docs</span><span class="skill-arch-sub">PRD → 4 段 Markdown</span></div><ol class="skill-arch-steps"><li><span class="skill-arch-no">01</span><span class="skill-arch-ph">询问 PRD 来源, 粘贴或 Notion URL</span></li><li><span class="skill-arch-no">02</span><span class="skill-arch-ph">确认语气, 亲切／技术／正式</span></li><li><span class="skill-arch-no">03</span><span class="skill-arch-ph">解析 PRD 并套用改写规则, 把内部用语洗掉</span></li><li><span class="skill-arch-no">04</span><span class="skill-arch-ph">产出四段, Overview · How It Works · Using · Tips</span></li></ol><div class="skill-arch-foot">读 PRD,用用户视角重写,把工程／PM 的框架拿掉。适用于帮助中心与产品手册, 不是 tooltip 或 release note。</div>',
       },
     };
 

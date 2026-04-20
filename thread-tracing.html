@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Closing the Loop · Wren AI · Iris Hsieh</title>
+  <link rel="icon" type="image/png" href="Logo.png" />
+  <link rel="apple-touch-icon" href="Logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -46,7 +48,7 @@
       padding: 16px 60px;
       display: flex; align-items: center;
     }
-    .nav-back {
+    .nav-back { white-space: nowrap; flex-shrink: 0;
       font-size: 13px; font-weight: 600;
       color: var(--muted); letter-spacing: 0.04em;
       font-family: 'Barlow', sans-serif;
@@ -479,7 +481,7 @@
 
 <!-- -- NAV -- -->
 <nav class="nav">
-  <a class="nav-back" href="#work" data-i18n="nav.back">← Iris Hsieh</a>
+  <a class="nav-back" href="index.html#island-work" data-i18n="nav.back">← Iris Hsieh</a>
   <div class="nav-anchors">
     <a class="nav-anchor" href="#intro" data-i18n="nav.intro">.Intro</a>
     <a class="nav-anchor" href="#s01" data-i18n="nav.s01">01.Preface</a>
@@ -499,8 +501,8 @@
 <!-- -- TITLE BAR -- -->
 <div class="title-bar">
   <div class="title-bar-inner">
-    <div class="title-big" data-i18n="title.big">Thread Tracing — Building AI's Self-Evolution Feedback Loop</div>
-    <div class="title-sub" data-i18n="title.sub">How my team and I transformed blind failure rates into a structured observability pipeline — turning every user complaint into fuel for AI evolution.</div>
+    <div class="title-big" data-i18n="title.big">Thread Tracing, Building AI's Self-Evolution Feedback Loop</div>
+    <div class="title-sub" data-i18n="title.sub">How my team and I transformed blind failure rates into a structured observability pipeline, turning every user complaint into fuel for AI evolution.</div>
   </div>
 </div>
 
@@ -509,12 +511,12 @@
   <div class="sec-inner" style="max-width:100%;padding:0;">
     <div class="intro-card">
       <div class="intro-photo">
-        <img src="assets/thread-tracing/feedback-cover.png" alt="Thread Tracing — AI feedback keyboard with thumbs up/down, chat, and AI keys" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;" />
+        <img src="assets/thread-tracing/feedback-cover.png" alt="Thread Tracing, AI feedback keyboard with thumbs up/down, chat, and AI keys" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;" />
       </div>
       <div class="intro-copy">
         <div class="text-block">
           <p class="h3" data-i18n="intro.overview.label">Project Overview</p>
-          <p class="body" data-i18n="intro.overview.body">To give enterprises greater control over their AI applications, my team and I designed <b>Thread Tracing</b> — a governance module that lets AI administrators observe organization-wide interaction data from a holistic perspective. Grounded in Google's PAIR framework, the system transforms scattered user feedback into structured, visual intelligence. Administrators can proactively identify model deviations and convert feedback into actionable instructions — closing an autonomous loop of <b>monitor, feedback, and optimize</b>.</p>
+          <p class="body" data-i18n="intro.overview.body">To give enterprises greater control over their AI applications, my team and I designed <b>Thread Tracing</b>, a governance module that lets AI administrators observe organization-wide interaction data from a holistic perspective. Grounded in Google's PAIR framework, the system transforms scattered user feedback into structured, visual intelligence. Administrators can proactively identify model deviations and convert feedback into actionable instructions, closing an autonomous loop of <b>monitor, feedback, and optimize</b>.</p>
         </div>
         <div class="text-block">
           <p class="h3" data-i18n="intro.role.label">My Role</p>
@@ -534,18 +536,18 @@
   <div class="sec-inner">
     <div class="sec-head reveal">
       <span class="sec-num">01.</span>
-      <span class="sec-title" data-i18n="s01.title">Preface — What Do We Lose When AI Enters the Enterprise?</span>
+      <span class="sec-title" data-i18n="s01.title">Preface, What Do We Lose When AI Enters the Enterprise?</span>
     </div>
     <div class="s01-grid">
       <div class="s01-text">
         <div class="text-block reveal">
-          <p class="body" data-i18n="s01.lede">During the design process at Wren AI, my team and I discovered that when AI systems move from the lab into enterprise environments serving <span class="stat-hi">thousands of users</span>, what administrators fear most isn't AI "not knowing the answer" — it's AI "giving the wrong answer and <span class="stat-hi-blue">nobody knows why</span>."</p>
+          <p class="body" data-i18n="s01.lede">During the design process at Wren AI, my team and I discovered that when AI systems move from the lab into enterprise environments serving <span class="stat-hi">thousands of users</span>, what administrators fear most isn't AI "not knowing the answer", it's AI "giving the wrong answer and <span class="stat-hi-blue">nobody knows why</span>."</p>
         </div>
         <div class="text-block reveal">
           <p class="h3" data-i18n="s01.blackbox.label">The current state is a "black box":</p>
           <ol class="num-list">
-            <li data-i18n="s01.p1"><b>Broken Perception</b> — When a user hits "thumbs down," it's like a patient crying out in pain — but the administrator has no idea which nerve is damaged.</li>
-            <li data-i18n="s01.p2"><b>Open-Loop Governance</b> — The system lacks an "automated exam room" — administrators fix Error A this time, only to trigger Error B in the next update.</li>
+            <li data-i18n="s01.p1"><b>Broken Perception</b>, When a user hits "thumbs down," it's like a patient crying out in pain, but the administrator has no idea which nerve is damaged.</li>
+            <li data-i18n="s01.p2"><b>Open-Loop Governance</b>, The system lacks an "automated exam room", administrators fix Error A this time, only to trigger Error B in the next update.</li>
           </ol>
         </div>
         <div class="text-block reveal">
@@ -554,7 +556,7 @@
         </div>
       </div>
       <div class="s01-img reveal">
-        <img src="assets/thread-tracing/s01-cover.png" alt="AI door on a skyscraper — when AI enters the enterprise" />
+        <img src="assets/thread-tracing/s01-cover.png" alt="AI door on a skyscraper, when AI enters the enterprise" />
       </div>
     </div>
 
@@ -566,16 +568,16 @@
   <div class="sec-inner">
     <div class="sec-head reveal">
       <span class="sec-num">02.</span>
-      <span class="sec-title" data-i18n="s02.title">Problem Definition — What "Symptoms" Are We Facing?</span>
+      <span class="sec-title" data-i18n="s02.title">Problem Definition, What "Symptoms" Are We Facing?</span>
     </div>
     <div class="text-block reveal">
       <p class="body" data-i18n="s02.lede">We observed user behavior over <span class="stat-hi">three months</span>, segmenting by engagement level and query mode. Three failure patterns kept surfacing:</p>
     </div>
     <div class="text-block reveal">
       <ol class="num-list">
-        <li data-i18n="s02.pA"><b>Noisy Signal</b> — When queries failed, users mostly responded with vague phrases like "this answer is useless" or "that's not what I wanted" — too ambiguous for AI to extract actionable optimization instructions. The existing thumbs-up/down was also too subtle; <span class="stat-hi-blue">almost no one used it</span>.</li>
-        <li data-i18n="s02.pB"><b>Transient Failures</b> — The team monitored traces internally via Langfuse, but offered no channel for project administrators to analyze failures on their own. Enterprises couldn't self-adjust — every optimization required post-sales intervention.</li>
-        <li data-i18n="s02.pC"><b>Misaligned Correction</b> — Even when corrections were made, there was no standardized test bank to verify whether a fix actually held across all scenarios. Administrators adjusted Instructions based on experience, but fixing Problem A often triggered Problem B in the next round — without a regression mechanism, every correction was a game of whack-a-mole.</li>
+        <li data-i18n="s02.pA"><b>Noisy Signal</b>, When queries failed, users mostly responded with vague phrases like "this answer is useless" or "that's not what I wanted", too ambiguous for AI to extract actionable optimization instructions. The existing thumbs-up/down was also too subtle; <span class="stat-hi-blue">almost no one used it</span>.</li>
+        <li data-i18n="s02.pB"><b>Transient Failures</b>, The team monitored traces internally via Langfuse, but offered no channel for project administrators to analyze failures on their own. Enterprises couldn't self-adjust, every optimization required post-sales intervention.</li>
+        <li data-i18n="s02.pC"><b>Misaligned Correction</b>, Even when corrections were made, there was no standardized test bank to verify whether a fix actually held across all scenarios. Administrators adjusted Instructions based on experience, but fixing Problem A often triggered Problem B in the next round, without a regression mechanism, every correction was a game of whack-a-mole.</li>
       </ol>
     </div>
   </div>
@@ -586,29 +588,29 @@
   <div class="sec-inner">
     <div class="sec-head reveal">
       <span class="sec-num">03.</span>
-      <span class="sec-title" data-i18n="s03.title">Solution — The Feedback Loop We Designed</span>
+      <span class="sec-title" data-i18n="s03.title">Solution, The Feedback Loop We Designed</span>
     </div>
 
     <div class="text-block reveal">
       <p class="h3" data-i18n="s01.pair.label">Why Feedback Loops Matter</p>
-      <p class="body" data-i18n="s01.pair.body">Referencing Google's <a href="https://pair.withgoogle.com/guidebook/chapters/feedback-and-controls/design-ai-feedback-loops" target="_blank" style="text-decoration:underline;">PAIR framework</a>, feedback is more than opinion collection — it's the core engine driving system evolution:</p>
+      <p class="body" data-i18n="s01.pair.body">Referencing Google's <a href="https://pair.withgoogle.com/guidebook/chapters/feedback-and-controls/design-ai-feedback-loops" target="_blank" style="text-decoration:underline;">PAIR framework</a>, feedback is more than opinion collection, it's the core engine driving system evolution:</p>
       <ol class="num-list">
-        <li data-i18n="s01.pair.p1"><b>Model Optimization (Ground Truth)</b> — Transforming user feedback into high-quality labeled data that precisely calibrates model errors.</li>
-        <li data-i18n="s01.pair.p2"><b>Personalized Perception (Personalization)</b> — Continuously learning individual preferences to craft tailored interaction experiences.</li>
-        <li data-i18n="s01.pair.p3"><b>Trust &amp; Agency</b> — Empowering users to intervene in decisions, shifting from passive acceptance to active guidance and building deep trust.</li>
+        <li data-i18n="s01.pair.p1"><b>Model Optimization (Ground Truth)</b>, Transforming user feedback into high-quality labeled data that precisely calibrates model errors.</li>
+        <li data-i18n="s01.pair.p2"><b>Personalized Perception (Personalization)</b>, Continuously learning individual preferences to craft tailored interaction experiences.</li>
+        <li data-i18n="s01.pair.p3"><b>Trust &amp; Agency</b>, Empowering users to intervene in decisions, shifting from passive acceptance to active guidance and building deep trust.</li>
       </ol>
     </div>
     <div class="text-block reveal">
       <p class="h3" data-i18n="s01.fb.label">Balancing Dual-Track Collection</p>
       <p class="body" data-i18n="s01.fb.body">In our design, we adopted a parallel implicit-and-explicit strategy to ensure both breadth and depth of data:</p>
       <ol class="num-list">
-        <li data-i18n="s01.fb.p1"><b>Implicit Feedback — Data Breadth:</b> Automatically monitoring clicks, dwell time, and ignore behavior as low-friction signals. Yields <span class="stat-hi">massive behavioral samples</span>, but environmental noise can mislead.</li>
-        <li data-i18n="s01.fb.p2"><b>Explicit Feedback — Intent Depth:</b> Capturing clear intent through ratings, thumbs up/down, and structured error reports. Higher interaction friction, but delivers the <span class="stat-hi-blue">purest optimization guidance</span>.</li>
+        <li data-i18n="s01.fb.p1"><b>Implicit Feedback, Data Breadth:</b> Automatically monitoring clicks, dwell time, and ignore behavior as low-friction signals. Yields <span class="stat-hi">massive behavioral samples</span>, but environmental noise can mislead.</li>
+        <li data-i18n="s01.fb.p2"><b>Explicit Feedback, Intent Depth:</b> Capturing clear intent through ratings, thumbs up/down, and structured error reports. Higher interaction friction, but delivers the <span class="stat-hi-blue">purest optimization guidance</span>.</li>
       </ol>
     </div>
 
     <div class="text-block reveal">
-      <p class="body" data-i18n="s03.lede">Based on the above, my team and I designed Thread Tracing as a four-stage closed loop — each stage directly targeting a gap we identified.</p>
+      <p class="body" data-i18n="s03.lede">Based on the above, my team and I designed Thread Tracing as a four-stage closed loop, each stage directly targeting a gap we identified.</p>
     </div>
 
     <div class="loop-wrap reveal">
@@ -666,13 +668,13 @@
           <div class="ofs-spine-line"></div>
         </div>
         <div class="ofs-body">
-          <div class="ofs-chapter-title" data-i18n="s03.st1.title">Structured Intake — Turning Noise into Signal</div>
-          <p class="ofs-chapter-story" data-i18n="s03.st1.desc">Feedback should blend naturally into the workflow. Previously the thumbs-up / thumbs-down icons sat almost invisibly in the action row, so few users ever pressed them. We made the ask explicit, extended the Yes / No click into finer-grained tags (SQL generation failure, retrieval error, instruction non-compliance, summary error, SQL-Pairs deviation), and auto-captured the AI's reasoning trace at the moment of failure — preserving the "crime scene" that had previously vanished.</p>
+          <div class="ofs-chapter-title" data-i18n="s03.st1.title">Structured Intake, Turning Noise into Signal</div>
+          <p class="ofs-chapter-story" data-i18n="s03.st1.desc">Feedback should blend naturally into the workflow. Previously the thumbs-up / thumbs-down icons sat almost invisibly in the action row, so few users ever pressed them. We made the ask explicit, extended the Yes / No click into finer-grained tags (SQL generation failure, retrieval error, instruction non-compliance, summary error, SQL-Pairs deviation), and auto-captured the AI's reasoning trace at the moment of failure, preserving the "crime scene" that had previously vanished.</p>
           <div class="dd-list">
             <div class="dd-block">
               <div class="dd-num" data-i18n="s03.st1.dd0.num">Decision 01 · Make the ask explicit</div>
               <div class="dd-title" data-i18n="s03.st1.dd0.title">Pull the question into the line of sight, not the action row.</div>
-              <p class="dd-body" data-i18n="s03.st1.dd0.body">The old design buried feedback in the generic action row — a tiny thumbs-up / thumbs-down wedged between copy, share, and regenerate. Almost nobody pressed them. We pulled the question into the answer itself with an inline <code>Was this result helpful?</code> prompt, pinned directly below every response. The Yes / No click stays low-commitment on purpose; the structured intake only unfolds when a user actually has something to report. Lifting the ask from chrome to content was the single biggest behavioral lever in this chapter — response rate climbed <b>+45%</b> once the prompt was impossible to miss.</p>
+              <p class="dd-body" data-i18n="s03.st1.dd0.body">The old design buried feedback in the generic action row, a tiny thumbs-up / thumbs-down wedged between copy, share, and regenerate. Almost nobody pressed them. We pulled the question into the answer itself with an inline <code>Was this result helpful?</code> prompt, pinned directly below every response. The Yes / No click stays low-commitment on purpose; the structured intake only unfolds when a user actually has something to report. Lifting the ask from chrome to content was the single biggest behavioral lever in this chapter, response rate climbed <b>+45%</b> once the prompt was impossible to miss.</p>
               <div class="ba-compare">
                 <div class="ba-card">
                   <span class="ba-tag" data-i18n="s03.st1.before">Before · icons only</span>
@@ -687,19 +689,19 @@
             <div class="dd-block">
               <div class="dd-num" data-i18n="s03.st1.dd1.num">Decision 02 · Tag taxonomy, not free text</div>
               <div class="dd-title" data-i18n="s03.st1.dd1.title">Route noise into five named failure modes the AI team can already act on.</div>
-              <p class="dd-body" data-i18n="s03.st1.dd1.body">An early open-text version of this form taught us that unstructured feedback fragments into paraphrases of the same problem — <i>"the SQL is wrong"</i>, <i>"it used the wrong table"</i>, <i>"the query broke"</i> all meant one thing but read as three. We mapped the <span class="stat-hi">five real AI failure modes</span> — <code>SQL generation failed</code>, <code>Failed to retrieve data</code>, <code>Failed to follow instructions</code>, <code>Incorrect AI summary</code>, <code>SQL-Pairs deviation</code> — onto a fixed chip set. Users tap; the system aggregates. Signal survives the translation, and the admin dashboard can finally count apples against apples.</p>
+              <p class="dd-body" data-i18n="s03.st1.dd1.body">An early open-text version of this form taught us that unstructured feedback fragments into paraphrases of the same problem, <i>"the SQL is wrong"</i>, <i>"it used the wrong table"</i>, <i>"the query broke"</i> all meant one thing but read as three. We mapped the <span class="stat-hi">five real AI failure modes</span>, <code>SQL generation failed</code>, <code>Failed to retrieve data</code>, <code>Failed to follow instructions</code>, <code>Incorrect AI summary</code>, <code>SQL-Pairs deviation</code>, onto a fixed chip set. Users tap; the system aggregates. Signal survives the translation, and the admin dashboard can finally count apples against apples.</p>
               <div class="dd-shot"><img src="assets/thread-tracing/feedback-answer-modal.png" alt="Answer feedback modal with five primary issue tags"></div>
             </div>
             <div class="dd-block">
               <div class="dd-num" data-i18n="s03.st1.dd2.num">Decision 03 · Depth on demand, not by default</div>
               <div class="dd-title" data-i18n="s03.st1.dd2.title">Keep the form lean; let one tag earn the right to unfold.</div>
-              <p class="dd-body" data-i18n="s03.st1.dd2.body">A long form hurts completion rate; a short form loses specificity exactly where it matters most. The compromise: the modal stays lean by default, but when a user picks <code>Failed to follow instructions</code> — the one tag where <i>"which rule"</i> changes everything — a second dropdown reveals every project-level instruction currently configured. <code>Other</code> exists as a last resort, deliberately positioned as the least actionable option. The admin either gets a named rule to fix, or a clear signal that the instruction taxonomy is missing coverage.</p>
+              <p class="dd-body" data-i18n="s03.st1.dd2.body">A long form hurts completion rate; a short form loses specificity exactly where it matters most. The compromise: the modal stays lean by default, but when a user picks <code>Failed to follow instructions</code>, the one tag where <i>"which rule"</i> changes everything, a second dropdown reveals every project-level instruction currently configured. <code>Other</code> exists as a last resort, deliberately positioned as the least actionable option. The admin either gets a named rule to fix, or a clear signal that the instruction taxonomy is missing coverage.</p>
               <div class="dd-shot"><img src="assets/thread-tracing/feedback-answer-instruction-dropdown.png" alt="Conditional instruction dropdown triggered by selecting Failed to follow instructions"></div>
             </div>
             <div class="dd-block">
               <div class="dd-num" data-i18n="s03.st1.dd3.num">Decision 04 · One shape, two contexts</div>
               <div class="dd-title" data-i18n="s03.st1.dd3.title">Swap the vocabulary, preserve the muscle memory.</div>
-              <p class="dd-body" data-i18n="s03.st1.dd3.body">Answers and charts fail for different reasons, so they can't share one tag list — but they have to share one mental model, or users stop trusting the form after the second surface. Every feedback modal keeps the same three-part shape: <b>rate &rarr; tag &rarr; optional description</b>. Only the tag vocabulary swaps. A user who gave feedback on a broken SQL answer already knows what to do the first time a chart renders with the wrong axis — even though the specific options are different.</p>
+              <p class="dd-body" data-i18n="s03.st1.dd3.body">Answers and charts fail for different reasons, so they can't share one tag list, but they have to share one mental model, or users stop trusting the form after the second surface. Every feedback modal keeps the same three-part shape: <b>rate &rarr; tag &rarr; optional description</b>. Only the tag vocabulary swaps. A user who gave feedback on a broken SQL answer already knows what to do the first time a chart renders with the wrong axis, even though the specific options are different.</p>
               <div class="dd-shot"><img src="assets/thread-tracing/feedback-chart-modal.png" alt="Chart feedback modal with chart-specific issue tags"></div>
             </div>
           </div>
@@ -711,31 +713,31 @@
           <div class="ofs-spine-line"></div>
         </div>
         <div class="ofs-body">
-          <div class="ofs-chapter-title" data-i18n="s03.mq.title">Monitor Quality — From Count to Cause</div>
-          <p class="ofs-chapter-story" data-i18n="s03.mq.desc">The feedback modal was the producer; this dashboard is the consumer. Project owners open <code>Settings → Project → Thread tracing</code> and land on a single screen that has to answer two questions fast — is the AI getting better or worse this week, and what's the dominant failure mode right now. Everything else is a filter.</p>
+          <div class="ofs-chapter-title" data-i18n="s03.mq.title">Monitor Quality, From Count to Cause</div>
+          <p class="ofs-chapter-story" data-i18n="s03.mq.desc">The feedback modal was the producer; this dashboard is the consumer. Project owners open <code>Settings → Project → Thread tracing</code> and land on a single screen that has to answer two questions fast, is the AI getting better or worse this week, and what's the dominant failure mode right now. Everything else is a filter.</p>
           <div class="dd-list">
             <div class="dd-block">
               <div class="dd-num" data-i18n="s03.mq.dd1.num">Decision 01 · Trend first, taxonomy second</div>
               <div class="dd-title" data-i18n="s03.mq.dd1.title">Lead with the line; let the bars explain.</div>
-              <p class="dd-body" data-i18n="s03.mq.dd1.body">Admins don't want to open on a list of failures — they want to know if the needle is moving. The hero of the dashboard is a success-metrics chart (positive vs negative feedback, by day), with the failure-breakdown bar chart sitting directly underneath. The order matters: you glance at the trend line to decide whether last week's fix actually helped, then drop to the bars to see which category is spiking. Putting the breakdown first would have inverted the question into <i>"what's failing?"</i> before the admin had even decided whether anything needed fixing.</p>
+              <p class="dd-body" data-i18n="s03.mq.dd1.body">Admins don't want to open on a list of failures, they want to know if the needle is moving. The hero of the dashboard is a success-metrics chart (positive vs negative feedback, by day), with the failure-breakdown bar chart sitting directly underneath. The order matters: you glance at the trend line to decide whether last week's fix actually helped, then drop to the bars to see which category is spiking. Putting the breakdown first would have inverted the question into <i>"what's failing?"</i> before the admin had even decided whether anything needed fixing.</p>
               <div class="dd-shot"><img src="assets/thread-tracing/monitor-dashboard.png" alt="Thread tracing dashboard showing success metrics trend above a failure breakdown bar chart"></div>
             </div>
             <div class="dd-block">
               <div class="dd-num" data-i18n="s03.mq.dd2.num">Decision 02 · Filter by who reported, not only what happened</div>
               <div class="dd-title" data-i18n="s03.mq.dd2.title">Put identity on the filter shelf next to time and type.</div>
-              <p class="dd-body" data-i18n="s03.mq.dd2.body">Early prototypes filtered only by date range and trace type (<code>Answer</code> vs <code>Chart</code>). That wasn't enough once we talked to cross-team admins — marketing's failure profile looks nothing like finance's. We promoted <b>Reported-By</b> (specific members and user groups) into a first-class control rather than hiding it behind an advanced options menu, so the same bar chart can answer <i>"which team's queries is the AI struggling with?"</i> in two clicks. On the table below, a thumbs-up / thumbs-down toggle lets an admin zoom straight to explicit negative signal when they're hunting for the next correction.</p>
+              <p class="dd-body" data-i18n="s03.mq.dd2.body">Early prototypes filtered only by date range and trace type (<code>Answer</code> vs <code>Chart</code>). That wasn't enough once we talked to cross-team admins, marketing's failure profile looks nothing like finance's. We promoted <b>Reported-By</b> (specific members and user groups) into a first-class control rather than hiding it behind an advanced options menu, so the same bar chart can answer <i>"which team's queries is the AI struggling with?"</i> in two clicks. On the table below, a thumbs-up / thumbs-down toggle lets an admin zoom straight to explicit negative signal when they're hunting for the next correction.</p>
               <div class="dd-shot"><img src="assets/thread-tracing/monitor-filter-reported.png" alt="Reported-By filter listing members and user groups"></div>
             </div>
             <div class="dd-block">
               <div class="dd-num" data-i18n="s03.mq.dd3.num">Decision 03 · From count to cause in one click</div>
               <div class="dd-title" data-i18n="s03.mq.dd3.title">Collapse the table; let every row promise a deeper view.</div>
-              <p class="dd-body" data-i18n="s03.mq.dd3.body">The thread table is the bridge between <i>"a number went up"</i> and <i>"here's the actual broken query."</i> Each row collapses to Thread ID, timestamp, trace type, and sentiment. Expand it and the AI's suggested failure reasons appear inline, so admins can decide whether a full dive is worth it before opening the trace drawer. <code>Action → View</code> is where the reasoning trace, metadata, and SQL live — deep information, but gated behind the admin's intent rather than served up front.</p>
+              <p class="dd-body" data-i18n="s03.mq.dd3.body">The thread table is the bridge between <i>"a number went up"</i> and <i>"here's the actual broken query."</i> Each row collapses to Thread ID, timestamp, trace type, and sentiment. Expand it and the AI's suggested failure reasons appear inline, so admins can decide whether a full dive is worth it before opening the trace drawer. <code>Action → View</code> is where the reasoning trace, metadata, and SQL live, deep information, but gated behind the admin's intent rather than served up front.</p>
               <div class="dd-shot"><img src="assets/thread-tracing/monitor-table-expanded.png" alt="Thread table with an expanded row showing suggested failure reasons"></div>
             </div>
             <div class="dd-block">
               <div class="dd-num" data-i18n="s03.mq.dd4.num">Decision 04 · The drawer as a crime-scene brief</div>
-              <div class="dd-title" data-i18n="s03.mq.dd4.title">Everything you need to judge the failure — without leaving the table.</div>
-              <p class="dd-body" data-i18n="s03.mq.dd4.body">The drawer opens at the moment of decision — you've scanned the expanded row, the suggested failure reason looks worth investigating, and you click <code>View</code>. What you need now isn't a new page: it's a focused brief. The drawer surfaces creator identity and the reporter who flagged it (separating who ran the thread from who noticed the error), the AI's run status (distinguishing what the machine recorded from what the user perceived as broken), the issue tags the user chose, and the thread name that gives the failure natural-language context before the SQL appears. Every field earns its place — remove the reporter and you lose the cross-team signal; remove the thread name and the SQL reads without context. The drawer is designed to be read in thirty seconds and decided on.</p>
+              <div class="dd-title" data-i18n="s03.mq.dd4.title">Everything you need to judge the failure, without leaving the table.</div>
+              <p class="dd-body" data-i18n="s03.mq.dd4.body">The drawer opens at the moment of decision, you've scanned the expanded row, the suggested failure reason looks worth investigating, and you click <code>View</code>. What you need now isn't a new page: it's a focused brief. The drawer surfaces creator identity and the reporter who flagged it (separating who ran the thread from who noticed the error), the AI's run status (distinguishing what the machine recorded from what the user perceived as broken), the issue tags the user chose, and the thread name that gives the failure natural-language context before the SQL appears. Every field earns its place, remove the reporter and you lose the cross-team signal; remove the thread name and the SQL reads without context. The drawer is designed to be read in thirty seconds and decided on.</p>
               <div class="dd-shot"><img src="assets/thread-tracing/monitor-trace-details.png" alt="Trace details drawer with reasoning trace, metadata and SQL"></div>
             </div>
           </div>
@@ -747,25 +749,25 @@
           <div class="ofs-spine-line"></div>
         </div>
         <div class="ofs-body">
-          <div class="ofs-chapter-title" data-i18n="s03.st2.title">Error → Eval Suite — Closing the Loop on Failure</div>
-          <p class="ofs-chapter-story" data-i18n="s03.st2.desc">The feedback modal captures the signal; the trace drawer names the failure. This chapter is where that named failure becomes a repeatable test. When an admin converts a diagnosed thread into an Eval question, they're not writing a test case from scratch — they're turning a real user complaint into a permanent benchmark that runs against every future correction.</p>
+          <div class="ofs-chapter-title" data-i18n="s03.st2.title">Error → Eval Suite, Closing the Loop on Failure</div>
+          <p class="ofs-chapter-story" data-i18n="s03.st2.desc">The feedback modal captures the signal; the trace drawer names the failure. This chapter is where that named failure becomes a repeatable test. When an admin converts a diagnosed thread into an Eval question, they're not writing a test case from scratch, they're turning a real user complaint into a permanent benchmark that runs against every future correction.</p>
           <div class="dd-list">
             <div class="dd-block">
               <div class="dd-num" data-i18n="s03.st2.dd1.num">Decision 01 · Ground Truth SQL as the anchor</div>
               <div class="dd-title" data-i18n="s03.st2.dd1.title">Pin "correct" before you measure "wrong."</div>
-              <p class="dd-body" data-i18n="s03.st2.dd1.body">A test case without a ground truth is just a question. The Eval suite requires admins to pair every natural-language question with a verified SQL — either hand-authored or AI-generated and approved. This pair is the unit of measurement. Once locked, it becomes the objective standard the AI is scored against — not a human's memory of "it used to work," but a reproducible, version-controlled definition of correct. The <code>Preview Data</code> button closes the loop at definition time: you know the SQL is valid before it ever becomes a benchmark.</p>
-              <div class="dd-shot"><img src="assets/thread-tracing/eval-question-step1.png" alt="Step 1 — question and ground truth SQL editor with Preview Data"></div>
+              <p class="dd-body" data-i18n="s03.st2.dd1.body">A test case without a ground truth is just a question. The Eval suite requires admins to pair every natural-language question with a verified SQL, either hand-authored or AI-generated and approved. This pair is the unit of measurement. Once locked, it becomes the objective standard the AI is scored against, not a human's memory of "it used to work," but a reproducible, version-controlled definition of correct. The <code>Preview Data</code> button closes the loop at definition time: you know the SQL is valid before it ever becomes a benchmark.</p>
+              <div class="dd-shot"><img src="assets/thread-tracing/eval-question-step1.png" alt="Step 1, question and ground truth SQL editor with Preview Data"></div>
             </div>
             <div class="dd-block">
               <div class="dd-num" data-i18n="s03.st2.dd2.num">Decision 02 · Two-step creation separates SQL accuracy from narrative accuracy</div>
               <div class="dd-title" data-i18n="s03.st2.dd2.title">Correct SQL and correct output are two different questions.</div>
-              <p class="dd-body" data-i18n="s03.st2.dd2.body">Step 1 establishes the SQL anchor. Step 2 establishes what the answer should actually say — key findings, data sources, conclusions. Separating these steps forces admins to think about correctness at two levels: <i>"Did the AI write the right query?"</i> and <i>"Did the AI surface the right insight from it?"</i> A query can return the right data and still produce a misleading summary. The two-step model makes that distinction explicit, so regressions in either layer are caught independently.</p>
-              <div class="dd-shot"><img src="assets/thread-tracing/eval-question-step2.png" alt="Step 2 — expected output with key findings, data sources and conclusions"></div>
+              <p class="dd-body" data-i18n="s03.st2.dd2.body">Step 1 establishes the SQL anchor. Step 2 establishes what the answer should actually say, key findings, data sources, conclusions. Separating these steps forces admins to think about correctness at two levels: <i>"Did the AI write the right query?"</i> and <i>"Did the AI surface the right insight from it?"</i> A query can return the right data and still produce a misleading summary. The two-step model makes that distinction explicit, so regressions in either layer are caught independently.</p>
+              <div class="dd-shot"><img src="assets/thread-tracing/eval-question-step2.png" alt="Step 2, expected output with key findings, data sources and conclusions"></div>
             </div>
             <div class="dd-block">
               <div class="dd-num" data-i18n="s03.st2.dd3.num">Decision 03 · The benchmark result is a diff, not a verdict</div>
               <div class="dd-title" data-i18n="s03.st2.dd3.title">"Failed" is a starting point, not a finding.</div>
-              <p class="dd-body" data-i18n="s03.st2.dd3.body">The assessment view shows Pass / Fail alongside a score reason (<i>"Column count mismatch: generated is missing 1 column"</i>), a side-by-side SQL diff, a data preview comparison, and the AI's reasoning timeline. Each element answers a different diagnostic question: the score reason says <i>where</i> the divergence happened, the SQL diff shows <i>which clause</i> caused it, the data preview shows whether it mattered in practice, and the reasoning timeline reveals whether the AI misread the question or misbuilt the query. Admins leave the view knowing not just that a correction failed — but where to aim the next one.</p>
+              <p class="dd-body" data-i18n="s03.st2.dd3.body">The assessment view shows Pass / Fail alongside a score reason (<i>"Column count mismatch: generated is missing 1 column"</i>), a side-by-side SQL diff, a data preview comparison, and the AI's reasoning timeline. Each element answers a different diagnostic question: the score reason says <i>where</i> the divergence happened, the SQL diff shows <i>which clause</i> caused it, the data preview shows whether it mattered in practice, and the reasoning timeline reveals whether the AI misread the question or misbuilt the query. Admins leave the view knowing not just that a correction failed, but where to aim the next one.</p>
               <div class="dd-shot"><img src="assets/thread-tracing/eval-details.png" alt="Evaluation detail view: assessment, score reason, SQL diff and reasoning timeline"></div>
               <div class="dd-shot"><img src="assets/thread-tracing/eval-sql-diff.png" alt="Full-screen SQL diff comparing ground truth SQL against Wren-generated SQL"></div>
             </div>
@@ -778,26 +780,26 @@
           <div class="ofs-spine-line"></div>
         </div>
         <div class="ofs-body">
-          <div class="ofs-chapter-title" data-i18n="s03.st3.title">Guided Correction — The AI Knows What to Change, Not Just What Failed</div>
-          <p class="ofs-chapter-story" data-i18n="s03.st3.desc">The Eval suite names what failed. The AI Advisor takes it from there — running a diagnostic pass on the benchmark failures, staging specific knowledge-base changes, and verifying the result before anything ships. Correction becomes targeted instead of instinctive.</p>
+          <div class="ofs-chapter-title" data-i18n="s03.st3.title">Guided Correction, The AI Knows What to Change, Not Just What Failed</div>
+          <p class="ofs-chapter-story" data-i18n="s03.st3.desc">The Eval suite names what failed. The AI Advisor takes it from there, running a diagnostic pass on the benchmark failures, staging specific knowledge-base changes, and verifying the result before anything ships. Correction becomes targeted instead of instinctive.</p>
           <div class="dd-list">
             <div class="dd-block">
               <div class="dd-num" data-i18n="s03.st3.dd1.num">Decision 01 · Select failures, not symptoms</div>
               <div class="dd-title" data-i18n="s03.st3.dd1.title">Diagnosis starts with the benchmark, not a description.</div>
-              <p class="dd-body" data-i18n="s03.st3.dd1.body">Admins don't describe the problem to the advisor — they select the failing questions directly from the benchmark result. The advisor takes those as input and runs its own diagnostic pass across the knowledge base. The selection step matters: it scopes the diagnosis to confirmed failures, not hypotheticals, which keeps staged suggestions tightly coupled to observed regressions rather than guesswork.</p>
-              <div class="dd-shot"><img src="assets/thread-tracing/eval-advisor-diagnosis.png" alt="AI Advisor — 3 failed benchmark questions selected for diagnosis"></div>
+              <p class="dd-body" data-i18n="s03.st3.dd1.body">Admins don't describe the problem to the advisor, they select the failing questions directly from the benchmark result. The advisor takes those as input and runs its own diagnostic pass across the knowledge base. The selection step matters: it scopes the diagnosis to confirmed failures, not hypotheticals, which keeps staged suggestions tightly coupled to observed regressions rather than guesswork.</p>
+              <div class="dd-shot"><img src="assets/thread-tracing/eval-advisor-diagnosis.png" alt="AI Advisor, 3 failed benchmark questions selected for diagnosis"></div>
             </div>
             <div class="dd-block">
               <div class="dd-num" data-i18n="s03.st3.dd2.num">Decision 02 · Staged changes, not one-click fixes</div>
               <div class="dd-title" data-i18n="s03.st3.dd2.title">Every suggestion is reviewable before it becomes a commit.</div>
-              <p class="dd-body" data-i18n="s03.st3.dd2.body">The advisor surfaces schema adjustments and instruction edits as staged proposals — one change at a time, with edit and deselect controls on each. Admins can review the logic, modify the wording, or remove an item entirely before anything is applied. The separation between diagnosis and apply is intentional: it keeps human judgment in the loop on changes that touch the AI's core knowledge model, where a poorly scoped instruction can create new regressions while fixing old ones.</p>
-              <div class="dd-shot"><img src="assets/thread-tracing/eval-advisor-staged.png" alt="AI Advisor step 1 — staged schema modifications and instruction edits with review controls"></div>
+              <p class="dd-body" data-i18n="s03.st3.dd2.body">The advisor surfaces schema adjustments and instruction edits as staged proposals, one change at a time, with edit and deselect controls on each. Admins can review the logic, modify the wording, or remove an item entirely before anything is applied. The separation between diagnosis and apply is intentional: it keeps human judgment in the loop on changes that touch the AI's core knowledge model, where a poorly scoped instruction can create new regressions while fixing old ones.</p>
+              <div class="dd-shot"><img src="assets/thread-tracing/eval-advisor-staged.png" alt="AI Advisor step 1, staged schema modifications and instruction edits with review controls"></div>
             </div>
             <div class="dd-block">
               <div class="dd-num" data-i18n="s03.st3.dd3.num">Decision 03 · Verify before apply</div>
               <div class="dd-title" data-i18n="s03.st3.dd3.title">The benchmark decides whether the fix is ready.</div>
-              <p class="dd-body" data-i18n="s03.st3.dd3.body">Before staged changes are applied, the advisor runs a verification pass against the same benchmark questions. A Before / After column shows the per-question outcome — which failures resolved, which remained, and whether anything that previously passed has regressed. Admins commit only when the verification run agrees the changes are safe. This gate means every staged fix has been tested, not just reviewed.</p>
-              <div class="dd-shot"><img src="assets/thread-tracing/eval-advisor-verification.png" alt="AI Advisor step 2 — verification run with Before/After columns showing FAILED → Passed improvements"></div>
+              <p class="dd-body" data-i18n="s03.st3.dd3.body">Before staged changes are applied, the advisor runs a verification pass against the same benchmark questions. A Before / After column shows the per-question outcome, which failures resolved, which remained, and whether anything that previously passed has regressed. Admins commit only when the verification run agrees the changes are safe. This gate means every staged fix has been tested, not just reviewed.</p>
+              <div class="dd-shot"><img src="assets/thread-tracing/eval-advisor-verification.png" alt="AI Advisor step 2, verification run with Before/After columns showing FAILED → Passed improvements"></div>
             </div>
           </div>
         </div>
@@ -808,14 +810,14 @@
           <div class="ofs-spine-line"></div>
         </div>
         <div class="ofs-body">
-          <div class="ofs-chapter-title" data-i18n="s03.st4.title">Regression Verification — Pass on Every Round, Not Just This One</div>
-          <p class="ofs-chapter-story" data-i18n="s03.st4.desc">The advisor's verification pass only re-tests the questions it set out to fix. But a schema edit written to patch one failure can quietly break a question that was already green. Before anything ships to the AI system, the full benchmark runs one more time — every question, not just the failing ones — and only a clean sweep unlocks the final apply.</p>
+          <div class="ofs-chapter-title" data-i18n="s03.st4.title">Regression Verification, Pass on Every Round, Not Just This One</div>
+          <p class="ofs-chapter-story" data-i18n="s03.st4.desc">The advisor's verification pass only re-tests the questions it set out to fix. But a schema edit written to patch one failure can quietly break a question that was already green. Before anything ships to the AI system, the full benchmark runs one more time, every question, not just the failing ones, and only a clean sweep unlocks the final apply.</p>
           <div class="dd-list">
             <div class="dd-block">
               <div class="dd-num" data-i18n="s03.st4.dd3.num">Decision 01 · Full apply, guarded by a full re-run</div>
-              <div class="dd-title" data-i18n="s03.st4.dd3.title">The benchmark is the final approver — not the advisor.</div>
-              <p class="dd-body" data-i18n="s03.st4.dd3.body">Apply to AI system is intentionally the end of a two-gate process. The first gate is the advisor's Before/After on the failing subset; the second gate is a full-bank re-run that surfaces any new regressions introduced by the staged edits. Only when both rows read clean does the button activate. What ships isn't a suggestion an admin approved — it's a correction that the benchmark itself has signed off on.</p>
-              <div class="dd-shot"><img src="assets/thread-tracing/eval-advisor-apply.png" alt="AI Advisor step 3 — full apply with benchmark passing and Apply to AI system button"></div>
+              <div class="dd-title" data-i18n="s03.st4.dd3.title">The benchmark is the final approver, not the advisor.</div>
+              <p class="dd-body" data-i18n="s03.st4.dd3.body">Apply to AI system is intentionally the end of a two-gate process. The first gate is the advisor's Before/After on the failing subset; the second gate is a full-bank re-run that surfaces any new regressions introduced by the staged edits. Only when both rows read clean does the button activate. What ships isn't a suggestion an admin approved, it's a correction that the benchmark itself has signed off on.</p>
+              <div class="dd-shot"><img src="assets/thread-tracing/eval-advisor-apply.png" alt="AI Advisor step 3, full apply with benchmark passing and Apply to AI system button"></div>
             </div>
           </div>
         </div>
@@ -825,14 +827,14 @@
           <div class="ofs-badge">06</div>
         </div>
         <div class="ofs-body">
-          <div class="ofs-chapter-title" data-i18n="s03.st5.title">The Loop Closes — The Record Becomes the Next Starting Line</div>
-          <p class="ofs-chapter-story" data-i18n="s03.st5.desc">With apply complete, the benchmark run becomes the permanent record for the cycle. Accuracy delta, an <i>Improvement: Completed</i> stamp, every schema field the advisor touched, every instruction it added — all stitched to one timestamp. The loop doesn't just close; it leaves a signed receipt the next cycle reads from.</p>
+          <div class="ofs-chapter-title" data-i18n="s03.st5.title">The Loop Closes, The Record Becomes the Next Starting Line</div>
+          <p class="ofs-chapter-story" data-i18n="s03.st5.desc">With apply complete, the benchmark run becomes the permanent record for the cycle. Accuracy delta, an <i>Improvement: Completed</i> stamp, every schema field the advisor touched, every instruction it added, all stitched to one timestamp. The loop doesn't just close; it leaves a signed receipt the next cycle reads from.</p>
           <div class="dd-list">
             <div class="dd-block">
               <div class="dd-num" data-i18n="s03.st5.dd1.num">Decision 01 · The completed run is also the audit trail</div>
               <div class="dd-title" data-i18n="s03.st5.dd1.title">One timestamp, one signed summary of what actually shipped.</div>
-              <p class="dd-body" data-i18n="s03.st5.dd1.body">The benchmark result page carries three things at the top — the accuracy score, the <i>Improvement: Completed</i> label, and an expandable Advisor result that inventories every schema adjustment, every Specific or Global instruction, and a per-question verdict. An admin returning three weeks later can reconstruct why the AI behaves the way it does without asking the original author. For the next correction cycle, this record is also the baseline: the next full re-run compares against this version of truth, not against memory.</p>
-              <div class="dd-shot"><img src="assets/thread-tracing/eval-advisor-end.png" alt="Benchmark result after apply — Accuracy 80%, Improvement Completed, with Advisor result expanded showing schema modifications, Specific and Global instructions, and per-question verdicts"></div>
+              <p class="dd-body" data-i18n="s03.st5.dd1.body">The benchmark result page carries three things at the top, the accuracy score, the <i>Improvement: Completed</i> label, and an expandable Advisor result that inventories every schema adjustment, every Specific or Global instruction, and a per-question verdict. An admin returning three weeks later can reconstruct why the AI behaves the way it does without asking the original author. For the next correction cycle, this record is also the baseline: the next full re-run compares against this version of truth, not against memory.</p>
+              <div class="dd-shot"><img src="assets/thread-tracing/eval-advisor-end.png" alt="Benchmark result after apply, Accuracy 80%, Improvement Completed, with Advisor result expanded showing schema modifications, Specific and Global instructions, and per-question verdicts"></div>
             </div>
           </div>
         </div>
@@ -848,31 +850,31 @@
   <div class="sec-inner">
     <div class="sec-head reveal">
       <span class="sec-num">04.</span>
-      <span class="sec-title" data-i18n="s04.title">Design Pivot — From One-Shot to Iterative</span>
+      <span class="sec-title" data-i18n="s04.title">Design Pivot, From One-Shot to Iterative</span>
     </div>
 
     <div class="s04-stack reveal">
-      <p class="body" data-i18n="s04.wrong.body">The first AI Advisor I shipped assumed correction could be a single transaction. On a failed benchmark question, the admin opened a right-side drawer, read the score reason, and saw two things directly: a proposed schema adjustment with an <code>Apply adjustment</code> button, and a recommended instruction with an <code>Add to instruction</code> button. One click per row committed the change. That was the entire user flow — no verification pass, no full re-run, no trace of whether the fix actually held across the rest of the bank. The advisor spoke, the admin clicked, the drawer closed.</p>
+      <p class="body" data-i18n="s04.wrong.body">The first AI Advisor I shipped assumed correction could be a single transaction. On a failed benchmark question, the admin opened a right-side drawer, read the score reason, and saw two things directly: a proposed schema adjustment with an <code>Apply adjustment</code> button, and a recommended instruction with an <code>Add to instruction</code> button. One click per row committed the change. That was the entire user flow, no verification pass, no full re-run, no trace of whether the fix actually held across the rest of the bank. The advisor spoke, the admin clicked, the drawer closed.</p>
 
       <div class="dd-shot">
-        <img src="assets/thread-tracing/Before.png" alt="First version of the AI advisory drawer — Score reason, Schema adjustments with Apply adjustment button, and Recommended instructions with Add to instruction button; one click ended the flow">
+        <img src="assets/thread-tracing/Before.png" alt="First version of the AI advisory drawer, Score reason, Schema adjustments with Apply adjustment button, and Recommended instructions with Add to instruction button; one click ended the flow">
       </div>
-      <p class="dd-caption" data-i18n="s04.wrong.cap">BEFORE · One-shot AI advisory drawer — Apply and Add, then the flow ended.</p>
+      <p class="dd-caption" data-i18n="s04.wrong.cap">BEFORE · One-shot AI advisory drawer, Apply and Add, then the flow ended.</p>
 
-      <p class="body" data-i18n="s04.lede" style="margin-top:20px;">Testing with real eval sets proved that mental model wrong. A schema note that fixed one failure often introduced a new one elsewhere, and the admin had no way to see it until a user complained again. <span class="stat-hi-blue">Correction isn't a transaction — it's a cycle.</span> That realization reshaped every screen that came after: we stopped designing a linear <i>diagnose → fix → done</i> flow, and started designing for repeated rounds of test, adjust, and re-verify, with the benchmark sitting between each cycle as the arbiter of whether a fix actually shipped.</p>
+      <p class="body" data-i18n="s04.lede" style="margin-top:20px;">Testing with real eval sets proved that mental model wrong. A schema note that fixed one failure often introduced a new one elsewhere, and the admin had no way to see it until a user complained again. <span class="stat-hi-blue">Correction isn't a transaction, it's a cycle.</span> That realization reshaped every screen that came after: we stopped designing a linear <i>diagnose → fix → done</i> flow, and started designing for repeated rounds of test, adjust, and re-verify, with the benchmark sitting between each cycle as the arbiter of whether a fix actually shipped.</p>
 
-      <p class="body" data-i18n="s04.right.body">The second version replaced the single click with a loop. Every staged schema modification and every new instruction now passes through a Before / After verification run — the same failing questions, re-executed with the edits, shown side by side so admins can see exactly which failures resolved and whether any passing question regressed. Changes aren't overwritten; they accumulate. Each round adds to a growing stack of schema adjustments and instructions that the advisor has already confirmed safe, and <code>Re-run verification</code> lets the admin add another edit and test it against that stack before anything reaches the knowledge base. A correction is no longer final after one click — it's final after the benchmark stops surfacing regressions.</p>
+      <p class="body" data-i18n="s04.right.body">The second version replaced the single click with a loop. Every staged schema modification and every new instruction now passes through a Before / After verification run, the same failing questions, re-executed with the edits, shown side by side so admins can see exactly which failures resolved and whether any passing question regressed. Changes aren't overwritten; they accumulate. Each round adds to a growing stack of schema adjustments and instructions that the advisor has already confirmed safe, and <code>Re-run verification</code> lets the admin add another edit and test it against that stack before anything reaches the knowledge base. A correction is no longer final after one click, it's final after the benchmark stops surfacing regressions.</p>
 
       <div class="dd-shot">
-        <img src="assets/thread-tracing/eval-advisor-verification.png" alt="Second version of the Advisor — Verification step with Before/After columns and a growing stack of Staged Changes (schema modifications and instructions) on the right">
+        <img src="assets/thread-tracing/eval-advisor-verification.png" alt="Second version of the Advisor, Verification step with Before/After columns and a growing stack of Staged Changes (schema modifications and instructions) on the right">
       </div>
-      <p class="dd-caption" data-i18n="s04.right.cap">AFTER · A multi-round Before / After verification loop — every schema modification and instruction earns its place only after repeated re-runs.</p>
+      <p class="dd-caption" data-i18n="s04.right.cap">AFTER · A multi-round Before / After verification loop, every schema modification and instruction earns its place only after repeated re-runs.</p>
 
-      <p class="body" data-i18n="s04.d1.body" style="margin-top:20px;">This was the most critical — and most labor-intensive — part of engineering collaboration. When each correction round may trigger new side effects, the interface can no longer be a one-way conveyor belt. We had to design every step for "what if this needs to be done again": error classification needed to support re-tagging, the test bank needed incremental expansion rather than full replacement, and correction results needed immediate comparison with previous rounds rather than simply overwriting them.</p>
+      <p class="body" data-i18n="s04.d1.body" style="margin-top:20px;">This was the most critical, and most labor-intensive, part of engineering collaboration. When each correction round may trigger new side effects, the interface can no longer be a one-way conveyor belt. We had to design every step for "what if this needs to be done again": error classification needed to support re-tagging, the test bank needed incremental expansion rather than full replacement, and correction results needed immediate comparison with previous rounds rather than simply overwriting them.</p>
 
       <p class="body" data-i18n="s04.d2.body">This mindset shift also changed how we presented AI reasoning paths to administrators. In the initial linear model, we only needed to show "here's the error, here's the fix." But in an iterative model, administrators need to understand why the same issue recurs, which previous corrections may have introduced new problems, and which areas still haven't been covered by the test bank. Information architecture evolved from a simple diagnostic report into a multi-round correction history with contextual comparison.</p>
 
-      <p class="body" data-i18n="s04.d3.body">The most valuable lesson: <span class="stat-hi-blue">once we accepted that correction is a cycle rather than a destination, design decisions became much clearer</span>. Every feature needed to answer one question — <span class="stat-hi-blue">"Does this help the next iteration go more smoothly?"</span> — rather than "Does this solve the problem once and for all?"</p>
+      <p class="body" data-i18n="s04.d3.body">The most valuable lesson: <span class="stat-hi-blue">once we accepted that correction is a cycle rather than a destination, design decisions became much clearer</span>. Every feature needed to answer one question, <span class="stat-hi-blue">"Does this help the next iteration go more smoothly?"</span>, rather than "Does this solve the problem once and for all?"</p>
     </div>
 
   </div>
@@ -883,7 +885,7 @@
   <div class="sec-inner">
     <div class="sec-head reveal">
       <span class="sec-num">05.</span>
-      <span class="sec-title" data-i18n="s05.title">Results &amp; Reflections — From Passive Observation to Active Governance</span>
+      <span class="sec-title" data-i18n="s05.title">Results &amp; Reflections, From Passive Observation to Active Governance</span>
     </div>
     <div class="text-block reveal">
       <p class="body" data-i18n="s05.lede">Thread Tracing turned what had been scattered, headache-inducing user errors into a core data asset that drives the product's evolution.</p>
@@ -896,7 +898,7 @@
       </div>
       <div class="text-block reveal">
         <p class="h3" data-i18n="s05.next.label">Redefining the Designer's Role</p>
-        <p class="body" data-i18n="s05.next.body">This project reshaped how I see my role. In an AI product, a designer's job reaches beyond the surface of the interface — it becomes the work of building the governance logic. I wasn't just fixing a bug; I was building a framework that made the AI's black-box reasoning transparent and controllable.</p>
+        <p class="body" data-i18n="s05.next.body">This project reshaped how I see my role. In an AI product, a designer's job reaches beyond the surface of the interface, it becomes the work of building the governance logic. I wasn't just fixing a bug; I was building a framework that made the AI's black-box reasoning transparent and controllable.</p>
       </div>
     </div>
   </div>
@@ -929,7 +931,7 @@
       const scrollY = window.scrollY + navH + 40;
       let active = sections[0];
       sections.forEach(sec => { if (sec && sec.offsetTop <= scrollY) active = sec; });
-      // When the page is scrolled to the bottom, force the last section active —
+      // When the page is scrolled to the bottom, force the last section active ,
       // otherwise a short final section never crosses the probe line.
       const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 80;
       if (nearBottom && sections[sections.length - 1]) active = sections[sections.length - 1];

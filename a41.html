@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>A41 All For One · Iris Hsieh</title>
+  <link rel="icon" type="image/png" href="Logo.png" />
+  <link rel="apple-touch-icon" href="Logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -43,7 +45,7 @@
       padding: 16px 60px;
       display: flex; align-items: center;
     }
-    .nav-back {
+    .nav-back { white-space: nowrap; flex-shrink: 0;
       font-size: 13px; font-weight: 600;
       color: var(--muted);
       letter-spacing: 0.04em;
@@ -270,7 +272,7 @@
     /* ── RESPONSIVE ───────────────────────────────── */
     @media (max-width: 900px) {
       .nav { padding: 12px 20px; }
-      .nav-back { font-size: 11px; }
+      .nav-back { white-space: nowrap; flex-shrink: 0; font-size: 11px; }
       .nav-anchor { font-size: 10px; padding: 3px 7px; }
       .title-bar { padding: 28px 20px 20px; }
       .sec { padding: 60px 20px; }
@@ -291,7 +293,7 @@
 
 <!-- ── NAV ────────────────────────────────────────── -->
 <nav class="nav">
-  <a class="nav-back" href="#work" data-i18n="nav.back">← Iris Hsieh</a>
+  <a class="nav-back" href="index.html#island-work" data-i18n="nav.back">← Iris Hsieh</a>
   <div class="nav-anchors">
     <a class="nav-anchor" href="#intro" data-i18n="nav.intro">.Intro</a>
     <a class="nav-anchor" href="#s01" data-i18n="nav.s01">01.Start</a>
@@ -433,7 +435,7 @@
           <div class="phone-copy">
             <p class="h3" data-i18n="s02.b.picker.label">Color &amp; Size Picker</p>
             <p class="body" data-i18n="s02.b.picker.body1">The main challenge came from inconsistent scraped data: colors could appear as "grass green" or "green with rhombus pattern," while size labels varied widely. This unpredictability made fixed layouts impossible.</p>
-            <p class="body" style="margin-top:4px;" data-i18n="s02.b.picker.body2">To solve this, I used a <span class="stat-hi">Bottom Sheet design</span>, which balanced information capacity and usability on mobile — providing a more stable and flexible user experience.</p>
+            <p class="body" style="margin-top:4px;" data-i18n="s02.b.picker.body2">To solve this, I used a <span class="stat-hi">Bottom Sheet design</span>, which balanced information capacity and usability on mobile, providing a more stable and flexible user experience.</p>
           </div>
         </div>
       </div>

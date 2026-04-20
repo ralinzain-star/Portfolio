@@ -4,6 +4,8 @@
  <meta charset="UTF-8" />
  <meta name="viewport" content="width=device-width, initial-scale=1" />
  <title>AI Trip Planner · Iris Hsieh</title>
+  <link rel="icon" type="image/png" href="Logo.png" />
+  <link rel="apple-touch-icon" href="Logo.png" />
  <link rel="preconnect" href="https://fonts.googleapis.com" />
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -43,7 +45,7 @@
    padding: 16px 60px;
    display: flex; align-items: center;
   }
-  .nav-back {
+  .nav-back { white-space: nowrap; flex-shrink: 0;
    font-size: 13px; font-weight: 600;
    color: var(--muted); letter-spacing: 0.04em;
    font-family: 'Barlow', sans-serif;
@@ -251,7 +253,7 @@
 
 <!-- ── NAV ────────────────────────────────────────── -->
 <nav class="nav">
- <a class="nav-back" href="#writing">&larr; Iris Hsieh</a>
+ <a class="nav-back" href="index.html#island-writing">&larr; Iris Hsieh</a>
  <div class="nav-anchors">
   <a class="nav-anchor" href="#s00" data-i18n="nav.s00">01.Thesis</a>
   <a class="nav-anchor" href="#s03" data-i18n="nav.s03">02.Philosophy</a>
@@ -316,7 +318,7 @@
    <p class="body" data-i18n="s00.body">In the AI era, if the design artifact (Output) is no longer the defining axis of a designer&rsquo;s work, where does a designer&rsquo;s value manifest? In the past, our sense of achievement came from pixel-perfect craft &mdash; grid systems, color specs, we were the &ldquo;final reviewers&rdquo; of product visuals and interactions. But as generative AI and <span class="stat-hi">Vibe Coding</span> sweep in, when a prompt or a set of structured data can instantly produce a beautiful interface, we must honestly confront a shift: <span class="stat-hi">&ldquo;defining problems&rdquo; and &ldquo;building frameworks&rdquo; are becoming a designer&rsquo;s most important skills</span>.</p>
   </div>
   <div style="margin-top:24px;border-radius:16px;overflow:hidden;">
-   <img src="assets/trip-planner/hero-cloud.png" alt="AI-generated dreamscape — a floating island with a gazebo workspace, Figma window, and crystal prism above the clouds" style="width:100%;display:block;" />
+   <img src="assets/trip-planner/hero-cloud.png" alt="AI-generated dreamscape, a floating island with a gazebo workspace, Figma window, and crystal prism above the clouds" style="width:100%;display:block;" />
   </div>
  </div>
 </div>
@@ -331,11 +333,11 @@
   <div style="display:flex;flex-direction:column;gap:20px;">
    <div class="text-block">
     <p class="h3" data-i18n="s03.h1">Dialogue as Interface</p>
-    <p class="body" data-i18n="s03.b1">Trip planning is inherently fragmented and deeply personal. People rarely want to fill cold forms — they prefer to talk through their needs. I defined <span class="stat-hi">conversation as the core interface</span>. Through natural, multi-turn contextual dialogue, the AI simulates the questioning logic of a professional tour guide, progressively refining the plan, letting the interface flow with the user's thinking.</p>
+    <p class="body" data-i18n="s03.b1">Trip planning is inherently fragmented and deeply personal. People rarely want to fill cold forms, they prefer to talk through their needs. I defined <span class="stat-hi">conversation as the core interface</span>. Through natural, multi-turn contextual dialogue, the AI simulates the questioning logic of a professional tour guide, progressively refining the plan, letting the interface flow with the user's thinking.</p>
    </div>
    <div class="text-block">
     <p class="h3" data-i18n="s03.h2">Experience-Driven</p>
-    <p class="body" data-i18n="s03.b2">The trip webpage is just one form of visual output — the <span class="stat-hi">planning process itself</span> is the soul of this product. The essence of travel lies in the experience: what do you want to feel in a foreign place? How in control of your budget do you feel? How do you balance the everyday with unexpected surprises? I placed the design emphasis on the <strong>guided conversation upfront</strong>. This isn't just data collection — it's helping users complete a deep process of self-clarification, reclaiming the spontaneous spirit of travel. Real design happens in the dialogue: clarifying intent, resolving anxiety, and ultimately sending someone on a trip that is truly their own.</p>
+    <p class="body" data-i18n="s03.b2">The trip webpage is just one form of visual output, the <span class="stat-hi">planning process itself</span> is the soul of this product. The essence of travel lies in the experience: what do you want to feel in a foreign place? How in control of your budget do you feel? How do you balance the everyday with unexpected surprises? I placed the design emphasis on the <strong>guided conversation upfront</strong>. This isn't just data collection, it's helping users complete a deep process of self-clarification, reclaiming the spontaneous spirit of travel. Real design happens in the dialogue: clarifying intent, resolving anxiety, and ultimately sending someone on a trip that is truly their own.</p>
    </div>
   </div>
  </div>
@@ -358,14 +360,14 @@
     <div class="step-num">1</div>
     <div class="step-copy">
      <p class="h3" data-i18n="s04.d1.title">Semantic Mapping</p>
-     <p class="body" data-i18n="s04.d1.body">I defined a mapping ruleset where different Markdown syntax tags directly trigger specific design system components. <span class="stat-hi">Data tables</span> are parsed and rendered as interactive budget dashboards with dynamic filtering. <span class="stat-hi">Lists</span> — based on content characteristics — automatically render as checkbox-equipped packing checklists. <span class="stat-hi">Geo-links</span> are recognized by the engine and automatically pinned on the underlying interactive map.</p>
+     <p class="body" data-i18n="s04.d1.body">I defined a mapping ruleset where different Markdown syntax tags directly trigger specific design system components. <span class="stat-hi">Data tables</span> are parsed and rendered as interactive budget dashboards with dynamic filtering. <span class="stat-hi">Lists</span>, based on content characteristics, automatically render as checkbox-equipped packing checklists. <span class="stat-hi">Geo-links</span> are recognized by the engine and automatically pinned on the underlying interactive map.</p>
      <p class="h3" style="margin-top:12px;" data-i18n="s04.d1.ex1">Data Table &rarr; Budget Dashboard</p>
      <pre class="md-example"><code data-i18n="s04.d1.code1">MD Syntax                                Renders As
 ──────────────────────────────────     ──────────────────────────
 | Item   | Cost  | Status    |              Interactive Budget Dashboard
 | Flight | $420 | Confirmed |        →     Filter by city / category
 | Hotel  | $850 | Pending   |              Real-time totals + remaining budget
-| Dining | $30  | —         |</code></pre>
+| Dining | $30  |,         |</code></pre>
      <p class="h3" style="margin-top:12px;" data-i18n="s04.d1.ex2">Geo-link &rarr; Interactive Map</p>
      <pre class="md-example"><code data-i18n="s04.d1.code2">MD Syntax                                Renders As
 ──────────────────────────────────     ──────────────────────────
@@ -378,8 +380,8 @@
     <div class="step-num">2</div>
     <div class="step-copy">
      <p class="h3" data-i18n="s04.d2.title">Giving AI Orchestration Authority</p>
-     <p class="body" data-i18n="s04.d2.body">Markdown is the AI's native language. Through MD, I handed the orchestration authority back to the AI, letting it <span class="stat-hi">spontaneously design the layout</span> based on each trip's characteristics. For an international flight itinerary, the AI autonomously decides to generate a warning block. For a remote-work-focused trip, it prioritizes a Workspace Guide section. The UI structure is no longer fixed — it <span class="stat-hi">grows from the content</span>.</p>
-     <pre class="md-example"><code data-i18n="s04.d2.code">Scenario A — International Trip (Korea → Japan)
+     <p class="body" data-i18n="s04.d2.body">Markdown is the AI's native language. Through MD, I handed the orchestration authority back to the AI, letting it <span class="stat-hi">spontaneously design the layout</span> based on each trip's characteristics. For an international flight itinerary, the AI autonomously decides to generate a warning block. For a remote-work-focused trip, it prioritizes a Workspace Guide section. The UI structure is no longer fixed, it <span class="stat-hi">grows from the content</span>.</p>
+     <pre class="md-example"><code data-i18n="s04.d2.code">Scenario A, International Trip (Korea → Japan)
 AI detects border crossing, auto-inserts at page top:
 
   &gt; ⚠️ Entry Requirements
@@ -388,15 +390,15 @@ AI detects border crossing, auto-inserts at page top:
   &gt; Exchange: 1 TWD ≈ 42 KRW / 5 JPY
 
 ─────────────────────────────────────────
-Scenario B — Remote Work Trip (Fukuoka Work Mode)
+Scenario B, Remote Work Trip (Fukuoka Work Mode)
 AI detects Nomad Mode, auto-prioritizes:
 
-  ## 🖥️ Workspace Guide — Fukuoka
+  ## 🖥️ Workspace Guide, Fukuoka
   | Location           | Wi-Fi  | Outlet | Hours        |
   | Starbucks Tenjin   | 50Mbps | ✅     | 07:00–22:00  |
   | &amp;And Hostel Hakata | 80Mbps | ✅     | 24hr (guest) |
 
-→ The UI layout isn't a fixed template — it grows from this trip's characteristics</code></pre>
+→ The UI layout isn't a fixed template, it grows from this trip's characteristics</code></pre>
     </div>
    </div>
   </div>
@@ -754,7 +756,7 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       'page.title': 'AI Trip Planner',
       'page.subtitle': 'A conversational Claude Code AI Skill that turns scattered travel research into structured, in-depth travel experiences.',
       'intro.label.overview': 'Project Origin:',
-      'intro.overview.body': 'As a travel enthusiast, I wanted to share my upcoming Korea → Japan trip with friends and decided to do what everyone online was doing — <span class="stat-hi">Vibe Coding</span> a website. But as the Claude Code trend swept the tech world, and after using Claude Code Skills extensively at work, a new idea took shape: what if I turned my trip-planning method into a structured <a href="https://agentskills.io/what-are-skills" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Skill</a> — so that anyone could become their own <span class="stat-hi">travel planner</span> and set off on the journey they truly want?',
+      'intro.overview.body': 'As a travel enthusiast, I wanted to share my upcoming Korea → Japan trip with friends and decided to do what everyone online was doing, <span class="stat-hi">Vibe Coding</span> a website. But as the Claude Code trend swept the tech world, and after using Claude Code Skills extensively at work, a new idea took shape: what if I turned my trip-planning method into a structured <a href="https://agentskills.io/what-are-skills" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Skill</a>, so that anyone could become their own <span class="stat-hi">travel planner</span> and set off on the journey they truly want?',
       'intro.label.role': 'My Role:',
       'intro.role.body': 'Product Designer, Full-stack Developer, AI Prompt Engineer. <span class="stat-hi">Claude Code Skill</span>, MCP, HTML/CSS/JS',
       'intro.label.time': 'Timeframe:',
@@ -762,29 +764,29 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       'intro.label.repo': 'Open Source:',
       'intro.repo.body': 'github.com/ralinzain-star/trip-planner-skill ↗',
       's00.title': 'When design artifacts are no longer the designer’s defining axis',
-      's00.body': 'In the AI era, if the design artifact (Output) is no longer the defining axis of a designer’s work, where does a designer’s value manifest? In the past, our sense of achievement came from pixel-perfect craft — grid systems, color specs, we were the "final reviewers" of product visuals and interactions. But as generative AI and <span class="stat-hi">Vibe Coding</span> sweep in, when a prompt or a set of structured data can instantly produce a beautiful interface, we must honestly confront a shift: <span class="stat-hi">"defining problems" and "building frameworks" are becoming a designer’s most important skills</span>.',
+      's00.body': 'In the AI era, if the design artifact (Output) is no longer the defining axis of a designer’s work, where does a designer’s value manifest? In the past, our sense of achievement came from pixel-perfect craft, grid systems, color specs, we were the "final reviewers" of product visuals and interactions. But as generative AI and <span class="stat-hi">Vibe Coding</span> sweep in, when a prompt or a set of structured data can instantly produce a beautiful interface, we must honestly confront a shift: <span class="stat-hi">"defining problems" and "building frameworks" are becoming a designer’s most important skills</span>.',
       's03.title': 'Design Philosophy',
       's03.h1': 'Dialogue as Interface',
-      's03.b1': 'Trip planning is inherently fragmented and deeply personal. People rarely want to fill out cold forms — they prefer to talk through their needs. I defined <span class="stat-hi">conversation as the core interface</span>. Through natural, multi-turn contextual dialogue, the AI simulates the questioning logic of a professional tour guide, progressively refining the plan, letting the interface flow with the user\'s thinking.',
+      's03.b1': 'Trip planning is inherently fragmented and deeply personal. People rarely want to fill out cold forms, they prefer to talk through their needs. I defined <span class="stat-hi">conversation as the core interface</span>. Through natural, multi-turn contextual dialogue, the AI simulates the questioning logic of a professional tour guide, progressively refining the plan, letting the interface flow with the user\'s thinking.',
       's03.h2': 'Experience-Driven',
-      's03.b2': 'The trip webpage is just one form of visual output — the <span class="stat-hi">planning process itself</span> is the soul of this product. The essence of travel lies in the experience: what do you want to feel in a foreign place? How in control of your budget do you feel? How do you balance the everyday with unexpected surprises? I placed the design emphasis on the guided conversation upfront. This isn\'t just data collection — it\'s helping users complete a deep process of self-clarification, reclaiming the spontaneous spirit of travel. Real design happens in the dialogue: clarifying intent, resolving anxiety, and ultimately sending someone on a trip that is truly their own.',
+      's03.b2': 'The trip webpage is just one form of visual output, the <span class="stat-hi">planning process itself</span> is the soul of this product. The essence of travel lies in the experience: what do you want to feel in a foreign place? How in control of your budget do you feel? How do you balance the everyday with unexpected surprises? I placed the design emphasis on the guided conversation upfront. This isn\'t just data collection, it\'s helping users complete a deep process of self-clarification, reclaiming the spontaneous spirit of travel. Real design happens in the dialogue: clarifying intent, resolving anxiety, and ultimately sending someone on a trip that is truly their own.',
       's04.title': 'Key Decisions',
       's04.skill.label': 'What is a Skill?',
-      's04.skill.body': 'An <a href="https://agentskills.io/what-are-skills" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Agent Skill</a> is a lightweight, open format for extending AI agents. Each skill is a folder with a <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code> instruction file — plus optional scripts, templates, and reference materials. The agent reads the instructions on demand, gaining deep, specialized capabilities while staying fast.',
-      's04.intro': 'On the technical side, I made a core shift: abandoning rigid fill-in templates in favor of designing a structured <span class="stat-hi">Markdown as the semantic protocol for the UI</span>. This MD document doesn\'t just carry travel information — it directly defines the orchestration logic of the UI.',
+      's04.skill.body': 'An <a href="https://agentskills.io/what-are-skills" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Agent Skill</a> is a lightweight, open format for extending AI agents. Each skill is a folder with a <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code> instruction file, plus optional scripts, templates, and reference materials. The agent reads the instructions on demand, gaining deep, specialized capabilities while staying fast.',
+      's04.intro': 'On the technical side, I made a core shift: abandoning rigid fill-in templates in favor of designing a structured <span class="stat-hi">Markdown as the semantic protocol for the UI</span>. This MD document doesn\'t just carry travel information, it directly defines the orchestration logic of the UI.',
       's04.d1.title': 'Semantic Mapping',
-      's04.d1.body': 'I defined a mapping ruleset where different Markdown syntax tags directly trigger specific design system components. <span class="stat-hi">Data tables</span> are parsed and rendered as interactive budget dashboards with dynamic filtering. <span class="stat-hi">Lists</span> — based on content characteristics — automatically render as checkbox-equipped packing checklists. <span class="stat-hi">Geo-links</span> are recognized by the engine and automatically pinned on the underlying interactive map.',
+      's04.d1.body': 'I defined a mapping ruleset where different Markdown syntax tags directly trigger specific design system components. <span class="stat-hi">Data tables</span> are parsed and rendered as interactive budget dashboards with dynamic filtering. <span class="stat-hi">Lists</span>, based on content characteristics, automatically render as checkbox-equipped packing checklists. <span class="stat-hi">Geo-links</span> are recognized by the engine and automatically pinned on the underlying interactive map.',
       's04.d2.title': 'Giving AI Orchestration Authority',
-      's04.d2.body': 'Markdown is the AI\'s native language. Through MD, I handed the orchestration authority back to the AI, letting it <span class="stat-hi">spontaneously design the layout</span> based on each trip\'s characteristics. For an international flight itinerary, the AI autonomously decides to generate a warning block. For a remote-work-focused trip, it prioritizes a Workspace Guide section. The UI structure is no longer fixed — it <span class="stat-hi">grows from the content</span>.',
+      's04.d2.body': 'Markdown is the AI\'s native language. Through MD, I handed the orchestration authority back to the AI, letting it <span class="stat-hi">spontaneously design the layout</span> based on each trip\'s characteristics. For an international flight itinerary, the AI autonomously decides to generate a warning block. For a remote-work-focused trip, it prioritizes a Workspace Guide section. The UI structure is no longer fixed, it <span class="stat-hi">grows from the content</span>.',
       's04.d1.ex1': 'Data Table → Budget Dashboard',
       's04.d1.ex2': 'Geo-link → Interactive Map',
-      's04.d1.code1': 'MD Syntax                                Renders As\n──────────────────────────────────     ──────────────────────────\n| Item   | Cost  | Status    |              Interactive Budget Dashboard\n| Flight | $420 | Confirmed |        →     Filter by city / category\n| Hotel  | $850 | Pending   |              Real-time totals + remaining budget\n| Dining | $30  | —         |',
+      's04.d1.code1': 'MD Syntax                                Renders As\n──────────────────────────────────     ──────────────────────────\n| Item   | Cost  | Status    |              Interactive Budget Dashboard\n| Flight | $420 | Confirmed |        →     Filter by city / category\n| Hotel  | $850 | Pending   |              Real-time totals + remaining budget\n| Dining | $30  |,         |',
       's04.d1.code2': 'MD Syntax                                Renders As\n──────────────────────────────────     ──────────────────────────\n[Tsukiji Market](geo:35.6654,139.7707)    Leaflet Interactive Map\n[Sensō-ji](geo:35.7148,139.7967)     →     Auto-pin coordinates\n[Shinjuku Gyoen](geo:35.6852,139.7100)    Color-coded by date + route lines',
-      's04.d2.code': 'Scenario A — International Trip (Korea → Japan)\nAI detects border crossing, auto-inserts at page top:\n\n  > ⚠️ Entry Requirements\n  > Korea: K-ETA required (apply 72hr ahead)\n  > Japan: Visa-free 90 days, but fill out Visit Japan Web\n  > Exchange: 1 TWD ≈ 42 KRW / 5 JPY\n\n─────────────────────────────────────────\nScenario B — Remote Work Trip (Fukuoka Work Mode)\nAI detects Nomad Mode, auto-prioritizes:\n\n  ## 🖥️ Workspace Guide — Fukuoka\n  | Location           | Wi-Fi  | Outlet | Hours        |\n  | Starbucks Tenjin   | 50Mbps | ✅     | 07:00–22:00  |\n  | &And Hostel Hakata | 80Mbps | ✅     | 24hr (guest) |\n\n→ The UI layout isn’t a fixed template — it grows from this trip’s characteristics',
+      's04.d2.code': 'Scenario A, International Trip (Korea → Japan)\nAI detects border crossing, auto-inserts at page top:\n\n  > ⚠️ Entry Requirements\n  > Korea: K-ETA required (apply 72hr ahead)\n  > Japan: Visa-free 90 days, but fill out Visit Japan Web\n  > Exchange: 1 TWD ≈ 42 KRW / 5 JPY\n\n─────────────────────────────────────────\nScenario B, Remote Work Trip (Fukuoka Work Mode)\nAI detects Nomad Mode, auto-prioritizes:\n\n  ## 🖥️ Workspace Guide, Fukuoka\n  | Location           | Wi-Fi  | Outlet | Hours        |\n  | Starbucks Tenjin   | 50Mbps | ✅     | 07:00–22:00  |\n  | &And Hostel Hakata | 80Mbps | ✅     | 24hr (guest) |\n\n→ The UI layout isn’t a fixed template, it grows from this trip’s characteristics',
       's05.title': 'System Architecture',
       's05.intro': 'The system is split into two layers: a <span class="stat-hi">conversation orchestration layer</span> (the trip-planner skill that guides the user through a structured multi-phase dialogue with explicit confirmation gates) and a <span class="stat-hi">modular skill pipeline</span> (6 specialized sub-skills, each an independent module with its own <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code>, invoked conditionally by the orchestrator).',
       's05.layer1.label': 'Layer 1: Conversation Orchestration',
-      's05.layer1.body': 'The trip-planner skill acts as the orchestrator. It guides the user through a <span class="stat-hi">multi-phase structured dialogue</span>, with each phase ending in an explicit confirmation gate — the system never assumes, it always asks. Phases progress from research loading, through budget and preference gathering, to attraction selection (must-go vs. if-time-permits), then route optimization. Only after every phase is confirmed does the system proceed to generation.',
+      's05.layer1.body': 'The trip-planner skill acts as the orchestrator. It guides the user through a <span class="stat-hi">multi-phase structured dialogue</span>, with each phase ending in an explicit confirmation gate, the system never assumes, it always asks. Phases progress from research loading, through budget and preference gathering, to attraction selection (must-go vs. if-time-permits), then route optimization. Only after every phase is confirmed does the system proceed to generation.',
       's05.layer2.label': 'Layer 2: Modular Skill Pipeline',
       's05.layer2.body': 'Each Skill below is an independent module with its own <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code>. The orchestrator invokes them conditionally.',
       's05.layer2.code': 'travel-collector → flight-intelligence → trip-planner\n                                             ↓\n                            ui-style → trip-html-generator → trip-deployer\n\nEach module has its own SKILL.md; the orchestrator invokes conditionally:\n  • flight-intelligence  only when flights aren’t booked\n  • ui-style             only when the user selects a visual style',
@@ -796,7 +798,7 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's05.m5.body': 'Transforms confirmed trip data into a <span class="stat-hi">self-contained travel website</span>.',
       's05.m6.body': 'One-command deployment to GitHub Pages or Vercel, turning the site into a <span class="stat-hi">live URL</span>.',
       's06.title': 'Live Results',
-      's06.intro': 'This Skill generated the travel guide I actually used: <a href="https://ralinzain-star.github.io/busan-fukuoka/" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Busan & Fukuoka 14-Day Trip</a>. Below are the core features of the generated app — each one emerged organically from the Markdown semantic protocol.',
+      's06.intro': 'This Skill generated the travel guide I actually used: <a href="https://ralinzain-star.github.io/busan-fukuoka/" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Busan & Fukuoka 14-Day Trip</a>. Below are the core features of the generated app, each one emerged organically from the Markdown semantic protocol.',
       's06.f1.title': 'Splash & Overview Dashboard',
       's06.f1.body': 'A full-screen cover page with a personal travel photo backdrop opens to a <span class="stat-hi">live dashboard</span> with four stat cards, a seconds-precision countdown, and today’s timeline. Swipe up to enter; the cover flies away with a cubic-bezier animation.',
       's06.f1.img1.label': 'Splash Cover',
@@ -826,7 +828,7 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's06.f4.img3.label': 'Retrospective',
       's06.f4.img3.sub': 'Footprint · Budget review · Lessons',
       's06.f5.title': 'Time-aware Features & 4-Language i18n',
-      's06.f5.body': 'The site adapts to "what time is it now": a full-screen Today Overlay shifts its checklist based on days-until-departure (>7d / ≤7d / ≤3d / ≤1d). During the trip, today’s timeline dims past events and highlights the current one. All UI text, 8 category names, 14-day weather descriptions, and event titles are translated across <span class="stat-hi">zh-TW / English / 한국어 / 日本語</span> — 120+ keys, switching takes effect instantly.',
+      's06.f5.body': 'The site adapts to "what time is it now": a full-screen Today Overlay shifts its checklist based on days-until-departure (>7d / ≤7d / ≤3d / ≤1d). During the trip, today’s timeline dims past events and highlights the current one. All UI text, 8 category names, 14-day weather descriptions, and event titles are translated across <span class="stat-hi">zh-TW / English / 한국어 / 日本語</span>, 120+ keys, switching takes effect instantly.',
       's06.f5.img1.label': 'Before the Trip',
       's06.f5.img1.sub': '5 days countdown + pre-trip to-dos',
       's06.f5.img2.label': 'During the Trip',
@@ -834,7 +836,7 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's06.f5.img3.label': 'After the Trip',
       's06.f5.img3.sub': 'Trip Completed · 96 events · 5 cities',
       's07.title': 'Reflection',
-      's07.intro': 'The evolution of this project is a micro-experiment in "returning to the essence" — a recurring theme in product design. It began as a technology-driven exploration and ultimately arrived at an experience-centered solution.',
+      's07.intro': 'The evolution of this project is a micro-experiment in "returning to the essence", a recurring theme in product design. It began as a technology-driven exploration and ultimately arrived at an experience-centered solution.',
       's07.sub1': '1. Pivot of Value',
       's07.sub1.body': 'Looking back, this project went through three critical shifts in thinking:',
       's07.r1.title': 'Starting from "Vibe Coding an App"',
@@ -846,10 +848,10 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's07.sub2': '2. A Miniature of Product Design Evolution',
       's07.sub2.body': 'This "App → Skill → Experience" path mirrors the arc of contemporary product design. It tells us:',
       's07.b1': '<strong>Interfaces fade, but experiences endure:</strong> In the AI era, UI may be a byproduct of thinking. A designer’s job is no longer just defining "where the button goes" but <span class="stat-hi">how the system guides users into a fluid experience</span>.',
-      's07.b2': '<strong>Designers are value filters:</strong> Facing infinite AI possibilities, a designer’s core competency is <span class="stat-hi">defining what truly matters</span>. In this project, I filtered out excess features and kept budget confidence and digital nomad flexibility — what users actually need.',
+      's07.b2': '<strong>Designers are value filters:</strong> Facing infinite AI possibilities, a designer’s core competency is <span class="stat-hi">defining what truly matters</span>. In this project, I filtered out excess features and kept budget confidence and digital nomad flexibility, what users actually need.',
       's07.sub3': 'Returning to Design’s Origin',
       's07.sub3.body': 'This project taught me: the best product lets technology <span class="stat-hi">elegantly disappear</span> after completing its task.',
-      's07.conclusion': 'The initial Vibe Coding enthusiasm led me into the AI world; my designer’s instinct pulled me back beyond the tech framework to the essence of travel. We are entering an era of <span class="stat-hi">customized UI</span> — designers define system frameworks, AI handles execution, and users receive the purest, worry-free joy of exploration.'
+      's07.conclusion': 'The initial Vibe Coding enthusiasm led me into the AI world; my designer’s instinct pulled me back beyond the tech framework to the essence of travel. We are entering an era of <span class="stat-hi">customized UI</span>, designers define system frameworks, AI handles execution, and users receive the purest, worry-free joy of exploration.'
     },
     'zh-tw': {
       'nav.s00': '01.核心論點',
@@ -874,7 +876,7 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's03.h1': '對話即介面',
       's03.b1': '旅行規劃本質上是高度碎片化且具備個人色彩的過程。人們通常不喜歡填寫冰冷的表單，而是傾向透過交談來釐清需求。我將「對話」定義為<span class="stat-hi">核心介面</span>。透過多輪自然的來回互動（Contextual Turns），AI 模擬專業領隊的提問邏輯，在對話中逐步精煉旅行計畫，讓介面隨使用者的思緒流動。',
       's03.h2': '體驗驅動',
-      's03.b2': '行程網頁只是一種視覺化呈現方式，而<span class="stat-hi">「規劃過程」本身才是這項產品的靈魂</span>。旅行的真諦在於體驗內容：你想要在異國感受到什麼？你對預算的掌控感如何？以及如何在日常與「日常之外」的驚喜之間找到平衡？我將設計重點放在前期的引導對話。這不只是在收集資料，而是在協助使用者完成一場深度的自我梳理，找回旅行中「隨性探索」的本質。真正的設計發生在對話中——幫助使用者釐清意圖、解決焦慮，並最終送他們踏上一場真正屬於自己的旅程。',
+      's03.b2': '行程網頁只是一種視覺化呈現方式，而<span class="stat-hi">「規劃過程」本身才是這項產品的靈魂</span>。旅行的真諦在於體驗內容：你想要在異國感受到什麼？你對預算的掌控感如何？以及如何在日常與「日常之外」的驚喜之間找到平衡？我將設計重點放在前期的引導對話。這不只是在收集資料，而是在協助使用者完成一場深度的自我梳理，找回旅行中「隨性探索」的本質。真正的設計發生在對話中，幫助使用者釐清意圖、解決焦慮，並最終送他們踏上一場真正屬於自己的旅程。',
       's04.title': '關鍵決策',
       's04.skill.label': '什麼是 Skill？',
       's04.skill.body': '<a href="https://agentskills.io/what-are-skills" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Agent Skill</a> 是一種輕量、開放的格式，用於擴展 AI 代理的能力。每個 Skill 是一個包含 <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code> 指令檔的資料夾，可搭配腳本、範本與參考資料。代理按需讀取指令，既保持快速又能獲得深度的專業能力。',
@@ -885,13 +887,13 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's04.d2.body': 'Markdown 是 AI 的母語。透過 MD，我將編排的主導權交還給 AI，讓它根據這趟旅程的特性<span class="stat-hi">「自發性」地設計版面</span>。如果是一趟跨國飛行，AI 會自主決定生成警告區塊；如果是定點遠端辦公行程，則優先編排 Workspace Guide。UI 結構不再是固定的，而是<span class="stat-hi">隨內容「長」出來的</span>。',
       's04.d1.ex1': '資料表格 → 預算儀表板',
       's04.d1.ex2': '地理連結 → 互動地圖',
-      's04.d1.code1': 'MD 寫法                                渲染為\n──────────────────────────────────     ──────────────────────────\n| 項目 | 費用  | 狀態      |              互動式預算儀表板\n| 機票 | $420 | Confirmed |        →     可依城市/類別動態篩選\n| 飯店 | $850 | Pending   |              即時加總 + 剩餘預算顯示\n| 餐飲 | $30  | —         |',
+      's04.d1.code1': 'MD 寫法                                渲染為\n──────────────────────────────────     ──────────────────────────\n| 項目 | 費用  | 狀態      |              互動式預算儀表板\n| 機票 | $420 | Confirmed |        →     可依城市/類別動態篩選\n| 飯店 | $850 | Pending   |              即時加總 + 剩餘預算顯示\n| 餐飲 | $30  |,         |',
       's04.d1.code2': 'MD 寫法                                渲染為\n──────────────────────────────────     ──────────────────────────\n[築地市場](geo:35.6654,139.7707)        Leaflet 互動地圖\n[淺草寺](geo:35.7148,139.7967)   →     自動標記座標點位\n[新宿御苑](geo:35.6852,139.7100)        依日期色彩分群 + 路線繪製',
-      's04.d2.code': '情境 A — 跨國旅行（韓國→日本）\nAI 偵測到跨境，自動在頁首插入：\n\n  > ⚠️ 入境須知\n  > 韓國：需申請 K-ETA（72hr 前）\n  > 日本：免簽 90 天，但須填寫 Visit Japan Web\n  > 匯率：1 TWD ≈ 42 KRW / 5 JPY\n\n─────────────────────────────────────────\n情境 B — 遠端辦公行程（福岡 Work Mode）\nAI 偵測到 Nomad Mode，自動優先編排：\n\n  ## 🖥️ Workspace Guide — Fukuoka\n  | 地點              | Wi-Fi  | 插座 | 營業時間      |\n  | Starbucks 天神店   | 50Mbps | ✅   | 07:00–22:00  |\n  | &And Hostel 博多  | 80Mbps | ✅   | 24hr (住客)  |\n\n→ UI 版面不是固定模板，而是隨「這趟旅程的特性」自動生長',
+      's04.d2.code': '情境 A, 跨國旅行（韓國→日本）\nAI 偵測到跨境，自動在頁首插入：\n\n  > ⚠️ 入境須知\n  > 韓國：需申請 K-ETA（72hr 前）\n  > 日本：免簽 90 天，但須填寫 Visit Japan Web\n  > 匯率：1 TWD ≈ 42 KRW / 5 JPY\n\n─────────────────────────────────────────\n情境 B, 遠端辦公行程（福岡 Work Mode）\nAI 偵測到 Nomad Mode，自動優先編排：\n\n  ## 🖥️ Workspace Guide, Fukuoka\n  | 地點              | Wi-Fi  | 插座 | 營業時間      |\n  | Starbucks 天神店   | 50Mbps | ✅   | 07:00–22:00  |\n  | &And Hostel 博多  | 80Mbps | ✅   | 24hr (住客)  |\n\n→ UI 版面不是固定模板，而是隨「這趟旅程的特性」自動生長',
       's05.title': '系統架構',
       's05.intro': '系統分為兩層：<span class="stat-hi">對話編排層</span>（引導使用者完成結構化多階段對話）與<span class="stat-hi">模組化 Skill 管線</span>（6 個專業 Sub-skill，每個模組都有自己的 <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code>，由編排器依條件呼叫）。',
       's05.layer1.label': 'Layer 1：對話編排 (Conversation Orchestration)',
-      's05.layer1.body': 'trip-planner 作為編排器，引導使用者完成<span class="stat-hi">多階段結構化對話</span>，每個階段結束時都有明確確認關卡——系統從不假設，只會詢問。流程從載入研究資料開始，歷經預算與偏好收集、景點篩選（分「必去」與「有時間再去」），到路線最佳化。唯有所有階段確認完畢，系統才會進入生成步驟。',
+      's05.layer1.body': 'trip-planner 作為編排器，引導使用者完成<span class="stat-hi">多階段結構化對話</span>，每個階段結束時都有明確確認關卡，系統從不假設，只會詢問。流程從載入研究資料開始，歷經預算與偏好收集、景點篩選（分「必去」與「有時間再去」），到路線最佳化。唯有所有階段確認完畢，系統才會進入生成步驟。',
       's05.layer2.label': 'Layer 2：模組化 Skill 管線 (Modular Skill Pipeline)',
       's05.layer2.body': '以下每個 Skill 都是擁有獨立 <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code> 的模組。編排器依條件呼叫。',
       's05.layer2.code': 'travel-collector → flight-intelligence → trip-planner\n                                             ↓\n                            ui-style → trip-html-generator → trip-deployer\n\n每個模組擁有獨立 SKILL.md，編排器依條件呼叫：\n  • flight-intelligence  僅在機票未訂時觸發\n  • ui-style             僅在使用者選擇視覺風格時啟動',
@@ -903,9 +905,9 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's05.m5.body': '將確認的行程資料轉化為<span class="stat-hi">自包含 (Self-contained) 旅行網站</span>。單一打包，不需後端伺服器。',
       's05.m6.body': '一鍵部署至 GitHub Pages、Netlify 或 Vercel，將本地端網站變成<span class="stat-hi">線上分享網址</span>。',
       's06.title': '實際成果',
-      's06.intro': '此 Skill 生成了我實際使用的旅行指南：<a href="https://ralinzain-star.github.io/busan-fukuoka/" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">釜山 & 福岡 14 天旅程</a>。以下是生成 App 的核心功能——每一項都從 Markdown 語義協議自然長出來。',
+      's06.intro': '此 Skill 生成了我實際使用的旅行指南：<a href="https://ralinzain-star.github.io/busan-fukuoka/" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">釜山 & 福岡 14 天旅程</a>。以下是生成 App 的核心功能，每一項都從 Markdown 語義協議自然長出來。',
       's06.f1.title': 'Splash 封面與概覽儀表板',
-      's06.f1.body': '全螢幕封面頁以使用者個人的旅行照片為背景，點開後進入<span class="stat-hi">即時儀表板</span>——四格統計卡、秒級倒數、當日時間軸一目了然。上滑進入，封面以 cubic-bezier 動畫飛走。',
+      's06.f1.body': '全螢幕封面頁以使用者個人的旅行照片為背景，點開後進入<span class="stat-hi">即時儀表板</span>，四格統計卡、秒級倒數、當日時間軸一目了然。上滑進入，封面以 cubic-bezier 動畫飛走。',
       's06.f1.img1.label': 'Splash 封面',
       's06.f1.img1.sub': '自訂背景 · 上滑進入 · 當日預覽',
       's06.f1.img2.label': 'Overview 儀表板',
@@ -933,7 +935,7 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's06.f4.img3.label': '旅程回顧',
       's06.f4.img3.sub': '足跡 · 預算對比 · 經驗',
       's06.f5.title': '時間感知功能與四語 i18n',
-      's06.f5.body': '網站會根據「現在是什麼時候」自動調整：全螢幕 Today Overlay 依出發天數（>7 天 / ≤7 天 / ≤3 天 / ≤1 天）切換待辦清單；旅行中的當日時間軸會讓已過事件變淡、進行中高亮。所有 UI 文字、8 種分類、14 天天氣描述與事件名都翻譯為<span class="stat-hi">繁中 / English / 한국어 / 日本語</span>——120+ keys 切換即時生效。',
+      's06.f5.body': '網站會根據「現在是什麼時候」自動調整：全螢幕 Today Overlay 依出發天數（>7 天 / ≤7 天 / ≤3 天 / ≤1 天）切換待辦清單；旅行中的當日時間軸會讓已過事件變淡、進行中高亮。所有 UI 文字、8 種分類、14 天天氣描述與事件名都翻譯為<span class="stat-hi">繁中 / English / 한국어 / 日本語</span>，120+ keys 切換即時生效。',
       's06.f5.img1.label': '旅行前',
       's06.f5.img1.sub': '出發倒數 5 天 + 行前待辦',
       's06.f5.img2.label': '旅行中',
@@ -956,7 +958,7 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's07.b2': '<strong>設計師是價值的過濾器：</strong>面對無限的 AI 技術可能性，設計師的核心競爭力在於<span class="stat-hi">定義什麼是真正重要的</span>。在這個專案中，我過濾掉多餘的功能，留下了預算安全感與數位遊牧的彈性，這才是使用者真正需要的。',
       's07.sub3': '結語：回歸設計的初衷',
       's07.sub3.body': '這個專案讓我學會：最好的產品，是讓技術在完成任務後<span class="stat-hi">優雅地隱身</span>。',
-      's07.conclusion': '當初想用 Vibe Coding 寫 App 的熱情，引導我進入了 AI 的世界；而身為設計師的自覺，讓我最後跳脫了技術框架，回歸到旅行的初衷。我們正在進入一個<span class="stat-hi">客製化 UI</span> 的時代——設計師定義系統框架，AI 負責執行填充，而使用者得到的，是那份最純粹、無後顧之憂的探索喜悅。'
+      's07.conclusion': '當初想用 Vibe Coding 寫 App 的熱情，引導我進入了 AI 的世界；而身為設計師的自覺，讓我最後跳脫了技術框架，回歸到旅行的初衷。我們正在進入一個<span class="stat-hi">客製化 UI</span> 的時代，設計師定義系統框架，AI 負責執行填充，而使用者得到的，是那份最純粹、無後顧之憂的探索喜悅。'
     },
     'zh-cn': {
       'nav.s00': '01.核心论点',
@@ -981,7 +983,7 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's03.h1': '对话即界面',
       's03.b1': '旅行规划本质上是高度碎片化且具备个人色彩的过程。人们通常不喜欢填写冰冷的表单，而是倾向透过交谈来厘清需求。我将“对话”定义为<span class="stat-hi">核心界面</span>。透过多轮自然的来回互动（Contextual Turns），AI 模拟专业领队的提问逻辑，在对话中逐步精炼旅行计划，让界面随用户的思绪流动。',
       's03.h2': '体验驱动',
-      's03.b2': '行程网页只是一种可视化呈现方式，而<span class="stat-hi">“规划过程”本身才是这项产品的灵魂</span>。旅行的真谛在于体验内容：你想要在异国感受到什么？你对预算的掌控感如何？以及如何在日常与“日常之外”的惊喜之间找到平衡？我将设计重点放在前期的引导对话。这不只是在收集数据，而是在协助用户完成一场深度的自我梳理，找回旅行中“随性探索”的本质。真正的设计发生在对话中——帮助用户厘清意图、解决焦虑，并最终送他们踏上一场真正属于自己的旅程。',
+      's03.b2': '行程网页只是一种可视化呈现方式，而<span class="stat-hi">“规划过程”本身才是这项产品的灵魂</span>。旅行的真谛在于体验内容：你想要在异国感受到什么？你对预算的掌控感如何？以及如何在日常与“日常之外”的惊喜之间找到平衡？我将设计重点放在前期的引导对话。这不只是在收集数据，而是在协助用户完成一场深度的自我梳理，找回旅行中“随性探索”的本质。真正的设计发生在对话中，帮助用户厘清意图、解决焦虑，并最终送他们踏上一场真正属于自己的旅程。',
       's04.title': '关键决策',
       's04.skill.label': '什么是 Skill？',
       's04.skill.body': '<a href="https://agentskills.io/what-are-skills" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">Agent Skill</a> 是一种轻量、开放的格式，用于扩展 AI 代理的能力。每个 Skill 是一个包含 <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code> 指令文件的文件夹，可搭配脚本、模板与参考数据。代理按需读取指令，既保持快速又能获得深度的专业能力。',
@@ -992,13 +994,13 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's04.d2.body': 'Markdown 是 AI 的母语。透过 MD，我将编排的主导权交还给 AI，让它根据这趟旅程的特性<span class="stat-hi">“自发性”地设计版面</span>。如果是一趟跨国飞行，AI 会自主决定生成警告区块；如果是定点远程办公行程，则优先编排 Workspace Guide。UI 结构不再是固定的，而是<span class="stat-hi">随内容“长”出来的</span>。',
       's04.d1.ex1': '数据表格 → 预算仪表板',
       's04.d1.ex2': '地理链接 → 交互地图',
-      's04.d1.code1': 'MD 写法                                渲染为\n──────────────────────────────────     ──────────────────────────\n| 项目 | 费用  | 状态      |              交互式预算仪表板\n| 机票 | $420 | Confirmed |        →     可按城市/类别动态筛选\n| 酒店 | $850 | Pending   |              实时加总 + 剩余预算显示\n| 餐饮 | $30  | —         |',
+      's04.d1.code1': 'MD 写法                                渲染为\n──────────────────────────────────     ──────────────────────────\n| 项目 | 费用  | 状态      |              交互式预算仪表板\n| 机票 | $420 | Confirmed |        →     可按城市/类别动态筛选\n| 酒店 | $850 | Pending   |              实时加总 + 剩余预算显示\n| 餐饮 | $30  |,         |',
       's04.d1.code2': 'MD 写法                                渲染为\n──────────────────────────────────     ──────────────────────────\n[筑地市场](geo:35.6654,139.7707)        Leaflet 交互地图\n[浅草寺](geo:35.7148,139.7967)   →     自动标记坐标点位\n[新宿御苑](geo:35.6852,139.7100)        按日期色彩分群 + 路线绘制',
-      's04.d2.code': '情境 A — 跨国旅行（韩国→日本）\nAI 检测到跨境，自动在页首插入：\n\n  > ⚠️ 入境须知\n  > 韩国：需申请 K-ETA（72hr 前）\n  > 日本：免签 90 天，但须填写 Visit Japan Web\n  > 汇率：1 TWD ≈ 42 KRW / 5 JPY\n\n─────────────────────────────────────────\n情境 B — 远程办公行程（福冈 Work Mode）\nAI 检测到 Nomad Mode，自动优先编排：\n\n  ## 🖥️ Workspace Guide — Fukuoka\n  | 地点              | Wi-Fi  | 插座 | 营业时间      |\n  | Starbucks 天神店   | 50Mbps | ✅   | 07:00–22:00  |\n  | &And Hostel 博多  | 80Mbps | ✅   | 24hr (住客)  |\n\n→ UI 版面不是固定模板，而是随“这趟旅程的特性”自动生长',
+      's04.d2.code': '情境 A, 跨国旅行（韩国→日本）\nAI 检测到跨境，自动在页首插入：\n\n  > ⚠️ 入境须知\n  > 韩国：需申请 K-ETA（72hr 前）\n  > 日本：免签 90 天，但须填写 Visit Japan Web\n  > 汇率：1 TWD ≈ 42 KRW / 5 JPY\n\n─────────────────────────────────────────\n情境 B, 远程办公行程（福冈 Work Mode）\nAI 检测到 Nomad Mode，自动优先编排：\n\n  ## 🖥️ Workspace Guide, Fukuoka\n  | 地点              | Wi-Fi  | 插座 | 营业时间      |\n  | Starbucks 天神店   | 50Mbps | ✅   | 07:00–22:00  |\n  | &And Hostel 博多  | 80Mbps | ✅   | 24hr (住客)  |\n\n→ UI 版面不是固定模板，而是随“这趟旅程的特性”自动生长',
       's05.title': '系统架构',
       's05.intro': '系统分为两层：<span class="stat-hi">对话编排层</span>（引导用户完成结构化多阶段对话）与<span class="stat-hi">模块化 Skill 管线</span>（6 个专业 Sub-skill，每个模块都有自己的 <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code>，由编排器按条件调用）。',
       's05.layer1.label': 'Layer 1：对话编排 (Conversation Orchestration)',
-      's05.layer1.body': 'trip-planner 作为编排器，引导用户完成<span class="stat-hi">多阶段结构化对话</span>，每个阶段结束时都有明确确认关卡——系统从不假设，只会询问。流程从载入研究数据开始，历经预算与偏好收集、景点筛选（分“必去”与“有时间再去”），到路线优化。唯有所有阶段确认完毕，系统才会进入生成步骤。',
+      's05.layer1.body': 'trip-planner 作为编排器，引导用户完成<span class="stat-hi">多阶段结构化对话</span>，每个阶段结束时都有明确确认关卡，系统从不假设，只会询问。流程从载入研究数据开始，历经预算与偏好收集、景点筛选（分“必去”与“有时间再去”），到路线优化。唯有所有阶段确认完毕，系统才会进入生成步骤。',
       's05.layer2.label': 'Layer 2：模块化 Skill 管线 (Modular Skill Pipeline)',
       's05.layer2.body': '以下每个 Skill 都是拥有独立 <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code> 的模块。编排器按条件调用。',
       's05.layer2.code': 'travel-collector → flight-intelligence → trip-planner\n                                             ↓\n                            ui-style → trip-html-generator → trip-deployer\n\n每个模块拥有独立 SKILL.md，编排器按条件调用：\n  • flight-intelligence  仅在机票未订时触发\n  • ui-style             仅在用户选择视觉风格时启动',
@@ -1010,9 +1012,9 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's05.m5.body': '将确认的行程数据转化为<span class="stat-hi">自包含 (Self-contained) 旅行网站</span>。单一打包，不需后端服务器。',
       's05.m6.body': '一键部署至 GitHub Pages、Netlify 或 Vercel，将本地端网站变成<span class="stat-hi">在线分享网址</span>。',
       's06.title': '实际成果',
-      's06.intro': '此 Skill 生成了我实际使用的旅行指南：<a href="https://ralinzain-star.github.io/busan-fukuoka/" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">釜山 & 福冈 14 天旅程</a>。以下是生成 App 的核心功能——每一项都从 Markdown 语义协议自然生长。',
+      's06.intro': '此 Skill 生成了我实际使用的旅行指南：<a href="https://ralinzain-star.github.io/busan-fukuoka/" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">釜山 & 福冈 14 天旅程</a>。以下是生成 App 的核心功能，每一项都从 Markdown 语义协议自然生长。',
       's06.f1.title': 'Splash 封面与概览仪表板',
-      's06.f1.body': '全屏封面页以用户个人的旅行照片为背景，点开后进入<span class="stat-hi">实时仪表板</span>——四格统计卡、秒级倒数、当日时间轴一目了然。上滑进入，封面以 cubic-bezier 动画飞走。',
+      's06.f1.body': '全屏封面页以用户个人的旅行照片为背景，点开后进入<span class="stat-hi">实时仪表板</span>，四格统计卡、秒级倒数、当日时间轴一目了然。上滑进入，封面以 cubic-bezier 动画飞走。',
       's06.f1.img1.label': 'Splash 封面',
       's06.f1.img1.sub': '自定义背景 · 上滑进入 · 当日预览',
       's06.f1.img2.label': 'Overview 仪表板',
@@ -1040,7 +1042,7 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's06.f4.img3.label': '旅程回顾',
       's06.f4.img3.sub': '足迹 · 预算对比 · 经验',
       's06.f5.title': '时间感知功能与四语 i18n',
-      's06.f5.body': '网站会根据“现在是什么时候”自动调整：全屏 Today Overlay 依出发天数（>7 天 / ≤7 天 / ≤3 天 / ≤1 天）切换待办清单；旅行中的当日时间轴会让已过事件变淡、进行中高亮。所有 UI 文字、8 种分类、14 天天气描述与事件名都翻译为<span class="stat-hi">简中 / English / 한국어 / 日本語</span>——120+ keys 切换即时生效。',
+      's06.f5.body': '网站会根据“现在是什么时候”自动调整：全屏 Today Overlay 依出发天数（>7 天 / ≤7 天 / ≤3 天 / ≤1 天）切换待办清单；旅行中的当日时间轴会让已过事件变淡、进行中高亮。所有 UI 文字、8 种分类、14 天天气描述与事件名都翻译为<span class="stat-hi">简中 / English / 한국어 / 日本語</span>，120+ keys 切换即时生效。',
       's06.f5.img1.label': '旅行前',
       's06.f5.img1.sub': '出发倒数 5 天 + 行前待办',
       's06.f5.img2.label': '旅行中',
@@ -1063,7 +1065,7 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's07.b2': '<strong>设计师是价值的过滤器：</strong>面对无限的 AI 技术可能性，设计师的核心竞争力在于<span class="stat-hi">定义什么是真正重要的</span>。在这个项目中，我过滤掉多余的功能，留下了预算安全感与数字游牧的弹性，这才是用户真正需要的。',
       's07.sub3': '结语：回归设计的初衷',
       's07.sub3.body': '这个项目让我学会：最好的产品，是让技术在完成任务后<span class="stat-hi">优雅地隐身</span>。',
-      's07.conclusion': '当初想用 Vibe Coding 写 App 的热情，引导我进入了 AI 的世界；而身为设计师的自觉，让我最后跳脱了技术框架，回归到旅行的初衷。我们正在进入一个<span class="stat-hi">定制化 UI</span> 的时代——设计师定义系统框架，AI 负责执行填充，而用户得到的，是那份最纯粹、无后顾之忧的探索喜悦。'
+      's07.conclusion': '当初想用 Vibe Coding 写 App 的热情，引导我进入了 AI 的世界；而身为设计师的自觉，让我最后跳脱了技术框架，回归到旅行的初衷。我们正在进入一个<span class="stat-hi">定制化 UI</span> 的时代，设计师定义系统框架，AI 负责执行填充，而用户得到的，是那份最纯粹、无后顾之忧的探索喜悦。'
     },
     'ja': {
       'nav.s00': '01.テーゼ (Thesis)',
@@ -1099,9 +1101,9 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's04.d2.body': 'Markdown は AI の母国語です。MD を通じて、編成の主導権を AI に返し、各旅程の特性に基づいて<span class="stat-hi">「自発的に」レイアウトをデザイン</span>させます。国際フライトの旅程なら AI が自律的に警告ブロックを生成し、リモートワーク旅なら Workspace Guide を優先編成します。UI 構造はもはや固定ではなく、<span class="stat-hi">コンテンツから「育つ」</span>ものになりました。',
       's04.d1.ex1': 'データテーブル → 予算ダッシュボード',
       's04.d1.ex2': 'ジオリンク → インタラクティブマップ',
-      's04.d1.code1': 'MD 記法                                  レンダリング結果\n──────────────────────────────────     ──────────────────────────\n| 項目   | 費用  | ステータス |              インタラクティブ予算ダッシュボード\n| 航空券 | $420 | Confirmed |        →     都市/カテゴリで動的フィルタ\n| ホテル | $850 | Pending   |              リアルタイム合計 + 残り予算\n| 食事   | $30  | —         |',
+      's04.d1.code1': 'MD 記法                                  レンダリング結果\n──────────────────────────────────     ──────────────────────────\n| 項目   | 費用  | ステータス |              インタラクティブ予算ダッシュボード\n| 航空券 | $420 | Confirmed |        →     都市/カテゴリで動的フィルタ\n| ホテル | $850 | Pending   |              リアルタイム合計 + 残り予算\n| 食事   | $30  |,         |',
       's04.d1.code2': 'MD 記法                                  レンダリング結果\n──────────────────────────────────     ──────────────────────────\n[築地市場](geo:35.6654,139.7707)        Leaflet インタラクティブマップ\n[浅草寺](geo:35.7148,139.7967)   →     自動座標ピン留め\n[新宿御苑](geo:35.6852,139.7100)        日付別色分け + ルート描画',
-      's04.d2.code': 'シナリオ A — 国際旅行（韓国→日本）\nAI が国境越えを検知し、ページ先頭に自動挿入：\n\n  > ⚠️ 入国要件\n  > 韓国：K-ETA の申請が必要（72 時間前）\n  > 日本：ビザ免除 90 日、ただし Visit Japan Web の記入が必要\n  > 為替：1 TWD ≈ 42 KRW / 5 JPY\n\n─────────────────────────────────────────\nシナリオ B — リモートワーク旅（福岡 Work Mode）\nAI が Nomad Mode を検知し、自動優先編成：\n\n  ## 🖥️ Workspace Guide — Fukuoka\n  | 場所               | Wi-Fi  | コンセント | 営業時間     |\n  | Starbucks 天神店    | 50Mbps | ✅         | 07:00–22:00 |\n  | &And Hostel 博多   | 80Mbps | ✅         | 24hr (宿泊客) |\n\n→ UI レイアウトは固定テンプレートではなく、「この旅の特性」に応じて自動的に育つ',
+      's04.d2.code': 'シナリオ A, 国際旅行（韓国→日本）\nAI が国境越えを検知し、ページ先頭に自動挿入：\n\n  > ⚠️ 入国要件\n  > 韓国：K-ETA の申請が必要（72 時間前）\n  > 日本：ビザ免除 90 日、ただし Visit Japan Web の記入が必要\n  > 為替：1 TWD ≈ 42 KRW / 5 JPY\n\n─────────────────────────────────────────\nシナリオ B, リモートワーク旅（福岡 Work Mode）\nAI が Nomad Mode を検知し、自動優先編成：\n\n  ## 🖥️ Workspace Guide, Fukuoka\n  | 場所               | Wi-Fi  | コンセント | 営業時間     |\n  | Starbucks 天神店    | 50Mbps | ✅         | 07:00–22:00 |\n  | &And Hostel 博多   | 80Mbps | ✅         | 24hr (宿泊客) |\n\n→ UI レイアウトは固定テンプレートではなく、「この旅の特性」に応じて自動的に育つ',
       's05.title': 'システム構成',
       's05.intro': 'システムは 2 つのレイヤーで構成されています：<span class="stat-hi">会話オーケストレーション層</span>（構造化マルチフェーズ対話にユーザーを導く）と<span class="stat-hi">モジュラー Skill パイプライン</span>（6 つの専門 Sub-skill。各モジュールは独自の <code style="font-size:0.9em;background:rgba(0,0,0,0.06);padding:2px 5px;border-radius:4px;">SKILL.md</code> を持ち、条件に応じてオーケストレーターが呼び出します）。',
       's05.layer1.label': 'Layer 1：会話オーケストレーション',
@@ -1117,7 +1119,7 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's05.m5.body': '確定した旅程データを<span class="stat-hi">自己完結型 (Self-contained) トラベルウェブサイト</span>に変換します。単一バンドルで、サーバーは不要です。',
       's05.m6.body': 'GitHub Pages、Netlify、または Vercel へワンコマンドでデプロイし、ローカルサイトを<span class="stat-hi">共有可能なライブ URL</span> に変換します。',
       's06.title': '実際の成果',
-      's06.intro': 'この Skill が、私が実際に使用したトラベルガイドを生成しました：<a href="https://ralinzain-star.github.io/busan-fukuoka/" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">釜山 & 福岡 14 日間の旅</a>。以下は生成された App の主要機能——すべて Markdown セマンティックプロトコルから自然に生まれたものです。',
+      's06.intro': 'この Skill が、私が実際に使用したトラベルガイドを生成しました：<a href="https://ralinzain-star.github.io/busan-fukuoka/" target="_blank" rel="noreferrer" style="text-decoration:underline;font-weight:500;">釜山 & 福岡 14 日間の旅</a>。以下は生成された App の主要機能、すべて Markdown セマンティックプロトコルから自然に生まれたものです。',
       's06.f1.title': 'スプラッシュ & 概要ダッシュボード',
       's06.f1.body': 'ユーザーがアップロードした旅行写真を背景にした全画面カバーから、<span class="stat-hi">ライブダッシュボード</span>へ。4 つの統計カード、秒精度のカウントダウン、本日のタイムラインが一目で確認できます。上スワイプで進入、カバーは cubic-bezier アニメーションで飛び去ります。',
       's06.f1.img1.label': 'スプラッシュカバー',
@@ -1147,7 +1149,7 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's06.f4.img3.label': 'レトロスペクティブ',
       's06.f4.img3.sub': '足跡 · 予算対比 · 学び',
       's06.f5.title': '時間認識機能と 4 言語 i18n',
-      's06.f5.body': 'サイトは「今がいつか」に応じて自動調整：全画面 Today Overlay は出発までの日数（>7 日 / ≤7 日 / ≤3 日 / ≤1 日）でチェックリストを切り替え、旅行中のタイムラインは過去のイベントをフェードし、進行中を強調します。すべての UI テキスト、8 つのカテゴリ名、14 日分の天気説明、イベント名が<span class="stat-hi">繁中 / English / 한국어 / 日本語</span>に翻訳済み——120+ キー、切り替えは即座に反映されます。',
+      's06.f5.body': 'サイトは「今がいつか」に応じて自動調整：全画面 Today Overlay は出発までの日数（>7 日 / ≤7 日 / ≤3 日 / ≤1 日）でチェックリストを切り替え、旅行中のタイムラインは過去のイベントをフェードし、進行中を強調します。すべての UI テキスト、8 つのカテゴリ名、14 日分の天気説明、イベント名が<span class="stat-hi">繁中 / English / 한국어 / 日本語</span>に翻訳済み、120+ キー、切り替えは即座に反映されます。',
       's06.f5.img1.label': '旅行前',
       's06.f5.img1.sub': '出発まで 5 日 + 旅前 To-do',
       's06.f5.img2.label': '旅行中',
@@ -1167,10 +1169,10 @@ Other styles: swiss-minimalist | botanical | neo-brutalism
       's07.sub2': '2. プロダクトデザイン進化の縮図',
       's07.sub2.body': 'この「App → Skill → Experience」という道筋は、現代のプロダクトデザイン進化の縮図です。それは次のことを教えてくれます：',
       's07.b1': '<strong>UI は消えても体験は残る：</strong>AI 時代において、UI は思考の副産物かもしれません。デザイナーの仕事はもはや「ボタンをどこに置くか」を定義するだけでなく、<span class="stat-hi">システムがいかにユーザーをなめらかな体験へと導くか</span>を定義することです。',
-      's07.b2': '<strong>デザイナーは価値のフィルター：</strong>無限の AI 技術の可能性に直面したとき、デザイナーのコア競争力は<span class="stat-hi">真に重要なものを定義すること</span>にあります。このプロジェクトでは余分な機能を削ぎ落とし、予算の安心感とデジタルノマドの柔軟性を残しました——それこそがユーザーが本当に必要としているものです。',
+      's07.b2': '<strong>デザイナーは価値のフィルター：</strong>無限の AI 技術の可能性に直面したとき、デザイナーのコア競争力は<span class="stat-hi">真に重要なものを定義すること</span>にあります。このプロジェクトでは余分な機能を削ぎ落とし、予算の安心感とデジタルノマドの柔軟性を残しました、それこそがユーザーが本当に必要としているものです。',
       's07.sub3': '結び：デザインの原点へ',
       's07.sub3.body': 'このプロジェクトが教えてくれたこと：最高のプロダクトとは、技術がタスクを完了した後に<span class="stat-hi">優雅に姿を消す</span>ものです。',
-      's07.conclusion': 'Vibe Coding で App を作りたいという最初の情熱が AI の世界へと導いてくれました。そして、デザイナーとしての自覚が最終的に技術の枠を超え、旅の本質へと立ち返らせてくれました。私たちは<span class="stat-hi">カスタマイズされた UI</span> の時代へと突入しています——デザイナーがシステムのフレームワークを定義し、AI が実行と充填を担い、ユーザーが手にするのは、最も純粋で心配のない探索の喜びです。'
+      's07.conclusion': 'Vibe Coding で App を作りたいという最初の情熱が AI の世界へと導いてくれました。そして、デザイナーとしての自覚が最終的に技術の枠を超え、旅の本質へと立ち返らせてくれました。私たちは<span class="stat-hi">カスタマイズされた UI</span> の時代へと突入しています、デザイナーがシステムのフレームワークを定義し、AI が実行と充填を担い、ユーザーが手にするのは、最も純粋で心配のない探索の喜びです。'
     }
   };
 

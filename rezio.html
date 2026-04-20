@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>KKday Rezio · Iris Hsieh</title>
+  <link rel="icon" type="image/png" href="Logo.png" />
+  <link rel="apple-touch-icon" href="Logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -44,7 +46,7 @@
       padding: 16px 60px;
       display: flex; align-items: center;
     }
-    .nav-back {
+    .nav-back { white-space: nowrap; flex-shrink: 0;
       font-size: 13px; font-weight: 600;
       color: var(--muted);
       letter-spacing: 0.04em;
@@ -1217,7 +1219,7 @@
     @media (max-width: 640px) {
       /* Nav */
       .nav { padding: 12px 16px; gap: 12px; }
-      .nav-back { font-size: 11px; }
+      .nav-back { white-space: nowrap; flex-shrink: 0; font-size: 11px; }
       .nav-anchor { font-size: 10px; padding: 3px 7px; }
 
       /* Title bar */
@@ -1295,7 +1297,7 @@
 
 <!-- ── NAV ──────────────────────────────────────────── -->
 <nav class="nav">
-  <a class="nav-back" href="#work">← Iris Hsieh</a>
+  <a class="nav-back" href="index.html#island-work">← Iris Hsieh</a>
   <div class="nav-anchors">
     <a class="nav-anchor" href="#intro" data-i18n="nav.intro">.Intro</a>
     <a class="nav-anchor" href="#s01" data-i18n="nav.s01">01.Achievement</a>
