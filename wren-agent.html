@@ -382,13 +382,13 @@
 
 <!-- ── NAV ────────────────────────────────────────── -->
 <nav class="nav">
-  <a class="nav-back" href="/#work" data-i18n="nav.back">← Iris Hsieh</a>
+  <a class="nav-back" href="#work" data-i18n="nav.back">← Iris Hsieh</a>
   <div class="nav-anchors">
     <a class="nav-anchor" href="#intro" data-i18n="nav.intro">.Intro</a>
     <a class="nav-anchor" href="#s01" data-i18n="nav.s01">01.Archaeology</a>
     <a class="nav-anchor" href="#s02" data-i18n="nav.s02">02.Diagnosis &amp; Decision</a>
     <a class="nav-anchor" href="#s04" data-i18n="nav.s04">03.Solution</a>
-    <a class="nav-anchor" href="#s05" data-i18n="nav.s05">04.Rolling Confirmation</a>
+    <a class="nav-anchor" href="#s05" data-i18n="nav.s05">04.Closing Reflection</a>
   </div>
   <select class="nav-lang" id="nav-lang-select">
     <option value="en">EN</option>
@@ -411,7 +411,7 @@
   <div class="sec-inner" style="max-width:100%;padding:0;">
     <div class="intro-card">
       <div class="intro-photo">
-        <img src="/assets/wren-agent/cover.png" alt="Wren AI Agent — Ask to explore your data" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;" />
+        <img src="assets/wren-agent/cover.png" alt="Wren AI Agent — Ask to explore your data" style="width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;" />
       </div>
       <div class="intro-copy">
         <div class="text-block">
@@ -447,7 +447,7 @@
           <p class="h3" data-i18n="s01.gen1.label">Gen 1 · Ad-hoc Mode (2023–2024)</p>
           <p class="body" data-i18n="s01.gen1.body">The first generation was a classic linear pipeline — one-shot in, one-shot out — like a vending machine: feed it a precise instruction, and it returns SQL. Even today, despite a failure rate around <span class="stat-hi">19.5%</span>, the <span class="stat-hi">11%</span> of active projects still living in this mode drive nearly <span class="stat-hi">60%</span> of total traffic. These power users would rather tolerate failing one out of every five queries than give up direct control over the SQL.</p>
           <div style="margin-top:16px;">
-            <img src="/assets/wren-agent/result_answer-92eb121b06d7cfadc6952eac5d1d09b2.png" alt="Ad-hoc Mode — a single question returns a single textual answer" style="width:100%;border:1px solid var(--border);border-radius:6px;display:block;" />
+            <img src="assets/wren-agent/result_answer-92eb121b06d7cfadc6952eac5d1d09b2.png" alt="Ad-hoc Mode — a single question returns a single textual answer" style="width:100%;border:1px solid var(--border);border-radius:6px;display:block;" />
           </div>
         </div>
       </div>
@@ -457,7 +457,7 @@
           <p class="h3" data-i18n="s01.gen2.label">Gen 2 · Interactive Mode (2025.09)</p>
           <p class="body" data-i18n="s01.gen2.body">The second generation layered memory on top of the linear pipeline — what we called <em>True Thread Context</em>. Users no longer had to restate background with every question; the historical context carried forward, making continuous analysis possible. That layer pushed the error rate down to a near-perfect <span class="stat-hi-blue">0.29%</span>, and proved that conversation can absorb — and quietly correct — the small slips a pipeline makes along the way.</p>
           <div style="margin-top:16px;">
-            <img src="/assets/wren-agent/ask_change_color-e9d061b62eb374acb41fab5dcb4bfd8e.png" alt="Interactive Mode — iterating on a chart artifact through conversation" style="width:100%;border:1px solid var(--border);border-radius:6px;display:block;" />
+            <img src="assets/wren-agent/ask_change_color-e9d061b62eb374acb41fab5dcb4bfd8e.png" alt="Interactive Mode — iterating on a chart artifact through conversation" style="width:100%;border:1px solid var(--border);border-radius:6px;display:block;" />
           </div>
         </div>
       </div>
@@ -467,26 +467,7 @@
           <p class="h3" data-i18n="s01.gen3.label">Gen 3 · Agent Mode (2026)</p>
           <p class="body" data-i18n="s01.gen3.body">The third generation tore down the rigid pipeline entirely, replacing it with a <b>multi-agent, skill-based</b> system. Multiple agents collaborate dynamically around the user's current intent, pulling together the strengths of the first two generations — the resilience of conversation <em>and</em> the precision of technical execution.</p>
           <div style="margin-top:16px;">
-            <img src="/assets/wren-agent/mode-selection.png" alt="Agent Mode — mode selector exposing Agent, Interactive, and Ad-hoc modes" style="width:100%;border:1px solid var(--border);border-radius:6px;display:block;" />
-          </div>
-
-          <div class="reveal" style="margin-top:40px;display:flex;flex-direction:column;gap:16px;">
-            <p class="body" data-i18n="s01.gen3.r1"><em>If a designer no longer draws, is she still a designer? How do we measure the "goodness" of a creator when the traditional craft is automated? When the physical or digital "object" loses its primacy, what remains of the designer?</em></p>
-            <p class="body" data-i18n="s01.gen3.r2">These are the questions that haunt me as I build inside the realm of AI. In an era where the interface has been reduced to a simple chat bubble and a text box, what is left for us to do?</p>
-
-            <p class="h3" data-i18n="s01.gen3.h1" style="margin-top:16px;">The Death of Process, the Birth of Intent</p>
-            <p class="body" data-i18n="s01.gen3.h1b1">While in Bali, I encountered the work of Anthropic designer Jenny Wen, who famously declared that the <em>"design process is dead."</em> That sentence sent shockwaves through the design community. Yet, caught between the extremes of quiet meditation and the relentless monitoring of user data, I arrived at a realization: <b>we become designers because there is something we burn to create — a world we desperately want to see exist.</b></p>
-            <p class="body" data-i18n="s01.gen3.h1b2">The tools have multiplied and the noise has grown deafening, but the core philosophy remains unshaken. We must constantly ask ourselves:</p>
-            <ul class="bull-list">
-              <li data-i18n="s01.gen3.li1">What is the message we are trying to convey?</li>
-              <li data-i18n="s01.gen3.li2">What is the fundamental value we offer the user?</li>
-              <li data-i18n="s01.gen3.li3">What do we want the user to carry away after the interaction is over?</li>
-            </ul>
-
-            <p class="h3" data-i18n="s01.gen3.h2" style="margin-top:16px;">Beyond the Artifact</p>
-            <p class="body" data-i18n="s01.gen3.h2b1">The "design object" — the interface, the icon, the layout — is merely a vehicle. It is a waypoint in a larger journey. The essence of design has never been about the pixels; it has always been about <em>influence</em>.</p>
-            <p class="body" data-i18n="s01.gen3.h2b2">A mentor once told me: <b>"A designer must never give up on dialogue. The moment a designer stops communicating, design dies."</b></p>
-            <p class="body" data-i18n="s01.gen3.h2b3">As AI designers, our role has evolved. We are no longer just building tools; we are crafting the medium for dialogue itself. We design AI to converse with humanity — to inspire, to assist, to empower. Our ultimate goal is to encourage people to use AI to create things that influence others, sparking a virtuous cycle of creation and conversation.</p>
+            <img src="assets/wren-agent/mode-selection.png" alt="Agent Mode — mode selector exposing Agent, Interactive, and Ad-hoc modes" style="width:100%;border:1px solid var(--border);border-radius:6px;display:block;" />
           </div>
         </div>
       </div>
@@ -559,7 +540,7 @@
                 <span data-i18n="s04.replay">Replay</span>
               </button>
             </div>
-            <iframe data-src="/assets/wren-agent/chat-home.html?auto=a" src="/assets/wren-agent/chat-home.html?auto=a" loading="lazy" title="Guided discovery demo"></iframe>
+            <iframe data-src="assets/wren-agent/chat-home.html?auto=a" src="assets/wren-agent/chat-home.html?auto=a" loading="lazy" title="Guided discovery demo"></iframe>
           </div>
         </div>
         <div class="journey-copy">
@@ -588,7 +569,7 @@
                 <span data-i18n="s04.replay">Replay</span>
               </button>
             </div>
-            <iframe data-src="/assets/wren-agent/chat-home.html?auto=b" src="/assets/wren-agent/chat-home.html?auto=b" loading="lazy" title="Skill-driven autonomy demo"></iframe>
+            <iframe data-src="assets/wren-agent/chat-home.html?auto=b" src="assets/wren-agent/chat-home.html?auto=b" loading="lazy" title="Skill-driven autonomy demo"></iframe>
           </div>
         </div>
         <div class="journey-copy">
@@ -614,11 +595,27 @@
   <div class="sec-inner">
     <div class="sec-head reveal">
       <span class="sec-num">04.</span>
-      <span class="sec-title" data-i18n="s05.title">Make Control Transparent, Not Modal</span>
+      <span class="sec-title" data-i18n="s05.title">Closing Reflection — Beyond the Artifact</span>
     </div>
-    <div class="text-block reveal" style="margin-top:8px;gap:16px;">
+    <div class="text-block reveal" style="margin-top:8px;gap:14px;">
       <p class="body" data-i18n="s05.closing.body1">What we ultimately shipped was the <b>soul of the Strict Auditor</b> carried inside the <b>body of a lightweight conversation</b>.</p>
       <p class="body" data-i18n="s05.closing.body2">SQL inspection and logic debugging are no longer foreign objects living outside the experience — they become reasoning receipts available on demand. Removing Ad-hoc was an experiment in trust migration: when we successfully blocked errors at the <b>intent</b> stage and surfaced a smooth, transparent trail at the <b>execution</b> stage, users moved from being tedious inspectors to composed governors. The interface got simpler, yet users' sense of control over the AI reached a depth we hadn't been able to deliver before.</p>
+      <p class="body" data-i18n="s05.ref.r1" style="margin-top:10px;">While designing this product, I found myself wondering: if a designer no longer draws, is she still a designer? How do we measure the "goodness" of a creator when the traditional craft is automated? When the physical or digital "object" loses its primacy, what remains of the designer?</p>
+      <p class="body" data-i18n="s05.ref.r2">These are the questions that haunt me as I build inside the realm of AI. In an era where the interface has been reduced to a simple chat bubble and a text box, what is left for us to do?</p>
+
+      <p class="h3" data-i18n="s05.ref.h1" style="margin-top:10px;">The Death of Process, the Birth of Intent</p>
+      <p class="body" data-i18n="s05.ref.h1b1">While in Bali, I encountered the work of Anthropic designer Jenny Wen, who famously declared that the "design process is dead." That sentence sent shockwaves through the design community. Yet, caught between the extremes of quiet meditation and the relentless monitoring of user data, I arrived at a realization: <b>we become designers because there is something we burn to create, a world we desperately want to see exist.</b></p>
+      <p class="body" data-i18n="s05.ref.h1b2">The tools have multiplied and the noise has grown deafening, but the core philosophy remains unshaken. We must constantly ask ourselves:</p>
+      <ul class="bull-list" style="margin-top:-2px;">
+        <li data-i18n="s05.ref.li1">What is the message we are trying to convey?</li>
+        <li data-i18n="s05.ref.li2">What is the fundamental value we offer the user?</li>
+        <li data-i18n="s05.ref.li3">What do we want the user to carry away after the interaction is over?</li>
+      </ul>
+
+      <p class="h3" data-i18n="s05.ref.h2" style="margin-top:10px;">Beyond the Artifact</p>
+      <p class="body" data-i18n="s05.ref.h2b1">The "design object", the interface, the icon, the layout, is merely a vehicle. It is a waypoint in a larger journey. The essence of design has never been about the pixels; it has always been about influence.</p>
+      <p class="body" data-i18n="s05.ref.h2b2">A mentor once told me: <b>"A designer must never give up on dialogue. The moment a designer stops communicating, design dies."</b></p>
+      <p class="body" data-i18n="s05.ref.h2b3">As AI designers, our role has evolved. We are no longer just building tools; we are crafting the medium for dialogue itself. We design AI to converse with humanity, to inspire, to assist, to empower. Our ultimate goal is to encourage people to use AI to create things that influence others, sparking a virtuous cycle of creation and conversation.</p>
     </div>
   </div>
 </div>
@@ -688,7 +685,7 @@
       'nav.s01': '01.データ考古学',
       'nav.s02': '02.診断と決断',
       'nav.s04': '03.解決策',
-      'nav.s05': '04.結び',
+      'nav.s05': '04.むすび',
       'title.big': 'ひとつのプロダクト、3 つの心：会話型 BI を問い直す',
       'title.sub': '約 1 万件のクエリログから 3 つの技術世代を浮かび上がらせ、AI 駆動 BI の信頼アーキテクチャを描き直した。',
       'intro.overview.label': 'はじめに',
@@ -720,7 +717,7 @@
       's04.jB.s3': '<b>インライン Checkpoint</b> — Agent がその場で 1 つだけ確認（「顧客の定義はどちら？」）。ユーザーはチャット内でそのまま返せます。パネルは出ません。',
       's04.jB.s4': '<b>展開できる原語</b> — どの思考ステップも、SQL・ツール呼び出し・推論チェーンへ展開可能。モードを切り替えずにデバッグ完結。',
       's04.jB.s5': '最終レポートは <b>Receipt</b> 付きでストリーム。折りたためる SQL と判断の軌跡で、会話を離れずに検証できます。',
-      's05.title': 'コントロールは「モード」ではなく「透明性」で',
+      's05.title': 'むすびにかえて ——「つくったもの」の、その先へ',
       's05.closing.body1': '最終的に届けたのは、<b>厳格な監査人の魂</b>を<b>軽やかな対話の器</b>に宿したものでした。',
       's05.closing.body2': 'SQL 確認もロジックのデバッグも、もはや体験の外に置かれた「異物」ではありません。必要なときに呼び出せる思考の証跡として、体験の内側に溶け込んでいます。Ad-hoc を取り除くことは、信頼の受け渡しの実験でした。<b>意図</b>の段階でエラーを食い止め、<b>実行</b>の段階でなめらかな透明な軌跡を見せられれば、ユーザーは煩雑な検査役から、落ち着いたガバナーへと変わっていきます。インターフェースはずっとシンプルになり、それでも AI への手ごたえは、これまで届かなかった深さにまで達しました。',
       's01.title': 'The Setup — 1 つのプロダクトに宿る 3 つの技術地層',
@@ -731,18 +728,18 @@
       's01.gen2.body': '第 2 世代は、線形パイプラインの上に「記憶層」を重ねました——私たちが <em>True Thread Context</em>（真の対話文脈）と名づけたものです。ユーザーは毎回背景を説明し直す手間から解放され、履歴の文脈がそのまま引き継がれるように。連続的な分析が初めて成立しました。この構造はエラー率を <span class="stat-hi-blue">0.29%</span> までほぼ完璧に押し下げ、対話というメカニズムがパイプラインの小さなズレを吸収して直せることを証明しました。',
       's01.gen3.label': '第 3 世代 · Agent Mode (2026)',
       's01.gen3.body': '第 3 世代では、硬直した Pipeline をまるごと解体し、<b>Multi-agent × Skill-based</b> の構成に置き換えました。複数の Agent がユーザーのその時々の意図に合わせて動的に協働し、前 2 世代それぞれの強みをひとつに束ねます——対話の柔軟さと、実行の精度を、同時に。',
-      's01.gen3.r1': '<em>デザイナーが絵を描かなくなったら、それでも彼女はデザイナーなのだろうか。伝統的な手仕事が自動化されていく時代、「良い作り手」をどう測ればいいのか。物理的・デジタルを問わず「モノ」が中心にいなくなったとき、デザイナーに何が残るのか。</em>',
-      's01.gen3.r2': 'AI のただなかで何かを組み立てながら、私はこの問いに取り憑かれています。インターフェースがチャットの吹き出しとテキスト入力欄にまで削ぎ落とされたこの時代に、私たちにできることは何でしょうか。',
-      's01.gen3.h1': 'プロセスの死、意図の誕生',
-      's01.gen3.h1b1': 'バリに滞在していたとき、Anthropic のデザイナー Jenny Wen の仕事に出会いました。彼女は <em>「デザインプロセスは死んだ」</em> と言い切り、その言葉はデザインコミュニティに小さくない衝撃を走らせました。静かな瞑想と、ユーザーデータを絶えず見続ける緊張——そのあいだを行き来しながら、私はひとつの結論にたどり着きます。<b>私たちがデザイナーになるのは、どうしても作りたいものがあるから。見たい世界があるからです。</b>',
-      's01.gen3.h1b2': 'ツールは増え、ノイズもまた大きくなりました。それでも、核にある思想は揺らぎません。私たちは自分自身に、問い続けなければなりません。',
-      's01.gen3.li1': '私たちは、何を伝えようとしているのか？',
-      's01.gen3.li2': 'ユーザーに提供する、根本的な価値とは何か？',
-      's01.gen3.li3': 'この体験のあと、ユーザーに何を持ち帰ってほしいのか？',
-      's01.gen3.h2': '「つくったもの」の、その先へ',
-      's01.gen3.h2b1': '「デザインオブジェクト」——インターフェース、アイコン、レイアウト——は、あくまで乗り物にすぎません。それは、もっと長い旅の途中にある、通過点です。デザインの本質は、ピクセルの美しさではなく、<em>影響</em>そのものにあります。',
-      's01.gen3.h2b2': 'かつて、ある師からこんな言葉をもらいました。<b>「デザイナーは、対話をあきらめた瞬間に死ぬ。コミュニケーションをやめたら、そこでデザインも終わる。」</b>',
-      's01.gen3.h2b3': 'AI 時代のデザイナーとして、私たちの役割は変わりました。ツールそのものを作るのではなく、<b>対話の媒体</b>を設計している——そう捉えています。AI が人とことばを交わし、励まし、助け、力を添えるための場をつくる。そしてその先に、AI を使って誰かに影響を与える何かを生み出す人たちを増やしていきたい。創造と対話が循環する——そのきっかけになることが、私たちの目的です。',
+      's05.ref.r1': 'このプロダクトを設計しながら、ふと考え込んでしまいました。デザイナーがもう手を動かして描かないなら、それでも彼女はデザイナーなのでしょうか。伝統的な手仕事が自動化されていくこの時代、作り手の「良さ」はどう測ればいいのでしょう。物理的にせよデジタルにせよ、「モノ」がその中心性を失ったとき、デザイナーには何が残るのでしょうか。',
+      's05.ref.r2': 'AI の領域のなかで何かをつくりながら、私はいつもこの問いにつきまとわれています。インターフェースがたった一つのチャットの吹き出しと、一つのテキスト入力欄にまで削ぎ落とされたこの時代に、私たちにはいったい何ができるのでしょうか。',
+      's05.ref.h1': 'プロセスの死、意図の誕生',
+      's05.ref.h1b1': 'バリに滞在していたとき、Anthropic のデザイナー Jenny Wen の仕事に出会いました。彼女は「デザインプロセスは死んだ」と言い切り、その一文はデザインコミュニティに小さくない衝撃を走らせました。静かな瞑想と、ユーザーデータをひたすら見つめ続ける緊張。その両極のあいだを行き来しながら、私はひとつの答えにたどり着きます。<b>私たちがデザイナーになるのは、どうしても作らずにはいられないものがあるから。この世に見たくてたまらない世界があるからです。</b>',
+      's05.ref.h1b2': 'ツールは増え、ノイズもずっと大きくなりました。それでも、核心にある思想そのものは揺らぎません。私たちはいつも、自分自身に問い続けなければなりません。',
+      's05.ref.li1': '私たちが届けようとしているメッセージは、いったい何か。',
+      's05.ref.li2': 'ユーザーに差し出している、根源的な価値とは何か。',
+      's05.ref.li3': 'このやり取りが終わったあと、ユーザーに何を持ち帰ってほしいのか。',
+      's05.ref.h2': '「つくったもの」の、その先へ',
+      's05.ref.h2b1': '「デザインオブジェクト」、つまりインターフェース、アイコン、レイアウトは、あくまで一つの乗り物にすぎません。より長い旅の途中にある、通過点のひとつです。デザインの本質は、ピクセルの美しさにあったことなど一度もなく、いつだって影響力そのものでした。',
+      's05.ref.h2b2': 'かつて、ある師匠がこう言いました。<b>「デザイナーは、対話をあきらめた瞬間に死ぬ。伝えることをやめたら、そこでデザインも終わってしまう。」</b>',
+      's05.ref.h2b3': 'AI 時代のデザイナーとして、私たちの役割はすっかり変わりました。私たちはもう、ただツールを作っているのではなく、<b>対話そのものの媒体</b>をかたちづくっているのです。AI が人と言葉を交わし、人を励まし、助け、力づけるための場を設計する。そしてその先で、AI を使って誰かに影響を与える何かを生み出す人たちを、もっと増やしていきたい。創造と対話がお互いを呼び起こしていく。その循環のきっかけになることこそが、私たちの本当のゴールです。',
       's02.title': '診断と決断 ——「エキスパート・パラドックス」と Ad-hoc の正体',
       's02.intro': '数万件の Langfuse トレースを分析し、89 名のアクティブユーザーに深くインタビューした結果、プロダクトが技術アーキテクチャとユーザー認知のあいだで引き裂かれていることが見えてきました。旧来の線形アーキテクチャは、パフォーマンスを縛っていただけではありません。ユーザーの本当の意図そのものを、読み違えていたのです。',
       's02.part1.label': '洞察 01 · エキスパート・パラドックス —— 熟練するほど、挫折する',
@@ -760,7 +757,7 @@
       'nav.s01': '01.數據考古',
       'nav.s02': '02.診斷與決策',
       'nav.s04': '03.解決方案',
-      'nav.s05': '04.滾動確認',
+      'nav.s05': '04.結語',
       'title.big': '一個產品，三種心智：重新思考對話式 BI',
       'title.sub': '透過分析近萬筆使用者查詢數據，定義三個技術世代的分野，重新設計 AI 驅動 BI 的信任架構。',
       'intro.overview.label': '前言',
@@ -792,7 +789,7 @@
       's04.jB.s3': '<b>Inline checkpoint</b> — Agent 在對話中問一個澄清問題（「你說的客戶是哪種定義？」）。用戶在聊天中直接回答，不用面板。',
       's04.jB.s4': '<b>可展開的原語</b>——任何思考步驟都能展開成 SQL、tool call 或推理鏈。不用切換模式也能 debug。',
       's04.jB.s5': '最終報告串流進來，附帶 <b>Receipt</b>：可摺疊的 SQL + 決策軌跡，不離開對話就能核驗。',
-      's05.title': '讓控制權透明化，而非模式化',
+      's05.title': '結語：超越「作品」本身',
       's05.closing.body1': '我們最終實現的，是將<b>「嚴格稽核」的靈魂</b>繼承進<b>「輕量對話」的身軀</b>中。',
       's05.closing.body2': 'SQL 檢視與邏輯除錯不再是獨立於體驗之外的「異物」，而是隨時可供調用的思考憑證。移除 Ad-hoc 是一場關於信任移轉的實驗：當我們成功在<b>「意圖階段」</b>阻斷錯誤，並在<b>「執行階段」</b>提供流暢透明的軌跡，用戶便能從繁瑣的檢查員，轉化為從容的治理者。介面變簡單了，但用戶對 AI 的掌控力卻達到了前所未有的深度。',
       's01.title': 'The Setup — 一個產品中的三個技術地層',
@@ -803,18 +800,18 @@
       's01.gen2.body': '第二代在原本的線性 Pipeline 上疊了一層記憶，也就是我們稱為 <em>True Thread Context</em>（真實對話脈絡）的機制。用戶不再需要每一次提問都重新交代背景，歷史上下文會自動延續，讓連續性分析變得可能。這一層結構把錯誤率壓低到近乎完美的 <span class="stat-hi-blue">0.29%</span>，也證明了對話機制確實能吸收並修復 Pipeline 在執行中遺漏的小誤差。',
       's01.gen3.label': '第三代 · Agent Mode (2026)',
       's01.gen3.body': '第三代徹底拆掉僵硬的 Pipeline，換成 <b>Multi-agent 與 Skill-based</b> 的組合。多個 Agent 會依照用戶當下的意圖動態協作，把前兩代各自的優點收攏在一起——同時保有對話的韌性，與技術執行的精準。',
-      's01.gen3.r1': '<em>當一位設計師不再親手繪製，她還算是設計師嗎？當傳統的手藝被自動化取代，我們要如何衡量一位創作者是否「夠好」？當實體或數位上的「作品」不再處於核心時，設計師身上還剩下什麼？</em>',
-      's01.gen3.r2': '當我在 AI 的疆域裡打造產品，這些問題始終纏繞著我。當介面被簡化到只剩下一個對話氣泡與一個輸入框，身為設計師，我們還能做些什麼？',
-      's01.gen3.h1': '流程之死，意圖誕生',
-      's01.gen3.h1b1': '在峇里島時，我讀到 Anthropic 設計師 Jenny Wen 的文字，她公開宣告：<em>「設計流程已死」</em>。這句話在設計圈投下了不小的震盪。介於安靜冥想與緊盯用戶數據這兩個極端之間，我反覆沉澱之後，漸漸得到一個答案——<b>我們之所以成為設計師，是因為心裡有非做不可的事、有一個非常想看見的世界。</b>',
-      's01.gen3.h1b2': '工具變多了，噪音也更大了，但核心的哲學從未動搖。我們必須不斷追問自己：',
-      's01.gen3.li1': '我們想傳遞的訊息，究竟是什麼？',
-      's01.gen3.li2': '我們能提供給使用者的根本價值，究竟是什麼？',
-      's01.gen3.li3': '當這段互動結束後，我們希望使用者帶走什麼？',
-      's01.gen3.h2': '超越「作品」本身',
-      's01.gen3.h2b1': '「設計物件」——介面、圖示、版面——其實只是一個載體，是長旅程中的一個驛站。設計的本質從來不是像素的精巧，而是<em>影響力</em>本身。',
-      's01.gen3.h2b2': '一位前輩曾這樣告訴我：<b>「設計師永遠不能放棄對話。當設計師停止溝通的那一刻，設計也跟著死去。」</b>',
-      's01.gen3.h2b3': '作為 AI 時代的設計師，我們的角色早已改變。我們不再只是打磨工具，而是在塑造<b>對話本身的媒介</b>。我們設計 AI 與人類交談——去啟發、去協助、去賦能。我們最終想做的，是鼓勵更多人用 AI 創造出能影響他人的事物，讓創造與對話彼此滋養，形成一個正向的循環。',
+      's05.ref.r1': '<em>若一位設計師不再親手繪製，她還稱得上是設計師嗎？當傳統的手藝被自動化取代，我們要如何衡量一位創作者的「好」？當實體或數位上的「作品」不再處於核心時，設計師身上究竟還剩下什麼？</em>',
+      's05.ref.r2': '當我在 AI 的疆域裡持續打造產品，這些問題始終縈繞著我。在介面已經被簡化到只剩下一個對話氣泡與一個輸入框的時代，身為設計師，我們還能做些什麼？',
+      's05.ref.h1': '流程之死，意圖的誕生',
+      's05.ref.h1b1': '在峇里島時，我讀到 Anthropic 設計師 Jenny Wen 的文字，她公開宣告 <em>「設計流程已死」</em>。這句話在設計圈投下不小的震盪。在安靜冥想與緊盯用戶數據這兩個極端之間反覆來回，我終於沉澱出一個答案——<b>我們之所以成為設計師，是因為心裡有非創造不可的東西，有一個非常想看見它存在的世界。</b>',
+      's05.ref.h1b2': '工具變多了，雜音也更大了，但核心的哲學從未動搖。我們必須不斷地追問自己——',
+      's05.ref.li1': '我們想傳遞的訊息，究竟是什麼？',
+      's05.ref.li2': '我們提供給使用者的根本價值，究竟是什麼？',
+      's05.ref.li3': '當這段互動結束之後，我們希望使用者帶走什麼？',
+      's05.ref.h2': '超越「作品」本身',
+      's05.ref.h2b1': '「設計物件」——介面、圖示、版面——其實只是一個載體，只是更長的旅程中的一個驛站。設計的本質從來不是像素的精巧，始終是 <em>影響力</em> 本身。',
+      's05.ref.h2b2': '一位前輩曾這樣告訴我——<b>「設計師永遠不能放棄對話。當設計師停止溝通的那一刻，設計也隨之死去。」</b>',
+      's05.ref.h2b3': '身為 AI 時代的設計師，我們的角色早已不同。我們不再只是打磨工具，而是在塑造<b>對話本身的媒介</b>。我們設計 AI 與人類交談——為了啟發、為了協助、為了賦能。我們最終想做的，是鼓勵更多人用 AI 去創造出能影響他人的事物，讓創造與對話彼此呼應，形成一個正向循環。',
       's02.title': '診斷與決策：數據背後的「專家悖論」與 Ad-hoc 的身份解碼',
       's02.intro': '我們分析了上萬筆 Langfuse 追蹤數據，並深入訪談了 89 位活躍用戶，發現產品正陷於技術架構與用戶認知脫節的困境。這項研究揭示了舊有的線性架構不僅限制了系統性能，更誤解了用戶的真實意圖。',
       's02.part1.label': '洞察 01 · 專家悖論（Expert Paradox）—— 越專業，越挫折',
@@ -832,7 +829,7 @@
       'nav.s01': '01.数据考古',
       'nav.s02': '02.诊断与决策',
       'nav.s04': '03.解决方案',
-      'nav.s05': '04.滚动确认',
+      'nav.s05': '04.结语',
       'title.big': '一个产品，三种心智：重新思考对话式 BI',
       'title.sub': '通过分析近万条用户查询数据，定义三个技术世代的分野，重新设计 AI 驱动 BI 的信任架构。',
       'intro.overview.label': '前言',
@@ -864,7 +861,7 @@
       's04.jB.s3': '<b>Inline checkpoint</b> — Agent 在对话中问一个澄清问题（"你说的客户是哪种定义？"）。用户在聊天中直接回答，不用面板。',
       's04.jB.s4': '<b>可展开的原语</b>——任何思考步骤都能展开成 SQL、tool call 或推理链。不用切换模式也能 debug。',
       's04.jB.s5': '最终报告流式到达，附带 <b>Receipt</b>：可折叠的 SQL + 决策轨迹，不离开对话就能核验。',
-      's05.title': '让控制权透明化，而非模式化',
+      's05.title': '结语：超越"作品"本身',
       's05.closing.body1': '我们最终实现的，是将<b>「严格稽核」的灵魂</b>继承进<b>「轻量对话」的身躯</b>中。',
       's05.closing.body2': 'SQL 检视与逻辑调试不再是独立于体验之外的「异物」，而是随时可供调用的思考凭证。移除 Ad-hoc 是一场关于信任转移的实验：当我们成功在<b>「意图阶段」</b>阻断错误，并在<b>「执行阶段」</b>提供流畅透明的轨迹，用户便能从繁琐的检查员，转化为从容的治理者。界面变简单了，但用户对 AI 的掌控力却达到了前所未有的深度。',
       's01.title': 'The Setup — 一个产品中的三个技术地层',
@@ -875,18 +872,18 @@
       's01.gen2.body': '第二代在原本的线性 Pipeline 上叠了一层记忆，也就是我们称为 <em>True Thread Context</em>（真实对话脉络）的机制。用户不再需要每一次提问都重新交代背景，历史上下文会自动延续，让连续性分析变得可能。这一层结构把错误率压低到近乎完美的 <span class="stat-hi-blue">0.29%</span>，也证明了对话机制确实能吸收并修复 Pipeline 在执行中遗漏的小误差。',
       's01.gen3.label': '第三代 · Agent Mode (2026)',
       's01.gen3.body': '第三代彻底拆掉僵硬的 Pipeline，换成 <b>Multi-agent 与 Skill-based</b> 的组合。多个 Agent 会依照用户当下的意图动态协作，把前两代各自的优点收拢在一起——同时保有对话的韧性，与技术执行的精准。',
-      's01.gen3.r1': '<em>当一位设计师不再亲手绘制，她还算是设计师吗？当传统的手艺被自动化取代，我们要如何衡量一位创作者是否"够好"？当实体或数字上的"作品"不再处于核心时，设计师身上还剩下什么？</em>',
-      's01.gen3.r2': '当我在 AI 的领域里打造产品，这些问题始终萦绕着我。当界面被简化到只剩下一个对话气泡与一个输入框，身为设计师，我们还能做些什么？',
-      's01.gen3.h1': '流程之死，意图诞生',
-      's01.gen3.h1b1': '在巴厘岛时，我读到 Anthropic 设计师 Jenny Wen 的文字，她公开宣告：<em>"设计流程已死"</em>。这句话在设计圈投下了不小的震动。介于安静冥想与紧盯用户数据这两个极端之间，我反复沉淀之后，逐渐得到一个答案——<b>我们之所以成为设计师，是因为心里有非做不可的事、有一个非常想看见的世界。</b>',
-      's01.gen3.h1b2': '工具变多了，噪音也更大了，但核心的哲学从未动摇。我们必须不断追问自己：',
-      's01.gen3.li1': '我们想传递的信息，究竟是什么？',
-      's01.gen3.li2': '我们能提供给用户的根本价值，究竟是什么？',
-      's01.gen3.li3': '当这段互动结束之后，我们希望用户带走什么？',
-      's01.gen3.h2': '超越"作品"本身',
-      's01.gen3.h2b1': '"设计物件"——界面、图标、版面——其实只是一个载体，是长旅程中的一个驿站。设计的本质从来不是像素的精巧，而是<em>影响力</em>本身。',
-      's01.gen3.h2b2': '一位前辈曾这样告诉我：<b>"设计师永远不能放弃对话。当设计师停止沟通的那一刻，设计也随之死去。"</b>',
-      's01.gen3.h2b3': '作为 AI 时代的设计师，我们的角色早已改变。我们不再只是打磨工具，而是在塑造<b>对话本身的媒介</b>。我们设计 AI 与人类交谈——去启发、去协助、去赋能。我们最终想做的，是鼓励更多人用 AI 创造出能影响他人的事物，让创造与对话彼此滋养，形成一个正向的循环。',
+      's05.ref.r1': '<em>若一位设计师不再亲手绘制，她还称得上是设计师吗？当传统的手艺被自动化取代，我们要如何衡量一位创作者的"好"？当实体或数字上的"作品"不再处于核心时，设计师身上究竟还剩下什么？</em>',
+      's05.ref.r2': '当我在 AI 的疆域里持续打造产品，这些问题始终萦绕着我。在界面已经被简化到只剩下一个对话气泡与一个输入框的时代，身为设计师，我们还能做些什么？',
+      's05.ref.h1': '流程之死，意图的诞生',
+      's05.ref.h1b1': '在巴厘岛时，我读到 Anthropic 设计师 Jenny Wen 的文字，她公开宣告 <em>"设计流程已死"</em>。这句话在设计圈投下了不小的震动。在安静冥想与紧盯用户数据这两个极端之间反复来回，我终于沉淀出一个答案——<b>我们之所以成为设计师，是因为心里有非创造不可的东西，有一个非常想看见它存在的世界。</b>',
+      's05.ref.h1b2': '工具变多了，杂音也更大了，但核心的哲学从未动摇。我们必须不断地追问自己——',
+      's05.ref.li1': '我们想传递的信息，究竟是什么？',
+      's05.ref.li2': '我们提供给用户的根本价值，究竟是什么？',
+      's05.ref.li3': '当这段互动结束之后，我们希望用户带走什么？',
+      's05.ref.h2': '超越"作品"本身',
+      's05.ref.h2b1': '"设计物件"——界面、图标、版面——其实只是一个载体，只是更长旅程中的一个驿站。设计的本质从来不是像素的精巧，始终是 <em>影响力</em> 本身。',
+      's05.ref.h2b2': '一位前辈曾这样告诉我——<b>"设计师永远不能放弃对话。当设计师停止沟通的那一刻，设计也随之死去。"</b>',
+      's05.ref.h2b3': '身为 AI 时代的设计师，我们的角色早已不同。我们不再只是打磨工具，而是在塑造<b>对话本身的媒介</b>。我们设计 AI 与人类交谈——为了启发、为了协助、为了赋能。我们最终想做的，是鼓励更多人用 AI 去创造出能影响他人的事物，让创造与对话彼此呼应，形成一个正向循环。',
       's02.title': '诊断与决策：数据背后的「专家悖论」与 Ad-hoc 的身份解码',
       's02.intro': '我们分析了上万笔 Langfuse 追踪数据，并深入访谈了 89 位活跃用户，发现产品正陷于技术架构与用户认知脱节的困境。这项研究揭示了旧有的线性架构不仅限制了系统性能，更误解了用户的真实意图。',
       's02.part1.label': '洞察 01 · 专家悖论（Expert Paradox）—— 越专业，越挫折',
