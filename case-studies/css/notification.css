@@ -248,18 +248,26 @@ html { scroll-padding-top: 80px; }
       background: #b0a090;
     }
     .notif-flow { flex-direction: column; align-items: flex-start; gap: 20px; min-width: max-content; }
+    /* When viewport gets below the flow's intrinsic width, release the max-content
+       pin on the cat-grid row so the 8 category cards can wrap instead of forcing
+       the whole diagram to horizontal-scroll. */
+    @media (max-width: 1400px) {
+      .notif-flow { min-width: 0; }
+      .flow-row { flex-wrap: wrap; }
+    }
     .flow-row { display: flex; align-items: flex-start; gap: 0; }
     .flow-row-center { justify-content: center; }
-    /* Single horizontal row extending rightward — one column per card.
-       Parent .notif-flow has min-width: max-content so the full row is
-       reachable via horizontal scroll on narrow viewports. */
+    /* Wrap into multiple rows when narrow; cap each card at ~210px on wide
+       viewports so cards don't stretch out of proportion. auto-fit keeps
+       every card the same column width including dangling-row items.
+       Center the grid tracks so cards sit in the middle of the available space. */
     .cat-grid {
       display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(160px, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(180px, 210px));
       gap: 8px;
       flex: 1;
       min-width: 0;
+      justify-content: center;
     }
     .cat-card { background: #fffefb; border: 1px solid #e0d9d0; max-width: none; }
     .flow-arrow { display: flex; flex-direction: column; align-items: center; }
