@@ -307,6 +307,17 @@ html { scroll-padding-top: 80px; }
       line-height: 1.3;
       text-align: center;
     }
+    /* CJK languages — the mono font has no CJK glyphs, fall back to system,
+       and allow wrapping so the diagram doesn't get pushed wider than its frame. */
+    html[lang="ja"]    .loop-transfer-label,
+    html[lang="zh-TW"] .loop-transfer-label,
+    html[lang="zh-CN"] .loop-transfer-label {
+      font-family: inherit;
+      font-size: 10px;
+      letter-spacing: 0;
+      white-space: normal;
+      max-width: 96px;
+    }
     .loop-dot {
       --dot-color: rgba(255,255,255,0.6);
       width: 56px;

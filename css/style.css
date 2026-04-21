@@ -12,6 +12,7 @@
       --sidebar-border: #dbd4c9;   /* same as --border */
       --neon-green:   #c5dfc7;     /* sage green tint from hills */
       --neon-pink:    #f2d0d8;     /* soft pink tint from flowers */
+      --neon-yellow:  #ffe033;     /* bright yellow — inline emphasis in body text */
       --highlight-bg: #c5d9ec;     /* pale sky blue from photo */
       --nav-w:        200px;
     }
@@ -421,6 +422,15 @@
       vertical-align: middle;
     }
     .hl-pink { background: var(--neon-pink); }
+
+    /* Inline yellow highlight for body text (smaller than the headline .hl pill) */
+    .stat-hi {
+      background: var(--neon-yellow);
+      padding: 1px 4px;
+      border-radius: 4px;
+      font-weight: 600;
+      color: var(--text);
+    }
 
     .intro-bio {
       font-size: 13px;

@@ -46,6 +46,24 @@
     }
     .text-block { display: flex; flex-direction: column; gap: 8px; }
 
+    /* Narrow content blocks — constrain body/list width for readability.
+       Scoped to text flow sections (s02, s03, s01 conclusion) so full-width media blocks aren't touched. */
+    #s02 .text-block,
+    #s02 .bull-list,
+    #s03 > .sec-inner > .text-block,
+    #s01 > .sec-inner > .text-block {
+      max-width: 820px;
+    }
+    /* RWD — on narrow viewports, let content use the full available width */
+    @media (max-width: 720px) {
+      #s02 .text-block,
+      #s02 .bull-list,
+      #s03 > .sec-inner > .text-block,
+      #s01 > .sec-inner > .text-block {
+        max-width: 100%;
+      }
+    }
+
     /* Nav */
     .nav {
       position: sticky; top: 0; z-index: 100;
