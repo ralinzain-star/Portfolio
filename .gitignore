@@ -4,3 +4,8 @@
 _site/
 .jekyll-cache/
 node_modules/
+
+# Ad-hoc screen recordings (root only — asset videos in assets/ stay tracked)
+/*.mov
+/螢幕錄影*
+/Screen*Recording*
