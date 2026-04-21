@@ -71,24 +71,9 @@
           return;
         }
 
-        // Desktop: fly canvas to island
-        const vw = wrap.clientWidth, vh = wrap.clientHeight;
-        const TOP_PAD = 64;
-        const tx = -(el.offsetLeft - vw / 2 + el.offsetWidth / 2);
-        // Top-anchor so the island title stays visible; center short islands that fit comfortably.
-        const ty = el.offsetHeight + TOP_PAD * 2 <= vh
-          ? -(el.offsetTop - vh / 2 + el.offsetHeight / 2)
-          : -(el.offsetTop - TOP_PAD);
-        const from = { x: ox, y: oy }, to = { x: tx, y: ty };
-        const dur = 650, start = performance.now();
-        const ease = t => t < .5 ? 2*t*t : -1+(4-2*t)*t;
-        const step = now => {
-          const p = Math.min((now - start) / dur, 1), e2 = ease(p);
-          ox = from.x + (to.x - from.x) * e2;
-          oy = from.y + (to.y - from.y) * e2;
-          applyT(); if (p < 1) requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
+        // Desktop: fly canvas to island (delegate to the shared flyToIsland so
+        // sidebar, minimap, and hash-on-load all share the same centering math).
+        flyToIsland(id);
       });
     });
 
