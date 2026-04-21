@@ -111,16 +111,16 @@
       document.body.classList.add('sidebar-collapsed');
     }
 
-    // Compute the canvas translate that centers (or top-aligns) a given island.
+    // Compute the canvas translate that centers a given island within the viewport.
+    // Always centers vertically + horizontally, even for islands taller than the viewport
+    // (tall islands will clip equally at top/bottom — that's the trade-off for a truly
+    // centered anchor landing).
     // Re-measures viewport + element each call so late layout shifts (video metadata,
     // images loading, etc.) don't leave us stuck on a stale target.
     function islandTranslate(el) {
       const vw = wrap.clientWidth, vh = wrap.clientHeight;
-      const TOP_PAD = 64;
       const tx = -(el.offsetLeft - vw / 2 + el.offsetWidth / 2);
-      const ty = el.offsetHeight + TOP_PAD * 2 <= vh
-        ? -(el.offsetTop - vh / 2 + el.offsetHeight / 2)
-        : -(el.offsetTop - TOP_PAD);
+      const ty = -(el.offsetTop - vh / 2 + el.offsetHeight / 2);
       return { tx, ty };
     }
 
