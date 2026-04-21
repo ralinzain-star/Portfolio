@@ -111,9 +111,11 @@
     }
 
     // Minimap dot click → fly to island (reuse same fly logic)
+    let flyAnimFrame = null;
     function flyToIsland(id) {
       const el = document.getElementById('island-' + id);
       if (!el) return;
+      if (flyAnimFrame !== null) { cancelAnimationFrame(flyAnimFrame); flyAnimFrame = null; }
       const from = { x: ox, y: oy };
       const dur = 650, start = performance.now();
       const ease = t => t < .5 ? 2*t*t : -1+(4-2*t)*t;
@@ -124,16 +126,20 @@
         const p = Math.min((now - start) / dur, 1), e2 = ease(p);
         ox = from.x + (tx - from.x) * e2;
         oy = from.y + (ty - from.y) * e2;
-        applyT(); if (p < 1) requestAnimationFrame(step);
+        applyT();
+        if (p < 1) flyAnimFrame = requestAnimationFrame(step);
+        else flyAnimFrame = null;
       };
-      requestAnimationFrame(step);
+      flyAnimFrame = requestAnimationFrame(step);
       document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
       const sbItem = document.querySelector(`.sb-item[data-target="${id}"]`);
       if (sbItem) sbItem.classList.add('active');
     }
 
-    // Snap (no animation) — used as a post-load safety net for hash-on-load.
+    // Snap (no animation) — post-load safety net for hash-on-load.
+    // Skipped if fly animation is still running (fly re-measures target each frame).
     function snapToIsland(id) {
+      if (flyAnimFrame !== null) return;
       const el = document.getElementById('island-' + id);
       if (!el) return;
       const { tx, ty } = islandTranslate(el);
