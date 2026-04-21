@@ -751,9 +751,9 @@
 
     <!-- Time overlap · critical system behavior -->
     <div class="overlap-section">
-      <div class="overlap-head">Critical System Behavior</div>
-      <div class="overlap-title">The system flags the overlap · but makes you debug it rule by rule.</div>
-      <p class="overlap-body">When two bound rules share the same time window, saving shows which dates are overlapping. But the error stops there. There is no indication of which rules are in conflict, no direct link to the offending entries, and no suggested fix. The merchant has to manually scan every rule one by one to find the pair causing the collision · then figure out on their own how to resolve it.</p>
+      <div class="overlap-head" data-i18n="s03b.overlap.head">Critical System Behavior</div>
+      <div class="overlap-title" data-i18n="s03b.overlap.title">The system flags the overlap · but makes you debug it rule by rule.</div>
+      <p class="overlap-body" data-i18n="s03b.overlap.body">When two bound rules share the same time window, saving shows which dates are overlapping. But the error stops there. There is no indication of which rules are in conflict, no direct link to the offending entries, and no suggested fix. The merchant has to manually scan every rule one by one to find the pair causing the collision · then figure out on their own how to resolve it.</p>
       <div class="cal-wrap">
         <div class="cal-days">
           <div class="cal-day">MON</div>
@@ -797,14 +797,14 @@
           </div>
         </div>
         <div class="cal-legend">
-          <div class="cal-legend-item"><div class="cal-legend-dot a"></div>Rule A · Weekly Repeat · NT$2,050 / person</div>
-          <div class="cal-legend-item"><div class="cal-legend-dot b"></div>Rule B · Weekend · NT$2,300 / person</div>
-          <div class="cal-legend-item"><div class="cal-legend-dot overlap"></div>Sat &amp; Sun overlap · which price applies?</div>
+          <div class="cal-legend-item"><div class="cal-legend-dot a"></div><span data-i18n="s03b.overlap.legend.a">Rule A · Weekly Repeat · NT$2,050 / person</span></div>
+          <div class="cal-legend-item"><div class="cal-legend-dot b"></div><span data-i18n="s03b.overlap.legend.b">Rule B · Weekend · NT$2,300 / person</span></div>
+          <div class="cal-legend-item"><div class="cal-legend-dot overlap"></div><span data-i18n="s03b.overlap.legend.overlap">Sat &amp; Sun overlap · which price applies?</span></div>
         </div>
       </div>
       <div class="ofs-pain critical">
-        <span class="ofs-pain-tag">Critical Risk</span>
-        <p>The system resolves conflicts silently. There is no validation, no warning banner, and no conflict indicator in the Bound Rules table. Merchants only discover the problem when a customer reports an unexpected price · or never. This is the highest-severity usability failure in the legacy flow: a data integrity risk invisible to the person responsible for the data.</p>
+        <span class="ofs-pain-tag" data-i18n="s03b.overlap.critical.tag">Critical Risk</span>
+        <p data-i18n="s03b.overlap.critical.body">The system resolves conflicts silently. There is no validation, no warning banner, and no conflict indicator in the Bound Rules table. Merchants only discover the problem when a customer reports an unexpected price · or never. This is the highest-severity usability failure in the legacy flow: a data integrity risk invisible to the person responsible for the data.</p>
       </div>
     </div>
 

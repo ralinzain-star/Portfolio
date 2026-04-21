@@ -745,7 +745,7 @@ html { scroll-padding-top: 80px; }
       min-width: max-content;
       display: flex;
       flex-direction: row;
-      align-items: flex-start;
+      align-items: center;
       gap: 0;
       width: 100%;
       box-sizing: border-box;
@@ -806,22 +806,21 @@ html { scroll-padding-top: 80px; }
       line-height: 1.4;
       color: var(--text);
     }
-    /* Horizontal connector · plain line */
+    /* Horizontal connector · solid line with arrowhead */
     .prd-hline {
-      width: 24px;
-      min-width: 24px;
-      height: 1px;
-      background: #b0a090;
+      width: 28px;
+      min-width: 28px;
+      height: 1.5px;
+      background: #2b2520;
       flex-shrink: 0;
-      margin-top: 36px;
+      position: relative;
     }
-    /* Right column · packages stacked, connected via left border as fork */
+    /* Right column · packages stacked with rounded bracket fork */
     .prd-col-pkgs {
       display: flex;
       flex-direction: column;
       gap: 16px;
-      padding-left: 24px;
-      border-left: 1px solid #b0a090;
+      padding-left: 28px;
       position: relative;
       flex: 1;
       min-width: 0;
@@ -835,15 +834,28 @@ html { scroll-padding-top: 80px; }
       position: relative;
       min-width: 0;
     }
-    /* Horizontal arm from fork to each package node */
-    .prd-pkg-h::before {
+    /* Rounded bracket fork · top pkg curves top-left, bottom pkg curves bottom-left */
+    .prd-pkg-h:first-child::before {
       content: '';
       position: absolute;
-      left: -24px;
+      left: -28px;
       top: 20px;
-      width: 24px;
-      height: 1px;
-      background: #b0a090;
+      bottom: -8px;
+      width: 28px;
+      border-top: 1.5px solid #2b2520;
+      border-left: 1.5px solid #2b2520;
+      border-top-left-radius: 14px;
+    }
+    .prd-pkg-h:last-child::before {
+      content: '';
+      position: absolute;
+      left: -28px;
+      top: -8px;
+      height: 28px;
+      width: 28px;
+      border-bottom: 1.5px solid #2b2520;
+      border-left: 1.5px solid #2b2520;
+      border-bottom-left-radius: 14px;
     }
     /* Package node */
     .prd-node-pkg {
@@ -1136,8 +1148,7 @@ html { scroll-padding-top: 80px; }
     /* Pain callout */
     .ofs-pain {
       background: rgba(211,76,76,0.05);
-      border-left: 3px solid rgba(211,76,76,0.4);
-      border-radius: 0 6px 6px 0;
+      border-radius: 6px;
       padding: 8px 12px; margin-bottom: 8px;
       display: flex; flex-direction: column; gap: 4px;
     }
