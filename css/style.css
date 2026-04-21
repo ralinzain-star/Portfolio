@@ -409,6 +409,12 @@
       line-height: 1.08;
       margin-bottom: 24px;
     }
+    /* Include CJK font families in the headline chain so Japanese / Traditional
+       Chinese / Simplified Chinese characters render with a matching 700 weight
+       instead of falling back to a differently-weighted system font. */
+    html[lang="ja"]    .intro-headline { font-family: 'Noto Sans JP', 'Barlow', sans-serif; font-weight: 700; }
+    html[lang="zh-TW"] .intro-headline { font-family: 'Noto Sans TC', 'Barlow', sans-serif; font-weight: 700; }
+    html[lang="zh-CN"] .intro-headline { font-family: 'Noto Sans SC', 'Barlow', sans-serif; font-weight: 700; }
 
     .hl {
       display: inline-block;
