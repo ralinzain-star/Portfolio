@@ -3,10 +3,9 @@
   "configurations": [
     {
       "name": "portfolio",
-      "runtimeExecutable": "/Users/harmony/Library/Application Support/com.raycast.macos/NodeJS/runtime/18.18.2/bin/node",
-      "runtimeArgs": ["/Users/harmony/Documents/GitHub/Portfolio/scripts/serve.js"],
-      "port": 3001,
-      "autoPort": true
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "http-server", ".", "-p", "8765", "-c-1", "--silent"],
+      "port": 8765
     }
   ]
 }

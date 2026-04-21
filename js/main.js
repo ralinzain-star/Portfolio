@@ -60,12 +60,12 @@
         document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
         item.classList.add('active');
 
-        // Mobile: scroll to section + collapse nav
+        // Mobile: scroll to section center + collapse nav
         if (window.innerWidth <= 640) {
           document.body.classList.add('sidebar-collapsed');
           setTimeout(() => {
-            const headerH = document.querySelector('.sb-header').offsetHeight;
-            const top = el.getBoundingClientRect().top + window.scrollY - headerH - 12;
+            const rect = el.getBoundingClientRect();
+            const top = rect.top + window.scrollY - (window.innerHeight - rect.height) / 2;
             window.scrollTo({ top, behavior: 'smooth' });
           }, 60);
           return;
@@ -105,12 +105,8 @@
     // metadata, images loading, etc.) don't leave us stuck on a stale target.
     function islandTranslate(el) {
       const vw = wrap.clientWidth, vh = wrap.clientHeight;
-      const TOP_PAD = 64;
       const tx = -(el.offsetLeft - vw / 2 + el.offsetWidth / 2);
-      const fits = el.offsetHeight + TOP_PAD * 2 <= vh;
-      const ty = fits
-        ? -(el.offsetTop - vh / 2 + el.offsetHeight / 2)
-        : -(el.offsetTop - TOP_PAD);
+      const ty = -(el.offsetTop - vh / 2 + el.offsetHeight / 2);
       return { tx, ty };
     }
 
