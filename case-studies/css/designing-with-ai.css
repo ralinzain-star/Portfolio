@@ -108,7 +108,7 @@
     .sec.white { background: var(--bg-card); }
     .sec.cream { background: var(--bg); }
     .sec-inner {
-      width: 100%;
+      width: 100%; max-width: 1440px;
       display: flex; flex-direction: column; gap: 20px;
     }
     .sec-head {
