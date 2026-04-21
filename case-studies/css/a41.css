@@ -89,7 +89,7 @@ html { scroll-padding-top: 80px; }
     .sec.white { background: var(--bg-card); }
     .sec.cream { background: var(--bg); }
     .sec-inner {
-      width: 100%; max-width: 1400px;
+      width: 100%;
       display: flex; flex-direction: column; gap: 48px;
     }
 
@@ -128,7 +128,7 @@ html { scroll-padding-top: 80px; }
       display: flex; align-items: center; justify-content: center;
     }
     .title-bar-inner {
-      width: 100%; max-width: 1400px;
+      width: 100%;
       display: flex; flex-direction: column; gap: 12px;
     }
 
