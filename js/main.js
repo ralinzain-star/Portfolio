@@ -139,8 +139,10 @@
       dot.addEventListener('click', () => flyToIsland(dot.dataset.target));
     });
 
-    // Hash-on-load: fly to island if URL has #target (e.g. /#work from case study back button)
-    const hashTarget = location.hash.replace('#', '');
+    // Hash-on-load: fly to island if URL has #target (e.g. /#work or /#island-work from case study back button)
+    // Accept both short form (#work) and full form (#island-work) — case study back buttons use the full form.
+    let hashTarget = location.hash.replace('#', '');
+    if (hashTarget.startsWith('island-')) hashTarget = hashTarget.slice(7);
     if (hashTarget && document.getElementById('island-' + hashTarget)) {
       setTimeout(() => {
         flyToIsland(hashTarget);
