@@ -100,6 +100,12 @@
       border-bottom-color: transparent;
     }
 
+    .sb-logo {
+      width: 28px; height: 28px;
+      object-fit: contain;
+      flex-shrink: 0;
+      opacity: 0.8;
+    }
     .sb-name-wrap { flex: 1; min-width: 0; }
     .sb-name {
       font-size: 12px;
@@ -120,14 +126,14 @@
     .sb-grid-btn {
       width: 24px; height: 24px;
       border-radius: 6px;
-      background: rgba(43,37,32,0.05);
+      background: transparent;
       display: flex; align-items: center; justify-content: center;
       color: var(--sidebar-muted);
       cursor: pointer;
       flex-shrink: 0;
       transition: background 0.15s, color 0.15s;
     }
-    .sb-grid-btn:hover { background: rgba(43,37,32,0.1); color: var(--sidebar-text); }
+    .sb-grid-btn:hover { background: transparent; color: var(--sidebar-text); }
 
     /* section group label */
     .sb-group {
@@ -145,8 +151,8 @@
     /* globe logo in header */
     .sb-logo {
       width: 30px; height: 30px;
-      border-radius: 8px;
-      border: 1px solid var(--sidebar-border);
+      border-radius: 0;
+      border: none;
       display: flex; align-items: center; justify-content: center;
       color: var(--sidebar-muted);
       flex-shrink: 0;
@@ -1150,7 +1156,7 @@
     @media (max-width: 640px) {
 
       /* scroll, no grab cursor */
-      html, body { height: auto; overflow: auto; cursor: default; }
+      html, body { height: auto; overflow-x: hidden; overflow-y: auto; cursor: default; }
       body.panning { cursor: default; }
 
       /* sidebar → fixed top nav bar */

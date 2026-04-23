@@ -192,6 +192,16 @@
       history.replaceState(null, '', location.pathname);
     });
 
+    // Before navigating to a case study, stamp the current island hash so that
+    // browser-back returns to index.html#island-X and the fly logic restores position.
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href*="case-studies/"]');
+      if (!a) return;
+      const island = a.closest('[id^="island-"]');
+      if (!island) return;
+      history.replaceState(null, '', location.pathname + '#' + island.id);
+    });
+
     // ── LANGUAGE SWITCHER ──────────────────────────────────────────
     const i18n = {
       en: {
