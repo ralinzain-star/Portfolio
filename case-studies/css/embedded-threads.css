@@ -422,7 +422,7 @@ html { scroll-padding-top: 80px; }
     @container (max-width: 540px) {
       /* Mobile top bar: burger + title (20px Medium) + kebab + plus-circle, all 36×36.
          padding-top: 48px leaves room for the iPhone dynamic-island notch (Figma 2745:8053). */
-      .rwd-mock-top { padding: 48px 16px 12px; gap: 8px; }
+      .rwd-mock-top { padding: 54px 16px 12px; gap: 8px; height: auto; min-height: 98px; }
       .rwd-mock-burger { display: flex; margin-right: 4px; }
       .rwd-mock-input-wrap { padding-bottom: 28px; }
       .rwd-mock-plus { display: flex; }

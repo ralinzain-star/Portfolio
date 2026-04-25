@@ -30,8 +30,8 @@
     <a class="nav-anchor" href="#s01" data-i18n="nav.s01">01.Context</a>
     <a class="nav-anchor" href="#s02" data-i18n="nav.s02">02.Two Modes</a>
     <a class="nav-anchor" href="#s03" data-i18n="nav.s03">03.References</a>
-    <a class="nav-anchor" href="#s04" data-i18n="nav.s04">04.The System</a>
-    <a class="nav-anchor" href="#s05" data-i18n="nav.s05">05.Cross-Surface</a>
+    <a class="nav-anchor" href="#s04" data-i18n="nav.s04">04.Five Design Calls</a>
+    <a class="nav-anchor" href="#s05" data-i18n="nav.s05">05.One Embed, Anywhere</a>
     <a class="nav-anchor" href="#s06" data-i18n="nav.s06">06.Shipped</a>
   </div>
   <select class="nav-lang" id="nav-lang-select">
@@ -45,8 +45,8 @@
 <!-- ── TITLE BAR ──────────────────────────────────── -->
 <div class="title-bar">
   <div class="title-bar-inner">
-    <div class="title-big" data-i18n="title.big">Embedded Threads: Making Wren AI a First-Class Citizen Inside Other Products</div>
-    <div class="title-sub" data-i18n="title.sub">Designing the integration, authentication, quota, and error system that lets Wren AI's conversational BI live inside Notion, Tableau, and enterprise SaaS, without sacrificing tenancy, trust, or brand.</div>
+    <div class="title-big" data-i18n="title.big">Embedded Threads: Bringing BI to Where Decisions Actually Happen</div>
+    <div class="title-sub" data-i18n="title.sub">Designing a conversational BI surface that lives inside Notion sidebars, mobile bottom-sheets, and 393px phone screens, without losing its voice along the way.</div>
   </div>
 </div>
 
@@ -60,15 +60,15 @@
       <div class="intro-copy">
         <div class="text-block">
           <p class="h3" data-i18n="intro.overview.label">Project Overview</p>
-          <p class="body" data-i18n="intro.overview.body">Wren AI is an open-source, conversational BI product that lets business users ask questions of their data in natural language. Customers increasingly wanted Wren AI to live <em>inside</em> their own surfaces, a Notion sidebar, an internal SaaS dashboard, a Tableau panel, not in a separate tab. <b>Embedded Threads</b> is the feature I designed to make that possible: two integration modes, credit-based quota, audited activity, UI customization, and a thirteen-code error system that keeps the embedded surface graceful when things go wrong.</p>
+          <p class="body" data-i18n="intro.overview.body">Wren AI is a conversational BI product. What customers kept asking for wasn't another tab to open, it was a way to <em>ask their data questions where they already were</em>: a Notion sidebar on a laptop, a bottom-sheet modal on their phone, a panel in a Tableau dashboard between meetings. <b>Embedded Threads</b> is the surface I designed to live in those places, from a 1024px desktop split to a 393px phone screen, without losing what makes Wren AI itself.</p>
         </div>
         <div class="text-block">
           <p class="h3" data-i18n="intro.role.label">My Role</p>
-          <p class="body" data-i18n="intro.role.body"><span class="stat-hi">Sole designer</span> on a three-person delivery team, PM <b>Freda</b>, engineering lead <b>Andy Yen</b>, and me. I owned the end-to-end spec: mode architecture, authentication UX, customization surface, activity log schema, error-code taxonomy, and parity between SaaS and Self-hosted.</p>
+          <p class="body" data-i18n="intro.role.body"><span class="stat-hi">Sole designer.</span> I owned the embedded experience end to end, how it gets configured, how it adapts across screen sizes, what it says when something breaks, and how it behaves once it's living inside someone else's product.</p>
         </div>
         <div class="text-block">
           <p class="h3" data-i18n="intro.time.label">Company &amp; Timeframe</p>
-          <p class="body" data-i18n="intro.time.body">Wren AI · Feb – March 2026 · Shipped in SaaS 0.53.0 (Wren 2.0) and Self-hosted 1.9.0</p>
+          <p class="body" data-i18n="intro.time.body">Wren AI · Feb – March 2026 · 2 weeks</p>
         </div>
       </div>
     </div>
@@ -80,31 +80,30 @@
   <div class="sec-inner">
     <div class="sec-head reveal">
       <span class="sec-num">01.</span>
-      <span class="sec-title" data-i18n="s01.title">The Context, BI Products Live Inside Other Products Now</span>
+      <span class="sec-title" data-i18n="s01.title">BI Doesn't Live on a Dashboard Anymore. It Lives Where the Decision Is.</span>
     </div>
-    <p class="lede reveal" data-i18n="s01.lede">A conversational BI tool that only lives on its own domain is a tool people have to visit. The customers who stick are the ones who can bring data Q&amp;A to the place where decisions actually happen, a Notion doc, a Tableau dashboard, an internal operations SaaS. Embedding was not a nice-to-have; it was where the product was being pulled.</p>
+    <p class="lede reveal" data-i18n="s01.lede">A BI tool that only opens in its own tab is a tool people forget. The customers who actually used Wren AI were the ones who could pull it up while they were already mid-task, reading a Notion doc on the train, checking an internal dashboard from their phone in a meeting, glancing at a Tableau panel between slides. Embedding wasn't a nice-to-have. It was the difference between a tool people remember and a tool they don't.</p>
 
     <div class="pill-row reveal">
-      <span class="pill" data-i18n="s01.pill1">Target · Notion · Tableau · Internal SaaS</span>
-      <span class="pill" data-i18n="s01.pill2">Platforms · SaaS + Self-hosted</span>
-      <span class="pill" data-i18n="s01.pill3">Release · Wren 2.0 · March 20, 2026</span>
-      <span class="pill" data-i18n="s01.pill4">Constraint · 5-week ship window</span>
+      <span class="pill" data-i18n="s01.pill1">Surfaces · Notion · Mobile dashboards · Tableau</span>
+      <span class="pill" data-i18n="s01.pill2">Screen sizes · 393 → 1024px+</span>
+      <span class="pill" data-i18n="s01.pill3">Release · Wren 2.0 · March 2026</span>
+      <span class="pill" data-i18n="s01.pill4">Constraint · 2-week ship window</span>
     </div>
 
     <div class="two-col">
       <div class="text-block reveal">
-        <p class="h3" data-i18n="s01.why.label">Why embedding was blocking adoption</p>
-        <p class="body" data-i18n="s01.why.body">Enterprise buyers kept asking the same three questions in trials: <em>can my end-users see each other's data?</em>, <em>how do I cap spend per project?</em>, and <em>what happens when the embed breaks in front of my customers?</em>. Those are not "demo" questions, they are gating questions. A product that can't answer them cleanly doesn't make it into a procurement review.</p>
+        <p class="h3" data-i18n="s01.why.label">The behavior I was designing for</p>
+        <p class="body" data-i18n="s01.why.body">The clearest signal was watching how people actually asked their data questions. They weren't sitting at their desks. They were on phones during commutes, on tablets in meeting rooms, on laptops with three other tabs already open. The embed had to be a surface they could <span class="stat-hi">glance at, ask once, and act on</span>, without ever feeling like they'd left the host product to do it.</p>
       </div>
       <div class="text-block reveal">
         <p class="h3" data-i18n="s01.bet.label">The design bet</p>
-        <p class="body" data-i18n="s01.bet.body">Treat Embedded Threads as its own product surface, not a stripped-down version of the main app. That meant a distinct setup flow, a different UI-filtering policy, its own audit schema, and its own error vocabulary. The goal: a host product could adopt Wren AI in an afternoon, and a procurement team could accept it in a meeting.</p>
+        <p class="body" data-i18n="s01.bet.body">Treat Embedded Threads as its own surface, not a smaller version of the main app. That meant designing from the constraints inward: a 393px phone width, a bottom-sheet that animates up over content, a sidebar that's never wider than 30% of the host page. <em>If it worked at 393, it would work everywhere else. If it only worked at 1024, it didn't matter.</em></p>
       </div>
     </div>
 
-    <div class="insight reveal">
-      <span class="ins-label" data-i18n="s01.insight.label">The framing question</span>
-      <span data-i18n="s01.insight.body">What shape of embed does the host product actually want? A public widget that anyone reading the page can talk to, or a tenant-aware panel where each logged-in user only sees their own history? Answering that up front set the entire architecture.</span>
+    <div class="text-block reveal" style="margin-top:8px;">
+      <p class="body" data-i18n="s01.frame.body"><b>The framing question</b>, where will the user be when they ask this? Not what data model they need, not what permissions they should have, but <span class="stat-hi">physically where, on what screen, with how much attention</span>. Answering that first reordered every decision after.</p>
     </div>
   </div>
 </div>
@@ -114,59 +113,58 @@
   <div class="sec-inner">
     <div class="sec-head reveal">
       <span class="sec-num">02.</span>
-      <span class="sec-title" data-i18n="s02.title">Two Integration Modes, Naming the Trade-off Instead of Hiding It</span>
+      <span class="sec-title" data-i18n="s02.title">Two Modes, Built Around How People Actually Embed</span>
     </div>
-    <p class="lede reveal" data-i18n="s02.lede">The temptation was to build one "smart" embed mode that figured out tenancy on its own. The discipline was to refuse. Customers needed to see, in one screen, the trade-off between deploy speed and data isolation, and pick with eyes open.</p>
+    <p class="lede reveal" data-i18n="s02.lede">The tempting move was one "smart" mode that handled every case. The disciplined move was to refuse. Two clear surfaces, each tied to a real behavior, drop into a doc, or sign in and see your own history.</p>
 
     <div class="mode-grid">
       <div class="mode-card reveal">
         <span class="mode-eyebrow" data-i18n="s02.m1.eyebrow">Mode 01 · Public</span>
         <span class="mode-title" data-i18n="s02.m1.title">Public Embed</span>
-        <span class="mode-body" data-i18n="s02.m1.body">Drop-in URL / iframe. No login required. Every viewer sees the same shared threads, useful for Notion pages, public documentation, demo sites.</span>
+        <span class="mode-body" data-i18n="s02.m1.body">A shared chat. Anyone landing on the page sees the same threads, useful for Notion pages, public documentation, marketing sites.</span>
         <div class="mode-row">
           <span class="mode-key" data-i18n="s02.m1.k1">Best for</span>
           <span class="mode-val" data-i18n="s02.m1.v1">Notion sidebars, Tableau panels, public docs</span>
         </div>
         <div class="mode-row">
-          <span class="mode-key" data-i18n="s02.m1.k2">Isolation</span>
-          <span class="mode-val" data-i18n="s02.m1.v2">None. Threads are shared across all viewers.</span>
+          <span class="mode-key" data-i18n="s02.m1.k2">What the user sees</span>
+          <span class="mode-val" data-i18n="s02.m1.v2">One shared thread. Everyone reads the same conversation.</span>
         </div>
         <div class="mode-row">
           <span class="mode-key" data-i18n="s02.m1.k3">Setup</span>
-          <span class="mode-val" data-i18n="s02.m1.v3">Toggle on. Copy iframe. Done.</span>
+          <span class="mode-val" data-i18n="s02.m1.v3">Toggle on. Copy. Paste. Under a minute.</span>
         </div>
         <div class="mode-row">
           <span class="mode-key" data-i18n="s02.m1.k4">Default</span>
-          <span class="mode-val" data-i18n="s02.m1.v4"><b>Off</b>. User must opt in, we never ship an embed that leaks data by default.</span>
+          <span class="mode-val" data-i18n="s02.m1.v4"><b>Off.</b> The embed never ships in a state that could leak data accidentally.</span>
         </div>
       </div>
 
       <div class="mode-card primary reveal">
         <span class="mode-eyebrow" data-i18n="s02.m2.eyebrow">Mode 02 · Identity Verification</span>
         <span class="mode-title" data-i18n="s02.m2.title">Identity Verification Embed</span>
-        <span class="mode-body" data-i18n="s02.m2.body">JWT-signed. The host product authenticates the end-user, hands Wren AI a short-lived identity token, and each user only ever sees their own threads, multi-tenant by construction.</span>
+        <span class="mode-body" data-i18n="s02.m2.body">A personal chat. The host product hands off who the user is when the embed loads, so each person sees only their own history.</span>
         <div class="mode-row">
           <span class="mode-key" data-i18n="s02.m2.k1">Best for</span>
-          <span class="mode-val" data-i18n="s02.m2.v1">Enterprise SaaS, internal tools, anything with a login</span>
+          <span class="mode-val" data-i18n="s02.m2.v1">Mobile dashboards, internal SaaS, anything with a login</span>
         </div>
         <div class="mode-row">
-          <span class="mode-key" data-i18n="s02.m2.k2">Isolation</span>
-          <span class="mode-val" data-i18n="s02.m2.v2">Strict per-user. Threads are scoped to the identity on the token.</span>
+          <span class="mode-key" data-i18n="s02.m2.k2">What the user sees</span>
+          <span class="mode-val" data-i18n="s02.m2.v2">Their own threads, their own history. Nobody else's.</span>
         </div>
         <div class="mode-row">
           <span class="mode-key" data-i18n="s02.m2.k3">Setup</span>
-          <span class="mode-val" data-i18n="s02.m2.v3">Generate a shared secret. Sign a JWT on your backend. Pass it to the iframe.</span>
+          <span class="mode-val" data-i18n="s02.m2.v3">A bit more involved, the host product passes the user's identity in.</span>
         </div>
         <div class="mode-row">
-          <span class="mode-key" data-i18n="s02.m2.k4">Key hygiene</span>
-          <span class="mode-val" data-i18n="s02.m2.v4">Reset invalidates future iframe loads but keeps live sessions alive until their token expires, a deliberate grace-period so customers don't take down their own product by rotating keys.</span>
+          <span class="mode-key" data-i18n="s02.m2.k4">Why split</span>
+          <span class="mode-val" data-i18n="s02.m2.v4">A shared embed in a Notion doc and a personal embed in a logged-in mobile dashboard are two different products. Pretending they're the same makes both worse.</span>
         </div>
       </div>
     </div>
 
-    <div class="ofs-screenshot-placeholder reveal">
-      <div class="ofs-screenshot-icon">📸</div>
-      <div class="ofs-screenshot-label" data-i18n="s02.shot.label">screenshot: Embed settings page, mode toggle, secret-key panel, preview</div>
+    <div class="text-block reveal" style="margin-top:8px;">
+      <p class="body" data-i18n="s02.frame.body"><b>Naming the trade-off was the work.</b> An afternoon went into deciding <em>not</em> to merge the two. Once Public and Identity each had a name and a default, every later question, what shows when nobody's logged in, when threads should refresh, what the empty state says, had an obvious answer. <span class="stat-hi">Ambiguity in the model is the cost you pay later in the UI.</span></p>
     </div>
   </div>
 </div>
@@ -176,34 +174,33 @@
   <div class="sec-inner">
     <div class="sec-head reveal">
       <span class="sec-num">03.</span>
-      <span class="sec-title" data-i18n="s03.title">The Industry References, Learning from Metabase, Tableau, Power BI</span>
+      <span class="sec-title" data-i18n="s03.title">Watched the Neighbors First, Then Decided What Not to Copy</span>
     </div>
-    <p class="lede reveal" data-i18n="s03.lede">Embedded analytics is a mature space. Before opening Figma I spent a week reading how Metabase, Tableau, and Power BI solved the same problems, not to copy them, but to know where the accepted patterns ended and where we could still simplify.</p>
+    <p class="lede reveal" data-i18n="s03.lede">Embedded analytics isn't new. Before I opened Figma I spent a week with Metabase, Tableau, and Power BI, not to copy any of them, but to know where the industry converged and where I could still simplify.</p>
 
     <div class="ref-grid">
       <div class="ref-card reveal">
         <span class="ref-tag" data-i18n="s03.r1.tag">Open-source benchmark</span>
         <span class="ref-logo">Metabase</span>
-        <span class="ref-body" data-i18n="s03.r1.body">Static and Interactive embedding via JWT signing. Dynamic iframe resize via <span class="mono">postMessage</span>. Cleanest developer-side ergonomics in the space.</span>
-        <span class="ref-take" data-i18n="s03.r1.take">Borrowed: JWT trust model, postMessage for height sync.</span>
+        <span class="ref-body" data-i18n="s03.r1.body">What I saw: the lowest-friction path from "I want this in my doc" to "it's running." Cleanest first-run feel in the category.</span>
+        <span class="ref-take" data-i18n="s03.r1.take">What I took: that drop-in feeling. Customers shouldn't have to read a week of docs to try a v1.</span>
       </div>
       <div class="ref-card reveal">
         <span class="ref-tag" data-i18n="s03.r2.tag">Enterprise gold standard</span>
         <span class="ref-logo">Tableau</span>
-        <span class="ref-body" data-i18n="s03.r2.body">Connected Apps + EAS (External Authorization Servers), fine-grained JS API (v3): <span class="mono">filterTheView</span>, <span class="mono">getDataFromView</span>, event listeners.</span>
-        <span class="ref-take" data-i18n="s03.r2.take">Intentionally skipped: the programmatic JS SDK. Too heavy for our Notion/Tableau drop-in use case.</span>
+        <span class="ref-body" data-i18n="s03.r2.body">What I saw: every setting exposed, every behavior programmable. Powerful, but heavy.</span>
+        <span class="ref-take" data-i18n="s03.r2.take">What I skipped: the programmable surface. Most of our customers want to drop the embed into a Notion page or a mobile dashboard, not write code against an SDK.</span>
       </div>
       <div class="ref-card reveal">
         <span class="ref-tag" data-i18n="s03.r3.tag">Microsoft ecosystem</span>
         <span class="ref-logo">Power BI</span>
-        <span class="ref-body" data-i18n="s03.r3.body">Separates Access Token (user auth) from Embed Token (data authorization) for row-level security. Azure-AD-flavored, but the two-token separation is conceptually elegant.</span>
-        <span class="ref-take" data-i18n="s03.r3.take">Considered: two-token split. Rejected for v1, single JWT is enough for the current tenancy model.</span>
+        <span class="ref-body" data-i18n="s03.r3.body">What I saw: identity and data permissions handled as separate concerns. Conceptually elegant.</span>
+        <span class="ref-take" data-i18n="s03.r3.take">What I parked for v2: that two-layer split. For v1 customers, one layer is enough, the second is design overhead, not value.</span>
       </div>
     </div>
 
-    <div class="insight reveal">
-      <span class="ins-label" data-i18n="s03.takeaway.label">What we took away</span>
-      <span data-i18n="s03.takeaway.body">The industry converges on JWT-based trust and postMessage for cross-origin UI sync. Where we diverged: <b>no JS SDK required</b>. A customer should be able to ship v1 with a copy-pasted iframe tag and a single backend function that signs a JWT, nothing more.</span>
+    <div class="text-block reveal" style="margin-top:8px;">
+      <p class="body" data-i18n="s03.takeaway.body"><b>The principle I walked away with</b>, do what the industry agrees on, and don't do what the industry over-does. <span class="stat-hi">"Copy-paste a snippet and you're running"</span> became the bar for v1, and that one sentence shaped every embed setup screen that followed.</p>
     </div>
   </div>
 </div>
@@ -213,29 +210,29 @@
   <div class="sec-inner">
     <div class="sec-head reveal">
       <span class="sec-num">04.</span>
-      <span class="sec-title" data-i18n="s04.title">The System, Quota, Activity, Customization, Error Handling</span>
+      <span class="sec-title" data-i18n="s04.title">Five Design Calls Running in Parallel</span>
     </div>
-    <p class="lede reveal" data-i18n="s04.lede">Picking the mode is step one. Four parallel systems had to work beneath it: credit-based usage limits, a full audit trail, host-side brand customization, and a thirteen-code error vocabulary. Each one had its own set of edge cases, and each one had to feel native when rendered inside someone else's product.</p>
+    <p class="lede reveal" data-i18n="s04.lede">Picking the mode was step one. Underneath sat five design problems that had to land at the same time, usage limits, activity records, brand customization, what to hide from the main app, and how to talk when something breaks. Each had its own edge cases, and each had to feel like a local resident inside someone else's product.</p>
 
     <!-- Feature 1: Quota -->
     <div class="feature-block reveal" style="margin-top:16px;">
       <div>
-        <div class="feature-eyebrow" data-i18n="s04.f1.eyebrow">Feature 01 · Quota</div>
-        <div class="feature-title" data-i18n="s04.f1.title">Web Credit caps, per project, auto-reset monthly</div>
+        <div class="feature-eyebrow" data-i18n="s04.f1.eyebrow">01 · Usage limits</div>
+        <div class="feature-title" data-i18n="s04.f1.title">Don't let the embed burn a month of budget overnight</div>
       </div>
       <div class="text-block">
-        <p class="body" data-i18n="s04.f1.body">Every embedded interaction burns Web Credits. Without a cap, a buggy client embed could drain a customer's budget in an afternoon. The default cap is <span class="stat-hi">20 credits per project per month</span>, configurable per-project, and the meter auto-resets on the first of each month. Hitting the cap flips the embed into <b>read-only</b>, the thread is still visible but asking is disabled, so a customer-facing surface never suddenly turns into a blank error page.</p>
+        <p class="body" data-i18n="s04.f1.body">Every question costs the customer something. Without a cap, a single bug in a client's page could drain their month in an afternoon. I set <span class="stat-hi">a default ceiling per project, auto-resetting on the first</span>, and made the over-cap state <em>read-only</em> instead of an error: the thread stays visible, just nobody can ask. <b>The embed never turns blank in front of someone's customer.</b></p>
       </div>
       <div class="stat-grid">
         <div class="stat-card">
           <span class="stat-eyebrow" data-i18n="s04.f1.s1.label">Scope</span>
           <span class="stat-value">By<span class="unit">Project</span></span>
-          <span class="stat-foot" data-i18n="s04.f1.s1.foot">Not per-user, per-project is the billable surface.</span>
+          <span class="stat-foot" data-i18n="s04.f1.s1.foot">Per project, not per user. The project is what gets billed.</span>
         </div>
         <div class="stat-card">
           <span class="stat-eyebrow" data-i18n="s04.f1.s2.label">Default cap</span>
           <span class="stat-value">20<span class="unit">credits</span></span>
-          <span class="stat-foot" data-i18n="s04.f1.s2.foot">A sane ceiling that still lets a demo run.</span>
+          <span class="stat-foot" data-i18n="s04.f1.s2.foot">Enough for a demo to feel real, not enough to do damage.</span>
         </div>
         <div class="stat-card">
           <span class="stat-eyebrow" data-i18n="s04.f1.s3.label">Reset</span>
@@ -243,9 +240,9 @@
           <span class="stat-foot" data-i18n="s04.f1.s3.foot">First of the month, automatic.</span>
         </div>
         <div class="stat-card">
-          <span class="stat-eyebrow" data-i18n="s04.f1.s4.label">Over-cap state</span>
+          <span class="stat-eyebrow" data-i18n="s04.f1.s4.label">Over-cap</span>
           <span class="stat-value">Read-only</span>
-          <span class="stat-foot" data-i18n="s04.f1.s4.foot">Thread visible, asking disabled.</span>
+          <span class="stat-foot" data-i18n="s04.f1.s4.foot">Thread still visible, asking disabled. Never blank.</span>
         </div>
       </div>
     </div>
@@ -253,86 +250,46 @@
     <!-- Feature 2: Activity Log -->
     <div class="feature-block reveal" style="margin-top:24px;">
       <div>
-        <div class="feature-eyebrow" data-i18n="s04.f2.eyebrow">Feature 02 · Activity Log</div>
-        <div class="feature-title" data-i18n="s04.f2.title">Every embedded interaction, audit-grade</div>
+        <div class="feature-eyebrow" data-i18n="s04.f2.eyebrow">02 · Activity log</div>
+        <div class="feature-title" data-i18n="s04.f2.title">Who asked what, when, how much</div>
       </div>
       <div class="text-block">
-        <p class="body" data-i18n="s04.f2.body">The embedded surface runs outside the host app, but the Project Owner still needs to answer "who asked what, when, costing how much?", for compliance, for debugging, for usage-based billing. I designed an activity schema with seven actions and tenant-aware metadata so the log is legible without opening a query console.</p>
+        <p class="body" data-i18n="s04.f2.body">The embed runs outside the main app, but a Project Owner still needs to answer the obvious question, <em>who asked what, when, costing how much</em>, for compliance, for debugging, for billing. I scoped the log to the actions that actually matter to a project owner, <span class="stat-hi">just enough to be useful, not so much that it becomes noise</span>.</p>
       </div>
-      <table class="log-table">
-        <thead>
-          <tr>
-            <th data-i18n="s04.f2.col1">Action</th>
-            <th data-i18n="s04.f2.col2">Message</th>
-            <th data-i18n="s04.f2.col3">Key metadata</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="log-action">Create Thread</span></td>
-            <td data-i18n="s04.f2.r1.msg">${user} created "${thread}" by asking "${question}"</td>
-            <td data-i18n="s04.f2.r1.meta">question · sql · answer · credit_used · duration_ms</td>
-          </tr>
-          <tr>
-            <td><span class="log-action">Follow-up</span></td>
-            <td data-i18n="s04.f2.r2.msg">${user} asked a follow-up in "${thread}"</td>
-            <td data-i18n="s04.f2.r2.meta">question · sql · answer · credit_used · duration_ms</td>
-          </tr>
-          <tr>
-            <td><span class="log-action">Delete Thread</span></td>
-            <td data-i18n="s04.f2.r3.msg">${user} deleted "${thread}"</td>
-            <td data-i18n="s04.f2.r3.meta">thread.id · thread.name · timestamp</td>
-          </tr>
-          <tr>
-            <td><span class="log-action">Generate secret key</span></td>
-            <td data-i18n="s04.f2.r4.msg">Owner generated shared secret key</td>
-            <td data-i18n="s04.f2.r4.meta">(host-level action)</td>
-          </tr>
-          <tr>
-            <td><span class="log-action">Regenerate key</span></td>
-            <td data-i18n="s04.f2.r5.msg">Owner rotated shared secret key</td>
-            <td data-i18n="s04.f2.r5.meta">(invalidates new iframe loads; live sessions survive TTL)</td>
-          </tr>
-          <tr>
-            <td><span class="log-action">Embed settings</span></td>
-            <td data-i18n="s04.f2.r6.msg">${user} saved embedded threads setting</td>
-            <td data-i18n="s04.f2.r6.meta">identity_verification · public_embed · chat_icon · logo · credit_limit · display_name</td>
-          </tr>
-          <tr>
-            <td><span class="log-action">Recommended Qs</span></td>
-            <td data-i18n="s04.f2.r7.msg">${user} generated home recommended questions</td>
-            <td data-i18n="s04.f2.r7.meta">recommended_questions · model_used · tokens · duration_ms</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="insight">
-        <span class="ins-label" data-i18n="s04.f2.note.label">A small call I'm glad we made</span>
-        <span data-i18n="s04.f2.note.body">Thread links inside the Activity Log are <b>disabled</b> for embedded threads, with a tooltip, <em>"Unavailable for embedded threads"</em>. Clicking through would open the main app and expose a surface the embed wasn't supposed to leak. The log is a record, not a back door.</span>
+      <ul class="bull-list">
+        <li data-i18n="s04.f2.l1"><b>Created a thread</b>, with the first question that opened it</li>
+        <li data-i18n="s04.f2.l2"><b>Asked a follow-up</b>, who continued which conversation</li>
+        <li data-i18n="s04.f2.l3"><b>Deleted a thread</b>, who and when</li>
+        <li data-i18n="s04.f2.l4"><b>Changed embed settings</b>, who toggled what (mode, branding, limits)</li>
+        <li data-i18n="s04.f2.l5"><b>Rotated the access key</b>, with a deliberate grace period so live sessions don't drop</li>
+      </ul>
+      <div class="text-block" style="margin-top:8px;">
+        <p class="body" data-i18n="s04.f2.note.body"><b>One small decision I'm glad I held.</b> The thread titles in the log are <em>not</em> clickable for embedded threads, with a tooltip explaining why. Clicking through would open the main app and expose a surface the embed was specifically designed to keep hidden. <span class="stat-hi">The log is a record, not a back door.</span></p>
       </div>
     </div>
 
     <!-- Feature 3: Customization -->
     <div class="feature-block reveal" style="margin-top:24px;">
       <div>
-        <div class="feature-eyebrow" data-i18n="s04.f3.eyebrow">Feature 03 · Customization</div>
-        <div class="feature-title" data-i18n="s04.f3.title">Enough brand control to feel native. No more.</div>
+        <div class="feature-eyebrow" data-i18n="s04.f3.eyebrow">03 · Brand customization</div>
+        <div class="feature-title" data-i18n="s04.f3.title">Just enough to feel like a local resident, no more</div>
       </div>
       <div class="two-col">
         <div class="text-block">
-          <p class="body" data-i18n="s04.f3.body">The embed has to feel like it belongs in the host product, but Wren AI still needs to be legible as the BI engine when something goes wrong. I scoped customization to the four surfaces that shift perceived ownership without hiding the underlying product: company logo, chat icon, theme color, display name. Everything else inherits Wren AI's defaults.</p>
+          <p class="body" data-i18n="s04.f3.body">The embed has to look like it belongs in the host product, but when something goes wrong, the user has to be able to recognize it as Wren AI. I kept the customizable surface to four things: logo, chat icon, primary color, display name. Everything else inherits the defaults. <span class="stat-hi">Every extra "yes, you can change this" is a setup task you've added to the customer's afternoon</span>, keeping the surface small was a courtesy, not a limitation.</p>
         </div>
         <ul class="bull-list">
           <li data-i18n="s04.f3.l1"><b>Company logo</b>, shown at the iframe header</li>
           <li data-i18n="s04.f3.l2"><b>Chat icon</b>, the AI avatar in each response</li>
           <li data-i18n="s04.f3.l3"><b>Theme color</b>, primary accent, follows host product</li>
           <li data-i18n="s04.f3.l4"><b>Display name</b>, how the embed refers to itself in UI copy</li>
-          <li data-i18n="s04.f3.l5"><b>RWD</b>, works in Notion sidebars, bottom-sheet modals, full-page iframes</li>
+          <li data-i18n="s04.f3.l5"><b>Responsive layout</b>, holds up from a Notion sidebar to a phone bottom-sheet to a full-page iframe</li>
         </ul>
       </div>
       <!-- RWD live demo -->
       <div class="text-block" style="margin-top:12px;">
-        <p class="h3" data-i18n="s04.f3.rwd.label">RWD Playground, drag the corner</p>
-        <p class="body" data-i18n="s04.f3.rwd.body">The embed has to behave the same across Notion sidebars (~393px), web bottom-sheet modals (~768px), and full-page iframes (~1024px+). Drag the bottom-right corner, or snap to a preset, to see how the layout collapses, the thread list disappears first, then the follow-up chips, then the chart shrinks.</p>
+        <p class="h3" data-i18n="s04.f3.rwd.label">RWD playground, drag the corner and watch it collapse</p>
+        <p class="body" data-i18n="s04.f3.rwd.body">The same embed has to live inside a Notion sidebar (~393px), a phone bottom-sheet (~768px), and a full-page iframe (~1024px+). I designed an explicit <span class="stat-hi">collapse priority</span>, the thread list goes first, then the follow-up chips, then the chart shrinks. <em>Mobile-first isn't a smaller desktop. It's the opposite, get 393 right first, and the wider sizes earn their extra space.</em></p>
       </div>
       <div class="rwd-demo">
         <div class="rwd-controls">
@@ -606,72 +563,30 @@
     <!-- Feature 4: UI Filtering -->
     <div class="feature-block reveal" style="margin-top:24px;">
       <div>
-        <div class="feature-eyebrow" data-i18n="s04.f4.eyebrow">Feature 04 · UI Filtering</div>
-        <div class="feature-title" data-i18n="s04.f4.title">Hiding the plumbing so the embed reads as a chat, not a tool</div>
+        <div class="feature-eyebrow" data-i18n="s04.f4.eyebrow">04 · Hiding the workshop</div>
+        <div class="feature-title" data-i18n="s04.f4.title">So it reads as a conversation, not a tool</div>
       </div>
       <div class="text-block">
-        <p class="body" data-i18n="s04.f4.body">The main Wren AI app exposes a lot of surface, suggestion chips, thinking steps, Question-SQL pairs, chart instructions, candidate models. All useful to power users, all noise when the embed is sitting in someone's Notion doc. In the embed I hid:</p>
-      </div>
-      <ul class="bull-list">
-        <li data-i18n="s04.f4.l1"><b>Suggestion chips</b> (home-level recommended questions), off by default</li>
-        <li data-i18n="s04.f4.l2"><b>Thinking step</b> expanded output</li>
-        <li data-i18n="s04.f4.l3"><b>Question-SQL pairs found</b>, model provenance hidden</li>
-        <li data-i18n="s04.f4.l4"><b>SQL / summarizing / chart instructions</b> found blocks</li>
-        <li data-i18n="s04.f4.l5"><b>Candidate models</b>, users don't pick their own LLM inside the embed</li>
-      </ul>
-      <div class="insight">
-        <span class="ins-label" data-i18n="s04.f4.note.label">One exception I argued for</span>
-        <span data-i18n="s04.f4.note.body"><b>Suggested follow-ups</b> stay. They are the cheapest way to keep a user moving after an answer, and they read as conversational, not technical. The "Undeployed changes detected, will deploy when you ask" banner was also cut: in an embed, the user doesn't own deploys, so the warning is noise.</span>
+        <p class="body" data-i18n="s04.f4.body">The main Wren AI app exposes a lot, suggestion chips, thinking steps, candidate models, query provenance. Useful for power users, noise the moment the embed lands in someone's Notion page. In the embed I hid most of it, and kept exactly one thing the others didn't get, <span class="stat-hi">suggested follow-ups</span>. They're the cheapest way to keep a user moving after an answer, and they read as conversational, not technical. <em>Hide what's about how the answer was made, keep what's about what to ask next.</em></p>
       </div>
     </div>
 
     <!-- Feature 5: Error Handling -->
     <div class="feature-block reveal" style="margin-top:24px;">
       <div>
-        <div class="feature-eyebrow" data-i18n="s04.f5.eyebrow">Feature 05 · Error Handling</div>
-        <div class="feature-title" data-i18n="s04.f5.title">Thirteen error codes, three severities, one rule</div>
+        <div class="feature-eyebrow" data-i18n="s04.f5.eyebrow">05 · How the embed talks when it breaks</div>
+        <div class="feature-title" data-i18n="s04.f5.title">Three severities, one rule, never blank</div>
       </div>
       <div class="text-block">
-        <p class="body" data-i18n="s04.f5.body">The embed will fail, tokens will expire, data models will break, credits will run out, users will not be logged in. The rule I held to: <em>the embedded surface never goes blank, and the user always knows whose fault it is.</em> I grouped failures into three severities, each with a distinct UI treatment.</p>
+        <p class="body" data-i18n="s04.f5.body">The embed will fail, tokens expire, models drift, quotas run out, users aren't always logged in. The rule I held to: <span class="stat-hi">the embedded surface never goes blank, and the user always knows whose problem this is</span>. I grouped failures into three severities, each with its own UI treatment, so the wording, icon, and CTA could follow from one decision instead of fifteen.</p>
       </div>
-      <div class="err-grid">
-        <div class="err-group">
-          <div class="err-group-head">
-            <span class="err-tag block" data-i18n="s04.f5.g1.tag">Full-page</span>
-            <span class="err-group-title" data-i18n="s04.f5.g1.title">Blocking, embed unusable</span>
-          </div>
-          <div class="err-list">
-            <div class="err-row"><span class="err-code">E10001</span><span class="err-desc" data-i18n="s04.f5.e1">User not logged in</span></div>
-            <div class="err-row"><span class="err-code">E10002</span><span class="err-desc" data-i18n="s04.f5.e2">Embed mode not enabled</span></div>
-            <div class="err-row"><span class="err-code">E10003</span><span class="err-desc" data-i18n="s04.f5.e3">User not in project members</span></div>
-            <div class="err-row"><span class="err-code">E30001</span><span class="err-desc" data-i18n="s04.f5.e4">No embed settings configured</span></div>
-            <div class="err-row"><span class="err-code">E30002</span><span class="err-desc" data-i18n="s04.f5.e5">Data model not deployed</span></div>
-            <div class="err-row"><span class="err-code">E50001</span><span class="err-desc" data-i18n="s04.f5.e6">Internal critical error</span></div>
-            <div class="err-row"><span class="err-code">E50002</span><span class="err-desc" data-i18n="s04.f5.e7">AI service unavailable</span></div>
-          </div>
-        </div>
-        <div class="err-group">
-          <div class="err-group-head">
-            <span class="err-tag notify" data-i18n="s04.f5.g2.tag">Read-only</span>
-            <span class="err-group-title" data-i18n="s04.f5.g2.title">Quota, can read, cannot ask</span>
-          </div>
-          <div class="err-list">
-            <div class="err-row"><span class="err-code">E20001</span><span class="err-desc" data-i18n="s04.f5.e8">Quota used up</span></div>
-            <div class="err-row"><span class="err-code">E20002</span><span class="err-desc" data-i18n="s04.f5.e9">Out of API credits</span></div>
-            <div class="err-row"><span class="err-code">E30003</span><span class="err-desc" data-i18n="s04.f5.e10">Model parse error</span></div>
-          </div>
-          <div class="err-group-head" style="margin-top:16px;">
-            <span class="err-tag info" data-i18n="s04.f5.g3.tag">In-thread</span>
-            <span class="err-group-title" data-i18n="s04.f5.g3.title">Operational, can keep asking</span>
-          </div>
-          <div class="err-list">
-            <div class="err-row"><span class="err-code">E40001</span><span class="err-desc" data-i18n="s04.f5.e11">Thread not found</span></div>
-            <div class="err-row"><span class="err-code">E40002</span><span class="err-desc" data-i18n="s04.f5.e12">Task not found</span></div>
-            <div class="err-row"><span class="err-code">E40003</span><span class="err-desc" data-i18n="s04.f5.e13">Invalid input parameter</span></div>
-            <div class="err-row"><span class="err-code">E40004</span><span class="err-desc" data-i18n="s04.f5.e14">No matching data</span></div>
-            <div class="err-row"><span class="err-code">E40005</span><span class="err-desc" data-i18n="s04.f5.e15">Could not generate query</span></div>
-          </div>
-        </div>
+      <ul class="bull-list">
+        <li data-i18n="s04.f5.l1"><b>Full-page block</b>, the embed can't run at all. Not logged in, not configured, the service is down. Honest, plain, says exactly what's missing and who can fix it.</li>
+        <li data-i18n="s04.f5.l2"><b>Read-only</b>, the embed can be looked at but not used. Quota's gone, model can't parse. The thread stays, the input is locked, the explanation is one line.</li>
+        <li data-i18n="s04.f5.l3"><b>In-thread notice</b>, this question failed but the conversation continues. No data matched, query couldn't run. A small message in the bubble, then the user moves on.</li>
+      </ul>
+      <div class="text-block" style="margin-top:8px;">
+        <p class="body" data-i18n="s04.f5.note.body"><b>The hardest part wasn't the categorization, it was the wording.</b> "Something went wrong" doesn't pass when the embed is sitting in someone else's product, in front of someone else's user. Every line had to say <em>what happened, what they can do, what they shouldn't try.</em> Speaking for Wren AI on a screen it doesn't own meant every word counted.</p>
       </div>
     </div>
 
@@ -683,75 +598,23 @@
   <div class="sec-inner">
     <div class="sec-head reveal">
       <span class="sec-num">05.</span>
-      <span class="sec-title" data-i18n="s05.title">Cross-Surface Parity, SaaS &amp; Self-Hosted From Day One</span>
+      <span class="sec-title" data-i18n="s05.title">One Embed, Wherever It's Hosted</span>
     </div>
-    <p class="lede reveal" data-i18n="s05.lede">Wren AI ships as both a managed SaaS and a customer-hosted deployment. Embedded Threads had to behave identically on both, but the plumbing underneath had to quietly diverge. Most of the design work was making those divergences invisible to the end user.</p>
+    <p class="lede reveal" data-i18n="s05.lede">Wren AI ships in two flavors, a managed cloud version and a self-hosted version customers run themselves. The embed had to behave the same in both. Most of the design work in this section wasn't building two surfaces, it was making the differences underneath invisible to the person actually using the embed.</p>
 
-    <div class="surface-split">
-      <div class="surface-card reveal">
-        <span class="surface-tag" data-i18n="s05.sa.tag">Surface 01 · SaaS</span>
-        <span class="surface-title" data-i18n="s05.sa.title">Wren AI Cloud</span>
-        <div class="surface-kv">
-          <div class="surface-kv-row">
-            <span class="surface-kv-key" data-i18n="s05.sa.k1">Asset storage</span>
-            <span class="surface-kv-val" data-i18n="s05.sa.v1">Google Cloud Storage (GCS). Host logo / chat icon uploaded via <span class="mono">next/image</span>.</span>
-          </div>
-          <div class="surface-kv-row">
-            <span class="surface-kv-key" data-i18n="s05.sa.k2">Billing</span>
-            <span class="surface-kv-val" data-i18n="s05.sa.v2">Web Credit per ask. Enterprise tier for v1.</span>
-          </div>
-          <div class="surface-kv-row">
-            <span class="surface-kv-key" data-i18n="s05.sa.k3">Activity</span>
-            <span class="surface-kv-val" data-i18n="s05.sa.v3">Single <span class="mono">org_audit_log</span> stream.</span>
-          </div>
-        </div>
+    <div class="two-col">
+      <div class="text-block reveal">
+        <p class="h3" data-i18n="s05.same.label">What stays the same on both</p>
+        <p class="body" data-i18n="s05.same.body">Same setup screen. Same error messages. Same responsive behavior, including the 393px collapse. <span class="stat-hi">A user reading the embed shouldn't be able to tell whether the customer is on cloud or self-hosted</span>, and a customer evaluating both shouldn't have to learn two different products.</p>
       </div>
-
-      <div class="surface-card reveal">
-        <span class="surface-tag" data-i18n="s05.sh.tag">Surface 02 · Self-hosted</span>
-        <span class="surface-title" data-i18n="s05.sh.title">Customer Environment</span>
-        <div class="surface-kv">
-          <div class="surface-kv-row">
-            <span class="surface-kv-key" data-i18n="s05.sh.k1">Asset storage</span>
-            <span class="surface-kv-val" data-i18n="s05.sh.v1">Minio bucket <span class="mono">wrenai://{project_id}/...</span>. Preview renders with native <span class="mono">&lt;img&gt;</span>, not <span class="mono">next/image</span>, so customer domains display correctly.</span>
-          </div>
-          <div class="surface-kv-row">
-            <span class="surface-kv-key" data-i18n="s05.sh.k2">Billing</span>
-            <span class="surface-kv-val" data-i18n="s05.sh.v2">API call metering. <span class="mono">api_history</span> + <span class="mono">org_audit_log</span> linked by <span class="mono">org_audit_log_id</span>.</span>
-          </div>
-          <div class="surface-kv-row">
-            <span class="surface-kv-key" data-i18n="s05.sh.k3">Feature gating</span>
-            <span class="surface-kv-val" data-i18n="s05.sh.v3">License-controlled. Embedded chat only available on Enterprise Plus tier (shipping three months after Cloud).</span>
-          </div>
-        </div>
+      <div class="text-block reveal">
+        <p class="h3" data-i18n="s05.diff.label">What's deliberately different</p>
+        <p class="body" data-i18n="s05.diff.body">Self-hosted gates this feature behind the higher license tier, so the setup screen needed a graceful "not available on your plan" state, <em>not hidden</em> (confusing) but visible-and-locked, with a clear explanation. Same activity is visible in just one place per environment, not duplicated across two views, that took longer to get right than expected.</p>
       </div>
     </div>
 
-    <div class="insight reveal">
-      <span class="ins-label" data-i18n="s05.note.label">The invisible split</span>
-      <span data-i18n="s05.note.body">The API Activity tab in Self-hosted deliberately <b>hides</b> embedded-thread API history, these should appear once, in the web Activity Log, not twice across two views. A small taxonomy decision, but it cleaned up a lot of duplicate-looking entries for customers who would have otherwise filed it as a bug.</span>
-    </div>
-
-    <div class="feature-block reveal" style="margin-top:8px;">
-      <div>
-        <div class="feature-eyebrow" data-i18n="s05.code.eyebrow">Cross-origin communication</div>
-        <div class="feature-title" data-i18n="s05.code.title">postMessage, the one contract between host and embed</div>
-      </div>
-      <div class="text-block">
-        <p class="body" data-i18n="s05.code.body">An iframe can't call functions across origins. Everything that flows between host and embed, config, resize hints, callbacks, runs over <span class="mono">postMessage</span>. I documented a single, minimal contract so customers don't have to reverse-engineer the protocol:</p>
-      </div>
-      <div class="code-block">
-<span class="c-com">// Host page</span>
-<span class="c-kw">const</span> iframe = document.<span class="c-fn">getElementById</span>(<span class="c-str">"wren-embed"</span>);
-iframe.contentWindow.<span class="c-fn">postMessage</span>({ config }, <span class="c-str">"*"</span>);
-
-<span class="c-com">// Listen for callbacks from the embed</span>
-window.<span class="c-fn">addEventListener</span>(<span class="c-str">"message"</span>, (event) =&gt; {
-  <span class="c-kw">if</span> (event.data.type === <span class="c-str">"callback"</span>) {
-    console.<span class="c-fn">log</span>(<span class="c-str">"callback data:"</span>, event.data.payload);
-  }
-});
-      </div>
+    <div class="text-block reveal" style="margin-top:8px;">
+      <p class="body" data-i18n="s05.note.body"><b>The invisible alignment.</b> Consistent user experience isn't about making the back end identical, it's about <span class="stat-hi">deciding which differences to hide and which to name out loud</span>. Hide the wrong one and you look dishonest. Name the wrong one and you look messy. Where to draw that line was one of the longer judgment calls of this project.</p>
     </div>
   </div>
 </div>
@@ -761,71 +624,29 @@ window.<span class="c-fn">addEventListener</span>(<span class="c-str">"message"<
   <div class="sec-inner">
     <div class="sec-head reveal">
       <span class="sec-num">06.</span>
-      <span class="sec-title" data-i18n="s06.title">Shipped, And What I'd Change Next Time</span>
+      <span class="sec-title" data-i18n="s06.title">Shipped</span>
     </div>
 
     <div class="stat-grid reveal">
       <div class="stat-card">
         <span class="stat-eyebrow" data-i18n="s06.s1.label">Release</span>
-        <span class="stat-value">v0.53</span>
-        <span class="stat-foot" data-i18n="s06.s1.foot">SaaS (Wren 2.0) · March 20, 2026</span>
+        <span class="stat-value">Wren<span class="unit">2.0</span></span>
+        <span class="stat-foot" data-i18n="s06.s1.foot">Cloud and self-hosted, same day · March 2026</span>
       </div>
       <div class="stat-card">
-        <span class="stat-eyebrow" data-i18n="s06.s2.label">Self-hosted</span>
-        <span class="stat-value">v1.9</span>
-        <span class="stat-foot" data-i18n="s06.s2.foot">Same day. Cross-surface parity.</span>
+        <span class="stat-eyebrow" data-i18n="s06.s2.label">Smallest screen</span>
+        <span class="stat-value">393<span class="unit">px</span></span>
+        <span class="stat-foot" data-i18n="s06.s2.foot">Designed mobile-first, scales up from there.</span>
       </div>
       <div class="stat-card">
         <span class="stat-eyebrow" data-i18n="s06.s3.label">Modes</span>
         <span class="stat-value">2</span>
-        <span class="stat-foot" data-i18n="s06.s3.foot">Public + Identity Verification.</span>
+        <span class="stat-foot" data-i18n="s06.s3.foot">Public and Identity, named instead of merged.</span>
       </div>
       <div class="stat-card">
-        <span class="stat-eyebrow" data-i18n="s06.s4.label">Error codes</span>
-        <span class="stat-value">13</span>
-        <span class="stat-foot" data-i18n="s06.s4.foot">Three severities, never a blank page.</span>
-      </div>
-    </div>
-
-    <div class="ofs-story reveal" style="margin-top:24px;">
-      <div class="ofs-chapter">
-        <div class="ofs-spine">
-          <div class="ofs-badge">01</div>
-          <div class="ofs-spine-line"></div>
-        </div>
-        <div class="ofs-body">
-          <div class="ofs-chapter-title" data-i18n="s06.r1.title">Naming the trade-off was the real work</div>
-          <p class="ofs-chapter-story" data-i18n="s06.r1.story">The most valuable hour of the whole project was the one where we decided <em>not</em> to build a single "smart" mode. A clean binary, Public vs Identity, let the rest of the spec fall into place: one has threads shared by URL, the other scopes everything to a signed identity. Every edge case downstream (quota, activity, error codes) inherited that clarity.</p>
-        </div>
-      </div>
-      <div class="ofs-chapter">
-        <div class="ofs-spine">
-          <div class="ofs-badge">02</div>
-          <div class="ofs-spine-line"></div>
-        </div>
-        <div class="ofs-body">
-          <div class="ofs-chapter-title" data-i18n="s06.r2.title">Errors are a first-class surface, not an afterthought</div>
-          <p class="ofs-chapter-story" data-i18n="s06.r2.story">I spent almost as long on the thirteen-code error taxonomy as on the happy path. Embeds fail in public, in someone else's product, in front of someone else's users. "Something went wrong" is not an acceptable message there. Naming the severity up front (blocking / read-only / in-thread) meant engineering and support were speaking the same language by the time we shipped.</p>
-        </div>
-      </div>
-      <div class="ofs-chapter">
-        <div class="ofs-spine">
-          <div class="ofs-badge">03</div>
-          <div class="ofs-spine-line"></div>
-        </div>
-        <div class="ofs-body">
-          <div class="ofs-chapter-title" data-i18n="s06.r3.title">Parity cost more than I budgeted</div>
-          <p class="ofs-chapter-story" data-i18n="s06.r3.story">Making SaaS and Self-hosted feel identical, while routing assets through Minio vs GCS, gating behind a license, and reconciling <span class="mono">api_history</span> with <span class="mono">org_audit_log</span>, took almost a third of the design-engineering time. Next time I'd draft the parity spec as its own artifact in week one, not in the margins of the main spec.</p>
-        </div>
-      </div>
-      <div class="ofs-chapter">
-        <div class="ofs-spine">
-          <div class="ofs-badge">04</div>
-        </div>
-        <div class="ofs-body">
-          <div class="ofs-chapter-title" data-i18n="s06.r4.title">What's next, measuring adoption, not just shipping</div>
-          <p class="ofs-chapter-story" data-i18n="s06.r4.story">v1 is out; v1.1 is about listening. I'm instrumenting mode-selection (Public vs Identity %), first-ask time for embedded users, error-code frequency, and quota-exhaustion rate. Those four signals will tell us whether the trade-off we surfaced is the one customers actually make, or whether we should collapse or split it again.</p>
-        </div>
+        <span class="stat-eyebrow" data-i18n="s06.s4.label">Error states</span>
+        <span class="stat-value">3</span>
+        <span class="stat-foot" data-i18n="s06.s4.foot">Three severities, one rule, never blank.</span>
       </div>
     </div>
   </div>
