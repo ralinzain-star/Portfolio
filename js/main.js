@@ -12,15 +12,21 @@
     const scY = (MH - MM_PAD*2) / MM_CH;
 
     let ox = 0, oy = 0;
+    let zoom = 1;
+    const ZMIN = 0.5, ZMAX = 1.5, ZSTEP = 0.1;
     let dragging = false, sx, sy, sox, soy;
 
     function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
     function applyT() {
       const vw = wrap.clientWidth, vh = wrap.clientHeight;
-      ox = clamp(ox, -(CW - vw * 0.35), vw * 0.35);
-      oy = clamp(oy, -(CH - vh * 0.35), vh * 0.35);
-      canvas.style.transform = `translate(${ox}px,${oy}px)`;
+      const sCW = CW * zoom, sCH = CH * zoom;
+      ox = clamp(ox, -(sCW - vw * 0.35), vw * 0.35);
+      oy = clamp(oy, -(sCH - vh * 0.35), vh * 0.35);
+      canvas.style.transform = `translate(${ox}px,${oy}px) scale(${zoom})`;
+      canvas.style.transformOrigin = '0 0';
+      const zr = document.getElementById('zoomReset');
+      if (zr) zr.textContent = Math.round(zoom * 100) + '%';
       // update minimap viewport — same content-bbox scale as dots
       const vw2 = vw * scX, vh2 = vh * scY;
       mmVp.style.width  = vw2 + 'px';
@@ -49,6 +55,36 @@
       const t = e.touches[0]; ox = sox + t.clientX - sx; oy = soy + t.clientY - sy; applyT();
     }, { passive: true });
     window.addEventListener('touchend', () => { dragging = false; });
+
+    // Zoom: trackpad pinch (ctrlKey wheel) and Cmd/Ctrl + wheel
+    function setZoom(newZoom, anchorX, anchorY) {
+      newZoom = clamp(newZoom, ZMIN, ZMAX);
+      if (newZoom === zoom) return;
+      const rect = wrap.getBoundingClientRect();
+      const ax = (anchorX != null ? anchorX : rect.width / 2) - rect.left;
+      const ay = (anchorY != null ? anchorY : rect.height / 2) - rect.top;
+      // Keep the point under the cursor stationary in canvas space.
+      const cx = (ax - ox) / zoom;
+      const cy = (ay - oy) / zoom;
+      zoom = newZoom;
+      ox = ax - cx * zoom;
+      oy = ay - cy * zoom;
+      applyT();
+    }
+    wrap.addEventListener('wheel', e => {
+      if (!(e.ctrlKey || e.metaKey)) return;
+      e.preventDefault();
+      const delta = -e.deltaY * 0.0025;
+      setZoom(zoom * (1 + delta), e.clientX, e.clientY);
+    }, { passive: false });
+
+    // Zoom buttons
+    const zoomIn = document.getElementById('zoomIn');
+    const zoomOut = document.getElementById('zoomOut');
+    const zoomReset = document.getElementById('zoomReset');
+    if (zoomIn)    zoomIn.addEventListener('click', () => setZoom(zoom + ZSTEP));
+    if (zoomOut)   zoomOut.addEventListener('click', () => setZoom(zoom - ZSTEP));
+    if (zoomReset) zoomReset.addEventListener('click', () => setZoom(1));
 
     // Nav → fly to island
     document.querySelectorAll('.sb-item[data-target]').forEach(item => {
@@ -105,8 +141,8 @@
     // metadata, images loading, etc.) don't leave us stuck on a stale target.
     function islandTranslate(el) {
       const vw = wrap.clientWidth, vh = wrap.clientHeight;
-      const tx = -(el.offsetLeft - vw / 2 + el.offsetWidth / 2);
-      const ty = -(el.offsetTop - vh / 2 + el.offsetHeight / 2);
+      const tx = vw / 2 - (el.offsetLeft + el.offsetWidth / 2) * zoom;
+      const ty = vh / 2 - (el.offsetTop + el.offsetHeight / 2) * zoom;
       return { tx, ty };
     }
 
@@ -218,7 +254,7 @@
         'sidebar.explore': ' to explore',
         'intro.eyebrow': 'AI · Mobile · SaaS · Design System',
         'intro.headline': 'Iris Hsieh — Co-prospering with <span class="hl">AI</span>, defining the <span class="hl hl-pink">next possibility</span> of digital product experience.',
-        'intro.bio': 'Senior Product Designer specializing in <span class="stat-hi">AI, SaaS, mobile ecosystems, design systems, and design workflow planning</span>. Currently at <a href="https://getwren.ai" target="_blank" rel="noreferrer" data-tip="Text-to-SQL AI · natural language over data">Wren AI</a>. Previously crafted seamless experiences for <a data-tip="Android OS · Google hardware design team">Google Pixel</a> and <a data-tip="Asia\'s leading travel e-commerce platform">KKday</a>. Relocating to the UK, Europe, or Japan, open to opportunities in both.',
+        'intro.bio': 'Hi, I\'m Ming Hsi Hsieh, also known as Iris Hsieh, a Senior Product Designer specializing in <span class="stat-hi">AI, SaaS, mobile ecosystems, design systems, and design workflow planning</span>. Currently at <a href="https://getwren.ai" target="_blank" rel="noreferrer" data-tip="Text-to-SQL AI · natural language over data">Wren AI</a>, after previously crafting seamless experiences at <a data-tip="Android OS · Google hardware design team">Google Pixel</a> and <a data-tip="Asia\'s leading travel e-commerce platform">KKday</a>. I\'m relocating to the UK, Europe, or Japan and open to opportunities across all three.',
         'intro.bio2': 'If you want to see how I <span class="stat-hi">design AI products</span>, start with <a href="case-studies/wren-agent.html">One Product, Three Minds</a>, my rethink of conversational BI at Wren AI; <a href="case-studies/thread-tracing.html">Closing the Loop</a>, on feedback systems that turn user signals into model instructions; or <a href="case-studies/lsbg.html">Bicycle Lane Inspection</a>, an AI-assisted civic tool built for Hamburg\'s road maintenance team. For <span class="stat-hi">mobile systems work</span>, there\'s the <a href="case-studies/notification.html">Notification Framework</a> I led at Google Pixel, and <a href="case-studies/a41.html">A41</a>, a native cross-store shopping experience I designed at Fable. For <span class="stat-hi">B2B SaaS</span>, I built the <a href="case-studies/rezio-ds.html">Rezio Design System</a> at KKday and redesigned the <a href="case-studies/rezio.html">Rezio onboarding flow</a> that cut vendor setup time by 38%.',
         'intro.bio3': 'For how I think about AI and design more broadly, browse my <a href="#island-writing">Playground</a>, especially <a href="case-studies/designing-with-ai.html">Designing with AI</a>, where I document the workflow that lets one designer carry <span class="stat-hi">6–8 FTE</span> of scope</span> across parallel projects. I\'m currently building <a href="case-studies/trip-planner.html">Trip Planner</a>, a <span class="stat-hi">Claude Code skill</span> that turns travel research into interactive HTML guides.',
         'intro.pill.resume': 'CV ↓',
@@ -252,6 +288,9 @@
         'wcard10.co': 'Wren AI · 2026',
         'wcard10.title': 'Designing with AI: A Systems-Level Workflow for Solo Designers',
         'wcard10.desc': 'Documented the 11-step Claude Code pipeline that lets one designer carry ~6–8 FTE of scope across 3–4 parallel projects while 40% of the week is meetings.',
+        'wcard11.co': 'Wren AI · 2026',
+        'wcard11.title': 'Embedded Threads: Bringing BI to Where Decisions Actually Happen',
+        'wcard11.desc': 'Designed a conversational BI surface that lives inside Notion sidebars, mobile bottom-sheets, and 393px phone screens, without losing its voice along the way.',
         'about.badge': 'ABOUT',
         'about.bio.label': 'What I do',
         'about.bio': 'I specialize in transforming complex product requirements into intuitive systems. My focus lies at the intersection of AI product logic, SaaS scalability, and mobile usability—building design systems and AI workflows that empower both teams and users.',
@@ -294,7 +333,7 @@
         'sidebar.explore': '來探索',
         'intro.eyebrow': 'AI · 行動裝置 · SaaS · 設計系統',
         'intro.headline': 'Iris Hsieh — 與 <span class="hl">AI</span> 共榮，定義數位產品體驗的<span class="hl hl-pink">下一種可能</span>。',
-        'intro.bio': '資深產品設計師，深耕 <span class="stat-hi">AI、SaaS、行動生態、設計系統與設計流程規劃</span>。現任職於 <a href="https://getwren.ai" target="_blank" rel="noreferrer" data-tip="Text-to-SQL AI · 以自然語言查詢資料">Wren AI</a>，曾於 <a data-tip="Android OS · Google 硬體設計團隊">Google Pixel</a> 與 <a data-tip="亞洲領先的旅遊電商平台">KKday</a> 負責將複雜邏輯轉化為優雅的互動體驗。即將移居英國、歐洲或日本，開放洽談當地的合作機會。',
+        'intro.bio': 'Hi，我是謝明希（Ming Hsi, Hsieh），也叫我 Iris Hsieh，一位深耕 <span class="stat-hi">AI、SaaS、行動生態、設計系統與設計流程規劃</span> 的資深產品設計師。現任職於 <a href="https://getwren.ai" target="_blank" rel="noreferrer" data-tip="Text-to-SQL AI · 以自然語言查詢資料">Wren AI</a>，先前曾在 <a data-tip="Android OS · Google 硬體設計團隊">Google Pixel</a> 與 <a data-tip="亞洲領先的旅遊電商平台">KKday</a> 將複雜邏輯轉化為優雅的互動體驗。即將移居英國、歐洲或日本，開放洽談當地的合作機會。',
         'intro.bio2': '如果你想看看我怎麼<span class="stat-hi">設計 AI 產品</span>，可以從 <a href="case-studies/wren-agent.html">One Product, Three Minds</a> 開始，那是我在 Wren AI 重新思考對話式 BI 的案例；<a href="case-studies/thread-tracing.html">Closing the Loop</a>，談的是如何設計把使用者訊號轉成模型指令的回饋系統；或是 <a href="case-studies/lsbg.html">Bicycle Lane Inspection</a>，一款為漢堡道路養護團隊打造的 AI 公共服務工具。<span class="stat-hi">行動系統方面</span>，有我在 Google Pixel 主導的 <a href="case-studies/notification.html">Notification Framework</a>，以及我在 Fable 設計的原生跨店購物體驗 <a href="case-studies/a41.html">A41</a>。<span class="stat-hi">B2B SaaS 方面</span>，我在 KKday 打造了 <a href="case-studies/rezio-ds.html">Rezio Design System</a>，並重新設計了 <a href="case-studies/rezio.html">Rezio 廠商導入流程</a>，將設置時間縮短 38%。',
         'intro.bio3': '想了解我對 AI 與設計的看法，可以逛逛我的 <a href="#island-writing">Playground</a>，特別是 <a href="case-studies/designing-with-ai.html">Designing with AI</a>，我在裡面記錄了一位設計師如何在平行專案裡承擔 <span class="stat-hi">6 至 8 FTE</span> 的工作流。目前手邊的 side project 是 <a href="case-studies/trip-planner.html">Trip Planner</a>，一款把旅行研究轉成互動 HTML 指南的 Claude Code Skill。',
         'intro.pill.resume': '履歷 ↓',
@@ -328,6 +367,9 @@
         'wcard10.co': 'Wren AI · 2026',
         'wcard10.title': '與 AI 一起設計：為獨立設計師打造的系統級工作流',
         'wcard10.desc': '記錄 11 步的 Claude Code 工作流——讓一位設計師在 40% 時間是會議的情況下，仍能同時承擔 3–4 個並行專案、約 6–8 FTE 的工作量。',
+        'wcard11.co': 'Wren AI · 2026',
+        'wcard11.title': 'Embedded Threads：把 BI 帶到決策真正發生的地方',
+        'wcard11.desc': '設計可以住進 Notion 側欄、手機底部彈窗、393px 手機螢幕的對話式 BI 介面，並在每一個尺寸下都不丟掉 Wren AI 的本質。',
         'about.badge': '關於我',
         'about.bio.label': '核心專長',
         'about.bio': '我致力於將複雜的產品需求梳理成清晰的系統。我的工作核心在於 AI 產品邏輯、SaaS 擴充性與行動端易用性的交會點，透過設計系統與 AI 輔助工作流，同時賦能團隊與使用者。',
@@ -370,7 +412,7 @@
         'sidebar.explore': '来探索',
         'intro.eyebrow': 'AI · 移动端 · SaaS · 设计系统',
         'intro.headline': 'Iris Hsieh — 与 <span class="hl">AI</span> 共荣，定义数字产品体验的<span class="hl hl-pink">下一种可能</span>。',
-        'intro.bio': '高级产品设计师，专注于 <span class="stat-hi">AI、SaaS、移动生态、设计系统与设计流程规划</span>。现就职于 <a href="https://getwren.ai" target="_blank" rel="noreferrer" data-tip="Text-to-SQL AI · 以自然语言查询数据">Wren AI</a>，曾在 <a data-tip="Android OS · Google 硬件设计团队">Google Pixel</a> 与 <a data-tip="亚洲领先的旅游电商平台">KKday</a> 负责将复杂逻辑转化为清晰可用的交互体验。即将移居英国、欧洲或日本，开放洽谈当地的职场机会。',
+        'intro.bio': 'Hi，我是谢明希（Ming Hsi, Hsieh），也叫我 Iris Hsieh，一位专注于 <span class="stat-hi">AI、SaaS、移动生态、设计系统与设计流程规划</span> 的高级产品设计师。现就职于 <a href="https://getwren.ai" target="_blank" rel="noreferrer" data-tip="Text-to-SQL AI · 以自然语言查询数据">Wren AI</a>，先前曾在 <a data-tip="Android OS · Google 硬件设计团队">Google Pixel</a> 与 <a data-tip="亚洲领先的旅游电商平台">KKday</a> 将复杂逻辑转化为清晰可用的交互体验。即将移居英国、欧洲或日本，开放洽谈当地的职场机会。',
         'intro.bio2': '如果你想看看我怎么<span class="stat-hi">设计 AI 产品</span>，可以从 <a href="case-studies/wren-agent.html">One Product, Three Minds</a> 开始，那是我在 Wren AI 重新思考对话式 BI 的案例；<a href="case-studies/thread-tracing.html">Closing the Loop</a>，谈的是如何设计把用户信号转成模型指令的反馈系统；或是 <a href="case-studies/lsbg.html">Bicycle Lane Inspection</a>，一款为汉堡道路养护团队打造的 AI 公共服务工具。<span class="stat-hi">移动系统方面</span>，有我在 Google Pixel 主导的 <a href="case-studies/notification.html">Notification Framework</a>，以及我在 Fable 设计的原生跨店购物体验 <a href="case-studies/a41.html">A41</a>。B2B SaaS 方面，我在 KKday 打造了 <a href="case-studies/rezio-ds.html">Rezio Design System</a>，并重新设计了 <a href="case-studies/rezio.html">Rezio 厂商导入流程</a>，将配置时间缩短 38%。',
         'intro.bio3': '想了解我对 AI 与设计的看法，可以逛逛我的 <a href="#island-writing">Playground</a>，尤其是 <a href="case-studies/designing-with-ai.html">Designing with AI</a>，我在里面记录了一位设计师如何在并行项目里承担 <span class="stat-hi">6 至 8 FTE</span> 的工作流。目前手边的 side project 是 <a href="case-studies/trip-planner.html">Trip Planner</a>，一款把旅行研究转成互动 HTML 指南的 Claude Code Skill。',
         'intro.pill.resume': '简历 ↓',
@@ -404,6 +446,9 @@
         'wcard10.co': 'Wren AI · 2026',
         'wcard10.title': '与 AI 一起设计：为独立设计师打造的系统级工作流',
         'wcard10.desc': '记录 11 步的 Claude Code 工作流——让一位设计师在 40% 时间是会议的情况下，仍能同时承担 3–4 个并行项目、约 6–8 FTE 的工作量。',
+        'wcard11.co': 'Wren AI · 2026',
+        'wcard11.title': 'Embedded Threads：把 BI 带到决策真正发生的地方',
+        'wcard11.desc': '设计可以住进 Notion 侧栏、手机底部弹窗、393px 手机屏幕的对话式 BI 界面，并在每一个尺寸下都不丢掉 Wren AI 的本质。',
         'about.badge': '关于我',
         'about.bio.label': '核心专长',
         'about.bio': '我专注于将复杂的业务需求梳理为直观的系统。我的工作核心位于 AI 产品逻辑、SaaS 扩展性与移动端易用性的交汇点，通过设计系统与 AI 辅助工作流，同时赋能团队与用户。',
@@ -446,7 +491,7 @@
         'sidebar.explore': 'で探索',
         'intro.eyebrow': 'AI · モバイル · SaaS · デザインシステム',
         'intro.headline': 'Iris Hsieh — <span class="hl">AI</span> と共栄し、デジタルプロダクト体験の<span class="hl hl-pink">次なる可能性</span>を定義する。',
-        'intro.bio': '<span class="stat-hi">AI、SaaS、モバイル、デザインシステム、デザインワークフロー設計</span>を横断するシニアプロダクトデザイナー。現在は <a href="https://getwren.ai" target="_blank" rel="noreferrer" data-tip="Text-to-SQL AI · 自然言語でデータを操作">Wren AI</a> に在籍し、これまでに <a data-tip="Android OS · Google ハードウェア設計チーム">Google Pixel</a> と <a data-tip="アジア最大の旅行 EC プラットフォーム">KKday</a> で、複雑なシステムをわかりやすい体験へ整理してきた。近く英国、ヨーロッパ、または日本への移住を予定しており、両地域での機会にオープンです。',
+        'intro.bio': 'Hi、謝明希（Ming Hsi, Hsieh）と申します。Iris Hsieh とも呼ばれている、<span class="stat-hi">AI、SaaS、モバイル、デザインシステム、デザインワークフロー設計</span>を横断するシニアプロダクトデザイナーです。現在は <a href="https://getwren.ai" target="_blank" rel="noreferrer" data-tip="Text-to-SQL AI · 自然言語でデータを操作">Wren AI</a> に在籍し、それ以前は <a data-tip="Android OS · Google ハードウェア設計チーム">Google Pixel</a> と <a data-tip="アジア最大の旅行 EC プラットフォーム">KKday</a> で、複雑なシステムをわかりやすい体験へ整理してきました。近く英国、ヨーロッパ、または日本への移住を予定しており、いずれの地域でも機会にオープンです。',
         'intro.bio2': '<span class="stat-hi">AI プロダクトをどう設計している</span>かを見たい方は、Wren AI で会話型 BI を再設計した <a href="case-studies/wren-agent.html">One Product, Three Minds</a>、ユーザーのシグナルをモデルへの指示に変えるフィードバックシステムを扱った <a href="case-studies/thread-tracing.html">Closing the Loop</a>、そしてハンブルク市の道路整備チーム向けに設計した AI 支援ツール <a href="case-studies/lsbg.html">Bicycle Lane Inspection</a> からどうぞ。<span class="stat-hi">モバイル系の仕事</span>であれば、Google Pixel で率いた <a href="case-studies/notification.html">Notification Framework</a>、Fable で設計したクロスストアのネイティブ購入体験 <a href="case-studies/a41.html">A41</a> があります。<span class="stat-hi">B2B SaaS の領域</span>では、KKday で <a href="case-studies/rezio-ds.html">Rezio Design System</a> を構築し、セットアップ時間を 38% 短縮した <a href="case-studies/rezio.html">Rezio の導入フロー</a> を再設計しました。',
         'intro.bio3': 'AI とデザインについての考え方は、<a href="#island-writing">Playground</a>、とりわけ、並行プロジェクトを横断しながら一人のデザイナーが <span class="stat-hi">6〜8 FTE</span> 分のスコープを担うワークフローをまとめた <a href="case-studies/designing-with-ai.html">Designing with AI</a> をご覧ください。目下は、旅行リサーチをインタラクティブな HTML ガイドに変換する Claude Code Skill、<a href="case-studies/trip-planner.html">Trip Planner</a> を育てています。',
         'intro.pill.resume': '履歴書 ↓',
@@ -480,6 +525,9 @@
         'wcard10.co': 'Wren AI · 2026',
         'wcard10.title': 'AI と共にデザインする：ソロデザイナーのためのシステムレベルワークフロー',
         'wcard10.desc': '週の 40% が会議という状況の中で、1 人のデザイナーが 3〜4 の並行プロジェクト・6〜8 FTE 相当の範囲をカバーする、11 ステップの Claude Code パイプラインを記録。',
+        'wcard11.co': 'Wren AI · 2026',
+        'wcard11.title': 'Embedded Threads：意思決定の現場に BI を届ける',
+        'wcard11.desc': 'Notion のサイドバー、モバイルのボトムシート、393px のスマホ画面に住む会話型 BI サーフェスを設計し、どのサイズでも Wren AI らしさを失わない。',
         'about.badge': '自己紹介',
         'about.bio.label': '業務内容',
         'about.bio': '複雑なプロダクトを、チームが進めやすく、ユーザーが理解しやすい形に整理するのが仕事です。AI プロダクト、SaaS、モバイル領域を中心に、デザインシステム、ユーザビリティ改善、AI 活用ワークフローの設計に取り組んでいます。',

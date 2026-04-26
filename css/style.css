@@ -421,6 +421,15 @@
     html[lang="ja"]    .intro-headline { font-family: 'Noto Sans JP', 'Barlow', sans-serif; font-weight: 700; }
     html[lang="zh-TW"] .intro-headline { font-family: 'Noto Sans TC', 'Barlow', sans-serif; font-weight: 700; }
     html[lang="zh-CN"] .intro-headline { font-family: 'Noto Sans SC', 'Barlow', sans-serif; font-weight: 700; }
+    .intro-headline .name-alt {
+      display: block;
+      font-size: 0.32em;
+      font-weight: 400;
+      font-style: normal;
+      color: var(--muted, #8c8079);
+      letter-spacing: 0.02em;
+      margin-top: 10px;
+    }
 
     .hl {
       display: inline-block;
@@ -497,7 +506,7 @@
        WORK ISLAND
     ══════════════════════════════════ */
     .work-island { top: 1400px; left: 60px; transform: rotate(-1.2deg); }
-    .work-frame  { width: 840px; }
+    .work-frame  { width: 1080px; }
 
     .work-heading-row {
       display: flex;
@@ -997,7 +1006,7 @@
     /* ══════════════════════════════════
        SKILLS ISLAND
     ══════════════════════════════════ */
-    .skills-island { top: 980px; left: 1060px; transform: rotate(-0.7deg); }
+    .skills-island { top: 980px; left: 1360px; transform: rotate(-0.7deg); }
     .skills-frame  { width: 420px; }
     .skills-stamp {
       position: absolute;
@@ -1087,9 +1096,50 @@
     /* ══════════════════════════════════
        MINIMAP  — fixed bottom-left
     ══════════════════════════════════ */
-    .minimap {
+    .zoom-controls {
       position: fixed;
       bottom: 12px;
+      left: 12px;
+      width: var(--nav-w);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 4px;
+      background: rgba(255,254,251,0.85);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(219,212,201,0.5);
+      border-radius: 12px;
+      padding: 4px;
+      box-shadow: 0 4px 24px rgba(43,37,32,0.1), 0 1px 4px rgba(43,37,32,0.06);
+      z-index: 60;
+    }
+    .zoom-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 0;
+      background: transparent;
+      color: #2b2520;
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .zoom-btn:hover { background: rgba(43,37,32,0.06); }
+    .zoom-btn-reset { font-size: 11px; letter-spacing: 0.04em; }
+    @media (max-width: 640px) {
+      .zoom-controls { display: none; }
+    }
+
+    .minimap {
+      position: fixed;
+      bottom: 66px;
       left: 12px;
       width: var(--nav-w);
       height: 94px;
@@ -1098,7 +1148,7 @@
       backdrop-filter: blur(14px);
       border: 1px solid rgba(219,212,201,0.5);
       border-radius: 14px;
-      box-shadow: 0 4px 24px rgba(43,37,32,0.1), 0 1px 4px rgba(43,37,32,0.06);
+      box-shadow: 0 -2px 24px rgba(43,37,32,0.08), 0 1px 4px rgba(43,37,32,0.06);
       overflow: hidden;
       z-index: 100;
     }

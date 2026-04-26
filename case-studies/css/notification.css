@@ -71,7 +71,7 @@ html { scroll-padding-top: 80px; }
     }
     .sec.white { background: var(--bg-card); }
     .sec.cream { background: var(--bg); }
-    .sec-inner { width: 100%; max-width: 1440px; display: flex; flex-direction: column; gap: 48px; }
+    .sec-inner { width: 100%; max-width: 1440px; display: flex; flex-direction: column; gap: 20px; }
 
     /* ── SECTION HEADING ──────────────────────────── */
     .sec-head {
@@ -127,7 +127,9 @@ html { scroll-padding-top: 80px; }
     .icon-copy { flex: 1; display: flex; flex-direction: column; gap: 8px; }
 
     /* ── NUMBERED STEP LIST ───────────────────────── */
-    .step-list { display: flex; flex-direction: column; gap: 32px; }
+    .step-list { display: flex; flex-direction: column; gap: 20px; }
+    .sec-inner > div[style*="gap:32px"],
+    .sec-inner > div[style*="gap: 32px"] { gap: 20px !important; }
     .step-row { display: flex; gap: 24px; align-items: flex-start; }
     .step-num {
       width: 32px; height: 32px; flex-shrink: 0;
