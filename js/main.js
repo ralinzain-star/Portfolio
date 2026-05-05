@@ -313,7 +313,7 @@
         'article0.title': 'Reflections on Design: From Pixel-Perfect Obsession to the AI Cthulhu',
         'article0.tag': 'Reflection',
         'article0.desc': 'On adaptation, impact over artifacts, and dancing with AI uncertainty.',
-        'article1.title': 'Building a <span class="stat-hi">Claude Code Skill</span> for Travel Planning',
+        'article1.title': 'Building a Claude Code Skill for Travel Planning',
         'article1.tag': 'Claude Code Skill',
         'article1.desc': 'A conversational AI tool that turns travel research into interactive HTML guides.',
         'gate.status': 'Gate Open',
