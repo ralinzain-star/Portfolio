@@ -197,7 +197,7 @@ html { scroll-padding-top: 80px; }
     .ofs-screenshot img { width: 100%; display: block; }
 
     /* -- BEFORE / AFTER COMPARISON -- */
-    .ba-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0 10px; }
+    .ba-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0 10px; align-items: stretch; }
     .ba-card { display: flex; flex-direction: column; gap: 8px; }
     .ba-tag {
       display: inline-flex; align-items: center; gap: 6px;
@@ -206,8 +206,8 @@ html { scroll-padding-top: 80px; }
       color: var(--text); font-weight: 600;
     }
     .ba-tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--text); }
-    .ba-frame { width: 100%; border-radius: 6px; overflow: hidden; border: 1px solid #D9D9D9; }
-    .ba-frame img { width: 100%; display: block; }
+    .ba-frame { width: 100%; border-radius: 6px; overflow: hidden; border: 1px solid #D9D9D9; flex: 1; aspect-ratio: 1584 / 480; }
+    .ba-frame img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center top; }
 
     /* -- DESIGN DECISION BLOCKS -- */
     .dd-list { display: flex; flex-direction: column; gap: 28px; margin: 22px 0 6px; }
@@ -237,12 +237,15 @@ html { scroll-padding-top: 80px; }
       background: #1c1917;
       border-radius: 12px;
       padding: 28px 24px 32px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .loop-diagram {
       display: flex;
       align-items: flex-start;
       justify-content: center;
       gap: 0;
+      min-width: max-content;
     }
     .loop-group {
       display: flex;
@@ -401,48 +404,10 @@ html { scroll-padding-top: 80px; }
       .loop-group { flex-basis: 150px; max-width: 180px; }
       .loop-caption { font-size: 10.5px; padding: 0 2px; }
     }
-    /* Mobile: stack vertically */
+    /* Mobile: keep horizontal layout, allow swipe-scroll */
     @media (max-width: 620px) {
-      .loop-diagram {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-      }
-      .loop-group {
-        max-width: none;
-        flex-basis: auto;
-        align-items: flex-start;
-        padding-left: 4px;
-      }
-      .loop-label { white-space: nowrap; }
-      .loop-caption { text-align: left; padding: 0 4px 0 0; font-size: 11px; }
-      .loop-connector {
-        flex-direction: row;
-        align-items: center;
-        padding-top: 0;
-        padding-left: 18px;
-        gap: 10px;
-        min-width: 0;
-      }
-      .loop-transfer-label { max-width: none; white-space: nowrap; }
-      .loop-dot {
-        width: 2px;
-        height: 24px;
-        background-image: linear-gradient(to bottom, var(--dot-color) 50%, transparent 50%);
-        background-size: 2px 6px;
-        background-repeat: repeat-y;
-        animation: loopFlowV 0.9s linear infinite;
-      }
-      .loop-dot::after {
-        content: '▾';
-        right: 50%;
-        top: 100%;
-        transform: translate(50%, -50%);
-      }
-      @keyframes loopFlowV {
-        to { background-position: 0 6px; }
-      }
-      .loop-return-bar { display: none; }
+      .loop-wrap { padding: 22px 16px 26px; }
+      .loop-diagram { justify-content: flex-start; }
     }
 
     /* -- QUOTE ROW -- */

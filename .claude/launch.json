@@ -4,8 +4,8 @@
     {
       "name": "portfolio",
       "cwd": "/Users/harmony/Documents/GitHub/Portfolio",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["/tmp/iris-portfolio-serve.py"],
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["/tmp/iris-portfolio-serve.js"],
       "port": 4321
     }
   ]

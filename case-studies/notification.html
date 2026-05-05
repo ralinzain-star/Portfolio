@@ -194,11 +194,11 @@
 
     <body class="staticrypt-body">
     <img id="gate-bg-video" src="../assets/encrypted/gate.jpg" alt="" />
-        <div id="staticrypt_loading" class="staticrypt-spinner-container">
+        <div id="staticrypt_loading" class="staticrypt-spinner-container hidden" style="display:none!important">
             <div class="staticrypt-spinner"></div>
         </div>
 
-        <div id="staticrypt_content" class="staticrypt-content hidden">
+        <div id="staticrypt_content" class="staticrypt-content">
             <div class="staticrypt-page">
                 <div class="staticrypt-form">
                     <div class="staticrypt-instructions">
@@ -848,7 +848,7 @@ exports.init = init;
             const staticrypt = staticryptInitiator.init(staticryptConfig, templateConfig);
 
             // try to automatically decrypt on load if there is a saved password
-            window.onload = async function () {
+            (async function () {
                 const { isSuccessful } = await staticrypt.handleDecryptOnLoad();
 
                 // if we didn't decrypt anything on load, show the password prompt. Otherwise the content has already been
@@ -864,7 +864,7 @@ exports.init = init;
                         document.getElementById("staticrypt-remember-label").classList.remove("hidden");
                     }
                 }
-            };
+            })();
 
             // toggle password visibility
             const toggleIcon = document.querySelector(".staticrypt-toggle-password-visibility");

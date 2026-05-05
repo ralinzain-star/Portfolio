@@ -194,6 +194,12 @@
 
     // Hash-on-load: fly to island if URL has #target (e.g. from case study back button or direct link)
     const hashTarget = resolveHashTarget();
+    if (!hashTarget) {
+      // Default landing: snap to Intro island once layout settles.
+      const settle = () => { wrap.scrollTop = 0; wrap.scrollLeft = 0; snapToIsland('intro'); };
+      requestAnimationFrame(settle);
+      window.addEventListener('load', () => setTimeout(settle, 80));
+    }
     if (hashTarget) {
       // The browser's native anchor-scroll will set wrap.scrollTop to bring
       // the target island into view BEFORE our script runs, even though
