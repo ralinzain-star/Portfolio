@@ -36,7 +36,9 @@ jobs:
           source: ./
           destination: ./_site
       - name: Cache-bust assets
-        run: node scripts/cache-bust.js _site "$GITHUB_SHA"
+        run: |
+          sudo chown -R "$(id -u):$(id -g)" _site
+          node scripts/cache-bust.js _site "$GITHUB_SHA"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
