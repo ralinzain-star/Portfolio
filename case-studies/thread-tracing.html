@@ -286,6 +286,7 @@
         </div>
 
         <script>
+            (function() {
             // these variables will be filled when generating the file - the template format is 'variable_name'
             const staticryptInitiator = ((function(){
   const exports = {};
@@ -914,7 +915,7 @@ exports.init = init;
 
                     // show the remember me checkbox
                     if (isRememberEnabled) {
-                        document.getElementById("staticrypt-remember-label").classList.remove("hidden");
+                        document.getElementById("staticrypt-remember-label")?.classList.remove("hidden");
                     }
                 }
             })();
@@ -954,6 +955,7 @@ exports.init = init;
                     alert(templateError);
                 }
             });
+            })();
         </script>
     </body>
 </html>
