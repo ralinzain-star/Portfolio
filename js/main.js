@@ -565,7 +565,7 @@
     let currentLang = 'en';
 
     // Store original innerHTML for elements with rich child content
-    const richKeys = ['intro.headline', 'intro.bio', 'intro.bio2', 'intro.bio3', 'about.bio', 'about.offwork'];
+    const richKeys = ['intro.headline', 'intro.bio', 'intro.bio2', 'intro.bio3', 'about.bio', 'about.offwork', 'article1.title'];
     const originalHTML = {};
     richKeys.forEach(key => {
       const el = document.querySelector(`[data-i18n="${key}"]`);
@@ -588,7 +588,7 @@
         const key = el.getAttribute('data-i18n');
         // For rich-HTML elements in English, always restore original markup
         if (richKeys.includes(key)) {
-          if (key === 'intro.headline' || key === 'intro.bio' || key === 'intro.bio2' || key === 'intro.bio3') {
+          if (key === 'intro.headline' || key === 'intro.bio' || key === 'intro.bio2' || key === 'intro.bio3' || key === 'article1.title') {
             // Always use innerHTML so spans/links render in every language
             if (lang === 'en') {
               if (originalHTML[key]) el.innerHTML = originalHTML[key];
