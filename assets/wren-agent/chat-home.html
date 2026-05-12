@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Chat Home</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -191,11 +194,13 @@
     display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
   }
   .ai-first-line p { flex: 1; }
-  .ai-timestamp {
-    font-size: 14px; color: #8c8c8c; line-height: 22px; white-space: nowrap; flex-shrink: 0;
+  /* Per-message timestamp — sits under each user message, hover to reveal */
+  .msg-timestamp {
+    font-size: 12px; color: #8c8c8c; line-height: 18px; white-space: nowrap;
+    margin-top: 2px; padding-right: 4px;
     opacity: 0; transition: opacity 0.2s;
   }
-  .msg-ai:hover .ai-timestamp { opacity: 1; }
+  .msg-user:hover .msg-timestamp { opacity: 1; }
 
 
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -660,6 +665,10 @@
       <div class="menu-item-simple has-divider-bottom" data-slash-skill="manage">
         <div class="item-icon"><svg viewBox="0 0 1024 1024" width="12" height="12" fill="#595959"><path d="M839.2 278.1a32 32 0 0 0-30.4-22.1H736V144c0-17.7-14.3-32-32-32H320c-17.7 0-32 14.3-32 32v112h-72.8a31.9 31.9 0 0 0-30.4 22.1L112 502v378c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V502l-72.8-223.9zM360 184h304v72H360v-72zm480 656H184V513.4L244.3 328h535.4L840 513.4V840zM652 572H544V464c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v108H372c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h108v108c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V636h108c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8z"/></svg></div>
         <span class="item-text">Manage skills</span>
+      </div>
+      <div class="menu-item-simple" data-slash-skill="generate-report">
+        <div class="item-icon"><svg viewBox="0 0 1024 1024" width="12" height="12" fill="#595959"><path d="M516 673c0 4.4 3.4 8 7.5 8h185c4.1 0 7.5-3.6 7.5-8v-48c0-4.4-3.4-8-7.5-8h-185c-4.1 0-7.5 3.6-7.5 8v48zm-194.9 6.1l192-161c3.8-3.2 3.8-9.1 0-12.3l-192-160.9A7.95 7.95 0 0 0 308 351v62.7c0 2.4 1 4.6 2.9 6.1L420.7 512l-109.8 92.2a8.1 8.1 0 0 0-2.9 6.1V673c0 6.8 7.9 10.5 13.1 6.1zM880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zm-40 728H184V184h656v656z"/></svg></div>
+        <span class="item-text">generate-report</span>
       </div>
       <div class="menu-item-simple" data-slash-skill="skill-creator">
         <div class="item-icon"><svg viewBox="0 0 1024 1024" width="12" height="12" fill="#595959"><path d="M516 673c0 4.4 3.4 8 7.5 8h185c4.1 0 7.5-3.6 7.5-8v-48c0-4.4-3.4-8-7.5-8h-185c-4.1 0-7.5 3.6-7.5 8v48zm-194.9 6.1l192-161c3.8-3.2 3.8-9.1 0-12.3l-192-160.9A7.95 7.95 0 0 0 308 351v62.7c0 2.4 1 4.6 2.9 6.1L420.7 512l-109.8 92.2a8.1 8.1 0 0 0-2.9 6.1V673c0 6.8 7.9 10.5 13.1 6.1zM880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zm-40 728H184V184h656v656z"/></svg></div>
@@ -1159,9 +1168,14 @@
     });
   }
 
+  function nowTimestamp() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0') + ' ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0') + ':' + String(d.getSeconds()).padStart(2,'0');
+  }
+
   function addUserMsg(text) {
     const el = document.createElement('div'); el.className = 'msg-user';
-    el.innerHTML = `<div class="msg-user-content"><div class="msg-user-name">Freda Lai_0507</div><div class="msg-user-bubble">${text}</div></div><div class="msg-user-avatar">FR</div>`;
+    el.innerHTML = `<div class="msg-user-content"><div class="msg-user-name">Freda Lai_0507</div><div class="msg-user-bubble">${text}</div><span class="msg-timestamp">${nowTimestamp()}</span></div><div class="msg-user-avatar">FR</div>`;
     chatArea.appendChild(el); scrollBottom();
   }
 
@@ -1197,14 +1211,15 @@
     const el = document.createElement('div'); el.className = 'msg-ai';
     const firstLineHtml = skipFirstLine ? '' : '<div class="ai-first-line"><p class="ai-working-text">Appreciate your patience — working on your request!</p></div>';
     const iconVis = skipFirstLine ? ' style="visibility:hidden"' : '';
-    // Build with toggle + expanded area immediately (collapsed)
-    el.innerHTML = `<div class="ai-icon"${iconVis}>${AI_ICON}</div><div class="ai-body">${firstLineHtml}<div class="thinking-toggle"><span class="toggle-bird"><img src="ai-icon.svg" width="24" height="24"></span><span class="toggle-label">Show thinking steps</span><span class="toggle-spinner"></span><span class="toggle-chevron">${CHEVRON_DOWN_SVG}</span></div><div class="thinking-expanded-steps"></div></div>`;
+    // Build with toggle + expanded area immediately (expanded by default so
+    // viewers see the thinking steps stream in without having to click).
+    el.innerHTML = `<div class="ai-icon"${iconVis}>${AI_ICON}</div><div class="ai-body">${firstLineHtml}<div class="thinking-toggle expanded"><span class="toggle-bird"><img src="ai-icon.svg" width="24" height="24"></span><span class="toggle-label">Show thinking steps</span><span class="toggle-spinner"></span><span class="toggle-chevron">${CHEVRON_DOWN_SVG}</span></div><div class="thinking-expanded-steps visible"></div></div>`;
     el._thinkingSteps = thinkingSteps;
 
-    // Set up toggle
+    // Set up toggle (starts expanded — clicking once collapses)
     const toggle = el.querySelector('.thinking-toggle');
     const expanded = el.querySelector('.thinking-expanded-steps');
-    let isExpanded = false;
+    let isExpanded = true;
     toggle.addEventListener('click', () => {
       isExpanded = !isExpanded;
       toggle.classList.toggle('expanded', isExpanded);
@@ -1322,13 +1337,7 @@
     // Remove loading spinner from toggle
     const toggleSpinner = loadEl.querySelector('.toggle-spinner');
     if (toggleSpinner) toggleSpinner.remove();
-    const now = new Date();
-    const ts = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0') + ' ' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0');
-    const firstLine = loadEl.querySelector('.ai-first-line');
-    if (firstLine && !firstLine.querySelector('.ai-timestamp')) {
-      firstLine.insertAdjacentHTML('beforeend', `<span class="ai-timestamp">${ts}</span>`);
-    }
-    // No timestamp on thinking toggle rows (skipFirstLine)
+    // Timestamps now sit under each user message (see addUserMsg), not on the AI bubble.
     scrollBottom();
   }
 
@@ -1601,12 +1610,17 @@ Based on the manufacturing_OF_manpower_mask data for the last 30 days, here are 
   // ===== JOURNEY B: Generate Report (Figma) — fully automated =====
   function runJourneyB() {
     homeArea.classList.add('hidden'); chatArea.classList.add('active');
-    enterLoadingState();
 
-    // Step 1: User sends question
+    // The user message appears immediately so the conversation reads from the
+    // very first frame — the typing simulation was distracting from the
+    // thinking-step narrative that follows.
+    try { resetSkill(); } catch(e) {}
+    closeAll();
     addUserMsg('/generate-report How many customers do we have?');
+    enterLoadingState();
+    setTimeout(() => scheduleAiTurn1(), 400);
 
-    setTimeout(() => {
+    function scheduleAiTurn1() {
       // Step 2: AI loading with thinking steps
       const loadEl1 = addAiLoading([
         'Reading skill generate-report.md',
@@ -1719,7 +1733,7 @@ You can download the full report as Markdown/CSV below, or click on any chart to
           }, 600);
         }, 400);
       });
-    }, 500);
+    }
   }
 
   const journeyB = []; // empty — B is fully automated via runJourneyB()

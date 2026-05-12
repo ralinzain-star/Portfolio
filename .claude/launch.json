@@ -5,8 +5,8 @@
       "name": "portfolio",
       "cwd": "/Users/harmony/Documents/GitHub/Portfolio",
       "runtimeExecutable": "node",
-      "runtimeArgs": ["/tmp/iris-portfolio-serve.js"],
-      "port": 4321
+      "runtimeArgs": ["scripts/serve.js"],
+      "port": 3001
     }
   ]
 }

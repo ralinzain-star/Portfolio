@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WrenAI · Skills</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@13/marked.min.js"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #2c2c2c; }
+    .scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 3px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+
+    /* Top bar */
+    .topbar { background: #262626; }
+    .topbar a, .topbar button { color: #ffffff; }
+    .topbar .nav-pill { border-radius: 24px; height: 24px; padding: 0 8px; display: inline-flex; align-items: center; font-size: 14px; line-height: 22px; box-shadow: 0 2px 0 0 rgba(0,0,0,0.02); }
+    .topbar .nav-pill.active { background: rgba(255,255,255,0.2); font-weight: 700; }
+    .topbar .breadcrumb-pill { color: #d9d9d9; font-size: 12px; line-height: 18.86px; padding: 0 8px; height: 24px; border-radius: 24px; display: inline-flex; align-items: center; gap: 8px; }
+    .topbar .breadcrumb-pill.muted { color: #bfbfbf; }
+    .topbar .credits-pill { border: 0.5px solid #ffffff; border-radius: 12px; height: 24px; padding: 0 12px; display: inline-flex; align-items: center; gap: 8px; font-size: 12px; line-height: 22px; font-weight: 500; color: #ffffff; background-image: linear-gradient(90.77deg, #363636 2.37%, #0e0e0e 99.84%); }
+    .topbar .credits-divider { width: 1px; height: 12px; background: rgba(255,255,255,0.4); }
+
+    /* Sidebar */
+    .sidebar { background: #fafafa; border-right: 1px solid #ececec; }
+    .sidebar .section-title { font-size: 12px; color: #8a8a8a; padding: 8px 16px 4px; font-weight: 500; }
+    .sidebar .menu-item { padding: 4px 24px; font-size: 14px; color: #2c2c2c; cursor: pointer; height: 28px; display: flex; align-items: center; gap: 8px; }
+    .sidebar .menu-item:hover { background: #f0f0f0; }
+    .sidebar .menu-item.active { background: #efefef; color: #2c2c2c; }
+    .sidebar .badge-new { background: #2F54EB; color: white; font-size: 11px; font-weight: 500; padding: 1px 6px; border-radius: 4px; line-height: 14px; }
+    .sidebar .badge-beta { background: #f59e0b; color: white; font-size: 11px; font-weight: 500; padding: 1px 6px; border-radius: 4px; line-height: 14px; }
+
+    /* Toggle */
+    .toggle { width: 28px; height: 16px; border-radius: 9999px; background: #d4d4d8; position: relative; transition: background .15s; cursor: pointer; flex-shrink: 0; }
+    .toggle.on { background: #2F54EB; }
+    .toggle::after { content: ""; position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; background: white; border-radius: 50%; transition: transform .15s; }
+    .toggle.on::after { transform: translateX(12px); }
+
+    /* Buttons */
+    .btn-outline { border: 1px solid #d4d4d8; background: white; color: #2c2c2c; padding: 5px 12px; border-radius: 6px; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+    .btn-outline:hover { background: #fafafa; }
+    .btn-primary { background: #2F54EB; color: white; padding: 5px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; }
+    .btn-primary:hover { background: #1D3FC7; }
+    .btn-danger { background: #ef4444; color: white; padding: 5px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; }
+    .btn-danger:hover { background: #dc2626; }
+
+    /* Search */
+    .search-input { width: 100%; padding: 7px 80px 7px 12px; border: 1px solid #d4d4d8; border-radius: 6px; font-size: 13px; outline: none; background: white; color: #2c2c2c; }
+    .search-input::placeholder { color: #a1a1a1; }
+    .search-input:focus { border-color: #d4d4d8; box-shadow: none; }
+    .search-clear { position: absolute; right: 50px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; border-radius: 9999px; background: #d4d4d8; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: .8; }
+    .search-clear:hover { opacity: 1; }
+    .search-btn { position: absolute; right: 0; top: 0; bottom: 0; width: 40px; background: #2F54EB; border-radius: 0 5px 5px 0; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    .search-btn:hover { background: #1D3FC7; }
+
+    /* Skill row */
+    .skill-row { padding: 14px 12px; border-bottom: 1px solid #ececec; display: flex; align-items: flex-start; gap: 16px; border-radius: 6px; transition: background .12s; cursor: pointer; }
+    .skill-row:hover { background: #F5F5F5; }
+    .skill-name { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+    .skill-desc { font-size: 13px; color: #595959; margin-top: 2px; line-height: 1.5; word-break: break-word; }
+    .skill-meta { font-size: 12px; color: #8a8a8a; margin-top: 6px; display: inline-flex; align-items: center; gap: 4px; }
+
+    /* Dropdown menu */
+    .dd-menu { position: absolute; right: 0; top: 28px; min-width: 160px; background: white; border: 1px solid #ececec; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04); padding: 4px; z-index: 30; font-size: 13px; }
+    .dd-item { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 4px; cursor: pointer; color: #2c2c2c; width: 100%; text-align: left; }
+    .dd-item:hover { background: #f5f5f5; }
+    .dd-item.danger { color: #ef4444; }
+    .icon-btn { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 4px; cursor: pointer; color: #6b6b6b; }
+    .icon-btn:hover { background: #f0f0f0; }
+
+    /* Modals */
+    [data-modal-backdrop] { animation: fadeIn .15s ease-out; background: rgba(0,0,0,.4); }
+    [data-modal-content] { animation: scaleIn .15s ease-out; background: white; border-radius: 8px; box-shadow: 0 24px 48px rgba(0,0,0,.18); }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(.97); } to { opacity: 1; transform: scale(1); } }
+
+    /* Code viewer */
+    pre.code-viewer { margin: 0; padding: 12px 0; font-size: 12px; line-height: 18px; }
+    .code-line { display: grid; grid-template-columns: 56px 1fr; }
+    .code-line .ln { color: #b3b3b3; text-align: right; padding-right: 16px; user-select: none; }
+    .code-line .ct { white-space: pre; padding-right: 24px; color: #2c2c2c; }
+
+    /* Toast */
+    .toast { animation: toastIn .2s ease-out; }
+    @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 8px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+    /* Filetree */
+    .ft-folder { padding: 4px 12px; display: flex; align-items: center; gap: 6px; font-size: 13px; color: #2c2c2c; cursor: pointer; border-radius: 4px; margin: 0 4px; }
+    .ft-folder:hover { background: #f5f5f5; }
+    .chev-toggle { display: inline-flex; width: 12px; height: 12px; transition: transform .15s ease; color: #71717a; }
+    [data-folder-tree]:not(.collapsed) .chev-toggle { transform: rotate(90deg); }
+    [data-folder-tree].collapsed .ft-file { display: none; }
+    .ft-file { padding: 4px 12px 4px 30px; display: flex; align-items: center; gap: 6px; font-size: 13px; color: #2c2c2c; cursor: pointer; border-radius: 4px; margin: 0 4px; }
+    .ft-file:hover { background: #f5f5f5; }
+    .ft-file.active { background: #ebf2ff; color: #2F54EB; }
+    .ft-file.active i { color: #2F54EB; }
+
+    /* Article (official skill detail) */
+    .article { color: #2c2c2c; font-size: 14px; line-height: 1.7; }
+    .article h1 { font-size: 24px; font-weight: 600; margin: 0 0 12px; color: #1a1a1a; letter-spacing: -.01em; }
+    .article h2 { font-size: 16px; font-weight: 600; margin: 28px 0 8px; color: #1a1a1a; }
+    .article h3 { font-size: 14px; font-weight: 600; margin: 18px 0 6px; color: #1a1a1a; }
+    .article p { margin: 0 0 12px; }
+    .article p.lead { font-size: 15px; color: #595959; margin-bottom: 8px; }
+    .article ul, .article ol { padding-left: 20px; margin: 0 0 12px; }
+    .article ul { list-style: disc; }
+    .article ol { list-style: decimal; }
+    .article li { margin: 4px 0; }
+    .article li > ul, .article li > ol { margin: 4px 0 4px; }
+    .article strong { font-weight: 600; color: #1a1a1a; }
+    .article code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 13px; background: #ececec; padding: 1px 5px; border-radius: 3px; }
+    .article pre { background: #1e1e1e; color: #e5e5e5; padding: 12px 14px; border-radius: 6px; overflow-x: auto; font-size: 12.5px; line-height: 1.55; margin: 8px 0 14px; }
+    .article pre code { background: transparent; color: inherit; padding: 0; border-radius: 0; font-size: 12.5px; }
+    .article hr { border: 0; border-top: 1px solid #e5e5e5; margin: 16px 0; }
+    .article a { color: #2F54EB; text-decoration: underline; }
+
+    /* Upload warning banner */
+    .upload-banner { background: #FEF2F2; border: 1px solid #FECACA; border-radius: 6px; padding: 8px 12px; display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+
+    /* Dropzone */
+    .dropzone { border: 2px dashed #d4d4d8; border-radius: 8px; padding: 40px; text-align: center; cursor: pointer; transition: all .15s; background: white; }
+    .dropzone:hover, .dropzone.over { border-color: #2F54EB; background: #f5f9ff; }
+    .upload-progress { border: 1px solid #e4e1db; border-radius: 8px; padding: 14px 16px; background: #fff; }
+    .upload-progress-track { height: 6px; background: #f1efea; border-radius: 999px; overflow: hidden; }
+    .upload-progress-fill { height: 100%; background: linear-gradient(90deg, #2F54EB, #5B7DF5); border-radius: 999px; transition: width 60ms linear; }
+  </style>
+</head>
+<body class="bg-white">
+  <div id="app"></div>
+
+  <script type="text/markdown" id="skill-md-analyze-data">---
+name: analyze-data
+description: Use this skill when the user asks to query data, get specific numbers, answer factual questions, analyze data, find trends, explore a dataset, or visualize results.
+metadata:
+  builtin: "true"
+---
+
+## What this skill does
+
+Turns a question into an answer grounded in the project's data. It picks the right models, runs the right cuts, and — when a visual makes the answer easier to read — produces a chart with a one-sentence takeaway.
+
+This is the workhorse skill for analytical conversations: the user asks a question, the agent figures out the relevant tables, the answer lands with the supporting numbers and (where helpful) a chart that explains the trend at a glance.
+
+## When to use
+
+- The user asks a quantitative question ("how many", "what's the average", "which is highest").
+- The user wants to find a trend, compare cohorts, or look at a distribution.
+- The user wants to visualize a result ("chart this", "show me as a bar chart").
+- The user is exploring a dataset and isn't sure yet what to ask.
+- The user wants a follow-up cut on a previous answer ("now break that down by region").
+
+## What you get back
+
+- **A direct answer to the question** — usually a number, a small table, or a short ranked list.
+- **A chart, when the result calls for one.** Line for trends over time, bar for category comparisons, scatter for relationships, area for stacked composition.
+- **A one-sentence takeaway** that names the leader, the trend, or the outlier — so the chart isn't just decoration.
+- **Follow-up suggestions** that turn one question into a thread of analysis, not a one-shot lookup.
+
+## Where it stops
+
+It won't fabricate data when the question can't be answered from the connected models — it'll say so and suggest what would be needed. It also won't write essays; if the user wants a polished narrative report, that's the **generate-report** skill.
+
+## What you can ask for
+
+- **A single number** — count, total, average, ratio over a defined window.
+- **A trend** — how a metric has moved over time.
+- **A comparison** — one metric across categories, regions, segments, or any dimension.
+- **A top / bottom N** — ranked results with a comparable metric.
+- **A distribution** — how values are spread across buckets.
+- **A follow-up cut** — narrowing or reframing a previous answer.
+</script>
+
+  <script type="text/markdown" id="skill-md-doc">---
+name: doc
+description: Extract text and content from document files (DOCX, DOC, ODT, RTF)
+metadata:
+  builtin: "true"
+---
+
+## What this skill does
+
+Reads document files and returns clean, structured text the agent can reason over. The point is to make the contents of a Word-style document available for summarisation, extraction, and Q&A — without forcing the user to copy/paste anything.
+
+It handles the formats people actually share day to day:
+
+- **DOCX** — modern Microsoft Word
+- **DOC** — legacy binary Word
+- **ODT** — OpenDocument Text (LibreOffice / OpenOffice)
+- **RTF** — Rich Text Format
+
+## When to use
+
+- The user uploads or references a Word, OpenDocument, or RTF file.
+- The user wants to summarize a document, extract a specific section, or answer a question about its contents.
+- The user wants to convert a document into another format (e.g. plain text, Markdown).
+
+## What you get back
+
+- **Body text** in reading order, with whitespace and paragraph breaks preserved.
+- **Headings** with their level intact (H1–H6), so the agent can build a table of contents or navigate by section.
+- **Lists** — ordered and unordered — kept as lists.
+- **Tables** as Markdown-style tables when the structure is clean, or flattened rows when the layout is irregular.
+
+## Where it stops
+
+- Embedded images are described but not OCR'd — for image-heavy or scanned content, use the **pdf** skill on a PDF export.
+- Tracked changes are flattened to the accepted state; the original revision history isn't preserved.
+- Comments and footnotes are returned separately from the body, not inline.
+- Visual styling (font, color, exact spacing) is dropped — this is about content, not layout.
+
+## What you can ask for
+
+- **A summary** of the whole document or a specific section.
+- **A search** for a section, a topic, or every mention of a term.
+- **An extraction** of a list, a table, or a defined block (e.g. everything under a heading).
+- **A conversion** of the contents into another format (plain text, Markdown).
+- **An answer** to a question grounded in what the document actually says.
+</script>
+
+  <script type="text/markdown" id="skill-md-generate-report">---
+name: generate-report
+description: Generate comprehensive data reports with charts and insights
+metadata:
+  builtin: "true"
+---
+
+## What this skill does
+
+Builds a self-contained data report on a topic — narrative, supporting charts, and the underlying numbers — designed to be read end-to-end without the reader having to ask a single follow-up question.
+
+Where **analyze-data** answers one question with one cut and (sometimes) one chart, this skill writes a small document: framed findings, multiple supporting charts, the methods note, and the queries that produced the numbers. The output is something you'd forward to a stakeholder, not a one-line reply in chat.
+
+## When to use
+
+- The user asks for a "report", "summary", "weekly review", or "dashboard-like view" of their data.
+- The findings need to be shared with someone who won't run the analysis themselves.
+- The answer requires more than a single chart and a paragraph of context.
+- The user is closing out an investigation and wants a durable artifact.
+- The user wants to explain a trend or a regression to leadership.
+
+## What's in a typical report
+
+- **Executive summary** — 2–3 sentences naming the headline finding up front.
+- **Overview** — scope, time window, and the data that's covered.
+- **Key metrics** — the numbers that matter, framed as comparisons or deltas, not bare totals.
+- **Trends** — three to five charts, each with a one-sentence caption that states the takeaway.
+- **Recommendations** — what to do next, grounded in what the data showed.
+- **Methods note** — the queries and assumptions, so a curious reader can verify.
+
+## What you can ask for
+
+- **A periodic review** of a metric or area (weekly, monthly, quarterly).
+- **A status snapshot** of a topic for a specific audience.
+- **A before-and-after analysis** around a known event or change.
+- **A multi-dimension breakdown** that frames one metric across several cuts.
+- **A wrap-up** that closes out an investigation with findings and recommendations.
+
+## Where it stops
+
+This skill produces a document, not a live dashboard — for an interactive view that updates as data changes, the project's dashboards are the right home. And it builds reports from data already modeled in the project; if a metric isn't in the semantic layer yet, it'll flag the gap rather than guess.
+</script>
+
+  <script type="text/markdown" id="skill-md-pdf">---
+name: pdf
+description: Extract text and tables from PDF files for analysis
+metadata:
+  builtin: "true"
+---
+
+## What this skill does
+
+Pulls usable text and tables out of PDF files so the agent can summarize, search, or answer questions about the contents — without the user retyping anything.
+
+It handles the two flavors of PDFs people actually have:
+
+- **Born-digital PDFs** — exported from Word, Google Docs, design tools — where the text is selectable.
+- **Scanned PDFs** — image-only pages where the text has to be recognized first.
+
+## When to use
+
+- The user uploads or references a PDF and wants to extract its text or tables.
+- The user wants to summarize, search, or ask questions about a document.
+- The user wants to pull figures out of a PDF report into a spreadsheet for further analysis.
+- The user has a contract, invoice, research paper, or financial filing they want the agent to reason about.
+
+## What you get back
+
+- **Text in reading order**, with column flow handled and headers/footers separated so they don't pollute the body.
+- **Tables** recovered as Markdown tables when the structure is clean; multi-page tables are stitched together.
+- **Page-aware extraction** so the agent can answer "what does page 12 say about…" or pull specific page ranges.
+- **Metadata** (title, author, page count, creation date) when present.
+
+## Where it stops
+
+- Scanned PDFs run through OCR, and quality depends on the scan — expect occasional character errors on noisy or skewed pages.
+- Tables in PDFs are notoriously inconsistent; complex layouts (merged cells, nested headers) may come back as flattened rows that need a second pass.
+- Form fields are returned as plain key/value pairs, not as the original interactive widget layout.
+- Annotations and comments are extracted separately, not inline with the body.
+
+## What you can ask for
+
+- **A summary** of the document, or of a specific page range.
+- **A specific number, fact, or value** pulled out of the file.
+- **A table extraction** moved into a spreadsheet for further analysis.
+- **A search** across the document for every mention of a topic or term.
+- **An answer** to a question grounded in what the PDF says.
+</script>
+
+  <script type="text/markdown" id="skill-md-spreadsheet">---
+name: spreadsheet
+description: Import, transform, and analyze spreadsheet files (CSV, Excel, ODS)
+metadata:
+  builtin: "true"
+---
+
+## What this skill does
+
+Loads a spreadsheet file, surfaces what's in it, and runs the analysis the user asks for — filtering, aggregating, pivoting, joining — without making them move the file into a database first.
+
+It treats spreadsheets as first-class data sources, not just files to be opened, so the same conversational analysis flow that works for modeled warehouse data works for ad-hoc files too.
+
+## Supported formats
+
+- **CSV / TSV** — delimited text, encoding auto-detected
+- **XLSX / XLSM** — modern Excel; multi-sheet files are handled, each sheet treated as its own dataset
+- **XLS** — legacy Excel
+- **ODS** — OpenDocument Spreadsheet (LibreOffice)
+
+## When to use
+
+- The user uploads or references a CSV or Excel file and wants to explore it.
+- The user wants to clean, transform, or aggregate spreadsheet data.
+- The user wants to join spreadsheet data with the project's modeled (warehouse) data.
+- The user has a one-off file they don't want to ingest into the warehouse just to ask one question.
+
+## What you get back
+
+- **Schema overview** — column names, inferred types, row count, sample values, so the user can see what's actually in the file before asking analytical questions.
+- **A clean view of the data** — header rows promoted, types coerced, totals/notes rows handled, so the analysis isn't thrown off by stray cells.
+- **Aggregations and pivots** — group-by, totals, breakdowns, top-N — described in plain English and run on the spot.
+- **Charts** when the result is naturally visual (call into **analyze-data** for the chart layer).
+- **Exports** — back to CSV or Markdown for the user to download or paste elsewhere.
+
+## Where it stops
+
+- Excel formulas are read at their last cached value; volatile formulas may be stale.
+- Pivot tables and charts inside the source file are read as their underlying data, not their visual form.
+- Very large files (hundreds of thousands of rows) work but the agent will sample and filter rather than dump everything inline — for that scale, ingesting into the warehouse is usually the better path.
+
+## What you can ask for
+
+- **A schema overview** — what columns are in the file, their types, and how it looks at a glance.
+- **A grouped aggregation** — sum, count, or average a metric by a category.
+- **A join** with another file or with the project's modeled data, including a check for missing or unmatched rows.
+- **A pivot or reshape** so the layout matches how the user wants to read the data.
+- **A clean-up** — promoting headers, fixing types, dropping empty rows.
+- **An export** of the result back to CSV or Markdown.
+</script>
+
+  <script type="text/markdown" id="skill-md-sql-queries">---
+name: sql-queries
+description: Write and execute SQL queries to answer data questions
+metadata:
+  builtin: "true"
+---
+
+## What this skill does
+
+Translates a focused data question into SQL, runs it against the connected warehouse through the project's semantic layer, and returns the result alongside the query that produced it.
+
+The two halves matter equally: the user gets the number they asked for, and they get the SQL behind it — so the answer is verifiable, reusable, and doesn't have to be taken on faith.
+
+## When to use
+
+- The user asks a single-shot data question that maps cleanly to one or two tables and a clear aggregation.
+- The user wants a number or a small result set right now, not a chart or a written report.
+- The user is sketching a query before promoting it into a saved metric, dashboard, or report.
+- The user wants to spot-check a number that already lives in a dashboard.
+- The user wants the SQL itself, not just the answer — to copy into their own tool, share with a teammate, or save as an approved pattern.
+
+## What you get back
+
+- **The result** — usually a row count, a single value, or a short result table.
+- **The exact SQL that ran** — so the next person can verify, edit, or reuse it.
+- **Names that match the semantic layer**, not raw warehouse columns — queries reference modeled tables and friendly column names, with joins resolved automatically.
+- **Suspicious-result flags** — if the query returns zero rows, exactly one row, or a suspiciously round number, the agent will flag it instead of presenting it as fact.
+
+## Safety
+
+Read-only by default. Writes, deletes, and schema changes (DDL) require explicit approval and are turned off entirely in shared projects unless the role allows them — accidental destructive queries should never be possible from a chat prompt.
+
+## Hand-offs
+
+- Need a chart on top of the result? → **analyze-data**
+- Need the answer wrapped in narrative and shared with stakeholders? → **generate-report**
+- Want to save this as an approved pattern for the project? → promote it into the project's SQL library so future questions reuse the same shape.
+
+## What you can ask for
+
+- **A count** of records that meet a condition.
+- **A total or average** for a specific time window or segment.
+- **A top / bottom N** ranking with a comparable metric.
+- **A spot-check** on a number from an existing dashboard or report.
+- **The SQL itself** — see the query without running it, or get a starting point to edit.
+</script>
+
+  <script>
+    // ----------------------------- Data -----------------------------
+    const sampleSkillMd = `---
+name: wren-data-explorer
+description: Explore this project's Wren semantic models, summarize schema and relationships, and suggest or run focused exploratory queries.
+---
+
+# Wren Data Explorer
+
+Use this skill to explore the project's semantic data model and help users understand what data is available, how it's modeled, and what questions are worth asking.
+
+## When to use
+- The user asks what data is available
+- The user wants a schema summary for one or more models
+- The user asks how tables/models are related
+- The user wants ideas for exploratory analysis
+- The user asks a broad question that should be narrowed into a concrete SQL query
+
+## Workflow
+1. Read the canonical MDL overview when available.
+2. Summarize the relevant models, columns, and relationships.
+3. Identify the most likely fact model and dimensions for exploration.
+4. If needed, run minimal Wren discovery before querying.
+5. Suggest or execute focused exploratory SQL queries.
+6. Explain findings briefly and suggest useful next questions.
+`;
+
+    const loadOfficialMd = (id) => {
+      const el = document.getElementById('skill-md-' + id);
+      return el ? el.textContent.replace(/^\n+/, '').replace(/\n+$/, '') + '\n' : '';
+    };
+    const officialSkill = (id, name, description) => ({
+      id, name, description, official: true, enabled: true,
+      files: [{ path: `${name}/SKILL.md`, content: loadOfficialMd(id) }],
+    });
+
+    const state = {
+      skills: [
+        { id: 'wren-data-explorer', name: 'wren-data-explorer', description: "Explore this project's Wren semantic models, summarize schema and relationships, and suggest or run focused exploratory queries.", official: false, enabled: true, updatedAt: 'Apr 30, 2026', updatedBy: 'Iris H', files: [{ path: 'wren-data-explorer/SKILL.md', content: sampleSkillMd }] },
+        officialSkill('analyze-data', 'analyze-data', 'Use this skill when the user asks to query data, get specific numbers, answer factual questions, analyze data, find trends, explore a dataset, or visualize results.'),
+        officialSkill('doc', 'doc', 'Extract text and content from document files (DOCX, DOC, ODT, RTF)'),
+        officialSkill('generate-report', 'generate-report', 'Generate comprehensive data reports with charts and insights'),
+        officialSkill('pdf', 'pdf', 'Extract text and tables from PDF files for analysis'),
+        officialSkill('spreadsheet', 'spreadsheet', 'Import, transform, and analyze spreadsheet files (CSV, Excel, ODS)'),
+        officialSkill('sql-queries', 'sql-queries', 'Write and execute SQL queries to answer data questions'),
+      ],
+      search: '',
+      openMenuId: null,
+      selectedFileIdx: 0,
+      modal: null,
+      uploadError: null, // { type: 'duplicate', name, payload } | { type: 'invalid', message }
+      sidebarOpen: false,
+      view: 'skills', // 'skills' | 'thread'
+      threadMessage: null,
+      folderCollapsed: false,
+    };
+
+    // ----------------------------- Helpers -----------------------------
+    const $app = document.getElementById('app');
+    const escapeHtml = (s) => String(s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    function setState(patch) { Object.assign(state, patch); render(); }
+    function toast(msg, opts) {
+      // opts: { kind: 'success' | 'plain', action?: { label, onClick } }
+      const o = opts || {};
+      const el = document.createElement('div');
+      el.className = 'toast fixed top-6 left-1/2 z-[100]';
+      el.style.transform = 'translateX(-50%)';
+      const iconHtml = o.kind === 'success'
+        ? `<span class="inline-flex items-center justify-center w-6 h-6 rounded-full flex-shrink-0" style="background:#22c55e"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>`
+        : o.kind === 'warning'
+        ? `<span class="inline-flex items-center justify-center w-6 h-6 rounded-full flex-shrink-0" style="background:#F59E0B"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="6" x2="12" y2="13"/><line x1="12" y1="17" x2="12" y2="17"/></svg></span>`
+        : '';
+      const actionHtml = o.action
+        ? `<button class="toast-action" style="color:#2F54EB;font-weight:500;cursor:pointer;padding:0 4px">${o.action.label}</button>`
+        : '';
+      el.innerHTML = `
+        <div style="background:#ffffff;color:#1a1a1a;padding:12px 18px;border-radius:12px;display:inline-flex;align-items:center;gap:12px;box-shadow:0 10px 28px rgba(0,0,0,.12),0 2px 6px rgba(0,0,0,.06);font-size:14px;font-weight:500">
+          ${iconHtml}
+          <span>${msg}</span>
+          ${actionHtml}
+        </div>
+      `;
+      if (o.action) {
+        el.querySelector('.toast-action').addEventListener('click', () => { o.action.onClick(); el.remove(); });
+      }
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1500);
+    }
+    function renderCodeLines(content) {
+      return content.split('\n').map((line, i) => `<div class="code-line"><span class="ln">${i+1}</span><span class="ct">${escapeHtml(line) || '&nbsp;'}</span></div>`).join('');
+    }
+    function downloadFakeZip(name) {
+      const blob = new Blob([`# Mock skill: ${name}\nThis is a placeholder zip download from the prototype.`], { type: 'application/zip' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = `${name}.zip`;
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    }
+
+    // ----------------------------- Render -----------------------------
+    function render() {
+      const isThread = state.view === 'thread';
+      $app.innerHTML = `
+        ${renderTopBar()}
+        <div class="flex" style="height: calc(100vh - 48px);">
+          ${isThread ? renderHomeSidebar() : ''}
+          <main class="flex-1 overflow-auto min-w-0 ${isThread ? 'bg-[#fafafa]' : 'bg-white'}">${isThread ? renderThreadView() : renderSkillsPage()}</main>
+        </div>
+        ${renderModal()}
+      `;
+      lucide.createIcons();
+      attachHandlers();
+    }
+
+    function renderHomeSidebar() {
+      const sections = [
+        { name: 'Artefacts', icon: 'layers', count: 1, hasNew: false, items: ['Artefacts A', 'Artefacts B'] },
+        { name: 'Threads', icon: 'message-square', count: 2, hasNew: true, items: ['Sample H'] },
+      ];
+      return `
+        <aside class="w-[280px] flex-shrink-0 flex flex-col" style="background:#fafafa; box-shadow: inset -1px 0 0 0 #f0f0f0;">
+          <div class="flex items-center justify-between p-[12px] flex-shrink-0">
+            <div class="flex items-center gap-1">
+              <button class="bg-white border border-[#d9d9d9] rounded-[4px] h-[32px] w-[168px] px-[16px] flex items-center justify-between" style="box-shadow:0 2px 0 0 rgba(0,0,0,0.02)">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="folder" class="w-3 h-3 text-[#595959]"></i>
+                  <span class="text-[14px] text-[#262626] leading-[22px]">Private Folder</span>
+                </div>
+                <i data-lucide="chevron-down" class="w-2.5 h-2.5 text-[#595959]"></i>
+              </button>
+              <button class="w-[32px] h-[32px] rounded-[4px] flex items-center justify-center hover:bg-zinc-100 text-[#595959]">
+                <i data-lucide="list" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+            <button class="w-[32px] h-[32px] rounded-[4px] flex items-center justify-center hover:bg-zinc-100 text-[#595959]">
+              <i data-lucide="more-horizontal" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+          <div class="flex-1 overflow-auto scrollbar-thin flex flex-col gap-[12px] py-[4px]">
+            ${sections.map(sec => `
+              <div>
+                <div class="flex items-center justify-between px-[16px] h-[32px]">
+                  <div class="flex items-center gap-2 flex-1 min-w-0">
+                    <i data-lucide="${sec.icon}" class="w-4 h-4 text-[#262626]"></i>
+                    <span class="text-[14px] text-[#262626] leading-[22px] truncate">${sec.name} (${sec.count})</span>
+                  </div>
+                  ${sec.hasNew ? `
+                    <button class="bg-white border border-[#d9d9d9] rounded-[4px] inline-flex items-center gap-1.5 h-[24px] px-[10px] hover:bg-zinc-50" style="box-shadow:0 2px 0 0 rgba(0,0,0,0.02)">
+                      <i data-lucide="plus" class="w-3 h-3 text-[#262626]"></i>
+                      <span class="text-[12px] text-[#262626] leading-[22px]">New</span>
+                    </button>
+                  ` : `
+                    <button class="w-[32px] h-[32px] rounded-[4px] flex items-center justify-center text-[#595959] hover:bg-zinc-100">
+                      <i data-lucide="chevron-right" class="w-2.5 h-2.5"></i>
+                    </button>
+                  `}
+                </div>
+                ${sec.items.map(item => `
+                  <div class="flex items-center justify-between pl-[40px] pr-[16px] group hover:bg-zinc-100/60">
+                    <span class="flex-1 min-w-0 truncate text-[14px] text-[#262626] py-[4px] leading-[22px]">${escapeHtml(item)}</span>
+                    <button class="w-[32px] h-[32px] rounded-[4px] flex items-center justify-center text-[#595959] opacity-0 group-hover:opacity-100">
+                      <i data-lucide="more-horizontal" class="w-3.5 h-3.5"></i>
+                    </button>
+                  </div>
+                `).join('')}
+              </div>
+            `).join('')}
+          </div>
+          <div class="border-t border-[#f0f0f0] px-2 py-3 flex items-center gap-1 flex-shrink-0">
+            <button data-action="back-to-skills" class="icon-btn" title="Back to Settings"><i data-lucide="settings" class="w-3.5 h-3.5"></i></button>
+            <button class="icon-btn"><i data-lucide="headphones" class="w-3.5 h-3.5"></i></button>
+            <button class="icon-btn"><i data-lucide="book-open" class="w-3.5 h-3.5"></i></button>
+            <button class="icon-btn"><i data-lucide="lightbulb" class="w-3.5 h-3.5"></i></button>
+          </div>
+        </aside>
+      `;
+    }
+
+    function renderTopBar() {
+      return `
+        <header class="topbar h-[48px] flex items-center px-2 gap-5 text-[14px]">
+          <div class="flex items-center gap-1.5 px-2 sm:px-3 mr-0 sm:mr-2">
+            <svg width="22" height="22" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M25.2836 12.5277C26.0445 14.3792 25.6162 16.2854 24.3268 16.7856C23.0372 17.2856 21.3749 16.1899 20.614 14.3384C19.853 12.4869 20.2815 10.5806 21.5709 10.0806C22.8604 9.58056 24.5226 10.6762 25.2836 12.5277Z" fill="#fff"/>
+              <path d="M46.7997 35.1232C47.5156 35.9459 48.0961 36.8344 47.9868 37.896C47.8775 38.9578 46.8938 39.3824 46.238 39.4886C45.5821 39.5947 32.6842 41.2934 31.2634 41.3997C30.006 41.4936 29.7756 41.3381 29.2849 41.0069C29.0636 40.8637 24.0253 36.0714 21.5338 33.6931C20.3041 32.8032 19.1906 32.0968 18.405 31.8019C17.6818 31.5304 17.3933 30.5483 18.0669 29.9786L19.7433 28.5605C20.1837 28.188 20.8607 28.211 21.2676 28.6443C21.7436 29.0598 23.3063 30.7691 24.0282 31.5718C26.3125 33.7581 29.0959 36.4278 30.6076 37.896C31.8098 38.3206 34.6882 37.7899 35.3076 37.5776C35.3076 37.5776 31.09 32.3426 30.2271 31.6904C29.3641 31.0382 28.5882 30.5358 27.9849 30.2942C26.7236 29.6296 27.2945 28.7622 27.7377 28.4117L29.5613 27.1141C30.0036 26.7994 30.6332 26.845 31.0164 27.2574C33.2849 30.0958 38.0621 35.985 39.0239 36.8344C40.2263 37.259 43.0317 36.799 43.7239 36.5158L35.0393 25.7219C33.6455 24.5418 32.3564 23.5754 31.4684 23.2059C30.7621 22.9122 30.4882 21.9106 31.2037 21.3595L33.0501 19.937C33.3628 19.7475 34.1079 19.5166 34.5861 20.1098L35.8541 21.6522L46.7997 35.1232Z" fill="#fff"/>
+              <path d="M18.9565 3.18507C16.9131 3.18507 14.6622 3.66621 12.2524 4.86246C7.20789 7.36661 4.56965 12.5277 3.7356 16.3232C2.56458 21.6522 3.23213 27.2574 5.15907 30.8006C6.51941 33.3019 7.62634 34.5971 9.82922 36.4368C13.1663 39.2238 15.7007 40.4586 20.0547 40.9928C21.4395 41.1627 23.6269 41.0973 23.6269 41.0973C24.0888 41.1109 24.5288 41.2912 24.8613 41.6029L27.1136 43.7152L29.6517 45.9339C30.0984 46.3245 29.8141 47.0445 29.213 47.0445H26.3661C25.9134 47.0445 25.5064 46.6552 25.3594 46.4605C24.4558 45.577 22.9787 44.2646 22.9787 44.2646L20.1518 44.1814L19.3123 47.3616C19.2131 47.7373 18.8646 48 18.4653 48H17.3374C16.7722 48 16.3555 47.4869 16.487 46.953L17.2406 43.8946C16.6578 43.7782 16.0349 43.6165 15.3982 43.3926L14.2242 47.384C14.1169 47.7486 13.7738 48 13.3834 48H12.1235C11.5481 48 11.1295 47.4694 11.2791 46.9299L12.617 42.103C9.9372 40.875 7.57926 38.7539 7.57926 38.7539C5.7793 37.3629 3.84333 34.66 3.10035 33.4824C1.21311 30.3045 0.631779 28.3901 0.145006 24.7501C-0.206032 22.125 0.145018 17.696 0.51195 15.7399C1.9125 10.0806 4.61498 5.18688 10.5425 2.1447C13.5493 0.601515 16.4434 0 18.9565 0C21.5152 0 24.8714 0.812805 27.373 2.09515C29.8525 3.36618 31.0795 4.52526 32.7483 6.15403C33.272 6.66656 34.6034 7.67194 35.739 7.59323C36.4586 7.68778 38.4754 7.61419 40.787 6.56344C41.983 6.14259 42.815 6.97021 43.0741 7.41114C43.3648 7.86818 43.681 8.98192 42.6195 9.78059L34.8549 15.6236C34.4974 16.2024 34.2339 16.74 34.132 17.1965C33.7688 18.6536 32.5579 18 32.0912 17.696C31.6245 17.392 30.5594 15.8435 30.5594 15.8435C30.1699 15.3726 30.2605 14.6748 30.7736 14.3173C31.3405 13.9223 33.2181 12.6227 34.6429 11.7541L35.9387 10.7789C34.9888 10.8508 32.5757 10.4951 30.5229 8.49728C30.5229 8.49728 27.9056 5.95334 25.8426 4.91202C23.3755 3.66685 20.9542 3.18507 18.9565 3.18507Z" fill="#fff"/>
+            </svg>
+            <span class="text-white tracking-tight text-[22px] leading-none hidden sm:inline">WrenAI</span>
+          </div>
+          <nav class="hidden md:flex items-center gap-2">
+            <a class="nav-pill ${state.view === 'thread' ? 'active' : 'hover:bg-white/10'}">Home</a>
+            <a class="nav-pill hover:bg-white/10">Modeling</a>
+            <a class="nav-pill hover:bg-white/10">Knowledge</a>
+            <a class="nav-pill hover:bg-white/10">API</a>
+          </nav>
+          <div class="flex-1 hidden lg:flex justify-center items-center gap-1">
+            <button class="breadcrumb-pill muted hover:bg-white/10">
+              <span>Wren</span>
+              <i data-lucide="chevron-down" class="w-2.5 h-2.5"></i>
+            </button>
+            <span class="text-[#65676c] text-[13.3px]" style="line-height:22px">/</span>
+            <button class="breadcrumb-pill hover:bg-white/10">
+              <span>Default Project</span>
+              <i data-lucide="chevron-down" class="w-2.5 h-2.5"></i>
+            </button>
+          </div>
+          <div class="flex-1 lg:flex-none"></div>
+          <div class="flex items-center gap-3">
+            <button class="credits-pill hidden sm:inline-flex">
+              <span>13200 Credit</span>
+              <span class="credits-divider"></span>
+              <span>Essential</span>
+            </button>
+            <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-[11px] font-medium">IH</div>
+          </div>
+        </header>
+      `;
+    }
+
+    function renderSidebar() {
+      const sections = [
+        { title: 'Project', items: ['General','Access control','Data connection',['MCP connection','New'],['Embedded threads','Beta'],['Evaluation','Beta'],'Danger zone'] },
+        { title: 'Organization', items: ['General','Members','Billing','Activity log',['Integrations','New'],'API keys','Danger zone'] },
+        { title: 'Agent', items: ['Skills','Memories'] },
+        { title: 'User', items: ['Profile','Danger zone'] },
+      ];
+      return `
+        <aside class="sidebar w-[280px] flex-shrink-0 overflow-auto scrollbar-thin flex flex-col">
+          <div class="flex-1 py-4">
+            ${sections.map(sec => `
+              <div class="mb-2">
+                <div class="section-title">${sec.title}</div>
+                <ul>
+                  ${sec.items.map(it => {
+                    const [label, badge] = Array.isArray(it) ? it : [it, null];
+                    const isActive = label === 'Skills';
+                    const badgeHtml = badge === 'New' ? `<span class="badge-new">New</span>` : badge === 'Beta' ? `<span class="badge-beta">Beta</span>` : '';
+                    return `<li><a class="menu-item ${isActive ? 'active font-medium' : ''}"><span>${label}</span>${badgeHtml}</a></li>`;
+                  }).join('')}
+                </ul>
+              </div>
+            `).join('')}
+          </div>
+          <div class="border-t border-zinc-200 px-2 py-3 flex items-center gap-1">
+            <button class="icon-btn"><i data-lucide="settings" class="w-3.5 h-3.5"></i></button>
+            <button class="icon-btn"><i data-lucide="headphones" class="w-3.5 h-3.5"></i></button>
+            <button class="icon-btn"><i data-lucide="book-open" class="w-3.5 h-3.5"></i></button>
+            <button class="icon-btn"><i data-lucide="lightbulb" class="w-3.5 h-3.5"></i></button>
+          </div>
+        </aside>
+      `;
+    }
+
+    function renderThreadView() {
+      const prefill = state.threadMessage || '';
+      const renderPrefill = (text) => {
+        if (!text) return '';
+        const parts = text.split(/(\/[\w-]+)/g);
+        return parts.map(p =>
+          /^\/[\w-]+$/.test(p)
+            ? `<span class="text-[14px] whitespace-pre" style="color:#2f54eb; line-height:22px">${escapeHtml(p)}</span>`
+            : `<span class="text-[14px] text-[#262626] whitespace-pre" style="line-height:22px">${escapeHtml(p)}</span>`
+        ).join('');
+      };
+
+      const cards = [
+        { tag: 'Descriptive Questions', q: 'What is the cost per unit of production volumes for each supplier?' },
+        { tag: 'Data Quality and Cons…', q: 'How does the average Defect rates of products that passed their Inspection result…' },
+        { tag: 'Comparative Questions', q: 'Which Transportation modes have a lower average Shipping costs on Route A compared…' },
+      ];
+
+      const wrenSvg = `
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M25.2836 12.5277C26.0445 14.3792 25.6162 16.2854 24.3268 16.7856C23.0372 17.2856 21.3749 16.1899 20.614 14.3384C19.853 12.4869 20.2815 10.5806 21.5709 10.0806C22.8604 9.58056 24.5226 10.6762 25.2836 12.5277Z" fill="#65676C"/>
+          <path d="M46.7997 35.1232C47.5156 35.9459 48.0961 36.8344 47.9868 37.896C47.8775 38.9578 46.8938 39.3824 46.238 39.4886C45.5821 39.5947 32.6842 41.2934 31.2634 41.3997C30.006 41.4936 29.7756 41.3381 29.2849 41.0069C29.0636 40.8637 24.0253 36.0714 21.5338 33.6931C20.3041 32.8032 19.1906 32.0968 18.405 31.8019C17.6818 31.5304 17.3933 30.5483 18.0669 29.9786L19.7433 28.5605C20.1837 28.188 20.8607 28.211 21.2676 28.6443C21.7436 29.0598 23.3063 30.7691 24.0282 31.5718C26.3125 33.7581 29.0959 36.4278 30.6076 37.896C31.8098 38.3206 34.6882 37.7899 35.3076 37.5776C35.3076 37.5776 31.09 32.3426 30.2271 31.6904C29.3641 31.0382 28.5882 30.5358 27.9849 30.2942C26.7236 29.6296 27.2945 28.7622 27.7377 28.4117L29.5613 27.1141C30.0036 26.7994 30.6332 26.845 31.0164 27.2574C33.2849 30.0958 38.0621 35.985 39.0239 36.8344C40.2263 37.259 43.0317 36.799 43.7239 36.5158L35.0393 25.7219C33.6455 24.5418 32.3564 23.5754 31.4684 23.2059C30.7621 22.9122 30.4882 21.9106 31.2037 21.3595L33.0501 19.937C33.3628 19.7475 34.1079 19.5166 34.5861 20.1098L35.8541 21.6522L46.7997 35.1232Z" fill="#65676C"/>
+          <path d="M18.9565 3.18507C16.9131 3.18507 14.6622 3.66621 12.2524 4.86246C7.20789 7.36661 4.56965 12.5277 3.7356 16.3232C2.56458 21.6522 3.23213 27.2574 5.15907 30.8006C6.51941 33.3019 7.62634 34.5971 9.82922 36.4368C13.1663 39.2238 15.7007 40.4586 20.0547 40.9928C21.4395 41.1627 23.6269 41.0973 23.6269 41.0973C24.0888 41.1109 24.5288 41.2912 24.8613 41.6029L27.1136 43.7152L29.6517 45.9339C30.0984 46.3245 29.8141 47.0445 29.213 47.0445H26.3661C25.9134 47.0445 25.5064 46.6552 25.3594 46.4605C24.4558 45.577 22.9787 44.2646 22.9787 44.2646L20.1518 44.1814L19.3123 47.3616C19.2131 47.7373 18.8646 48 18.4653 48H17.3374C16.7722 48 16.3555 47.4869 16.487 46.953L17.2406 43.8946C16.6578 43.7782 16.0349 43.6165 15.3982 43.3926L14.2242 47.384C14.1169 47.7486 13.7738 48 13.3834 48H12.1235C11.5481 48 11.1295 47.4694 11.2791 46.9299L12.617 42.103C9.9372 40.875 7.57926 38.7539 7.57926 38.7539C5.7793 37.3629 3.84333 34.66 3.10035 33.4824C1.21311 30.3045 0.631779 28.3901 0.145006 24.7501C-0.206032 22.125 0.145018 17.696 0.51195 15.7399C1.9125 10.0806 4.61498 5.18688 10.5425 2.1447C13.5493 0.601515 16.4434 0 18.9565 0C21.5152 0 24.8714 0.812805 27.373 2.09515C29.8525 3.36618 31.0795 4.52526 32.7483 6.15403C33.272 6.66656 34.6034 7.67194 35.739 7.59323C36.4586 7.68778 38.4754 7.61419 40.787 6.56344C41.983 6.14259 42.815 6.97021 43.0741 7.41114C43.3648 7.86818 43.681 8.98192 42.6195 9.78059L34.8549 15.6236C34.4974 16.2024 34.2339 16.74 34.132 17.1965C33.7688 18.6536 32.5579 18 32.0912 17.696C31.6245 17.392 30.5594 15.8435 30.5594 15.8435C30.1699 15.3726 30.2605 14.6748 30.7736 14.3173C31.3405 13.9223 33.2181 12.6227 34.6429 11.7541L35.9387 10.7789C34.9888 10.8508 32.5757 10.4951 30.5229 8.49728C30.5229 8.49728 27.9056 5.95334 25.8426 4.91202C23.3755 3.66685 20.9542 3.18507 18.9565 3.18507Z" fill="#65676C"/>
+        </svg>
+      `;
+
+      return `
+        <div class="h-full flex flex-col">
+          <div class="flex-1 overflow-auto flex flex-col items-center">
+            <div class="w-[722px] max-w-full flex-1 flex flex-col items-center justify-center px-3 pt-6 pb-10">
+              <div class="flex justify-center">${wrenSvg}</div>
+              <h3 class="text-[16px] font-medium text-[#65676c] mt-3" style="line-height:25.14px">Know more about your data</h3>
+              <p class="text-[14px] text-[#65676c] mt-3 mb-2 text-center" style="line-height:22px">Try asking...</p>
+              <div class="flex w-[580px] max-w-full h-[150px]">
+                ${cards.map(c => `
+                  <div class="flex-1 px-[8px] h-full">
+                    <button class="bg-white border border-[#f0f0f0] rounded-[4px] flex flex-col gap-[12px] h-[150px] w-full pt-[13px] pb-[17px] px-[13px] hover:border-[#d9d9d9] transition text-left">
+                      <span class="self-start inline-flex items-center border border-[#d9d9d9] rounded-full px-[9px] py-[2px] text-[12px] text-[#65676c] whitespace-nowrap overflow-hidden text-ellipsis max-w-full" style="line-height:1">${escapeHtml(c.tag)}</span>
+                      <p class="text-[14px] text-[#65676c]" style="line-height:22px">${escapeHtml(c.q)}</p>
+                    </button>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="w-[722px] max-w-full px-[24px] py-[20px] flex-shrink-0">
+              <div class="bg-white border border-[#f0f0f0] rounded-[8px] px-[16px] py-[12px] flex flex-col gap-[4px]" style="box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)">
+                <div class="bg-white rounded-[4px] py-[5px] min-h-[32px] flex items-center overflow-x-auto whitespace-nowrap">
+                  ${prefill
+                    ? renderPrefill(prefill)
+                    : `<span class="text-[14px] text-[#bfbfbf]" style="line-height:22px">Ask to explore your data</span>`}
+                </div>
+                <div class="flex items-center justify-between">
+                  <button class="w-[32px] h-[32px] rounded-[4px] flex items-center justify-center text-[#595959] hover:bg-zinc-100">
+                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <div class="flex items-center gap-[12px]">
+                    <button class="px-[8px] py-[5px] rounded-[4px] inline-flex items-center gap-2 hover:bg-zinc-50">
+                      <span class="text-[12px]" style="color:rgba(0,0,0,0.85); line-height:22px">Agentic mode</span>
+                      <i data-lucide="chevron-down" class="w-2.5 h-2.5 text-[#595959]"></i>
+                    </button>
+                    <button class="w-[32px] h-[32px] rounded-[4px] flex items-center justify-center text-white" style="background:#2f54eb; box-shadow: 0 2px 0 0 rgba(0,0,0,0.04)">
+                      <i data-lucide="arrow-up" class="w-4 h-4"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderSkillsPage() {
+      const filtered = state.skills.filter(s => !state.search || s.name.toLowerCase().includes(state.search.toLowerCase()) || s.description.toLowerCase().includes(state.search.toLowerCase()));
+      return `
+        <div class="h-full flex flex-col w-full">
+          <div class="flex-shrink-0 px-4 sm:px-6 md:px-10 pt-5 md:pt-7 pb-2 bg-white border-b border-transparent">
+            <div class="flex items-start justify-between mb-6">
+              <h1 class="text-[20px] font-semibold text-zinc-900">Skills</h1>
+              <button data-action="open-upload" class="btn-outline">
+                <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+                Upload skill
+              </button>
+            </div>
+            <p class="text-[13px] text-zinc-600 mb-6 leading-[1.55] max-w-[850px]">
+              Skills define the capabilities available to the agent in this project — <strong class="font-semibold text-zinc-900">each project has its own enabled set</strong>. Built-in skills are provided by the system, and you can upload your own as a .zip containing a single top-level directory with a SKILL.md inside.
+            </p>
+            <div class="relative">
+              <input data-search value="${escapeHtml(state.search)}" placeholder="Search skills by name or description" class="search-input" />
+              ${state.search ? `<button data-action="clear-search" class="search-clear"><i data-lucide="x" class="w-2.5 h-2.5"></i></button>` : ''}
+              <button class="search-btn"><i data-lucide="search" class="w-3.5 h-3.5 text-white"></i></button>
+            </div>
+          </div>
+
+          <div class="flex-1 overflow-auto scrollbar-thin px-4 sm:px-6 md:px-10 pt-2 pb-6">
+            ${filtered.length === 0 ? `<div class="py-10 text-center text-sm text-zinc-500">No skills match "${escapeHtml(state.search)}"</div>` : filtered.map(renderSkillRow).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderSkillRow(s) {
+      const meta = s.official
+        ? `<span class="skill-meta"><i data-lucide="badge-check" class="w-3.5 h-3.5"></i> Official</span>`
+        : `<span class="skill-meta"><i data-lucide="user" class="w-3.5 h-3.5"></i> Updated on ${s.updatedAt} by ${escapeHtml(s.updatedBy)}</span>`;
+
+      const menuItems = s.official
+        ? [{ label: 'Try it out', icon: 'sparkles', action: 'try' }]
+        : [
+            { label: 'Try it out', icon: 'sparkles', action: 'try' },
+            { label: 'Download', icon: 'download', action: 'download' },
+            { label: 'Edit with wren AI', icon: 'pencil', action: 'edit' },
+            { label: 'Delete', icon: 'trash-2', action: 'delete', danger: true },
+          ];
+
+      return `
+        <div data-action="open-detail" data-id="${s.id}" class="skill-row">
+          <div class="flex-1 min-w-0">
+            <div class="skill-name">${escapeHtml(s.name)}</div>
+            <p class="skill-desc">${escapeHtml(s.description)}</p>
+            <div>${meta}</div>
+          </div>
+          <div class="flex items-center gap-1 pt-1.5 relative" onclick="event.stopPropagation()">
+            <div data-action="toggle" data-id="${s.id}" class="toggle ${s.enabled ? 'on' : ''}"></div>
+            <button data-action="toggle-menu" data-id="${s.id}" class="icon-btn">
+              <i data-lucide="more-horizontal" class="w-4 h-4"></i>
+            </button>
+            ${state.openMenuId === s.id ? `
+              <div class="dd-menu">
+                ${menuItems.map(m => `
+                  <button data-action="menu-${m.action}" data-id="${s.id}" class="dd-item ${m.danger ? 'danger' : ''}">
+                    <i data-lucide="${m.icon}" class="w-3.5 h-3.5"></i>
+                    ${m.label}
+                  </button>
+                `).join('')}
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    // ----------------------------- Modals -----------------------------
+    function renderModal() {
+      if (!state.modal) return '';
+      const m = state.modal;
+      let content = '';
+      if (m.type === 'detail') content = renderDetailModal(state.skills.find(s => s.id === m.id));
+      else if (m.type === 'upload') content = renderUploadModal();
+      else if (m.type === 'replace') content = renderReplaceModal(m.name);
+      else if (m.type === 'delete') content = renderDeleteModal(state.skills.find(s => s.id === m.id));
+      return `
+        <div data-modal-backdrop data-action="close-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div data-modal-content onclick="event.stopPropagation()">${content}</div>
+        </div>
+      `;
+    }
+
+    function renderDetailHeader(s) {
+      return `
+        <div class="px-6 py-3 border-b border-zinc-200 flex items-center justify-between gap-4">
+          <div class="min-w-0 flex-1">
+            <h2 class="text-[14px] font-semibold text-zinc-900">${escapeHtml(s.name)}</h2>
+            <p class="text-[12px] text-zinc-500 mt-0.5 truncate">${escapeHtml(s.description)}</p>
+          </div>
+          <button data-action="close-modal" class="text-zinc-400 hover:text-zinc-600 flex-shrink-0">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+      `;
+    }
+
+    function stripFrontmatter(md) {
+      return md.replace(/^---\n[\s\S]*?\n---\n+/, '');
+    }
+    function renderMarkdownToHtml(md) {
+      const body = stripFrontmatter(md);
+      if (window.marked) {
+        return marked.parse(body, { gfm: true, breaks: false });
+      }
+      return `<pre>${escapeHtml(body)}</pre>`;
+    }
+
+    function renderDetailModal(s) {
+      if (!s) return '';
+      if (s.official) {
+        const md = (s.files && s.files[0]) ? s.files[0].content : '';
+        return `
+          <div style="width: min(1120px, 95vw); height: min(760px, 90vh);" class="flex flex-col">
+            ${renderDetailHeader(s)}
+            <div class="flex-1 overflow-auto bg-zinc-50">
+              <article class="article mx-auto px-10 py-8" style="max-width: 720px;">
+                ${renderMarkdownToHtml(md)}
+              </article>
+            </div>
+            <div class="px-6 py-3 border-t border-zinc-200 flex items-center justify-between">
+              <span class="skill-meta"><i data-lucide="badge-check" class="w-3.5 h-3.5"></i> Official</span>
+              <button data-action="try-skill" data-id="${s.id}" class="btn-primary">Try it out</button>
+            </div>
+          </div>
+        `;
+      }
+      if (!s.files || !s.files.length) return '';
+      const file = s.files[state.selectedFileIdx] || s.files[0];
+      return `
+        <div style="width: min(1120px, 95vw); height: min(760px, 90vh);" class="flex flex-col">
+          ${renderDetailHeader(s)}
+          <div class="flex-1 flex overflow-hidden">
+            <div data-folder-tree class="w-[220px] flex-shrink-0 border-r border-zinc-200 overflow-auto scrollbar-thin py-2 bg-white${state.folderCollapsed ? ' collapsed' : ''}">
+              <div data-action="toggle-folder" class="ft-folder">
+                <span class="chev-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3"><path d="m9 18 6-6-6-6"/></svg></span>
+                <i data-lucide="folder" class="w-3.5 h-3.5 text-zinc-500"></i>
+                <span>${escapeHtml(s.name)}</span>
+                <span class="ml-auto text-[11px] text-zinc-400">${s.files.length}</span>
+              </div>
+              ${s.files.map((f, i) => `
+                <div data-action="select-file" data-idx="${i}" class="ft-file ${i === state.selectedFileIdx ? 'active' : ''}">
+                  <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                  <span>${escapeHtml(f.path.split('/').pop())}</span>
+                </div>
+              `).join('')}
+            </div>
+            <div class="flex-1 overflow-auto scrollbar-thin bg-zinc-50">
+              <pre class="code-viewer mono">${renderCodeLines(file.content)}</pre>
+            </div>
+          </div>
+          <div class="px-6 py-3 border-t border-zinc-200 flex items-center justify-between">
+            <span class="skill-meta"><i data-lucide="user" class="w-3.5 h-3.5"></i> Updated on ${s.updatedAt} by ${escapeHtml(s.updatedBy)}</span>
+            <div class="flex items-center gap-2">
+              <button data-action="download-skill" data-id="${s.id}" class="btn-outline">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i> Download
+              </button>
+              <button data-action="menu-edit" data-id="${s.id}" class="btn-outline">
+                <i data-lucide="pencil" class="w-3.5 h-3.5"></i> Edit with Wren AI
+              </button>
+              <button data-action="try-skill" data-id="${s.id}" class="btn-primary">Try it out</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderUploadModal() {
+      const err = state.uploadError;
+      let bannerHtml = '';
+      if (err) {
+        const msg = err.type === 'duplicate'
+          ? `A skill named "${escapeHtml(err.name)}" already exists`
+          : err.message;
+        bannerHtml = `
+          <div class="upload-banner">
+            <div class="flex items-center gap-2 text-[13px] text-red-700 flex-1">
+              <i data-lucide="alert-circle" class="w-4 h-4 flex-shrink-0"></i>
+              <span>${msg}</span>
+            </div>
+            <button data-action="dismiss-upload-error" class="text-red-500 hover:text-red-700">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+        `;
+      }
+      return `
+        <div style="width: min(500px, 95vw);">
+          <div class="px-5 py-3 border-b border-zinc-200 flex items-center justify-between">
+            <h2 class="text-[14px] font-semibold">Upload skill</h2>
+            <button data-action="close-modal" class="text-zinc-400 hover:text-zinc-600">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+          <div class="p-5">
+            ${bannerHtml}
+            ${state.uploadingFile ? `
+              <div class="upload-progress" data-upload-progress>
+                <div class="flex items-center gap-2.5 mb-2">
+                  <i data-lucide="file-archive" class="w-4 h-4 text-zinc-500 flex-shrink-0"></i>
+                  <span class="text-[13px] text-zinc-800 truncate flex-1">${escapeHtml(state.uploadingFile.name)}</span>
+                  <span data-upload-progress-pct class="text-[12px] text-zinc-500 font-mono">${state.uploadingFile.progress}%</span>
+                </div>
+                <div class="upload-progress-track">
+                  <div data-upload-progress-fill class="upload-progress-fill" style="width: ${state.uploadingFile.progress}%"></div>
+                </div>
+                <p class="mt-2 text-[12px] text-zinc-500">Uploading skill bundle…</p>
+              </div>
+            ` : `
+              <label data-dropzone class="dropzone block">
+                <i data-lucide="files" class="w-10 h-10 mx-auto text-zinc-400" stroke-width="1.4"></i>
+                <p class="mt-2 text-[13px] text-zinc-500">Drag and drop or click to upload</p>
+                <input data-file type="file" accept=".zip" class="hidden" />
+              </label>
+            `}
+            <div class="mt-4 text-[13px]">
+              <div class="font-semibold text-zinc-900 mb-1.5">File requirements</div>
+              <ul class="list-disc pl-5 text-zinc-700 space-y-1">
+                <li>.zip file that includes a SKILL.md file at the root level</li>
+                <li>SKILL.md contains a skill name and description formatted in YAML</li>
+              </ul>
+              <div class="mt-3 text-[12px] text-zinc-500 flex items-center gap-1">
+                <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                <span>
+                  <a class="text-zinc-700 underline cursor-pointer">Read more about creating skills</a>
+                  or
+                  <a class="text-zinc-700 underline cursor-pointer">see an example</a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderReplaceModal(name) {
+      return `
+        <div style="width: min(500px, 95vw); box-shadow: 0 9px 28px 8px rgba(0,0,0,0.05), 0 6px 16px 0 rgba(0,0,0,0.08), 0 3px 6px -4px rgba(0,0,0,0.12); border-radius: 8px;" class="bg-white pt-[32px] pr-[32px] pb-[24px] pl-[32px] flex flex-col gap-[24px] items-end">
+          <div class="flex items-start gap-[16px] w-full">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" class="flex-shrink-0">
+              <circle cx="11" cy="11" r="11" fill="#FF4D4F"/>
+              <path d="M14.5 7.5l-7 7M7.5 7.5l7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <div class="flex-1 min-w-0 flex flex-col gap-[8px]" style="color: rgba(0,0,0,0.85)">
+              <h3 class="font-medium" style="font-size:16px; line-height:24px">Replace "${escapeHtml(name)}" skill?</h3>
+              <p class="font-normal" style="font-size:12px; line-height:22px">Uploading this skill will overwrite the existing one with the same name. This action can't be undone.</p>
+            </div>
+          </div>
+          <div class="flex gap-[4px] items-start">
+            <button data-action="close-modal" class="bg-white border border-[#d9d9d9] rounded-[4px] px-[17px] py-[5px]" style="font-size:14px; line-height:22px; color:#262626">Discard</button>
+            <button data-action="confirm-replace" class="border rounded-[4px] px-[17px] py-[5px] text-white" style="background:#ff4d4f; border-color:#ff4d4f; font-size:14px; line-height:22px">Upload and replace</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderDeleteModal(s) {
+      if (!s) return '';
+      return `
+        <div style="width: min(416px, 95vw);" class="p-5">
+          <div class="flex items-start gap-3">
+            <div class="w-7 h-7 rounded-full border-2 border-red-500 flex items-center justify-center flex-shrink-0">
+              <i data-lucide="x" class="w-4 h-4 text-red-500"></i>
+            </div>
+            <div class="flex-1 pt-0.5">
+              <h3 class="text-[14px] font-semibold text-zinc-900">Delete "${escapeHtml(s.name)}" skill?</h3>
+              <p class="text-[13px] text-zinc-600 mt-1 leading-[1.5]">This skill will be removed from your agent. This cannot be undone.</p>
+            </div>
+          </div>
+          <div class="flex justify-end gap-2 mt-4">
+            <button data-action="close-modal" class="btn-outline">Cancel</button>
+            <button data-action="confirm-delete" data-id="${s.id}" class="btn-danger">Delete</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // ----------------------------- Handlers -----------------------------
+    function attachHandlers() {
+      $app.querySelectorAll('[data-search]').forEach(el => {
+        el.addEventListener('input', e => {
+          state.search = e.target.value;
+          const start = e.target.selectionStart;
+          render();
+          const next = $app.querySelector('[data-search]');
+          if (next) { next.focus(); next.setSelectionRange(start, start); }
+        });
+      });
+
+      $app.querySelectorAll('[data-action]').forEach(el => {
+        el.addEventListener('click', e => handleAction(el.dataset.action, el.dataset.id, e, el));
+      });
+
+      const dz = $app.querySelector('[data-dropzone]');
+      const fi = $app.querySelector('[data-file]');
+      if (dz && fi) {
+        dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over'); });
+        dz.addEventListener('dragleave', () => dz.classList.remove('over'));
+        dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('over'); const f = e.dataTransfer.files[0]; if (f) handleUploadedFile(f); });
+        fi.addEventListener('change', e => { const f = e.target.files[0]; if (f) handleUploadedFile(f); });
+      }
+
+    }
+
+    function handleAction(action, id, e, el) {
+      switch (action) {
+        case 'toggle': {
+          const s = state.skills.find(x => x.id === id);
+          if (s) {
+            s.enabled = !s.enabled;
+            render();
+            if (!s.enabled) toast(`Disabled ${s.name} for this project`, { kind: 'warning' });
+            else toast(`Enabled ${s.name} for this project`, { kind: 'success' });
+          }
+          break;
+        }
+        case 'toggle-menu': { e.stopPropagation(); setState({ openMenuId: state.openMenuId === id ? null : id }); break; }
+        case 'open-detail': { setState({ modal: { type: 'detail', id }, selectedFileIdx: 0, openMenuId: null, folderCollapsed: false }); break; }
+        case 'toggle-folder': {
+          state.folderCollapsed = !state.folderCollapsed;
+          const tree = $app.querySelector('[data-folder-tree]');
+          if (tree) tree.classList.toggle('collapsed', state.folderCollapsed);
+          break;
+        }
+        case 'open-upload': { setState({ modal: { type: 'upload' }, uploadError: null, openMenuId: null }); break; }
+        case 'select-file': {
+          const idx = parseInt(el.dataset.idx, 10);
+          state.selectedFileIdx = idx;
+          $app.querySelectorAll('[data-folder-tree] .ft-file').forEach((f, i) => f.classList.toggle('active', i === idx));
+          const skill = state.skills.find(x => x.id === state.modal?.id);
+          const file = skill?.files?.[idx];
+          const viewer = $app.querySelector('.code-viewer');
+          if (viewer && file) viewer.innerHTML = renderCodeLines(file.content);
+          break;
+        }
+        case 'clear-search': { setState({ search: '' }); break; }
+        case 'toggle-sidebar': { e.stopPropagation(); setState({ sidebarOpen: !state.sidebarOpen }); break; }
+        case 'close-sidebar': { setState({ sidebarOpen: false }); break; }
+        case 'close-modal': {
+          if (e && e.currentTarget && e.currentTarget.matches('[data-modal-backdrop]')) {
+            if (e.target.closest('[data-modal-content]')) return;
+          }
+          setState({ modal: null, uploadingFile: null });
+          break;
+        }
+        case 'menu-try':
+        case 'try-skill': {
+          const s = state.skills.find(x => x.id === id);
+          setState({ view: 'thread', threadMessage: `Demo /${s.name} with some great examples`, openMenuId: null, modal: null });
+          break;
+        }
+        case 'back-to-skills': { setState({ view: 'skills', threadMessage: null }); break; }
+        case 'menu-download':
+        case 'download-skill': { const s = state.skills.find(x => x.id === id); downloadFakeZip(s.name); toast(`Downloaded ${s.name}.zip`, { kind: 'success' }); setState({ openMenuId: null }); break; }
+        case 'dismiss-upload-error': { setState({ uploadError: null }); break; }
+        case 'apply-replace': {
+          const err = state.uploadError;
+          if (err && err.type === 'duplicate' && err.payload) {
+            const i = state.skills.findIndex(s => s.name === err.payload.name);
+            if (i >= 0) state.skills[i] = err.payload;
+            const name = err.payload.name;
+            state.uploadError = null;
+            state.modal = null;
+            render();
+            toast(`Replaced "${name}"`, { kind: 'success', action: { label: 'Try in Chat', onClick: () => {} } });
+          }
+          break;
+        }
+        case 'menu-edit': {
+          const s = state.skills.find(x => x.id === id);
+          setState({ view: 'thread', threadMessage: `Help me edit this skill /${s.name}`, openMenuId: null, modal: null });
+          break;
+        }
+        case 'menu-delete': { setState({ modal: { type: 'delete', id }, openMenuId: null }); break; }
+        case 'confirm-delete': { state.skills = state.skills.filter(s => s.id !== id); toast('Skill deleted'); setState({ modal: null }); break; }
+        case 'confirm-replace': {
+          const payload = state.modal?.payload;
+          if (payload) {
+            const i = state.skills.findIndex(s => s.name === payload.name);
+            if (i >= 0) state.skills[i] = payload; else state.skills.unshift(payload);
+            const name = payload.name;
+            state.modal = null;
+            render();
+            toast(`Replaced ${name}`, { kind: 'success', action: { label: 'Try in Chat', onClick: () => {} } });
+          } else {
+            setState({ modal: null });
+          }
+          break;
+        }
+      }
+    }
+
+    // Fake progress animation for real user-driven uploads, mirrors the
+    // orchestrator's animateUploadProgress but without the play-token guard.
+    async function fakeUploadProgress(fileName, durationMs) {
+      state.uploadingFile = { name: fileName, progress: 0 };
+      state.uploadError = null;
+      render();
+      const steps = 28;
+      const stepDur = durationMs / steps;
+      for (let i = 1; i <= steps; i++) {
+        await new Promise(r => setTimeout(r, stepDur));
+        // bail if the modal was closed mid-upload
+        if (!state.uploadingFile) return false;
+        state.uploadingFile.progress = Math.round((i / steps) * 100);
+        const fill = document.querySelector('[data-upload-progress-fill]');
+        const pct = document.querySelector('[data-upload-progress-pct]');
+        if (fill) fill.style.width = state.uploadingFile.progress + '%';
+        if (pct) pct.textContent = state.uploadingFile.progress + '%';
+      }
+      return true;
+    }
+
+    async function handleUploadedFile(file) {
+      const rawName = file.name.replace(/\.zip$/i, '');
+      const name = rawName || 'new-skill';
+
+      // Simulate "SKILL.md not found" when filename hints at a malformed zip.
+      // Errors short-circuit the progress animation, just like a real upload that
+      // fails validation immediately.
+      if (/no-skill|invalid|bad|missing|broken/i.test(file.name) || file.size === 0) {
+        setState({ uploadError: { type: 'invalid', message: 'SKILL.md not found in zip file' }, uploadingFile: null });
+        return;
+      }
+
+      // Run the fake progress UI before applying the real state change.
+      const completed = await fakeUploadProgress(file.name, 2200);
+      if (!completed) return;
+
+      const exists = state.skills.some(s => s.name === name);
+      const newSkill = {
+        id: name + '-' + Date.now(), name,
+        description: 'Uploaded skill — description from SKILL.md will appear here.',
+        official: false, enabled: true,
+        updatedAt: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        updatedBy: 'Iris H',
+        files: [{ path: `${name}/SKILL.md`, content: `---\nname: ${name}\ndescription: Uploaded skill\n---\n\n# ${name}\n` }],
+      };
+      state.uploadingFile = null;
+      if (exists) {
+        const existing = state.skills.find(s => s.name === name);
+        newSkill.id = existing.id;
+        setState({ modal: { type: 'replace', name, payload: newSkill } });
+      } else {
+        state.skills.unshift(newSkill);
+        state.modal = null;
+        state.uploadError = null;
+        render();
+        toast(`Uploaded ${name}`, { kind: 'success', action: { label: 'Try in Chat', onClick: () => {} } });
+      }
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && state.modal) setState({ modal: null });
+      else if (e.key === 'Escape' && state.openMenuId) setState({ openMenuId: null });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!state.openMenuId) return;
+      if (e.target.closest('[data-action="toggle-menu"]')) return;
+      if (e.target.closest('.dd-menu')) return;
+      setState({ openMenuId: null });
+    });
+
+    render();
+
+    // =============== Step-based playback orchestrator ===============
+    // Each journey is a list of atomic steps. Each step has a label
+    // (shown in the parent control panel) and a run() that drives the
+    // prototype's state. The parent kicks off playback via postMessage.
+
+    // Snapshot seed skills so each replay starts from the same baseline.
+    const SEED_SKILLS = JSON.parse(JSON.stringify(state.skills));
+
+    let playCtl = { token: 0 };
+    function cancelPlay() { playCtl.token++; }
+    function newToken() { return ++playCtl.token; }
+    const wait = (ms) => new Promise(r => setTimeout(r, ms));
+    const alive = (t) => t === playCtl.token;
+
+    function resetState({ withUserSkill = true } = {}) {
+      state.skills = JSON.parse(JSON.stringify(SEED_SKILLS));
+      if (!withUserSkill) state.skills = state.skills.filter(s => s.official);
+      state.search = '';
+      state.openMenuId = null;
+      state.selectedFileIdx = 0;
+      state.modal = null;
+      state.uploadError = null;
+      state.uploadingFile = null;
+      state.view = 'skills';
+      state.threadMessage = null;
+      state.folderCollapsed = false;
+      render();
+    }
+
+    // Build a "fresh-upload" payload matching the seed user skill.
+    function makeUploadPayload(seed) {
+      const p = JSON.parse(JSON.stringify(seed));
+      p.id = seed.id + '-' + Date.now();
+      p.updatedAt = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      return p;
+    }
+
+    // Animate a progress bar from 0 → 100 in the upload modal.
+    async function animateUploadProgress(t, fileName, durationMs = 1400) {
+      state.uploadingFile = { name: fileName, progress: 0 };
+      render();
+      const steps = 24;
+      const stepDur = durationMs / steps;
+      for (let i = 1; i <= steps; i++) {
+        await wait(stepDur); if (!alive(t)) return false;
+        state.uploadingFile.progress = Math.round((i / steps) * 100);
+        // Patch only the progress fill node to avoid re-rendering the whole modal mid-stream
+        const fill = document.querySelector('[data-upload-progress-fill]');
+        const pct = document.querySelector('[data-upload-progress-pct]');
+        if (fill) fill.style.width = state.uploadingFile.progress + '%';
+        if (pct) pct.textContent = state.uploadingFile.progress + '%';
+      }
+      return true;
+    }
+
+    // ---------- UPLOAD JOURNEY ----------
+    const uploadSteps = [
+      { label: 'Open the Upload skill modal',
+        run: async (t) => {
+          setState({ modal: { type: 'upload' }, uploadError: null, uploadingFile: null });
+          await wait(700);
+        }},
+      { label: 'Drag wren-data-explorer.zip into the dropzone',
+        run: async (t) => {
+          // visually arm the dropzone, then trigger the progress animation
+          const dz = document.querySelector('[data-dropzone]');
+          if (dz) dz.classList.add('over');
+          await wait(450); if (!alive(t)) return;
+          if (dz) dz.classList.remove('over');
+          await animateUploadProgress(t, 'wren-data-explorer.zip', 2800);
+        }},
+      { label: 'Skill appears at the top of the list',
+        run: async (t) => {
+          const seedUser = SEED_SKILLS.find(s => !s.official);
+          const newSkill = makeUploadPayload(seedUser);
+          state.skills.unshift(newSkill);
+          state.modal = null;
+          state.uploadingFile = null;
+          render();
+          toast('Uploaded ' + newSkill.name, { kind: 'success', action: { label: 'Try in Chat', onClick: () => {} } });
+          await wait(1400);
+        }},
+      { label: 'Try uploading the same skill again',
+        run: async (t) => {
+          setState({ modal: { type: 'upload' }, uploadError: null, uploadingFile: null });
+          await wait(900);
+          const dz = document.querySelector('[data-dropzone]');
+          if (dz) dz.classList.add('over');
+          await wait(450); if (!alive(t)) return;
+          if (dz) dz.classList.remove('over');
+          await animateUploadProgress(t, 'wren-data-explorer.zip', 1100);
+        }},
+      { label: 'Duplicate name detected → Replace modal',
+        run: async (t) => {
+          const seedUser = SEED_SKILLS.find(s => !s.official);
+          const payload = makeUploadPayload(seedUser);
+          state.uploadingFile = null;
+          setState({ modal: { type: 'replace', name: seedUser.name, payload } });
+          await wait(1800);
+        }},
+      { label: 'Confirm Upload and replace',
+        run: async (t) => {
+          const payload = state.modal && state.modal.payload;
+          if (payload) {
+            const i = state.skills.findIndex(s => s.name === payload.name);
+            if (i >= 0) state.skills[i] = payload; else state.skills.unshift(payload);
+            toast('Replaced ' + payload.name, { kind: 'success' });
+          }
+          setState({ modal: null });
+          await wait(900);
+        }},
+    ];
+
+    // ---------- TRY-IT-OUT JOURNEY ----------
+    const trySteps = [
+      { label: 'Click into the wren-data-explorer row',
+        run: async (t) => {
+          resetState();
+          await wait(500);
+          setState({ modal: { type: 'detail', id: 'wren-data-explorer' }, selectedFileIdx: 0 });
+          await wait(1200);
+        }},
+      { label: 'Inspect the SKILL.md in the two-pane code view',
+        run: async (t) => {
+          await wait(1400);
+        }},
+      { label: 'Click "Try it out" in the modal footer',
+        run: async (t) => {
+          const s = state.skills.find(x => x.id === 'wren-data-explorer');
+          if (!s) return;
+          setState({ view: 'thread', threadMessage: 'Demo /' + s.name + ' with some great examples', openMenuId: null, modal: null });
+          await wait(1000);
+        }},
+    ];
+
+    const JOURNEYS_DEF = {
+      upload: { steps: uploadSteps, init: () => resetState({ withUserSkill: false }) },
+      try:    { steps: trySteps,    init: () => resetState({ withUserSkill: true  }) },
+    };
+
+    function postToParent(msg) {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage(msg, '*');
+      }
+    }
+
+    async function playJourney(journeyId) {
+      cancelPlay();
+      const t = newToken();
+      const def = JOURNEYS_DEF[journeyId];
+      if (!def) return;
+      def.init && def.init();
+      await wait(400); if (!alive(t)) { postToParent({ type: 'jc_play_aborted' }); return; }
+      for (let i = 0; i < def.steps.length; i++) {
+        if (!alive(t)) { postToParent({ type: 'jc_play_aborted' }); return; }
+        postToParent({ type: 'jc_step_start', idx: i });
+        try { await def.steps[i].run(t); } catch (err) { console.error(err); }
+        if (!alive(t)) { postToParent({ type: 'jc_play_aborted' }); return; }
+        postToParent({ type: 'jc_step_done', idx: i });
+        await wait(250);
+      }
+      postToParent({ type: 'jc_play_done' });
+    }
+
+    // ---------- postMessage protocol ----------
+    window.addEventListener('message', (e) => {
+      const d = e.data;
+      if (!d || typeof d !== 'object' || !d.type) return;
+      if (d.type === 'jc_play')   playJourney(d.journey);
+      else if (d.type === 'jc_cancel') { cancelPlay(); postToParent({ type: 'jc_play_aborted' }); }
+      else if (d.type === 'jc_reset')  { cancelPlay(); JOURNEYS_DEF[d.journey] && JOURNEYS_DEF[d.journey].init(); }
+    });
+
+    // Announce ready + send step labels so the parent can render them.
+    function announceReady() {
+      const steps = Object.fromEntries(Object.entries(JOURNEYS_DEF).map(([k, v]) => [k, v.steps.map(s => s.label)]));
+      postToParent({ type: 'jc_ready', steps });
+    }
+    announceReady();
+    // Re-announce after a beat in case the parent script attached its listener later.
+    setTimeout(announceReady, 300);
+  </script>
+</body>
+</html>
