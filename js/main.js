@@ -19,6 +19,7 @@
     function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
     function applyT() {
+      if (!wrap || !canvas) return;
       const vw = wrap.clientWidth, vh = wrap.clientHeight;
       const sCW = CW * zoom, sCH = CH * zoom;
       ox = clamp(ox, -(sCW - vw * 0.35), vw * 0.35);
@@ -27,13 +28,27 @@
       canvas.style.transformOrigin = '0 0';
       const zr = document.getElementById('zoomReset');
       if (zr) zr.textContent = Math.round(zoom * 100) + '%';
-      // update minimap viewport — same content-bbox scale as dots
-      const vw2 = vw * scX, vh2 = vh * scY;
+      // update minimap viewport — convert screen offset back to canvas-space (account for zoom)
+      if (!mmVp) return;
+      const vw2 = (vw / zoom) * scX, vh2 = (vh / zoom) * scY;
       mmVp.style.width  = vw2 + 'px';
       mmVp.style.height = vh2 + 'px';
-      mmVp.style.left   = clamp((-ox - MM_OX) * scX + MM_PAD, 0, MW - vw2) + 'px';
-      mmVp.style.top    = clamp((-oy - MM_OY) * scY + MM_PAD, 0, MH - vh2) + 'px';
+      mmVp.style.left   = clamp((-ox / zoom - MM_OX) * scX + MM_PAD, 0, MW - vw2) + 'px';
+      mmVp.style.top    = clamp((-oy / zoom - MM_OY) * scY + MM_PAD, 0, MH - vh2) + 'px';
     }
+
+    // Intro video readiness: replaces inline onloadeddata/oncanplay which crashed
+    // with "classList of null" when the video element was detached mid-buffer.
+    (() => {
+      const v = document.getElementById('introVideo');
+      if (!v) return;
+      const markReady = () => {
+        const wrap = v.parentNode;
+        if (wrap && wrap.classList) wrap.classList.add('is-ready');
+      };
+      v.addEventListener('loadeddata', markReady);
+      v.addEventListener('canplay', markReady);
+    })();
 
     wrap.addEventListener('mousedown', e => {
       if (e.target.closest('a,button,.pill,.sb-item,.island-bubble,.deco-scatter')) return;
@@ -124,8 +139,8 @@
       // after transition, recalc canvas
       setTimeout(applyT, 300);
     }
-    toggleBtn.addEventListener('click', toggleSidebar);
-    revealBtn.addEventListener('click', toggleSidebar);
+    if (toggleBtn) toggleBtn.addEventListener('click', toggleSidebar);
+    if (revealBtn) revealBtn.addEventListener('click', toggleSidebar);
 
     // Mobile: start with sidebar collapsed
     if (window.innerWidth <= 640) {
@@ -578,56 +593,77 @@
       if (el) originalHTML[key] = el.innerHTML;
     });
 
-    // Pangu spacing: insert space between CJK and Latin/numbers
+    // Pangu spacing: insert space between CJK and Latin/numbers.
+    // Memoized \u2014 output is deterministic per input, so we cache to avoid running
+    // ~60 regex passes per language switch (was the dominant cost in INP traces).
+    const panguCache = new Map();
     function pangu(str) {
       if (!str) return str;
-      return str
+      const cached = panguCache.get(str);
+      if (cached !== undefined) return cached;
+      const out = str
         .replace(/([\u3000-\u9fff\uff00-\uffef])([A-Za-z0-9])/g, '$1 $2')
         .replace(/([A-Za-z0-9])([\u3000-\u9fff\uff00-\uffef])/g, '$1 $2');
+      panguCache.set(str, out);
+      return out;
     }
+
+    // Pre-cache [data-i18n] elements once. Avoids running querySelectorAll on
+    // every language switch and lets us iterate a flat array (faster than
+    // NodeList.forEach for INP).
+    const i18nElements = [];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      i18nElements.push({ el, key: el.getAttribute('data-i18n') });
+    });
+    const richInnerHTMLKeys = new Set(['intro.headline','intro.bio','intro.bio2','intro.bio3','article1.title']);
+    const richKeySet = new Set(richKeys);
 
     function applyLang(lang) {
       currentLang = lang;
       const t = i18n[lang];
       if (!t) return;
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        // For rich-HTML elements in English, always restore original markup
-        if (richKeys.includes(key)) {
-          if (key === 'intro.headline' || key === 'intro.bio' || key === 'intro.bio2' || key === 'intro.bio3' || key === 'article1.title') {
-            // Always use innerHTML so spans/links render in every language
-            if (lang === 'en') {
+      const isEN = lang === 'en';
+      for (let i = 0; i < i18nElements.length; i++) {
+        const { el, key } = i18nElements[i];
+        if (richKeySet.has(key)) {
+          if (richInnerHTMLKeys.has(key)) {
+            if (isEN) {
               if (originalHTML[key]) el.innerHTML = originalHTML[key];
             } else if (t[key]) {
               el.innerHTML = t[key];
             }
           } else {
-            if (lang === 'en') {
+            if (isEN) {
               if (originalHTML[key]) el.innerHTML = originalHTML[key];
             } else if (t[key]) {
               el.textContent = pangu(t[key]);
             }
           }
-          return;
+          continue;
         }
-        if (t[key] !== undefined && t[key] !== '') {
-          el.textContent = lang === 'en' ? t[key] : pangu(t[key]);
+        const v = t[key];
+        if (v !== undefined && v !== '') {
+          el.textContent = isEN ? v : pangu(v);
         }
-      });
-      langBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.lang === lang));
-      // Update company tooltips
-      const tips = t || i18n['en'];
-      const bioEl = document.querySelector('.intro-bio');
-      if (bioEl) {
-        const [wren, pixel, kkday] = bioEl.querySelectorAll('a[data-tip]');
-        if (wren)   wren.dataset.tip   = tips['tip.wrenai'] || wren.dataset.tip;
-        if (pixel)  pixel.dataset.tip  = tips['tip.pixel']  || pixel.dataset.tip;
-        if (kkday)  kkday.dataset.tip  = tips['tip.kkday']  || kkday.dataset.tip;
       }
+      langBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.lang === lang));
       // Update html lang attribute (triggers CSS font-family switch)
       document.documentElement.lang = lang === 'zh-tw' ? 'zh-TW' : lang === 'zh-cn' ? 'zh-CN' : lang;
-      // Persist selection
-      try { localStorage.setItem('portfolio-lang', lang); } catch(e) {}
+      // Defer non-visible work (tooltip dataset, localStorage) so it doesn't
+      // block the next paint after the click.
+      const tips = t || i18n['en'];
+      const persistAndPolish = () => {
+        const bioEl = document.querySelector('.intro-bio');
+        if (bioEl) {
+          const [wren, pixel, kkday] = bioEl.querySelectorAll('a[data-tip]');
+          if (wren)   wren.dataset.tip   = tips['tip.wrenai'] || wren.dataset.tip;
+          if (pixel)  pixel.dataset.tip  = tips['tip.pixel']  || pixel.dataset.tip;
+          if (kkday)  kkday.dataset.tip  = tips['tip.kkday']  || kkday.dataset.tip;
+        }
+        try { localStorage.setItem('portfolio-lang', lang); } catch(e) {}
+      };
+      if ('requestIdleCallback' in window) requestIdleCallback(persistAndPolish, { timeout: 500 });
+      else setTimeout(persistAndPolish, 0);
     }
 
     // Restore saved language on load
@@ -860,10 +896,10 @@
     /* ── Article Popup ──────────────────────────── */
     (function() {
       var overlay = document.getElementById('article-overlay');
-      if (!overlay) return;
       var titleEl = document.getElementById('article-popup-title');
       var body = document.getElementById('article-popup-body');
       var closeBtn = document.getElementById('article-popup-close');
+      if (!overlay || !titleEl || !body || !closeBtn) return;
       document.querySelectorAll('[data-article]').forEach(function(item) {
         item.addEventListener('click', function() {
           var tmpl = document.getElementById(item.dataset.article);

@@ -45,8 +45,8 @@
           <div class="intro-layout">
 
             <!-- TOP: video banner -->
-            <div class="intro-video-wrap">
-              <video autoplay muted loop playsinline src="assets/index/Intro.mp4"></video>
+            <div class="intro-video-wrap" id="introVideoWrap">
+              <video id="introVideo" autoplay muted loop playsinline preload="auto" poster="assets/index/Intro-poster.jpg" src="assets/index/Intro.mp4"></video>
             </div>
 
             <!-- BOTTOM: text full width -->
@@ -89,6 +89,18 @@
             </div>
           </div>
           <div class="work-grid">
+            <!-- card 0e: Designing with AI — workflow (2026) -->
+            <a class="wcard" href="case-studies/designing-with-ai.html" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;cursor:pointer;">
+              <div class="wthumb" style="padding:0">
+                <img src="assets/designing-with-ai/Cover.jpg" alt="Designing with AI" style="width:100%;height:100%;object-fit:cover;display:block;">
+              </div>
+              <div class="wbody">
+                <div class="wco" data-i18n="wcard10.co">Wren AI · 2026</div>
+                <div class="wtitle" data-i18n="wcard10.title">Designing with AI: A Systems-Level Workflow for Solo Designers</div>
+                <div class="wdesc" data-i18n="wcard10.desc">Documented the 11-step Claude Code pipeline that lets one designer carry ~6–8 FTE of scope across 3–4 parallel projects while 40% of the week is meetings.</div>
+                <div class="wtags"><span class="tag">AI Workflow</span><span class="tag">Claude Code</span><span class="tag">Systems</span><span class="tag">Solo Design</span></div>
+              </div>
+            </a>
             <!-- card 0: Wren AI Agent Mode (2026) -->
             <a class="wcard" href="case-studies/wren-agent.html" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;cursor:pointer;">
               <div class="wthumb" style="padding:0">
@@ -200,18 +212,6 @@
           </div>
 
           <div class="playground-grid" style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px;">
-            <!-- Designing with AI — workflow (2026) -->
-            <a class="wcard" href="case-studies/designing-with-ai.html" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;cursor:pointer;">
-              <div class="wthumb" style="padding:0">
-                <img src="assets/designing-with-ai/Cover.jpg" alt="Designing with AI" style="width:100%;height:100%;object-fit:cover;display:block;">
-              </div>
-              <div class="wbody">
-                <div class="wco" data-i18n="wcard10.co">Wren AI · 2026</div>
-                <div class="wtitle" data-i18n="wcard10.title">Designing with AI: A Systems-Level Workflow for Solo Designers</div>
-                <div class="wdesc" data-i18n="wcard10.desc">Documented the 11-step Claude Code pipeline that lets one designer carry ~6–8 FTE of scope across 3–4 parallel projects while 40% of the week is meetings.</div>
-                <div class="wtags"><span class="tag">AI Workflow</span><span class="tag">Claude Code</span><span class="tag">Systems</span><span class="tag">Solo Design</span></div>
-              </div>
-            </a>
             <div class="wcard" data-article="article-cthulhu" style="cursor:pointer;display:flex;flex-direction:column;">
               <div class="wthumb" style="padding:0;background:#e8dfd4;">
                 <video src="assets/home/Video_Generation.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
@@ -556,11 +556,11 @@
       <div class="mm-icon" style="background:#7aaa8a"></div>
       <div class="mm-label">Work</div>
     </div>
-    <div class="mm-island" data-target="skills" style="left:62px;top:52px">
+    <div class="mm-island" data-target="skills" style="left:109px;top:36px">
       <div class="mm-icon" style="background:#b8966e"></div>
       <div class="mm-label">Skills</div>
     </div>
-    <div class="mm-island" data-target="writing" style="left:109px;top:36px">
+    <div class="mm-island" data-target="writing" style="left:62px;top:52px">
       <div class="mm-icon" style="background:#9a86c4"></div>
       <div class="mm-label">Writing</div>
     </div>

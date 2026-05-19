@@ -921,9 +921,9 @@ exports.init = init;
                 // replaced, no need to do anything
                 if (!isSuccessful) {
                     // hide loading screen
-                    document.getElementById("staticrypt_loading").classList.add("hidden");
-                    document.getElementById("staticrypt_content").classList.remove("hidden");
-                    document.getElementById("staticrypt-password").focus();
+                    document.getElementById("staticrypt_loading")?.classList.add("hidden");
+                    document.getElementById("staticrypt_content")?.classList.remove("hidden");
+                    document.getElementById("staticrypt-password")?.focus();
 
                     // show the remember me checkbox
                     if (isRememberEnabled) {

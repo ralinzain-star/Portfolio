@@ -999,6 +999,7 @@
     const tooltip = document.getElementById('ppo-tooltip');
     const tipProduct = document.getElementById('ppo-tip-product');
     const tipBody = document.getElementById('ppo-tip-body');
+    if (!tooltip || !tipProduct || !tipBody) return;
     let hideTimer;
 
     document.querySelectorAll('.ppo-ideation-li').forEach(li => {
