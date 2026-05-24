@@ -1175,7 +1175,7 @@
 
   function addUserMsg(text) {
     const el = document.createElement('div'); el.className = 'msg-user';
-    el.innerHTML = `<div class="msg-user-content"><div class="msg-user-name">Freda Lai_0507</div><div class="msg-user-bubble">${text}</div><span class="msg-timestamp">${nowTimestamp()}</span></div><div class="msg-user-avatar">FR</div>`;
+    el.innerHTML = `<div class="msg-user-content"><div class="msg-user-name">Iris</div><div class="msg-user-bubble">${text}</div><span class="msg-timestamp">${nowTimestamp()}</span></div><div class="msg-user-avatar">IR</div>`;
     chatArea.appendChild(el); scrollBottom();
   }
 
@@ -1361,7 +1361,7 @@
   function addFeedbackBar(afterEl) {
     const bar = document.createElement('div');
     bar.className = 'feedback-bar';
-    bar.innerHTML = `<div class="feedback-left"><span class="fb-icon"><img src="question-circle.svg"></span><span class="fb-label">Was this result helpful?</span><span class="fb-action" data-vote="yes"><img src="like.svg" width="12" height="12"><span>Yes</span></span><span class="fb-action" data-vote="no"><img src="dislike.svg" width="12" height="12"><span>No</span></span></div><div class="feedback-right"><span class="fb-btn" title="Save"><img src="knowledge.svg"></span><span class="fb-btn" title="View"><img src="view.svg"></span><span class="fb-btn" title="More"><img src="more.svg"></span></div>`;
+    bar.innerHTML = `<div class="feedback-left"><span class="fb-icon"><img src="question-circle.svg"></span><span class="fb-label">Was this result helpful?</span><span class="fb-action" data-vote="yes"><img src="like.svg" width="12" height="12"><span>Yes</span></span><span class="fb-action" data-vote="no"><img src="dislike.svg" width="12" height="12"><span>No</span></span></div><div class="feedback-right"><span class="fb-btn" title="More"><img src="more.svg"></span></div>`;
     if (afterEl && afterEl.parentNode) {
       afterEl.parentNode.insertBefore(bar, afterEl.nextSibling);
     } else {
