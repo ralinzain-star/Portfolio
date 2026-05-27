@@ -276,7 +276,7 @@
         'intro.eyebrow': 'AI · Mobile · SaaS · Design System',
         'intro.headline': 'Iris Hsieh — Co-prospering with <span class="hl">AI</span>, defining the <span class="hl hl-pink">next possibility</span> of digital product experience.',
         'intro.bio': 'Hi, I\'m Ming Hsi Hsieh, also known as Iris Hsieh, a Senior Product Designer specializing in <span class="stat-hi">AI, SaaS, mobile ecosystems, design systems, and design workflow planning</span>. Currently at <a href="https://getwren.ai" target="_blank" rel="noreferrer" data-tip="Text-to-SQL AI · natural language over data">Wren AI</a>, after previously crafting seamless experiences at <a data-tip="Android OS · Google hardware design team">Google Pixel</a> and <a data-tip="Asia\'s leading travel e-commerce platform">KKday</a>. I\'m relocating to the UK, Europe, or Japan and open to opportunities across all three.',
-        'intro.bio2': 'If you want to see how I <span class="stat-hi">design AI products</span>, start with <a href="case-studies/wren-agent.html">One Product, Three Minds</a>, my rethink of conversational BI at Wren AI; <a href="case-studies/thread-tracing.html">Closing the Loop</a>, on feedback systems that turn user signals into model instructions; or <a href="case-studies/lsbg.html">Bicycle Lane Inspection</a>, an AI-assisted civic tool built for Hamburg\'s road maintenance team. For <span class="stat-hi">mobile systems work</span>, there\'s the <a href="case-studies/notification.html">Notification Framework</a> I led at Google Pixel, and <a href="case-studies/a41.html">A41</a>, a native cross-store shopping experience I designed at Fable. For <span class="stat-hi">B2B SaaS</span>, I built the <a href="case-studies/rezio-ds.html">Rezio Design System</a> at KKday and redesigned the <a href="case-studies/rezio.html">Rezio onboarding flow</a> that cut vendor setup time by 38%.',
+        'intro.bio2': 'If you want to see how I <span class="stat-hi">design AI products</span>, start with <a href="case-studies/wren-agent.html">One Product, Three Minds</a>, my rethink of conversational BI at Wren AI; <a href="case-studies/thread-tracing.html">Closing the Loop</a>, on feedback systems that turn user signals into model instructions; or <a href="case-studies/lsbg.html">Bicycle Lane Inspection</a>, an AI-assisted civic tool built for Hamburg\'s road maintenance team. For <span class="stat-hi">mobile systems work</span>, there\'s the <a href="case-studies/notification.html">Notification Framework</a> I led at Google Pixel, and <a href="case-studies/a41.html">A41</a>, a <span class="stat-hi">B2C cross-store shopping</span> experience I designed at Fable. For <span class="stat-hi">B2B SaaS</span>, I built the <a href="case-studies/rezio-ds.html">Rezio Design System</a> at KKday and redesigned the <a href="case-studies/rezio.html">Rezio onboarding flow</a> that cut vendor setup time by 38%.',
         'intro.bio3': 'For how I think about AI and design more broadly, browse my <a href="#island-writing">Playground</a>, especially <a href="case-studies/designing-with-ai.html">Designing with AI</a>, where I document the workflow that lets one designer carry <span class="stat-hi">6–8 FTE</span> of scope</span> across parallel projects. I\'m currently building <a href="case-studies/trip-planner.html">Trip Planner</a>, a <span class="stat-hi">Claude Code skill</span> that turns travel research into interactive HTML guides.',
         'intro.pill.resume': 'CV ↓',
         'intro.pill.linkedin': 'LinkedIn',
@@ -355,7 +355,7 @@
         'intro.eyebrow': 'AI · 行動裝置 · SaaS · 設計系統',
         'intro.headline': 'Iris Hsieh — 與 <span class="hl">AI</span> 共榮，定義數位產品體驗的<span class="hl hl-pink">下一種可能</span>。',
         'intro.bio': 'Hi，我是謝明希（Ming Hsi, Hsieh），也叫我 Iris Hsieh，一位深耕 <span class="stat-hi">AI、SaaS、行動生態、設計系統與設計流程規劃</span> 的資深產品設計師。現任職於 <a href="https://getwren.ai" target="_blank" rel="noreferrer" data-tip="Text-to-SQL AI · 以自然語言查詢資料">Wren AI</a>，先前曾在 <a data-tip="Android OS · Google 硬體設計團隊">Google Pixel</a> 與 <a data-tip="亞洲領先的旅遊電商平台">KKday</a> 將複雜邏輯轉化為優雅的互動體驗。即將移居英國、歐洲或日本，開放洽談當地的合作機會。',
-        'intro.bio2': '如果你想看看我怎麼<span class="stat-hi">設計 AI 產品</span>，可以從 <a href="case-studies/wren-agent.html">One Product, Three Minds</a> 開始，那是我在 Wren AI 重新思考對話式 BI 的案例；<a href="case-studies/thread-tracing.html">Closing the Loop</a>，談的是如何設計把使用者訊號轉成模型指令的回饋系統；或是 <a href="case-studies/lsbg.html">Bicycle Lane Inspection</a>，一款為漢堡道路養護團隊打造的 AI 公共服務工具。<span class="stat-hi">行動系統方面</span>，有我在 Google Pixel 主導的 <a href="case-studies/notification.html">Notification Framework</a>，以及我在 Fable 設計的原生跨店購物體驗 <a href="case-studies/a41.html">A41</a>。<span class="stat-hi">B2B SaaS 方面</span>，我在 KKday 打造了 <a href="case-studies/rezio-ds.html">Rezio Design System</a>，並重新設計了 <a href="case-studies/rezio.html">Rezio 廠商導入流程</a>，將設置時間縮短 38%。',
+        'intro.bio2': '如果你想看看我怎麼<span class="stat-hi">設計 AI 產品</span>，可以從 <a href="case-studies/wren-agent.html">One Product, Three Minds</a> 開始，那是我在 Wren AI 重新思考對話式 BI 的案例；<a href="case-studies/thread-tracing.html">Closing the Loop</a>，談的是如何設計把使用者訊號轉成模型指令的回饋系統；或是 <a href="case-studies/lsbg.html">Bicycle Lane Inspection</a>，一款為漢堡道路養護團隊打造的 AI 公共服務工具。<span class="stat-hi">行動系統方面</span>，有我在 Google Pixel 主導的 <a href="case-studies/notification.html">Notification Framework</a>，以及我在 Fable 設計的 <span class="stat-hi">B2C 跨店購物</span>體驗 <a href="case-studies/a41.html">A41</a>。<span class="stat-hi">B2B SaaS 方面</span>，我在 KKday 打造了 <a href="case-studies/rezio-ds.html">Rezio Design System</a>，並重新設計了 <a href="case-studies/rezio.html">Rezio 廠商導入流程</a>，將設置時間縮短 38%。',
         'intro.bio3': '想了解我對 AI 與設計的看法，可以逛逛我的 <a href="#island-writing">Playground</a>，特別是 <a href="case-studies/designing-with-ai.html">Designing with AI</a>，我在裡面記錄了一位設計師如何在平行專案裡承擔 <span class="stat-hi">6 至 8 FTE</span> 的工作流。目前手邊的 side project 是 <a href="case-studies/trip-planner.html">Trip Planner</a>，一款把旅行研究轉成互動 HTML 指南的 Claude Code Skill。',
         'intro.pill.resume': '履歷 ↓',
         'intro.pill.linkedin': 'LinkedIn',
@@ -434,7 +434,7 @@
         'intro.eyebrow': 'AI · 移动端 · SaaS · 设计系统',
         'intro.headline': 'Iris Hsieh — 与 <span class="hl">AI</span> 共荣，定义数字产品体验的<span class="hl hl-pink">下一种可能</span>。',
         'intro.bio': 'Hi，我是谢明希（Ming Hsi, Hsieh），也叫我 Iris Hsieh，一位专注于 <span class="stat-hi">AI、SaaS、移动生态、设计系统与设计流程规划</span> 的高级产品设计师。现就职于 <a href="https://getwren.ai" target="_blank" rel="noreferrer" data-tip="Text-to-SQL AI · 以自然语言查询数据">Wren AI</a>，先前曾在 <a data-tip="Android OS · Google 硬件设计团队">Google Pixel</a> 与 <a data-tip="亚洲领先的旅游电商平台">KKday</a> 将复杂逻辑转化为清晰可用的交互体验。即将移居英国、欧洲或日本，开放洽谈当地的职场机会。',
-        'intro.bio2': '如果你想看看我怎么<span class="stat-hi">设计 AI 产品</span>，可以从 <a href="case-studies/wren-agent.html">One Product, Three Minds</a> 开始，那是我在 Wren AI 重新思考对话式 BI 的案例；<a href="case-studies/thread-tracing.html">Closing the Loop</a>，谈的是如何设计把用户信号转成模型指令的反馈系统；或是 <a href="case-studies/lsbg.html">Bicycle Lane Inspection</a>，一款为汉堡道路养护团队打造的 AI 公共服务工具。<span class="stat-hi">移动系统方面</span>，有我在 Google Pixel 主导的 <a href="case-studies/notification.html">Notification Framework</a>，以及我在 Fable 设计的原生跨店购物体验 <a href="case-studies/a41.html">A41</a>。B2B SaaS 方面，我在 KKday 打造了 <a href="case-studies/rezio-ds.html">Rezio Design System</a>，并重新设计了 <a href="case-studies/rezio.html">Rezio 厂商导入流程</a>，将配置时间缩短 38%。',
+        'intro.bio2': '如果你想看看我怎么<span class="stat-hi">设计 AI 产品</span>，可以从 <a href="case-studies/wren-agent.html">One Product, Three Minds</a> 开始，那是我在 Wren AI 重新思考对话式 BI 的案例；<a href="case-studies/thread-tracing.html">Closing the Loop</a>，谈的是如何设计把用户信号转成模型指令的反馈系统；或是 <a href="case-studies/lsbg.html">Bicycle Lane Inspection</a>，一款为汉堡道路养护团队打造的 AI 公共服务工具。<span class="stat-hi">移动系统方面</span>，有我在 Google Pixel 主导的 <a href="case-studies/notification.html">Notification Framework</a>，以及我在 Fable 设计的 <span class="stat-hi">B2C 跨店购物</span>体验 <a href="case-studies/a41.html">A41</a>。B2B SaaS 方面，我在 KKday 打造了 <a href="case-studies/rezio-ds.html">Rezio Design System</a>，并重新设计了 <a href="case-studies/rezio.html">Rezio 厂商导入流程</a>，将配置时间缩短 38%。',
         'intro.bio3': '想了解我对 AI 与设计的看法，可以逛逛我的 <a href="#island-writing">Playground</a>，尤其是 <a href="case-studies/designing-with-ai.html">Designing with AI</a>，我在里面记录了一位设计师如何在并行项目里承担 <span class="stat-hi">6 至 8 FTE</span> 的工作流。目前手边的 side project 是 <a href="case-studies/trip-planner.html">Trip Planner</a>，一款把旅行研究转成互动 HTML 指南的 Claude Code Skill。',
         'intro.pill.resume': '简历 ↓',
         'intro.pill.linkedin': 'LinkedIn',
@@ -513,7 +513,7 @@
         'intro.eyebrow': 'AI · モバイル · SaaS · デザインシステム',
         'intro.headline': 'Iris Hsieh — <span class="hl">AI</span> と共栄し、デジタルプロダクト体験の<span class="hl hl-pink">次なる可能性</span>を定義する。',
         'intro.bio': 'Hi、謝明希（Ming Hsi, Hsieh）と申します。Iris Hsieh とも呼ばれている、<span class="stat-hi">AI、SaaS、モバイル、デザインシステム、デザインワークフロー設計</span>を横断するシニアプロダクトデザイナーです。現在は <a href="https://getwren.ai" target="_blank" rel="noreferrer" data-tip="Text-to-SQL AI · 自然言語でデータを操作">Wren AI</a> に在籍し、それ以前は <a data-tip="Android OS · Google ハードウェア設計チーム">Google Pixel</a> と <a data-tip="アジア最大の旅行 EC プラットフォーム">KKday</a> で、複雑なシステムをわかりやすい体験へ整理してきました。近く英国、ヨーロッパ、または日本への移住を予定しており、いずれの地域でも機会にオープンです。',
-        'intro.bio2': '<span class="stat-hi">AI プロダクトをどう設計している</span>かを見たい方は、Wren AI で会話型 BI を再設計した <a href="case-studies/wren-agent.html">One Product, Three Minds</a>、ユーザーのシグナルをモデルへの指示に変えるフィードバックシステムを扱った <a href="case-studies/thread-tracing.html">Closing the Loop</a>、そしてハンブルク市の道路整備チーム向けに設計した AI 支援ツール <a href="case-studies/lsbg.html">Bicycle Lane Inspection</a> からどうぞ。<span class="stat-hi">モバイル系の仕事</span>であれば、Google Pixel で率いた <a href="case-studies/notification.html">Notification Framework</a>、Fable で設計したクロスストアのネイティブ購入体験 <a href="case-studies/a41.html">A41</a> があります。<span class="stat-hi">B2B SaaS の領域</span>では、KKday で <a href="case-studies/rezio-ds.html">Rezio Design System</a> を構築し、セットアップ時間を 38% 短縮した <a href="case-studies/rezio.html">Rezio の導入フロー</a> を再設計しました。',
+        'intro.bio2': '<span class="stat-hi">AI プロダクトをどう設計している</span>かを見たい方は、Wren AI で会話型 BI を再設計した <a href="case-studies/wren-agent.html">One Product, Three Minds</a>、ユーザーのシグナルをモデルへの指示に変えるフィードバックシステムを扱った <a href="case-studies/thread-tracing.html">Closing the Loop</a>、そしてハンブルク市の道路整備チーム向けに設計した AI 支援ツール <a href="case-studies/lsbg.html">Bicycle Lane Inspection</a> からどうぞ。<span class="stat-hi">モバイル系の仕事</span>であれば、Google Pixel で率いた <a href="case-studies/notification.html">Notification Framework</a>、Fable で設計した <span class="stat-hi">B2C クロスストアの購入</span>体験 <a href="case-studies/a41.html">A41</a> があります。<span class="stat-hi">B2B SaaS の領域</span>では、KKday で <a href="case-studies/rezio-ds.html">Rezio Design System</a> を構築し、セットアップ時間を 38% 短縮した <a href="case-studies/rezio.html">Rezio の導入フロー</a> を再設計しました。',
         'intro.bio3': 'AI とデザインについての考え方は、<a href="#island-writing">Playground</a>、とりわけ、並行プロジェクトを横断しながら一人のデザイナーが <span class="stat-hi">6〜8 FTE</span> 分のスコープを担うワークフローをまとめた <a href="case-studies/designing-with-ai.html">Designing with AI</a> をご覧ください。目下は、旅行リサーチをインタラクティブな HTML ガイドに変換する Claude Code Skill、<a href="case-studies/trip-planner.html">Trip Planner</a> を育てています。',
         'intro.pill.resume': '履歴書 ↓',
         'intro.pill.linkedin': 'LinkedIn',
@@ -923,4 +923,34 @@
       });
       closeBtn.addEventListener('click', function() { overlay.classList.remove('open'); });
       overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.classList.remove('open'); });
+    })();
+
+    // ─────────────────────────────────────────────────────────────────────
+    // Footer auto-updates: pull latest commit date from GitHub commits API
+    // and rewrite the "Last update" line so the footer always reflects
+    // reality without manual edits. Falls back to the static HTML text
+    // if the API is unreachable or rate-limited.
+    // ─────────────────────────────────────────────────────────────────────
+    (function() {
+      var dateEl = document.getElementById('footer-update-date');
+      var yearEl = document.getElementById('footer-year');
+      if (!dateEl && !yearEl) return;
+
+      var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var API = 'https://api.github.com/repos/ralinzain-star/Portfolio/commits?per_page=1';
+
+      // Update copyright year client-side too (cheap, no network)
+      if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+      fetch(API, { cache: 'default' })
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(commits) {
+          if (!commits || !commits[0] || !commits[0].commit) return;
+          var iso = commits[0].commit.committer && commits[0].commit.committer.date;
+          if (!iso) return;
+          var d = new Date(iso);
+          if (isNaN(d.getTime())) return;
+          if (dateEl) dateEl.textContent = MONTHS[d.getMonth()] + ' ' + d.getFullYear();
+        })
+        .catch(function() { /* keep the static HTML fallback */ });
     })();
