@@ -312,6 +312,9 @@
         'wcard11.co': 'Wren AI · 2026',
         'wcard11.title': 'Embedded Threads: Bringing BI to Where Decisions Actually Happen',
         'wcard11.desc': 'Designed a conversational BI surface that lives inside Notion sidebars, mobile bottom-sheets, and 393px phone screens, without losing its voice along the way.',
+        'wcard12.co': 'Wren AI · 2026',
+        'wcard12.title': 'Data Apps: A Living BI Canvas You Build by Conversation',
+        'wcard12.desc': 'Designed Wren AI\'s Data Apps canvas across 13 interaction stages — turning one-shot questions into living dashboards you refine by talking or by direct manipulation.',
         'about.badge': 'ABOUT',
         'about.bio.label': 'What I do',
         'about.bio': 'I specialize in transforming complex product requirements into intuitive systems. My focus lies at the intersection of AI product logic, SaaS scalability, and mobile usability—building design systems and AI workflows that empower both teams and users.',
@@ -391,6 +394,9 @@
         'wcard11.co': 'Wren AI · 2026',
         'wcard11.title': 'Embedded Threads：把 BI 帶到決策真正發生的地方',
         'wcard11.desc': '設計可以住進 Notion 側欄、手機底部彈窗、393px 手機螢幕的對話式 BI 介面，並在每一個尺寸下都不丟掉 Wren AI 的本質。',
+        'wcard12.co': 'Wren AI · 2026',
+        'wcard12.title': 'Data Apps：用對話搭建的活 BI 畫布',
+        'wcard12.desc': '設計 Wren AI 的 Data Apps 畫布，橫跨 13 個互動階段——把一次性的問題變成可以用對話或直接操作來微調的活儀表板。',
         'about.badge': '關於我',
         'about.bio.label': '核心專長',
         'about.bio': '我致力於將複雜的產品需求梳理成清晰的系統。我的工作核心在於 AI 產品邏輯、SaaS 擴充性與行動端易用性的交會點，透過設計系統與 AI 輔助工作流，同時賦能團隊與使用者。',
@@ -470,6 +476,9 @@
         'wcard11.co': 'Wren AI · 2026',
         'wcard11.title': 'Embedded Threads：把 BI 带到决策真正发生的地方',
         'wcard11.desc': '设计可以住进 Notion 侧栏、手机底部弹窗、393px 手机屏幕的对话式 BI 界面，并在每一个尺寸下都不丢掉 Wren AI 的本质。',
+        'wcard12.co': 'Wren AI · 2026',
+        'wcard12.title': 'Data Apps：用对话搭建的活 BI 画布',
+        'wcard12.desc': '设计 Wren AI 的 Data Apps 画布，横跨 13 个交互阶段——把一次性的问题变成可以用对话或直接操作来微调的活仪表板。',
         'about.badge': '关于我',
         'about.bio.label': '核心专长',
         'about.bio': '我专注于将复杂的业务需求梳理为直观的系统。我的工作核心位于 AI 产品逻辑、SaaS 扩展性与移动端易用性的交汇点，通过设计系统与 AI 辅助工作流，同时赋能团队与用户。',
@@ -549,6 +558,9 @@
         'wcard11.co': 'Wren AI · 2026',
         'wcard11.title': 'Embedded Threads：意思決定の現場に BI を届ける',
         'wcard11.desc': 'Notion のサイドバー、モバイルのボトムシート、393px のスマホ画面に住む会話型 BI サーフェスを設計し、どのサイズでも Wren AI らしさを失わない。',
+        'wcard12.co': 'Wren AI · 2026',
+        'wcard12.title': 'Data Apps：対話で組み立てる、生きた BI キャンバス',
+        'wcard12.desc': 'Wren AI の Data Apps キャンバスを 13 のインタラクション段階にわたって設計——一度きりの質問を、対話や直接操作で仕上げられる生きたダッシュボードへ。',
         'about.badge': '自己紹介',
         'about.bio.label': '業務内容',
         'about.bio': '複雑なプロダクトを、チームが進めやすく、ユーザーが理解しやすい形に整理するのが仕事です。AI プロダクト、SaaS、モバイル領域を中心に、デザインシステム、ユーザビリティ改善、AI 活用ワークフローの設計に取り組んでいます。',
@@ -901,7 +913,8 @@
       var closeBtn = document.getElementById('article-popup-close');
       if (!overlay || !titleEl || !body || !closeBtn) return;
       document.querySelectorAll('[data-article]').forEach(function(item) {
-        item.addEventListener('click', function() {
+        item.addEventListener('click', function(e) {
+          e.preventDefault();
           var tmpl = document.getElementById(item.dataset.article);
           if (!tmpl) return;
           var lang = document.documentElement.lang || 'en';
