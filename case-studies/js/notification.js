@@ -19,6 +19,90 @@
   // ── i18n ──
   (function() {
     const notifI18n = {
+      'en': {
+        'nav.back': '← Iris Hsieh',
+        'nav.intro': '.Intro',
+        'nav.s01': '01.Where We Started',
+        'nav.s02': '02.Our Process',
+        'nav.s03': '03.What We Built',
+        'nav.s04': '04.AI Classifier',
+        'nav.s05': '05.Impact',
+        'page.title': 'Notification Framework',
+        'page.subtitle': 'Turning scattered alerts into a unified, review-ready notification framework.',
+        'intro.label.product': 'Project Overview:',
+        'intro.product.body1': 'We noticed that different features were sending out notifications without a shared understanding of what was already out there. As a result, users sometimes received repeated messages or missed the ones that actually mattered. We set out to fix that by building a shared framework that helps teams stay aligned on what gets sent, when, and why.',
+        'intro.product.body2': 'The work introduced structured rules, expanded notification categories, and defined frequency and priority models. I also helped design a supporting AI-powered classifier tool that turns the framework into a reviewable workflow for planning and validation.',
+        'intro.label.role': 'My Role:',
+        'intro.role.body': 'As the interaction designer, I <span class="stat-hi">audited and classified existing notifications</span>, co-developed the decision framework, and translated it into practical review tools. I aligned <span class="stat-hi">cross-functional teams</span> on shared standards, helped define the supporting classifier workflow, and documented the system so it could <span class="stat-hi">scale beyond a single feature team</span>.',
+        'intro.label.company': 'Company & Timeframe:',
+        'intro.company.body': 'Major Consumer Electronics Platform · 2025',
+        's01.title': 'Where We Started',
+        's01.bg.label': 'Project Background:',
+        's01.bg.body': 'We began with a comprehensive audit of notifications across <span class="stat-hi">6 core features</span> on the platform. Notifications were scattered across separate design files with no single source of truth. Each team had been designing in isolation. The audit surfaced overlapping messages, inconsistent tone, and gaps where important notifications were missing entirely.',
+        's01.goal.label': 'Our Goal:',
+        's01.goal.li1': '<strong>Build the foundation</strong>, Create a unified framework that designers and product managers can reference together.',
+        's01.goal.li2': '<strong>Ensure consistency</strong>, Reduce redundancy and conflicting messages across features.',
+        's01.goal.li3': '<strong>Enable better work</strong>, Establish shared standards so teams can move faster with confidence.',
+        's02.title': 'Our Process',
+        's02.lede': 'The framework was built on two pillars, each refined iteratively: <strong>Categorization &amp; Usage</strong>, informed by platform-level notification policies and adjusted through multiple rounds of review with stakeholders; and <strong>Notification Frequency Types</strong>, grounded in the existing design system to ensure visual and behavioral consistency.',
+        's02.step1.label': 'Step 1, Notification Audit',
+        's02.step1.body': 'We began with a comprehensive audit of notifications across 6 core features on the platform. Notifications were scattered across separate design files with no single source of truth. Each one was mapped by trigger, urgency, and frequency, then translated into flowcharts to reconstruct the end-to-end user journey.',
+        's02.step2.label': 'Step 2, Classification & Rules',
+        's02.step2.body': 'From the audit, we designed a classification tree that asked simple but systematic questions: Is this user-initiated? Is it a device health warning? Is it contextual? Each answer led to a category, a frequency type, and an importance level.',
+        's02.step3.label': 'Step 3, Cross-Functional Alignment',
+        's02.step3.body': 'We partnered closely with PMs and engineers, running design reviews and scenario testing to pressure-test the framework against real use cases. These sessions revealed where redundancy was most painful and where consistency mattered most, shaping the framework into <span class="stat-hi">something practical, not just theoretical</span>.',
+        's03.title': 'What We Built',
+        's03.step1.label': 'Categorization & Usage Guidelines',
+        's03.step1.body': 'We defined <span class="stat-hi">8 categories</span> informed by platform-level notification policies (e.g., Critical Device Health Warning, Security &amp; Privacy, Background Actions, Contextual Insights). This gave teams a vocabulary to consistently describe what kind of message they were sending.',
+        's03.step2.label': 'Frequency Type Guidelines',
+        's03.step2.body': 'We outlined <span class="stat-hi">4 main delivery types</span>: One-time Informational, Reappearing, Regular Delivery, and Ongoing. Each had clear rules on urgency, when it should disappear, and how often it could reappear. This gave teams explicit guardrails against over-notification and alert fatigue.',
+        's03.step3.label': 'Ranking & Priority Guidelines',
+        's03.step3.body': 'Each notification is assigned an importance level that determines its visual treatment and interruption behavior. We mapped notifications to <span class="stat-hi">4 levels (Urgent, High, Medium, Low)</span>. This ensured both consistency in tone and alignment with system behaviors (sound, vibration, heads-up, etc.).',
+        's03.step4.label': 'Notification Helper Tool',
+        's03.step4.body': 'A static framework alone wasn\'t enough, we needed a way for teams to actually use it in daily workflows. To solve this, I designed the <span class="stat-hi">AI-powered notification classifier</span>, a structured system that turned design rules into actionable outputs across different input types (PRDs, mocks, screenshots, flowcharts).',
+        's03.tree.label': 'Classification Tree',
+        's03.tree.body': 'The framework uses a decision-tree structure to classify any notification consistently. This sequential flow ensures every notification is evaluated through the same lens, regardless of which team is designing it.',
+        's03.tree.start.tag': 'Start',
+        's03.tree.start.name': 'New Notification',
+        's03.tree.step1.tag': 'Step 1',
+        's03.tree.step1.sub': 'Categorization &amp; Usage, Select the category that best describes the notification\'s purpose.',
+        's03.tree.cat1': '1. Critical Device Health Warning',
+        's03.tree.cat2': '2. Security, Safety & Privacy',
+        's03.tree.cat3': '3. User Initiated',
+        's03.tree.cat4': '4. Background Actions',
+        's03.tree.cat5': '5. Automated System Status',
+        's03.tree.cat6': '6. System Management Guidance',
+        's03.tree.cat7': '7. Contextual Insights & Alerts',
+        's03.tree.cat8': '8. Promotional',
+        's03.tree.step2.tag': 'Step 2',
+        's03.tree.step2.sub': 'Frequency Type, Determine how often and under what conditions it should appear.',
+        's03.tree.step3.tag': 'Step 3',
+        's03.tree.step3.sub': 'Importance Level, Assign a priority based on urgency and user impact.',
+        's03.tree.end.tag': 'End',
+        's03.tree.end.name': 'Fully Classified',
+        's04.title': 'Designing the AI-Powered Classifier, Use Gemini Gem',
+        's04.step1.label': 'Defining the Role & Modes',
+        's04.step1.body': 'I set a clear role for the AI-powered classifier and introduced <span class="stat-hi">input-driven mode switching</span>. Depending on whether the input was text, planning documents, or flow diagrams, the classifier automatically applied the right logic. This reduced ambiguity and ensured each context was handled appropriately.',
+        's04.step2.label': 'Standardized Review Table',
+        's04.step2.body': 'To make outputs directly usable, I created a fixed review table with fields: Feature, Trigger, Category, Frequency, Importance, Priority, Disappear Conditions, Layouts/Actions, and Display. Any inferred data had to be flagged as (AI Addition), making results <span class="stat-hi">traceable, auditable, and review-ready</span>.',
+        's04.step3.label': 'Anchoring to Core Documents',
+        's04.step3.body': 'The classifier was anchored to three authoritative sources, Categories &amp; Usage, Frequency Types, and the Decision Tree. Each classification referenced these definitions and included a summary, ensuring <span class="stat-hi">consistency with the framework</span> instead of language-based guesswork.',
+        's04.step4.label': 'Handling Complex Inputs',
+        's04.step4.body': 'I wrote strict rules for flowchart reviews, where noise is common. For flowchart inputs, <span class="stat-hi">only yellow cards were processed</span>, one per row, while non-notification elements were ignored. Even identical texts with different triggers became separate entries, keeping discussions strictly focused on notifications.',
+        's04.step5.label': 'Explainable Rules & Feedback Loop',
+        's04.step5.body': 'Importance and priority were derived through explainable rules (Category → Frequency → System Behavior). Subjective scoring was replaced with <span class="stat-hi">logic teams could debate</span>. I also embedded a feedback loop: if a classification was challenged, the classifier suggested alternatives, recalculated values, and checked against the notification inventory for duplicates.',
+        's05.title': 'Impact',
+        's05.impact1.label': 'Build the Foundation',
+        's05.impact1.goal': '<strong>Goal:</strong> Establish a unified notification framework to give the team a consistent way to classify and govern notifications.',
+        's05.impact1.body': '<strong>Impact:</strong> Grounding the work in three core documents, Categories, Frequency Types, and Decision Tree, gave the team a <span class="stat-hi">shared language</span>. Review discussions shifted from individual interpretation to a more consistent decision process.',
+        's05.impact2.label': 'Ensure Consistency',
+        's05.impact2.goal': '<strong>Goal:</strong> Prevent users from receiving duplicate or conflicting messages, improving overall experience consistency.',
+        's05.impact2.body': '<strong>Impact:</strong> Structured rules made de-duplication part of the workflow. The AI-powered classifier checked triggers for overlap and flagged inferred fields, <span class="stat-hi">reducing both omissions and review friction</span>.',
+        's05.impact3.label': 'Enable Better Work',
+        's05.impact3.goal': '<strong>Goal:</strong> Help designers and PMs make clearer decisions earlier in the process.',
+        's05.impact3.body': '<strong>Impact:</strong> The classifier introduced MVP/long-term splits, explainable importance rules, and alternative suggestions, helping product planning <span class="stat-hi">move earlier and with clearer rationale</span>.',
+        's05.summary': 'The framework, combined with AI-assisted tooling, lowered the effort required to design well-considered notifications. In the end, it turned a scattered notification problem into a <span class="stat-hi">repeatable process</span>, giving the team a <span class="stat-hi">shared foundation</span> for design reviews, trade-off discussions, and clearer accountability across features.',
+      },
       'zh-tw': {
         'nav.back': '← Iris Hsieh',
         'nav.intro': '.介紹',
@@ -292,32 +376,21 @@
 
     function applyNotifLang(lang) {
       const t = notifI18n[lang];
-      if (!t || lang === 'en') {
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-          const key = el.getAttribute('data-i18n');
-          if (notifOriginals[key] !== undefined) {
-            if (notifRichKeys.includes(key)) el.innerHTML = notifOriginals[key];
-            else el.textContent = notifOriginals[key];
-          }
-        });
-        document.documentElement.lang = 'en';
-        return;
-      }
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (t[key] !== undefined) {
-          if (notifRichKeys.includes(key)) el.innerHTML = t[key];
-          else el.textContent = t[key];
-        }
+        const val = (t && t[key] !== undefined) ? t[key] : notifOriginals[key];
+        if (val === undefined) return;
+        if (notifRichKeys.includes(key)) el.innerHTML = val;
+        else el.textContent = val;
       });
-      document.documentElement.lang = lang === 'zh-tw' ? 'zh-TW' : lang === 'zh-cn' ? 'zh-CN' : lang;
+      document.documentElement.lang = lang === 'zh-tw' ? 'zh-TW' : lang === 'zh-cn' ? 'zh-CN' : lang === 'ja' ? 'ja' : 'en';
     }
 
     try {
-      const saved = localStorage.getItem('portfolio-lang');
-      if (saved && saved !== 'en') applyNotifLang(saved);
+      const saved = localStorage.getItem('portfolio-lang') || 'en';
+      applyNotifLang(saved);
       const sel = document.getElementById('nav-lang-select');
-      if (sel) sel.value = saved || 'en';
+      if (sel) sel.value = saved;
     } catch(e) {}
 
     const langSel = document.getElementById('nav-lang-select');
