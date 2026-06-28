@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rezio Booking Management — Time-range Picker</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { height: 100vh; background: #ffffff; font-family: "Noto Sans", system-ui, sans-serif; color: #1f2328; }
+
+  .app { display: flex; flex-direction: column; height: 100vh; width: 100%; }
+  .app-topbar { flex-shrink: 0; background: #005abe; color: #fff; display: flex; align-items: center; gap: 24px; padding: 12px 16px; height: 52px; }
+  .app-body { flex: 1; display: flex; min-height: 0; }
+  .app-content { flex: 1; min-width: 0; background: #fff; overflow: auto; display: flex; flex-direction: column; align-items: center; padding: 80px 24px 40px; }
+  .content-stack { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+  .field-label { font-size: 13px; color: #7b7b7b; padding-left: 2px; }
+
+  button { font-family: inherit; cursor: pointer; }
+
+  /* ---------- Trigger field (start -> end) ---------- */
+  .ti-wrap { position: relative; width: 320px; max-width: 100%; }
+  .time-input { display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 8px 0 12px; border: 1px solid #dcdcdc; border-radius: 8px; background: #fff; cursor: pointer; }
+  .time-input:hover { border-color: #005abe; }
+  .ti-glyph { color: #005abe; flex-shrink: 0; }
+  .ti-text { display: inline-block; min-width: 54px; text-align: center; font-variant-numeric: tabular-nums; font-size: 14px; color: #9aa0a6; padding: 2px 6px; border-radius: 4px; }
+  .ti-text.filled { color: #1f2328; }
+  .ti-text.active { background: #eaf0f8; color: #005abe; }
+  .ti-arrow { color: #9aa0a6; font-size: 14px; }
+  .ti-spacer { flex: 1; }
+  .ti-clear { flex-shrink: 0; background: transparent; border: none; color: #9aa0a6; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 18px; line-height: 1; cursor: pointer; transition: background 0.12s ease, color 0.12s ease; }
+  .ti-clear:hover { background: #f0f4fa; color: #1f2328; }
+
+  /* ---------- Dropdown popover ---------- */
+  .tp-pop { position: absolute; top: 52px; left: 0; width: 220px; background: #fff; border: 1px solid #dcdcdc; border-radius: 8px; box-shadow: 0 6px 12px rgba(0,0,0,0.2); display: none; z-index: 10; overflow: hidden; }
+  .tp-pop.open { display: block; }
+  .tp-colhead { display: flex; }
+  .tp-colhead span { flex: 1; text-align: center; font-size: 11px; color: #7b7b7b; padding: 8px 0 4px; }
+  .tp-cols { display: flex; }
+  .tp-col { flex: 1; position: relative; max-height: 196px; overflow-y: auto; border-right: 1px solid #f0f0f0; scrollbar-width: thin; }
+  .tp-col:last-child { border-right: none; }
+  .tp-opt { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 8px 14px; background: transparent; border: none; font-size: 14px; color: #1f2328; cursor: pointer; text-align: left; }
+  .tp-opt:hover { background: #f0f4fa; }
+  .tp-opt.sel { background: #eaf0f8; color: #005abe; font-weight: 600; }
+  .tp-opt.disabled { color: #c8ccd0; cursor: default; }
+  .tp-opt.disabled:hover { background: transparent; }
+  .tp-foot { display: flex; gap: 8px; padding: 8px; border-top: 1px solid #dcdcdc; }
+  .tp-btn { flex: 1; height: 34px; border-radius: 6px; font-size: 13px; font-weight: 600; transition: background 0.12s ease; }
+  .tp-btn.tp-clear-btn { background: #fff; border: 1px solid #005abe; color: #005abe; }
+  .tp-btn.tp-clear-btn:hover { background: #f0f4fa; }
+  .tp-btn.tp-confirm { background: #005abe; border: 1px solid #005abe; color: #fff; }
+  .tp-btn.tp-confirm:hover { background: #0050a8; }
+</style>
+</head>
+<body>
+  <div class="app">
+    <header class="app-topbar"></header>
+    <div class="app-body">
+      <main class="app-content">
+        <div class="content-stack">
+          <span class="field-label">Booking time</span>
+          <div class="ti-wrap">
+            <div class="time-input" id="timeInput">
+              <svg class="ti-glyph" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <circle cx="9" cy="9.5" r="6.5" stroke="#005abe" stroke-width="1.4"/>
+                <path d="M9 6v3.5l2.2 1.3" stroke="#005abe" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M3.2 3.4l2.2 1.8M14.8 3.4l-2.2 1.8" stroke="#005abe" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+              <span class="ti-text" id="tiStart" data-slot="start">Start</span>
+              <span class="ti-arrow">&rarr;</span>
+              <span class="ti-text" id="tiEnd" data-slot="end">End</span>
+              <span class="ti-spacer"></span>
+              <button class="ti-clear" id="tiClear" type="button" aria-label="Clear time" style="display:none;">&times;</button>
+            </div>
+
+            <div class="tp-pop" id="tpPop" role="dialog" aria-label="Time picker">
+              <div class="tp-colhead"><span>Hour</span><span>Min</span></div>
+              <div class="tp-cols">
+                <div class="tp-col" id="hourCol" role="listbox" aria-label="Hour"></div>
+                <div class="tp-col" id="minCol" role="listbox" aria-label="Minute"></div>
+              </div>
+              <div class="tp-foot">
+                <button class="tp-btn tp-clear-btn" id="tpClear" type="button">Clear</button>
+                <button class="tp-btn tp-confirm" id="tpConfirm" type="button">Confirm</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+<script>
+(function () {
+  "use strict";
+
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function fmt(t) { return t ? pad(t.h) + ":" + pad(t.m) : null; }
+
+  var state = {
+    start: { h: 9, m: 0 },
+    end:   { h: 18, m: 0 },
+    active: "start",   // which slot the popover edits
+    pendH: 9,
+    pendM: 0
+  };
+
+  var el = {
+    field: document.getElementById("timeInput"),
+    tiStart: document.getElementById("tiStart"),
+    tiEnd: document.getElementById("tiEnd"),
+    tiClear: document.getElementById("tiClear"),
+    pop: document.getElementById("tpPop"),
+    hourCol: document.getElementById("hourCol"),
+    minCol: document.getElementById("minCol"),
+    clearBtn: document.getElementById("tpClear"),
+    confirmBtn: document.getElementById("tpConfirm")
+  };
+
+  function buildColumn(col, count, getSel, onPick, isDisabled) {
+    col.innerHTML = "";
+    for (var i = 0; i < count; i++) {
+      (function (val) {
+        var dis = isDisabled ? isDisabled(val) : false;
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "tp-opt" + (getSel() === val ? " sel" : "") + (dis ? " disabled" : "");
+        b.setAttribute("role", "option");
+        b.dataset.val = val;
+        b.textContent = pad(val);
+        if (dis) { b.disabled = true; }
+        else { b.addEventListener("click", function () { onPick(val); }); }
+        col.appendChild(b);
+      })(i);
+    }
+  }
+
+  function markSel(col, val) {
+    col.querySelectorAll(".tp-opt").forEach(function (b) {
+      b.classList.toggle("sel", parseInt(b.dataset.val, 10) === val);
+    });
+  }
+
+  function scrollToSel(col) {
+    var sel = col.querySelector(".tp-opt.sel");
+    if (sel) col.scrollTop = sel.offsetTop - col.clientHeight / 2 + sel.offsetHeight / 2;
+  }
+
+  function commitLive() {
+    // Reflect the picked value in the field immediately (real-time), before Confirm.
+    state[state.active] = { h: state.pendH, m: state.pendM };
+    // Invalid range (start later than end): clear whichever slot was not just edited.
+    if (state.start && state.end &&
+        (state.start.h * 60 + state.start.m) > (state.end.h * 60 + state.end.m)) {
+      if (state.active === "start") state.end = null; else state.start = null;
+    }
+    updateField();
+  }
+
+  // Range constraint: keep start <= end by bounding the active slot against the other.
+  function bounds() {
+    // Both slots are freely selectable; an invalid range clears the other slot
+    // (handled in commitLive) rather than disabling options.
+    return { min: null, max: null };
+  }
+  function hourDisabled(h) {
+    var b = bounds();
+    if (b.min && h < b.min.h) return true;
+    if (b.max && h > b.max.h) return true;
+    return false;
+  }
+  function minDisabled(h, m) {
+    var b = bounds();
+    if (b.min && h === b.min.h && m < b.min.m) return true;
+    if (b.max && h === b.max.h && m > b.max.m) return true;
+    return false;
+  }
+  function firstValidMin(h) { for (var m = 0; m < 60; m++) { if (!minDisabled(h, m)) return m; } return 0; }
+
+  function buildMinCol() {
+    buildColumn(el.minCol, 60, function () { return state.pendM; }, function (v) { state.pendM = v; markSel(el.minCol, v); commitLive(); }, function (m) { return minDisabled(state.pendH, m); });
+  }
+
+  function renderColumns() {
+    buildColumn(el.hourCol, 24, function () { return state.pendH; }, function (v) {
+      state.pendH = v;
+      if (minDisabled(v, state.pendM)) state.pendM = firstValidMin(v);
+      markSel(el.hourCol, v);
+      buildMinCol();
+      commitLive();
+    }, hourDisabled);
+    buildMinCol();
+    requestAnimationFrame(function () { scrollToSel(el.hourCol); scrollToSel(el.minCol); });
+  }
+
+  function updateField() {
+    var s = fmt(state.start), e = fmt(state.end);
+    el.tiStart.textContent = s || "Start";
+    el.tiStart.classList.toggle("filled", !!s);
+    el.tiEnd.textContent = e || "End";
+    el.tiEnd.classList.toggle("filled", !!e);
+    el.tiClear.style.display = (s || e) ? "inline-flex" : "none";
+    el.tiStart.classList.toggle("active", state.active === "start");
+    el.tiEnd.classList.toggle("active", state.active === "end");
+  }
+
+  function positionPop(slot) {
+    // Align the dropdown's left edge under the active slot's number (start or end).
+    var slotEl = slot === "start" ? el.tiStart : el.tiEnd;
+    var pr = el.pop.parentElement.getBoundingClientRect();
+    var sr = slotEl.getBoundingClientRect();
+    el.pop.style.left = Math.round(sr.left - pr.left) + "px";
+  }
+
+  function openPicker(slot) {
+    state.active = slot;
+    var cur = state[slot] || { h: 9, m: 0 };
+    state.pendH = cur.h;
+    state.pendM = cur.m;
+    el.pop.classList.add("open");
+    positionPop(slot);
+    renderColumns();
+    updateField();
+  }
+
+  function closePicker() { el.pop.classList.remove("open"); el.tiStart.classList.remove("active"); el.tiEnd.classList.remove("active"); }
+
+  // The two slots are independently clickable.
+  el.tiStart.addEventListener("click", function (e) { e.stopPropagation(); openPicker("start"); });
+  el.tiEnd.addEventListener("click", function (e) { e.stopPropagation(); openPicker("end"); });
+  // Clicking the field (icon / blank area) opens whichever slot is active.
+  el.field.addEventListener("click", function () { openPicker(state.active); });
+
+  el.confirmBtn.addEventListener("click", function () {
+    state[state.active] = { h: state.pendH, m: state.pendM };
+    updateField();
+    closePicker();
+  });
+
+  el.clearBtn.addEventListener("click", function () {
+    state[state.active] = null;
+    updateField();
+    closePicker();
+  });
+
+  el.tiClear.addEventListener("click", function (e) {
+    e.stopPropagation();
+    state.start = null; state.end = null;
+    updateField();
+    closePicker();
+  });
+
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closePicker(); });
+
+  // Showcase default: filled range, popover open editing the start time.
+  updateField();
+  openPicker("start");
+})();
+</script>
+</body>
+</html>

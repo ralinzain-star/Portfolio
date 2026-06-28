@@ -32,7 +32,8 @@
     <a class="nav-anchor" href="#s03" data-i18n="nav.s03">03.Broken</a>
     <a class="nav-anchor" href="#s04" data-i18n="nav.s04">04.Workflow</a>
     <a class="nav-anchor" href="#s05" data-i18n="nav.s05">05.System</a>
-    <a class="nav-anchor" href="#s06" data-i18n="nav.s06">06.Results</a>
+    <a class="nav-anchor" href="#scp" data-i18n="nav.scp">06.Platform</a>
+    <a class="nav-anchor" href="#s06" data-i18n="nav.s06">07.Results</a>
   </div>
   <select class="nav-lang" id="nav-lang-select">
     <option value="en">EN</option>
@@ -46,7 +47,7 @@
 <div class="title-bar">
   <div class="title-bar-inner">
     <div data-i18n="page.title" style="font-size:40px;font-weight:800;line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;font-family:'Barlow',sans-serif;">KKday Rezio Design System Overhaul</div>
-    <div data-i18n="page.subtitle" style="font-size:18px;font-weight:500;line-height:1.25;letter-spacing:-0.02em;font-family:'Barlow',sans-serif;">Rebuilding KKday Rezio Design System for Scalability &amp; Consistency</div>
+    <div data-i18n="page.subtitle" style="font-size:18px;font-weight:500;line-height:1.25;letter-spacing:-0.02em;font-family:'Barlow',sans-serif;">Consolidating existing patterns into a cross-platform React Native design system for Web and Android</div>
   </div>
 </div>
 
@@ -170,6 +171,7 @@
             <li data-i18n="s04.s1.li2">Gather feedback from the team to identify pain points and new component needs.</li>
           </ul>
           <p class="body" data-i18n="s04.s1.body">For example, in the original design, selected time tags would push the input field downward, so we needed a multi-select picker that allowed users to display multiple times directly within the picker. In addition, the single-select picker had efficiency issues, it required users to click repeatedly to complete the selection, resulting in unnecessary actions.</p>
+          <img src="../assets/rezio-ds/time-picker-states-en.png" alt="Multi-time picker states: empty, selected, and error" class="full-img" style="margin-top:8px;" />
         </div>
       </div>
 
@@ -352,8 +354,8 @@
           </div>
         </div>
         <div class="guideline-section-head" data-i18n="s05.gl.multi">Multi-Action Bar Order</div>
-        <div class="guideline-row" style="border-bottom:none;">
-          <div class="guideline-rule" data-i18n="s05.gl.multi.rule" style="border-right:1px solid var(--border);">
+        <div class="guideline-row" style="border-bottom:1px solid var(--border);">
+          <div class="guideline-rule" data-i18n="s05.gl.multi.rule">
             The sorting Action Bar should always be placed on the far right, with the order from left to right being Sort Up, Sort Down. When multiple Action Bars are displayed side by side, different types of buttons may be used as appropriate.
           </div>
           <div class="guideline-example" style="padding:12px 20px;">
@@ -368,11 +370,77 @@
   </div>
 </div>
 
-<!-- ── 06. RESULTS ────────────────────────────────── -->
-<div id="s06" class="sec cream" style="padding-top:32px;padding-bottom:60px;">
+<!-- ── 06. CROSS-PLATFORM ─────────────────────────── -->
+<div id="scp" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
   <div class="sec-inner">
     <div class="sec-head">
       <span class="sec-num">06.</span>
+      <span class="sec-title" data-i18n="scp.title">Cross-Platform</span>
+    </div>
+    <p class="body" data-i18n="scp.body">This system wasn't built for the web alone. With React Native as the foundation, the Web and Android apps share <span class="stat-hi">the same design tokens and components</span>, staying consistent from visual style to interaction behavior, with no need to build and maintain two separate platforms.</p>
+    <p class="body" data-i18n="scp.gadata" style="margin-top:16px;">Deciding which screen sizes to support was a data call, not a guess. Google Analytics showed the real spread of resolutions rezio's users run, from 375-wide phones to 2560-wide desktops, with <span class="stat-hi">1920×1080 and 1366×768 most common on web and 390×844 leading on mobile</span>. That told us which breakpoints to prioritize and test first, so the shared components held up on the screens people actually used.</p>
+    <div class="comp-block">
+      <p class="h3" data-i18n="scp.c1.label">Single-date picker</p>
+    <p class="body" data-i18n="scp.c1.body" style="margin-top:4px;">For choosing one date, such as a booking day. Today shows a ring and the chosen day fills solid, and the footer keeps a fixed height so it never jumps between the empty and selected states. Confirm writes the date to the field and closes. The calendar, header, and states are shared across Web and Android.</p>
+    <div class="xplat-demos" style="display:flex;gap:24px;align-items:flex-start;justify-content:center;flex-wrap:wrap;margin-top:12px;">
+      <figure style="flex:1 1 520px;min-width:0;margin:0;">
+        <figcaption class="caption" style="margin-bottom:8px;color:var(--muted);">SINGLE-DATE · WEB</figcaption>
+        <div style="border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg-card);">
+          <iframe src="../assets/rezio-ds/date-picker-web.html?v=12" title="Date picker on the rezio web admin (desktop)" loading="lazy" style="width:100%;height:760px;border:0;display:block;"></iframe>
+        </div>
+      </figure>
+      <figure style="flex:0 0 380px;max-width:100%;margin:0;">
+        <figcaption class="caption" style="margin-bottom:8px;color:var(--muted);">SINGLE-DATE · MOBILE</figcaption>
+        <div>
+          <iframe src="../assets/rezio-ds/date-picker-mobile.html?v=17" title="Date picker on the rezio mobile app (Android)" loading="lazy" style="width:100%;height:760px;border:0;display:block;"></iframe>
+        </div>
+      </figure>
+    </div>
+    </div>
+    <div class="comp-block">
+      <p class="h3" data-i18n="scp.c2.label">Multi-date picker</p>
+    <p class="body" data-i18n="scp.c2.body" style="margin-top:4px;">For selecting several dates at once. Picks stack into a date-ordered list, each removable by its trash icon, with a count badge. The list scrolls inside a fixed-height card instead of pushing it taller, and the field summarises the dates.</p>
+    <div class="xplat-demos" style="display:flex;gap:24px;align-items:flex-start;justify-content:center;flex-wrap:wrap;margin-top:12px;">
+      <figure style="flex:1 1 520px;min-width:0;margin:0;">
+        <figcaption class="caption" style="margin-bottom:8px;color:var(--muted);">MULTI-DATE · WEB</figcaption>
+        <div style="border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg-card);">
+          <iframe src="../assets/rezio-ds/multi-date-picker-web.html?v=9" title="Multi-date picker on the rezio web admin (desktop)" loading="lazy" style="width:100%;height:760px;border:0;display:block;"></iframe>
+        </div>
+      </figure>
+      <figure style="flex:0 0 380px;max-width:100%;margin:0;">
+        <figcaption class="caption" style="margin-bottom:8px;color:var(--muted);">MULTI-DATE · MOBILE</figcaption>
+        <div>
+          <iframe src="../assets/rezio-ds/multi-date-picker-mobile.html?v=17" title="Multi-date picker on the rezio mobile app (Android)" loading="lazy" style="width:100%;height:760px;border:0;display:block;"></iframe>
+        </div>
+      </figure>
+    </div>
+    </div>
+    <div class="comp-block">
+      <p class="h3" data-i18n="scp.c3.label">Time-range picker</p>
+    <p class="body" data-i18n="scp.c3.body" style="margin-top:4px;">For setting a start and end time, through paired hour and minute columns. Values update live as you pick, and choosing a value that makes the range invalid clears the other end, so the start always stays before the end.</p>
+    <div class="xplat-demos" style="display:flex;gap:24px;align-items:flex-start;justify-content:center;flex-wrap:wrap;margin-top:12px;">
+      <figure style="flex:1 1 520px;min-width:0;margin:0;">
+        <figcaption class="caption" style="margin-bottom:8px;color:var(--muted);">TIME RANGE · WEB</figcaption>
+        <div style="border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg-card);">
+          <iframe src="../assets/rezio-ds/time-picker-web.html?v=10" title="Time-range picker on the rezio web admin (desktop)" loading="lazy" style="width:100%;height:760px;border:0;display:block;"></iframe>
+        </div>
+      </figure>
+      <figure style="flex:0 0 380px;max-width:100%;margin:0;">
+        <figcaption class="caption" style="margin-bottom:8px;color:var(--muted);">TIME RANGE · MOBILE</figcaption>
+        <div>
+          <iframe src="../assets/rezio-ds/time-picker-mobile.html?v=15" title="Time-range picker on the rezio mobile app (Android)" loading="lazy" style="width:100%;height:760px;border:0;display:block;"></iframe>
+        </div>
+      </figure>
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 07. RESULTS ────────────────────────────────── -->
+<div id="s06" class="sec white" style="padding-top:32px;padding-bottom:60px;">
+  <div class="sec-inner">
+    <div class="sec-head">
+      <span class="sec-num">07.</span>
       <span class="sec-title" data-i18n="s06.title">Results</span>
     </div>
     <div class="split-row" style="gap:40px;align-items:center;">

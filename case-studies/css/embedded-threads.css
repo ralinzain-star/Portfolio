@@ -517,6 +517,17 @@ html { scroll-padding-top: 80px; }
     .stat-value .unit { font-size: 16px; margin-left: 2px; color: var(--muted); font-weight: 600; }
     .stat-foot { font-size: 11px; line-height: 1.5; color: var(--muted); }
 
+    /* Persona row, the four people behind the four surfaces (attention order) */
+    .persona-row { margin: 22px 0 6px; }
+    .persona-eyebrow { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+    .persona-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .persona-card { display: flex; flex-direction: column; gap: 5px; padding: 14px 16px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg); }
+    .persona-ind { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+    .persona-role { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 15px; line-height: 1.15; color: var(--text); }
+    .persona-line { font-size: 12px; line-height: 1.45; color: var(--muted); }
+    @media (max-width: 768px) { .persona-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 460px) { .persona-grid { grid-template-columns: 1fr; } }
+
     /* Reveal */
     .case-figure { margin: 24px 0 0; display: flex; flex-direction: column; gap: 10px; }
     .case-figure img { width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-card); }
@@ -556,4 +567,355 @@ html { scroll-padding-top: 80px; }
       .sec-head { font-size: 20px; }
       .title-big { font-size: 28px; }
       .stat-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ────────────────────────────────────────────────────────────
+       Embedded-everywhere demo, section 03
+       Host-app backdrops (dimmed) + floating Wren chat widget.
+       Reuses the .rwd-mock-* chat styles inside .et-panel.
+       ──────────────────────────────────────────────────────────── */
+    .et-demo { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+    .et-controls { display: flex; align-items: center; justify-content: flex-start; gap: 12px; flex-wrap: wrap; }
+    .et-scenes, .et-devices { display: flex; gap: 6px; flex-wrap: wrap; }
+    .et-scene-btn, .et-device-btn { appearance: none; background: var(--bg); border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: var(--muted); cursor: pointer; text-transform: uppercase; font-weight: 600; transition: background 0.15s, color 0.15s, border-color 0.15s; }
+    .et-scene-btn:hover, .et-device-btn:hover { color: var(--text); border-color: rgba(43,37,32,0.3); }
+    .et-scene-btn.active, .et-device-btn.active { background: var(--text); color: var(--bg-card); border-color: var(--text); }
+
+    /* Stage, host-app canvas with a floating widget pinned bottom-right */
+    .et-stage { position: relative; width: 100%; height: 600px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: #eceae4; transition: height 0.28s ease; }
+    .et-stage[hidden] { display: none; }
+
+    /* Backdrop atoms */
+    .et-bg { position: absolute; inset: 0; display: none; overflow: hidden; }
+    /* Four host scenes, each a distinct embed pattern */
+    .et-dock, .et-phone-stage { display: none; }
+    .et-stage[data-scene="dashboard"] .et-bg-dashboard,
+    .et-stage[data-scene="slack"] .et-bg-slack,
+    .et-stage[data-scene="helpdesk"] .et-bg-inbox { display: flex; }
+    .et-stage[data-scene="dashboard"] .et-widget { display: flex; }
+    .et-stage[data-scene="helpdesk"] .et-dock { display: flex; }
+    .et-stage[data-scene="mobile"] .et-phone-stage { display: flex; }
+    .et-stage[data-scene="mobile"] { height: 800px; }
+    .et-bar { display: block; height: 8px; border-radius: 4px; background: #cdc6ba; }
+    .et-bar-sm { height: 6px; background: #d8d2c8; }
+    .et-bar-title { height: 15px; border-radius: 5px; background: #b3a89c; }
+    .et-sq { width: 18px; height: 18px; border-radius: 5px; background: #c5beb3; flex-shrink: 0; }
+    .et-sq.accent { background: #d8b48a; }
+    .et-ic { width: 15px; height: 15px; border-radius: 4px; background: #cdc6ba; flex-shrink: 0; }
+    .et-ic.sm { width: 12px; height: 12px; }
+    .et-dot.mute { width: 8px; height: 8px; border-radius: 50%; background: #c5beb3; flex-shrink: 0; }
+    .et-av { width: 30px; height: 30px; border-radius: 50%; background: #c5beb3; flex-shrink: 0; position: relative; }
+    .et-av.lg { width: 36px; height: 36px; }
+    .et-av.on::after { content: ''; position: absolute; right: -1px; bottom: -1px; width: 9px; height: 9px; border-radius: 50%; background: #8fb98f; border: 2px solid #fff; }
+    .et-pill { width: 44px; height: 18px; border-radius: 999px; background: #e2ded5; display: inline-block; }
+
+    /* Notion doc backdrop */
+    .et-bg-notion { background: #ffffff; }
+    .etn-rail { width: 216px; flex-shrink: 0; background: #f7f6f3; border-right: 1px solid #ebe7df; padding: 18px 12px; display: flex; flex-direction: column; gap: 3px; }
+    .etn-ws { display: flex; align-items: center; gap: 9px; padding: 4px 6px 10px; }
+    .etn-search { display: flex; align-items: center; gap: 8px; background: #efece6; border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; }
+    .etn-item { display: flex; align-items: center; gap: 9px; padding: 6px 8px; border-radius: 6px; }
+    .etn-item.sub { padding-left: 24px; }
+    .etn-item.active { background: #e8e4db; }
+    .etn-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+    .etn-topbar { display: flex; align-items: center; gap: 12px; padding: 14px 24px; border-bottom: 1px solid #f0ece4; }
+    .etn-doc { flex: 1; padding: 40px 56px; display: flex; flex-direction: column; gap: 13px; max-width: 760px; overflow: hidden; }
+    .etn-emoji { width: 46px; height: 46px; border-radius: 11px; background: #ead9bf; margin-bottom: 8px; }
+    .etn-line { height: 9px; border-radius: 4px; background: #e4dfd5; }
+    .etn-callout { background: #f3f0ea; border-radius: 8px; padding: 15px 16px; display: flex; gap: 12px; align-items: flex-start; margin: 8px 0; }
+    .etn-callout-ic { width: 18px; height: 18px; border-radius: 5px; background: #cdbfa6; flex-shrink: 0; }
+    .etn-callout-lines { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .etn-todo { display: flex; align-items: center; gap: 10px; }
+    .etn-check { width: 15px; height: 15px; border-radius: 4px; border: 1.5px solid #cdc6ba; flex-shrink: 0; }
+    .etn-check.done { background: #b9b3a6; border-color: #b9b3a6; }
+
+    /* Support inbox backdrop */
+    .et-bg-inbox { background: #ffffff; }
+    .eti-rail { width: 248px; flex-shrink: 0; background: #f7f6f3; border-right: 1px solid #ebe7df; padding: 14px 0; display: flex; flex-direction: column; gap: 2px; }
+    .eti-railhead { display: flex; align-items: center; justify-content: space-between; padding: 6px 18px 12px; }
+    .eti-badge { width: 20px; height: 20px; border-radius: 6px; background: #e2ded5; }
+    .eti-tabs { display: flex; gap: 8px; padding: 0 18px 12px; }
+    .eti-tab { width: 46px; height: 7px; border-radius: 999px; background: #e2ded5; }
+    .eti-tab.active { background: #9bb0cf; width: 38px; }
+    .eti-conv { display: flex; align-items: center; gap: 12px; padding: 12px 18px; }
+    .eti-conv.active { background: #eceae2; box-shadow: inset 3px 0 0 #9bb0cf; }
+    .eti-cv { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
+    .eti-cv-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .eti-unread { width: 16px; height: 16px; border-radius: 50%; background: #c98b86; flex-shrink: 0; }
+    .eti-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+    .eti-head { display: flex; align-items: center; gap: 12px; padding: 16px 28px; border-bottom: 1px solid #f0ece4; }
+    .eti-headcv { display: flex; flex-direction: column; gap: 7px; }
+    .eti-thread { flex: 1; padding: 26px 28px; display: flex; flex-direction: column; gap: 16px; }
+    .eti-msg { display: flex; align-items: flex-end; gap: 10px; max-width: 64%; }
+    .eti-msg.eti-me { margin-left: auto; flex-direction: row-reverse; }
+    .eti-bubble { background: #eeece6; border-radius: 13px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+    .eti-msg.eti-me .eti-bubble { background: #d6e0f0; }
+    .eti-reply { display: flex; align-items: center; gap: 12px; margin: 0 28px 22px; padding: 12px 16px; border: 1px solid #ebe7df; border-radius: 10px; }
+    .eti-reply .et-bar-sm { flex: 1; }
+    .eti-send { width: 30px; height: 30px; border-radius: 7px; background: #9bb0cf; flex-shrink: 0; }
+
+    /* Analytics dashboard backdrop */
+    .et-bg-dashboard { background: #ffffff; flex-direction: column; padding: 26px 30px; gap: 18px; }
+    .etd-top { display: flex; align-items: center; justify-content: space-between; }
+    .etd-toolbar { display: flex; align-items: center; gap: 8px; }
+    .etd-cta { width: 64px; height: 26px; border-radius: 7px; background: #9bb0cf; }
+    .etd-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .etd-card { background: #f7f6f3; border: 1px solid #ebe7df; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-height: 92px; }
+    .etd-big { width: 70px; height: 24px; border-radius: 6px; background: #beb8ad; }
+    .etd-trend { width: 30px; height: 8px; border-radius: 4px; }
+    .etd-trend.up { background: #9ec39e; }
+    .etd-trend.down { background: #d3a39e; }
+    .etd-row { flex: 1; display: flex; gap: 14px; min-height: 0; }
+    .etd-chart { flex: 1; background: #f7f6f3; border: 1px solid #ebe7df; border-radius: 12px; padding: 16px 18px; display: flex; flex-direction: column; gap: 14px; }
+    .etd-chart-head { display: flex; align-items: center; justify-content: space-between; }
+    .etd-bars { flex: 1; display: flex; align-items: flex-end; gap: 12px; min-height: 120px; }
+    .etd-bars i { flex: 1; background: linear-gradient(180deg, #a8bcd8, #8aa3c8); border-radius: 3px 3px 0 0; }
+    .etd-side { width: 168px; flex-shrink: 0; background: #f7f6f3; border: 1px solid #ebe7df; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+    .etd-donut { width: 84px; height: 84px; border-radius: 50%; align-self: center; background: conic-gradient(#8aa3c8 0 40%, #a8c8a8 40% 68%, #d8c08a 68% 100%); margin: 4px 0; -webkit-mask: radial-gradient(circle 21px at center, transparent 98%, #000 100%); mask: radial-gradient(circle 21px at center, transparent 98%, #000 100%); }
+    .etd-legend { display: flex; align-items: center; gap: 8px; }
+    .etd-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+    .etd-dot.one { background: #8aa3c8; }
+    .etd-dot.two { background: #a8c8a8; }
+    .etd-dot.three { background: #d8c08a; }
+
+    /* Embed-pattern label, right of the scene pills */
+    .et-pattern { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; white-space: nowrap; align-self: center; margin-left: auto; }
+
+    /* Auto-play pointer: mouse cursor (desktop scenes) / tap circle (mobile) */
+    .et-cursor { position: absolute; z-index: 50; pointer-events: none; left: 0; top: 0; width: 0; height: 0; transition: left 0.5s cubic-bezier(.45,0,.25,1), top 0.5s cubic-bezier(.45,0,.25,1); }
+    .et-cursor[hidden] { display: none; }
+    .et-cursor-arrow { position: absolute; left: -1px; top: -1px; filter: drop-shadow(0 1.5px 2px rgba(43,37,32,0.35)); }
+    .et-cursor-dot { position: absolute; left: -16px; top: -16px; width: 32px; height: 32px; border-radius: 50%; background: rgba(47,84,235,0.22); border: 1.5px solid rgba(47,84,235,0.55); display: none; }
+    .et-cursor-ring { position: absolute; left: -10px; top: -10px; width: 20px; height: 20px; border-radius: 50%; border: 2px solid #2f54eb; opacity: 0; }
+    .et-cursor.clicking .et-cursor-ring { animation: et-click-ring 0.55s ease-out; }
+    @keyframes et-click-ring { 0% { transform: scale(0.4); opacity: 0.85; } 100% { transform: scale(3); opacity: 0; } }
+    .et-stage[data-scene="mobile"] .et-cursor-arrow { display: none; }
+    .et-stage[data-scene="mobile"] .et-cursor-dot { display: block; }
+    .et-controls-right { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .et-play-btn { display: inline-flex; align-items: center; gap: 7px; background: #2f54eb; color: #fff; border: none; border-radius: 999px; padding: 7px 16px; font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; box-shadow: 0 4px 12px -4px rgba(47,84,235,0.5); }
+    .et-play-btn:hover { transform: translateY(-1px); box-shadow: 0 7px 16px -4px rgba(47,84,235,0.6); }
+    .et-play-btn.playing { background: var(--muted); box-shadow: none; }
+    .et-play-ico { font-size: 9px; line-height: 1; }
+
+    /* ── Slack scene: Wren as a bot reply in a channel ── */
+    .et-bg-slack { background: #fff; }
+    .ets-rail { width: 230px; flex-shrink: 0; background: #432c41; padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; }
+    .ets-ws { display: flex; align-items: center; gap: 9px; padding: 2px 4px 14px; border-bottom: 1px solid rgba(255,255,255,0.12); margin-bottom: 8px; }
+    .ets-ws-mark { width: 22px; height: 22px; border-radius: 6px; background: rgba(255,255,255,0.85); flex-shrink: 0; }
+    .ets-grp { padding: 6px 6px 2px; }
+    .ets-ch { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 6px; }
+    .ets-ch.active { background: #5b3a57; }
+    .ets-hash { color: rgba(255,255,255,0.5); font-family: 'Roboto', sans-serif; font-size: 15px; line-height: 1; flex-shrink: 0; }
+    .ets-hash.dark { color: #b9b3a6; }
+    .ets-main { flex: 1; display: flex; flex-direction: column; min-width: 0; background: #fff; }
+    .ets-head { display: flex; align-items: center; gap: 8px; padding: 16px 24px; border-bottom: 1px solid #ececec; }
+    .ets-msgs { flex: 1; display: flex; flex-direction: column; gap: 18px; padding: 22px 24px; overflow: hidden; }
+    .ets-msg { display: flex; gap: 12px; align-items: flex-start; }
+    .ets-body { display: flex; flex-direction: column; gap: 7px; min-width: 0; flex: 1; }
+    .ets-name { font-family: 'Roboto', sans-serif; font-weight: 700; font-size: 13px; color: #1d1c1d; }
+    .ets-text { font-family: 'Roboto', sans-serif; font-size: 14px; line-height: 1.46; color: #1d1c1d; }
+    .ets-bot-av { width: 30px; height: 30px; border-radius: 7px; background: #2f54eb; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ets-bot-av img { width: 22px; height: 22px; filter: brightness(0) invert(1); }
+    .ets-bot-name { display: flex; align-items: center; gap: 7px; font-family: 'Roboto', sans-serif; font-weight: 700; font-size: 13px; color: #1d1c1d; }
+    .ets-app { font-family: 'Roboto', sans-serif; font-weight: 600; font-size: 9px; letter-spacing: 0.04em; color: #616061; background: #e8e8e8; border-radius: 3px; padding: 1px 5px; text-transform: uppercase; }
+    .ets-attach { margin-top: 4px; border-left: 3px solid #e3e3e3; padding-left: 12px; max-width: 460px; }
+    .ets-attach .rwd-mock-chart { margin: 0; }
+    .ets-compose { margin: 0 24px 22px; padding: 13px 14px; border: 1px solid #d6d6d6; border-radius: 8px; }
+
+    /* ── Helpdesk scene: Wren docked as a right-hand panel ── */
+    .et-stage[data-scene="helpdesk"] .et-bg-inbox .eti-main { margin-right: 340px; }
+    .et-dock { position: absolute; top: 0; right: 0; bottom: 0; width: 340px; background: #fff; border-left: 1px solid var(--border); flex-direction: column; z-index: 3; box-shadow: -10px 0 30px -14px rgba(43,37,32,0.18); }
+    .et-dock-head { display: flex; align-items: center; justify-content: space-between; padding: 13px 16px; background: #2f54eb; color: #fff; flex-shrink: 0; }
+    .et-dock-head .et-panel-brand { color: #fff; }
+    .et-dock-scope { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; background: rgba(255,255,255,0.18); border-radius: 999px; padding: 3px 9px; }
+
+    /* ── Mobile scene: Wren as a bottom-sheet over a host app ── */
+    .et-phone-stage { position: absolute; inset: 0; align-items: center; justify-content: center; background: #efece6; }
+    .et-phone-device { position: relative; width: 360px; height: 740px; max-height: calc(100% - 36px); background: #f4f2ec; border: 13px solid #1c1c1e; border-radius: 50px; overflow: hidden; box-shadow: 0 22px 50px -14px rgba(43,37,32,0.4); }
+    .et-phone-device .rwd-mock-notch { display: block; }
+    .et-phone-device .rwd-mock-home-bar { display: block; }
+    /* Mobile: home screen first; tap the Wren bubble to open the full-screen assistant */
+    .et-phone-host { z-index: 1; }
+    .et-phone-launcher { position: absolute; right: 16px; bottom: 26px; z-index: 4; width: 54px; height: 54px; border-radius: 50%; border: none; cursor: pointer; background: #2f54eb; box-shadow: 0 12px 26px -8px rgba(47,84,235,0.55), 0 3px 10px rgba(43,37,32,0.2); display: flex; align-items: center; justify-content: center; transition: transform 0.18s ease; }
+    .et-phone-launcher:hover { transform: translateY(-2px) scale(1.05); }
+    .et-phone-launcher svg { width: 27px; height: 27px; display: block; }
+    .et-phone-launcher[hidden] { display: none; }
+    .et-phone-mock { z-index: 5; }
+    .et-phone-mock[hidden] { display: none; }
+    .et-phone-mock:not([hidden]) { animation: et-sheet-up 0.3s ease-out; }
+    .et-phone-close { background: transparent; border: 0; width: 34px; height: 34px; border-radius: 6px; padding: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; }
+    .et-phone-close img { width: 18px; height: 18px; }
+    /* Mobile embed = a full-screen Wren app (the rwd-mock at phone width). Its own
+       container queries reproduce the iOS form: notch, sidebar→drawer, sticky input. */
+    .et-phone-mock { position: absolute; inset: 0; }
+    .et-phone-host { position: absolute; inset: 0; padding: 56px 18px 0; display: flex; flex-direction: column; gap: 14px; }
+    .eph-top { display: flex; align-items: center; justify-content: space-between; }
+    .eph-card { background: #fff; border: 1px solid #e7e3da; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+    .et-sheet { position: absolute; left: 0; right: 0; bottom: 0; height: 74%; background: #fff; border-radius: 22px 22px 0 0; box-shadow: 0 -14px 34px -10px rgba(43,37,32,0.28); display: flex; flex-direction: column; z-index: 5; animation: et-sheet-up 0.32s ease-out; }
+    @keyframes et-sheet-up { from { transform: translateY(48px); } to { transform: none; } }
+    .et-sheet-grab { width: 38px; height: 5px; border-radius: 999px; background: #d9d4ca; margin: 9px auto 2px; flex-shrink: 0; }
+    .et-sheet-head { display: flex; align-items: center; padding: 8px 16px 12px; border-bottom: 1px solid #f0f0f0; flex-shrink: 0; }
+    /* Mobile sheet: the embedded Wren shows the full app chrome (top bar + thread
+       drawer), matching the top prototype's narrow/mobile form. */
+    .et-sheet .rwd-mock-burger,
+    .et-sheet .rwd-mock-plus { display: flex; }
+    .et-sheet .et-sheet-drawer { border-radius: 22px 22px 0 0; overflow: hidden; }
+
+    /* ════════════════════════════════════════════════════════════
+       Realistic host content — believable product chrome kept quiet
+       (muted, low contrast) so the embedded Wren layer stays the hero.
+       These are aria-hidden decorative backdrops behind the assistant.
+       ════════════════════════════════════════════════════════════ */
+    /* Dashboard (analytics host) */
+    .etd-host-title { font: 700 14px/1 'Barlow', sans-serif; color: #6b645c; letter-spacing: -0.01em; }
+    .etd-cta { width: auto; height: auto; padding: 6px 11px; border-radius: 7px; background: #efece5; border: 1px solid #e2ded5; color: #8c8079; font: 600 10px/1 'Noto Sans', sans-serif; display: inline-flex; align-items: center; }
+    .etd-card { gap: 5px; justify-content: flex-start; }
+    .etd-card-label { font: 600 11px/1.2 'Noto Sans', sans-serif; color: #9b9489; letter-spacing: 0.01em; }
+    .etd-card-value { font: 700 23px/1 'Barlow', sans-serif; color: #57514a; letter-spacing: -0.01em; }
+    .etd-delta { font: 600 10px/1 'IBM Plex Mono', monospace; margin-top: auto; }
+    .etd-delta.up { color: #6f9e6f; }
+    .etd-delta.down { color: #c0827d; }
+    .etd-chart-title { font: 600 12px/1 'Noto Sans', sans-serif; color: #6b645c; }
+    .etd-chart-meta { font: 500 10px/1 'IBM Plex Mono', monospace; color: #b0a89c; }
+    .etd-axis { display: flex; gap: 12px; }
+    .etd-axis span { flex: 1; text-align: center; font: 500 9px/1 'IBM Plex Mono', monospace; color: #b0a89c; }
+    .etd-side-title { font: 600 12px/1 'Noto Sans', sans-serif; color: #6b645c; }
+    .etd-legend { width: 100%; }
+    .etd-leg-label { flex: 1; font: 500 11px/1 'Noto Sans', sans-serif; color: #8c8079; }
+    .etd-leg-val { font: 600 11px/1 'Barlow', sans-serif; color: #6b645c; }
+    /* Slack (workspace host) */
+    .ets-ws-name { font: 700 14px/1 'Roboto', sans-serif; color: rgba(255,255,255,0.92); }
+    .ets-grp-label { font: 600 11px/1 'Roboto', sans-serif; color: rgba(255,255,255,0.5); letter-spacing: 0.02em; }
+    .ets-ch-name { font: 400 14px/1 'Roboto', sans-serif; color: rgba(255,255,255,0.62); }
+    .ets-ch-name.on { color: #fff; font-weight: 600; }
+    .ets-head-name { font: 700 15px/1 'Roboto', sans-serif; color: #1d1c1d; }
+    /* Helpdesk (support inbox host) */
+    .eti-rail-title { font: 700 14px/1 'Noto Sans', sans-serif; color: #4a443d; }
+    .eti-badge { width: auto; height: auto; min-width: 18px; padding: 2px 6px; border-radius: 999px; background: #e2ded5; color: #6b645c; font: 600 10px/1.5 'Noto Sans', sans-serif; text-align: center; }
+    .eti-name { flex: 1; min-width: 0; font: 600 12px/1.2 'Noto Sans', sans-serif; color: #4a443d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .eti-time { font: 500 10px/1 'IBM Plex Mono', monospace; color: #b0a89c; flex-shrink: 0; }
+    .eti-snippet { font: 400 11px/1.3 'Noto Sans', sans-serif; color: #9b9489; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .eti-meta { font: 500 10px/1 'IBM Plex Mono', monospace; color: #a89f93; letter-spacing: 0.02em; }
+    .eti-text { font: 400 12px/1.45 'Noto Sans', sans-serif; color: #6b645c; margin: 0; }
+    .eti-msg.eti-me .eti-text { color: #3f547e; }
+    .eti-reply-ph { flex: 1; font: 400 12px/1 'Noto Sans', sans-serif; color: #b0a89c; }
+    /* Mobile (exec KPI app host) */
+    .eph-greet { font: 700 17px/1 'Barlow', sans-serif; color: #4a443d; letter-spacing: -0.01em; }
+    .eph-card { gap: 5px; }
+    .eph-label { font: 600 11px/1.2 'Noto Sans', sans-serif; color: #9b9489; }
+    .eph-value { font: 700 26px/1 'Barlow', sans-serif; color: #57514a; letter-spacing: -0.01em; }
+    .eph-delta { font: 600 11px/1 'IBM Plex Mono', monospace; }
+    .eph-delta.up { color: #6f9e6f; }
+    .eph-delta.down { color: #c0827d; }
+    .eph-head { display: flex; flex-direction: column; gap: 3px; }
+    .eph-sub { font: 500 10px/1.2 'IBM Plex Mono', monospace; color: #a39c91; letter-spacing: 0.01em; }
+    .eph-hero .eph-value { font-size: 30px; }
+    .eph-spark { display: flex; align-items: flex-end; gap: 5px; height: 34px; margin-top: 10px; }
+    .eph-spark i { flex: 1; background: #d2ccbf; border-radius: 3px 3px 0 0; }
+    .eph-spark i:last-child { background: #b6ad9e; }
+    .eph-tiles { display: flex; gap: 12px; }
+    .eph-tile { flex: 1; padding: 14px; }
+    .eph-value.sm { font-size: 20px; }
+    .eph-list { padding: 14px 16px; gap: 0; }
+    .eph-list-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+    .eph-list-title { font: 700 12px/1 'Barlow', sans-serif; color: #57514a; }
+    .eph-list-link { font: 600 10px/1 'IBM Plex Mono', monospace; color: #9b9489; }
+    .eph-li { display: flex; align-items: center; gap: 10px; padding: 9px 0; }
+    .eph-li + .eph-li { border-top: 1px solid #efece5; }
+    .et-av.sm2 { width: 26px; height: 26px; background: #d3ccc0; }
+    .eph-li-cv { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+    .eph-li-name { font: 600 12px/1.2 'Noto Sans', sans-serif; color: #57514a; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .eph-li-sub { font: 500 10px/1.2 'IBM Plex Mono', monospace; color: #a39c91; }
+    .eph-li-amt { font: 700 13px/1 'Barlow', sans-serif; color: #4a443d; }
+
+    /* Floating widget */
+    .et-widget { position: absolute; right: 24px; bottom: 24px; z-index: 3; display: none; flex-direction: column; align-items: flex-end; gap: 14px; max-height: calc(100% - 48px); }
+    .et-launcher { width: 62px; height: 62px; border-radius: 50%; border: none; cursor: pointer; background: #2f54eb; box-shadow: 0 16px 32px -8px rgba(47,84,235,0.55), 0 4px 12px rgba(43,37,32,0.2); display: flex; align-items: center; justify-content: center; transition: transform 0.18s ease, box-shadow 0.18s ease; }
+    .et-launcher:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 20px 38px -8px rgba(47,84,235,0.6), 0 6px 14px rgba(43,37,32,0.22); }
+    .et-launcher svg { width: 30px; height: 30px; display: block; }
+    .et-launcher[hidden] { display: none; }
+
+    /* Chat panel (expanded) */
+    .et-panel { width: 384px; height: 560px; max-height: 100%; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 24px 60px -12px rgba(43,37,32,0.32), 0 6px 16px rgba(43,37,32,0.12); display: flex; flex-direction: column; border: 1px solid rgba(43,37,32,0.06); animation: et-pop 0.2s ease-out; transform-origin: bottom right; }
+    .et-panel[hidden] { display: none; }
+    @keyframes et-pop { from { opacity: 0; transform: translateY(12px) scale(0.96); } to { opacity: 1; transform: none; } }
+    .et-panel-head { display: flex; align-items: center; justify-content: space-between; padding: 13px 14px; background: #2f54eb; color: #fff; flex-shrink: 0; }
+    .et-panel-brand { display: flex; align-items: center; gap: 9px; font-family: 'Roboto', sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.01em; }
+    .et-panel-brand img { width: 26px; height: 26px; background: #fff; border-radius: 50%; padding: 3px; }
+    .et-panel-close { background: transparent; border: 0; width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: background 0.15s; }
+    .et-panel-close img { width: 13px; height: 13px; filter: brightness(0) invert(1); }
+    .et-panel-close:hover { background: rgba(255,255,255,0.16); }
+    .et-chat { flex: 1; overflow-y: auto; background: #fafafa; }
+    .et-chat-inner { display: flex; flex-direction: column; gap: 16px; padding: 16px 14px 10px; }
+
+    /* Neutralize wide-chat gutters from the reused .rwd-mock-* styles in panel / dock / sheet */
+    .et-chat .rwd-mock-dp-wrap { padding: 0; }
+    .et-chat .rwd-mock-chart { margin: 0; }
+    .et-chat .rwd-mock-qbox p,
+    .et-chat .rwd-mock-asst p,
+    .et-chat .rwd-mock-show-label { font-size: 15px; line-height: 1.5; }
+    .et-chat .rwd-mock-steps { padding-left: 34px; }
+    .et-panel .rwd-mock-input-wrap,
+    .et-dock .rwd-mock-input-wrap,
+    .et-sheet .rwd-mock-input-wrap { padding: 10px 12px 12px; background: #fff; border-top: 1px solid #f0f0f0; flex-shrink: 0; }
+    .et-panel .rwd-mock-input-card,
+    .et-dock .rwd-mock-input-card,
+    .et-sheet .rwd-mock-input-card { box-shadow: none; border: 1px solid #e8e8e8; }
+    .et-panel .rwd-mock-show { cursor: pointer; }
+    .et-panel .rwd-mock-down { transition: transform 0.18s ease; }
+    .et-panel .rwd-mock-show.steps-collapsed .rwd-mock-down { transform: rotate(-90deg); }
+    .rwd-mock-steps[hidden] { display: none; }
+
+    /* Auto-play journey: fade-in reveal + compact empty/list start state */
+    .et-fade { animation: et-fade-in 0.42s ease both; }
+    @keyframes et-fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .et-chat .rwd-mock-empty { flex: none; padding: 20px 16px 6px; gap: 0; }
+    .et-chat .rwd-mock-empty img { width: 40px; height: 40px; }
+    .et-chat .rwd-mock-empty-cards { grid-template-columns: 1fr; max-width: 100%; gap: 8px; margin-top: 14px; }
+    .et-chat .rwd-mock-empty-card { padding: 11px 13px; }
+
+    /* Threads list, the journey start state */
+    .et-threads { display: flex; flex-direction: column; padding: 12px 10px; gap: 2px; background: #fff; }
+    .et-threads-head { display: flex; align-items: center; justify-content: space-between; padding: 6px 10px 12px; font-family: 'Roboto', sans-serif; font-size: 13px; font-weight: 600; color: #65676c; }
+    .et-threads-new { font-size: 12px; font-weight: 600; color: #2f54eb; }
+    .et-thread-row { display: flex; align-items: center; gap: 10px; padding: 11px 10px; border-radius: 8px; transition: background 0.2s ease, box-shadow 0.2s ease; }
+    .et-thread-ic { width: 15px; height: 15px; flex-shrink: 0; opacity: 0.55; }
+    .et-thread-bar { display: block; height: 9px; border-radius: 4px; background: #d7d3cb; }
+    .et-thread-title { font-family: 'Roboto', sans-serif; font-size: 14px; line-height: 1.4; color: #262626; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .et-thread-target.clicked { background: #eaf0ff; box-shadow: inset 0 0 0 1px #c3d4ff; }
+    .et-threads-new { transition: background 0.2s ease; }
+    .et-threads-new.clicked { background: #eaf0ff; border-radius: 6px; padding: 2px 8px; }
+    .rwd-mock-empty-card { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+    .rwd-mock-empty-card.et-suggest-target.clicked { border-color: #2f54eb; box-shadow: 0 0 0 1px #2f54eb; }
+
+    /* Phone mockup inside the mobile scene */
+    .et-phone { height: 540px; max-height: 100%; display: flex; }
+    .et-phone img { height: 100%; width: auto; display: block; border-radius: 30px; box-shadow: 0 18px 40px -12px rgba(43,37,32,0.3); }
+    .et-phone-ph { height: 540px; max-height: 100%; aspect-ratio: 9 / 19.5; border: 2px dashed #c9c2b6; border-radius: 36px; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.04em; padding: 24px; background: #faf9f6; }
+
+    /* Mid widths: trim the helpdesk rail + dock so the middle thread
+       stays readable before the mobile collapse takes over at 640px. */
+    @media (max-width: 1080px) {
+      .eti-rail { width: 200px; }
+      .et-dock { width: 304px; }
+      .et-stage[data-scene="helpdesk"] .et-bg-inbox .eti-main { margin-right: 304px; }
+      .eti-msg { max-width: 82%; }
+    }
+
+    /* Narrow viewport: shrink stage + panel so the widget still fits */
+    @media (max-width: 640px) {
+      .et-stage { height: 560px; }
+      .et-widget { right: 14px; bottom: 14px; }
+      .et-panel { width: calc(100vw - 68px); max-width: 340px; height: 460px; }
+      .et-stage[data-scene="mobile"] { height: 680px; }
+      .et-phone-device { width: 290px; height: 600px; border-width: 11px; }
+      .ets-rail { width: 64px; }
+      .ets-rail .ets-ws-name, .ets-rail .ets-grp-label, .ets-rail .ets-ch-name { display: none; }
+      .et-stage[data-scene="helpdesk"] .et-bg-inbox .eti-main { margin-right: 0; }
+      .et-dock { width: 100%; }
+      .eti-rail { width: 84px; }
+      .eti-rail .eti-cv { display: none; }
+      .etd-cards { grid-template-columns: 1fr 1fr; }
+      .etd-row { flex-direction: column; }
+      .etd-side { width: auto; }
     }

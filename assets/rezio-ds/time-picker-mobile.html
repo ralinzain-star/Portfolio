@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rezio Time-range Picker — Mobile</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { min-height: 100vh; background: transparent; display: flex; align-items: center; justify-content: center; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', sans-serif; color: #1f2328; }
+
+  .phone { width: 375px; height: 760px; background: #fff; border-radius: 28px; overflow: hidden; position: relative; display: flex; flex-direction: column; }
+
+  .ph-status { height: 46px; background: #005abe; color: #fff; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 20px 9px; font-size: 13px; flex-shrink: 0; }
+  .ph-time { font-weight: 700; letter-spacing: .2px; }
+  .ph-glyphs { display: flex; align-items: center; gap: 6px; }
+  .ph-glyphs svg { display: block; }
+
+  .ph-header { height: 52px; background: #005abe; color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 16px; flex-shrink: 0; }
+  .ph-wordmark { font-weight: 800; font-size: 20px; letter-spacing: .3px; color: #fff; }
+  .ph-actions { display: flex; align-items: center; }
+  .ph-ico { background: transparent; border: none; color: #fff; width: 34px; height: 34px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; position: relative; padding: 0; }
+  .ph-badge { position: absolute; top: 1px; right: 1px; background: #c80a28; color: #fff; font-size: 9px; font-weight: 700; line-height: 1; border-radius: 7px; padding: 2px 3px; min-width: 15px; text-align: center; }
+
+  .ph-content { flex: 1; background: #fff; padding: 16px; overflow-y: auto; }
+  .ph-field-label { font-size: 12px; color: #7b7b7b; margin-bottom: 6px; }
+
+  /* ---------- Trigger field ---------- */
+  .ph-input { width: 100%; height: 48px; border: 1px solid #dcdcdc; border-radius: 8px; padding: 0 8px 0 12px; display: flex; align-items: center; gap: 8px; color: #1f2328; font-size: 15px; background: #fff; cursor: pointer; }
+  .ph-input .ti-glyph { color: #005abe; flex-shrink: 0; }
+  .ti-text { display: inline-block; min-width: 58px; text-align: center; font-variant-numeric: tabular-nums; font-size: 15px; color: #9aa0a6; padding: 2px 6px; border-radius: 4px; }
+  .ti-text.filled { color: #1f2328; }
+  .ti-text.active { background: #eaf0f8; color: #005abe; }
+  .ti-arrow { color: #9aa0a6; }
+  .ti-spacer { flex: 1; }
+  .ti-clear { flex-shrink: 0; background: transparent; border: none; color: #9aa0a6; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 20px; line-height: 1; cursor: pointer; }
+  .ti-clear:hover { background: #f0f4fa; color: #1f2328; }
+
+  /* ---------- Bottom sheet ---------- */
+  .sheet-overlay { position: absolute; inset: 0; z-index: 50; display: none; align-items: flex-end; background: rgba(15, 23, 42, 0.5); }
+  .sheet-overlay.open { display: flex; }
+  .sheet { width: 100%; background: #fff; border-radius: 16px 16px 0 0; max-height: 72%; display: flex; flex-direction: column; overflow: hidden; }
+  .sheet-handle { width: 40px; height: 4px; border-radius: 2px; background: #d0d0d0; margin: 8px auto 2px; flex-shrink: 0; }
+  .sheet-head { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 6px 12px 10px; flex-shrink: 0; }
+  .sh-close { background: transparent; border: none; font-size: 22px; line-height: 1; color: #1f2328; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; cursor: pointer; }
+  .sh-title { position: absolute; left: 50%; transform: translateX(-50%); font-size: 16px; font-weight: 600; color: #1f2328; pointer-events: none; }
+  .sh-confirm { background: transparent; border: none; color: #005abe; font-size: 15px; font-weight: 600; padding: 6px 8px; border-radius: 4px; cursor: pointer; }
+
+  .tp-cols { display: flex; flex: 1; min-height: 0; border-top: 1px solid #eee; }
+  .tp-col { flex: 1; position: relative; overflow-y: auto; border-right: 1px solid #f0f0f0; }
+  .tp-col:last-child { border-right: none; }
+  .tp-opt { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 14px 20px; background: transparent; border: none; font-size: 16px; color: #1f2328; text-align: left; cursor: pointer; }
+  .tp-opt:hover { background: #f6f8fb; }
+  .tp-opt.sel { background: #eaf0f8; color: #005abe; font-weight: 600; }
+  .tp-opt.disabled { color: #c8ccd0; }
+  .tp-opt.disabled:hover { background: transparent; }
+  .tp-opt .chk { color: #005abe; visibility: hidden; }
+  .tp-opt.sel .chk { visibility: visible; }
+
+  /* ---------- Android Material navigation bar ---------- */
+  .ph-tabs { height: 68px; background: #fff; border-top: 1px solid #eee; display: flex; flex-shrink: 0; }
+  .ph-tab { flex: 1 1 0; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 5px; padding-top: 10px; background: transparent; border: none; color: #5f6368; cursor: pointer; }
+  .ph-tab.active::before { content: ""; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 56px; height: 30px; border-radius: 15px; background: #d6e4ff; }
+  .ph-tab span { font-size: 11px; line-height: 1; position: relative; }
+  .ph-tab svg { display: block; position: relative; }
+  .ph-tab.active { color: #005abe; }
+  .ph-tab.active span { font-weight: 600; }
+
+  button { font-family: inherit; cursor: pointer; }
+
+  /* Mouse-as-touch indicator: the cursor becomes a finger-tap circle inside the phone */
+  .phone, .phone * { cursor: none; }
+  .touch-dot {
+    position: absolute;
+    top: 0; left: 0;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: rgba(80, 84, 92, 0.30);
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.12s ease, transform 0.08s ease, background 0.08s ease;
+    z-index: 999;
+  }
+  .touch-dot.press { background: rgba(80, 84, 92, 0.5); transform: translate(-50%, -50%) scale(0.82); }
+</style>
+</head>
+<body>
+  <div class="phone">
+
+    <div class="ph-status">
+      <span class="ph-time">9:41</span>
+      <span class="ph-glyphs">
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="none" aria-hidden="true">
+          <rect x="0" y="7" width="3" height="4" rx="1" fill="#fff"/><rect x="4.5" y="5" width="3" height="6" rx="1" fill="#fff"/><rect x="9" y="2.5" width="3" height="8.5" rx="1" fill="#fff"/><rect x="13.5" y="0" width="3" height="11" rx="1" fill="#fff"/>
+        </svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="none" aria-hidden="true">
+          <path d="M8 9.5l1.7-1.9a2.3 2.3 0 0 0-3.4 0L8 9.5z" fill="#fff"/><path d="M3.6 5.1a6.4 6.4 0 0 1 8.8 0" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M1.2 2.7a9.8 9.8 0 0 1 13.6 0" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        </svg>
+        <svg width="25" height="12" viewBox="0 0 25 12" fill="none" aria-hidden="true">
+          <rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="#fff" opacity="0.5"/><rect x="2" y="2" width="16" height="8" rx="1.5" fill="#fff"/><rect x="23" y="3.5" width="1.5" height="5" rx="0.75" fill="#fff" opacity="0.5"/>
+        </svg>
+      </span>
+    </div>
+
+    <div class="ph-header">
+      <div class="ph-wordmark">rezio</div>
+      <div class="ph-actions">
+        <button class="ph-ico" type="button" aria-label="Help">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="7.3" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8.1 7.7a1.9 1.9 0 0 1 3.8.2c0 1.3-1.9 1.5-1.9 2.9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="10" cy="13.7" r="0.95" fill="currentColor"/>
+          </svg>
+        </button>
+        <button class="ph-ico" type="button" aria-label="Announcements">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M4.5 5.5h11a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-5l-3.2 2.6V13.5H4.5a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M10 7.3v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="10" cy="11.7" r="0.8" fill="currentColor"/>
+          </svg>
+        </button>
+        <button class="ph-ico" type="button" aria-label="Notifications">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M10 3.2a3.8 3.8 0 0 0-3.8 3.8v2.8l-1.25 2.05a.5.5 0 0 0 .43.75h9.24a.5.5 0 0 0 .43-.75L13.8 9.8V7A3.8 3.8 0 0 0 10 3.2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M8.4 14.4a1.7 1.7 0 0 0 3.2 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <span class="ph-badge">99+</span>
+        </button>
+        <button class="ph-ico" type="button" aria-label="Menu">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M3.5 6h13M3.5 10h13M3.5 14h13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="ph-content">
+      <div class="ph-field-label">Booking time</div>
+      <div class="ph-input" id="timeInput">
+        <svg class="ti-glyph" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <circle cx="9" cy="9.5" r="6.5" stroke="#005abe" stroke-width="1.4"/>
+          <path d="M9 6v3.5l2.2 1.3" stroke="#005abe" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M3.2 3.4l2.2 1.8M14.8 3.4l-2.2 1.8" stroke="#005abe" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <span class="ti-text" id="tiStart" data-slot="start">Start</span>
+        <span class="ti-arrow">&rarr;</span>
+        <span class="ti-text" id="tiEnd" data-slot="end">End</span>
+        <span class="ti-spacer"></span>
+        <button class="ti-clear" id="tiClear" type="button" aria-label="Clear time" style="display:none;">&times;</button>
+      </div>
+
+      <div class="sheet-overlay" id="sheetOverlay">
+        <div class="sheet" role="dialog" aria-label="Time picker">
+          <div class="sheet-handle"></div>
+          <div class="sheet-head">
+            <button class="sh-close" id="shClose" type="button" aria-label="Cancel">&times;</button>
+            <span class="sh-title">Select time</span>
+            <button class="sh-confirm" id="shConfirm" type="button">Confirm</button>
+          </div>
+          <div class="tp-cols">
+            <div class="tp-col" id="hourCol" role="listbox" aria-label="Hour"></div>
+            <div class="tp-col" id="minCol" role="listbox" aria-label="Minute"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ph-tabs">
+      <button class="ph-tab active" type="button">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="currentColor"/><rect x="12" y="3" width="7" height="7" rx="1.5" fill="currentColor"/><rect x="3" y="12" width="7" height="7" rx="1.5" fill="currentColor"/><rect x="12" y="12" width="7" height="7" rx="1.5" fill="currentColor"/></svg>
+        <span>Home</span>
+      </button>
+      <button class="ph-tab" type="button">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><rect x="3.5" y="4.5" width="15" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 8.5h15" stroke="currentColor" stroke-width="1.6"/><path d="M7 2.5v3M15 2.5v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="9.3" y="11" width="3.4" height="3.4" rx="0.6" fill="currentColor"/></svg>
+        <span>Stock</span>
+      </button>
+      <button class="ph-tab" type="button">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M6 3h6l4 4v11a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 3v4h4" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 12.5h6M8 15.5h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span>Orders</span>
+      </button>
+      <button class="ph-tab" type="button">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M15 3h2a2 2 0 0 1 2 2v2M19 15v2a2 2 0 0 1-2 2h-2M7 19H5a2 2 0 0 1-2-2v-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <span>Redeem</span>
+      </button>
+    </div>
+
+    <div class="touch-dot" id="touchDot"></div>
+
+  </div>
+
+<script>
+(function () {
+  "use strict";
+  var phone = document.querySelector(".phone");
+  var dot = document.getElementById("touchDot");
+  if (phone && dot) {
+    phone.addEventListener("mousemove", function (e) {
+      var r = phone.getBoundingClientRect();
+      dot.style.left = (e.clientX - r.left) + "px";
+      dot.style.top = (e.clientY - r.top) + "px";
+      dot.style.opacity = "1";
+    });
+    phone.addEventListener("mouseleave", function () { dot.style.opacity = "0"; });
+    phone.addEventListener("mousedown", function () { dot.classList.add("press"); });
+    document.addEventListener("mouseup", function () { dot.classList.remove("press"); });
+  }
+})();
+(function () {
+  "use strict";
+
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function fmt(t) { return t ? pad(t.h) + ":" + pad(t.m) : null; }
+
+  var state = { start: { h: 9, m: 0 }, end: { h: 18, m: 0 }, active: "start", pendH: 9, pendM: 0 };
+
+  var el = {
+    field: document.getElementById("timeInput"),
+    tiStart: document.getElementById("tiStart"),
+    tiEnd: document.getElementById("tiEnd"),
+    tiClear: document.getElementById("tiClear"),
+    overlay: document.getElementById("sheetOverlay"),
+    hourCol: document.getElementById("hourCol"),
+    minCol: document.getElementById("minCol"),
+    closeBtn: document.getElementById("shClose"),
+    confirmBtn: document.getElementById("shConfirm")
+  };
+
+  function buildColumn(col, count, getSel, onPick, isDisabled) {
+    col.innerHTML = "";
+    for (var i = 0; i < count; i++) {
+      (function (val) {
+        var dis = isDisabled ? isDisabled(val) : false;
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "tp-opt" + (getSel() === val ? " sel" : "") + (dis ? " disabled" : "");
+        b.setAttribute("role", "option");
+        b.dataset.val = val;
+        b.innerHTML = "<span>" + pad(val) + "</span><span class=\"chk\" aria-hidden=\"true\">&#10003;</span>";
+        if (dis) { b.disabled = true; }
+        else { b.addEventListener("click", function () { onPick(val); }); }
+        col.appendChild(b);
+      })(i);
+    }
+  }
+
+  function markSel(col, val) {
+    col.querySelectorAll(".tp-opt").forEach(function (b) {
+      b.classList.toggle("sel", parseInt(b.dataset.val, 10) === val);
+    });
+  }
+
+  function scrollToSel(col) {
+    var sel = col.querySelector(".tp-opt.sel");
+    if (sel) col.scrollTop = sel.offsetTop - col.clientHeight / 2 + sel.offsetHeight / 2;
+  }
+
+  function commitLive() {
+    state[state.active] = { h: state.pendH, m: state.pendM };
+    // Invalid range (start later than end): clear whichever slot was not just edited.
+    if (state.start && state.end &&
+        (state.start.h * 60 + state.start.m) > (state.end.h * 60 + state.end.m)) {
+      if (state.active === "start") state.end = null; else state.start = null;
+    }
+    updateField();
+  }
+
+  // Range constraint: keep start <= end by bounding the active slot against the other.
+  function bounds() {
+    // Both slots are freely selectable; an invalid range clears the other slot
+    // (handled in commitLive) rather than disabling options.
+    return { min: null, max: null };
+  }
+  function hourDisabled(h) {
+    var b = bounds();
+    if (b.min && h < b.min.h) return true;
+    if (b.max && h > b.max.h) return true;
+    return false;
+  }
+  function minDisabled(h, m) {
+    var b = bounds();
+    if (b.min && h === b.min.h && m < b.min.m) return true;
+    if (b.max && h === b.max.h && m > b.max.m) return true;
+    return false;
+  }
+  function firstValidMin(h) { for (var m = 0; m < 60; m++) { if (!minDisabled(h, m)) return m; } return 0; }
+
+  function buildMinCol() {
+    buildColumn(el.minCol, 60, function () { return state.pendM; }, function (v) { state.pendM = v; markSel(el.minCol, v); commitLive(); }, function (m) { return minDisabled(state.pendH, m); });
+  }
+
+  function renderColumns() {
+    buildColumn(el.hourCol, 24, function () { return state.pendH; }, function (v) {
+      state.pendH = v;
+      if (minDisabled(v, state.pendM)) state.pendM = firstValidMin(v);
+      markSel(el.hourCol, v);
+      buildMinCol();
+      commitLive();
+    }, hourDisabled);
+    buildMinCol();
+    requestAnimationFrame(function () { scrollToSel(el.hourCol); scrollToSel(el.minCol); });
+  }
+
+  function updateField() {
+    var s = fmt(state.start), e = fmt(state.end);
+    el.tiStart.textContent = s || "Start";
+    el.tiStart.classList.toggle("filled", !!s);
+    el.tiEnd.textContent = e || "End";
+    el.tiEnd.classList.toggle("filled", !!e);
+    el.tiClear.style.display = (s || e) ? "inline-flex" : "none";
+    el.tiStart.classList.toggle("active", state.active === "start");
+    el.tiEnd.classList.toggle("active", state.active === "end");
+  }
+
+  function openPicker(slot) {
+    state.active = slot;
+    var cur = state[slot] || { h: 9, m: 0 };
+    state.pendH = cur.h; state.pendM = cur.m;
+    el.overlay.classList.add("open");
+    renderColumns();
+    updateField();
+  }
+  function closePicker() { el.overlay.classList.remove("open"); el.tiStart.classList.remove("active"); el.tiEnd.classList.remove("active"); }
+
+  el.tiStart.addEventListener("click", function (e) { e.stopPropagation(); openPicker("start"); });
+  el.tiEnd.addEventListener("click", function (e) { e.stopPropagation(); openPicker("end"); });
+  el.field.addEventListener("click", function () { openPicker(state.active); });
+
+  el.confirmBtn.addEventListener("click", function () {
+    state[state.active] = { h: state.pendH, m: state.pendM };
+    updateField();
+    closePicker();
+  });
+  el.closeBtn.addEventListener("click", closePicker);
+  el.overlay.addEventListener("click", function (e) { if (e.target === el.overlay) closePicker(); });
+  el.tiClear.addEventListener("click", function (e) { e.stopPropagation(); state.start = null; state.end = null; updateField(); closePicker(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closePicker(); });
+
+  // Showcase default: filled range, sheet open editing the start time.
+  updateField();
+  openPicker("start");
+})();
+</script>
+</body>
+</html>

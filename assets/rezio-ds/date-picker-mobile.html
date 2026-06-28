@@ -1,0 +1,1081 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rezio Date Picker — Mobile</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
+    color: #1f2328;
+  }
+
+  /* ---------- Device frame ---------- */
+  .phone {
+    width: 375px;
+    height: 760px;
+    background: #ffffff;
+    border-radius: 28px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* status bar */
+  .ph-status {
+    height: 46px;
+    background: #005abe;
+    color: #ffffff;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 20px 9px;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .ph-time { font-weight: 700; letter-spacing: .2px; }
+  .ph-glyphs { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+  .ph-glyphs svg { display: block; }
+
+  /* app header */
+  .ph-header {
+    height: 52px;
+    background: #005abe;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px 0 16px;
+    flex-shrink: 0;
+  }
+  .ph-wordmark { font-weight: 800; font-size: 20px; letter-spacing: .3px; color: #ffffff; }
+  .ph-actions { display: flex; align-items: center; }
+  .ph-ico {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    padding: 0;
+  }
+  .ph-badge {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    background: #c80a28;
+    color: #ffffff;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+    border-radius: 7px;
+    padding: 2px 3px;
+    min-width: 15px;
+    text-align: center;
+  }
+
+  /* content */
+  .ph-content {
+    flex: 1;
+    background: #ffffff;
+    padding: 16px;
+    overflow-y: auto;
+  }
+  .ph-field-label {
+    font-size: 12px;
+    color: #7b7b7b;
+    margin-bottom: 6px;
+  }
+  .ph-input {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #1f2328;
+    font-size: 15px;
+    background: #ffffff;
+    margin-bottom: 16px;
+  }
+  .ph-input .ph-cal-glyph { color: #005abe; flex-shrink: 0; }
+  .ph-input .ph-input-text { color: #9aa0a6; }
+  .ph-input .ph-input-text.filled { color: #1f2328; }
+  .ph-input { cursor: pointer; }
+  .phone { position: relative; }
+  .dp-overlay { position: absolute; inset: 0; z-index: 50; display: none; align-items: center; justify-content: center; padding: 24px; background: rgba(15, 23, 42, 0.5); }
+  .dp-overlay.open { display: flex; }
+
+  .ph-cardwrap { display: flex; justify-content: center; }
+
+  /* bottom tab bar — Android Material navigation bar (even split + active pill) */
+  .ph-tabs {
+    height: 68px;
+    background: #ffffff;
+    border-top: 1px solid #eee;
+    display: flex;
+    flex-shrink: 0;
+  }
+  .ph-tab {
+    flex: 1 1 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    padding-top: 10px;
+    background: transparent;
+    border: none;
+    color: #5f6368;
+    cursor: pointer;
+  }
+  .ph-tab.active::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 56px;
+    height: 30px;
+    border-radius: 15px;
+    background: #d6e4ff;
+  }
+  .ph-tab span { font-size: 11px; line-height: 1; position: relative; }
+  .ph-tab svg { display: block; position: relative; }
+  .ph-tab.active { color: #005abe; }
+  .ph-tab.active span { font-weight: 600; }
+
+  /* ===========================================================
+     VERBATIM calendar styles from date-picker-prototype.html
+     (body centering above is the wrapper page; calendar rules
+      are reused unchanged)
+     =========================================================== */
+  .dp-card {
+    width: 300px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+  }
+
+  button { font-family: inherit; cursor: pointer; }
+
+  /* ---------- Header (blue bar) ---------- */
+  .dp-header {
+    background: #005abe;
+    color: #ffffff;
+    padding: 12px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 4px;
+  }
+  .dp-header > .dp-close { justify-self: start; }
+  .dp-header > .dp-today { justify-self: end; }
+  .dp-hbtn {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    padding: 0;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background 0.12s ease;
+  }
+  .dp-hbtn:hover { background: rgba(255, 255, 255, 0.18); }
+  .dp-hbtn:focus-visible { outline: 2px solid #ffffff; outline-offset: 1px; }
+
+  .dp-close { font-size: 20px; width: 24px; height: 24px; }
+  .dp-header-center {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .dp-chev { font-size: 18px; width: 24px; height: 24px; }
+  .dp-year-btn {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    line-height: 1;
+    transition: background 0.12s ease;
+  }
+  .dp-year-btn:hover { background: rgba(255, 255, 255, 0.18); }
+  .dp-year-btn:focus-visible { outline: 2px solid #ffffff; outline-offset: 1px; }
+  .dp-caret { font-size: 13px; transition: transform 0.15s ease; }
+  .dp-year-btn[aria-expanded="true"] .dp-caret,
+  .dp-month-btn[aria-expanded="true"] .dp-caret { transform: rotate(180deg); }
+  .dp-today {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    transition: background 0.12s ease;
+  }
+  .dp-today:hover { background: rgba(255, 255, 255, 0.18); }
+  .dp-today:focus-visible { outline: 2px solid #ffffff; outline-offset: 1px; }
+
+  /* ---------- Month bar ---------- */
+  .dp-monthbar {
+    background: #ffffff;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .dp-mchev {
+    background: transparent;
+    border: none;
+    color: #005abe;
+    font-size: 18px;
+    width: 28px;
+    height: 28px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background 0.12s ease;
+  }
+  .dp-mchev:hover { background: #f0f4fa; }
+  .dp-mchev:focus-visible { outline: 2px solid #005abe; outline-offset: 1px; }
+  .dp-month-center {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dp-month-btn {
+    background: transparent;
+    border: none;
+    color: #005abe;
+    font-weight: 600;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    line-height: 1;
+    transition: background 0.12s ease;
+  }
+  .dp-month-btn:hover { background: #f0f4fa; }
+  .dp-month-btn:focus-visible { outline: 2px solid #005abe; outline-offset: 1px; }
+
+  /* ---------- Week header ---------- */
+  .dp-week {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 0 6px;
+  }
+  .dp-week .dp-wk {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #000000;
+  }
+
+  /* ---------- Date grid ---------- */
+  .dp-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 0 6px 6px;
+  }
+  .dp-cell {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .dp-day {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    color: #1f2328;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 0;
+    position: relative;
+    transition: background 0.12s ease;
+  }
+  /* hover only on in-month, non-selected days */
+  .dp-day.in:not(.selected):hover { background: #f0f4fa; }
+  .dp-day:focus-visible {
+    outline: 2px solid #005abe;
+    outline-offset: -2px;
+    border-radius: 50%;
+  }
+  .dp-day.out { color: #dcdcdc; cursor: default; }
+  /* today: blue ring outline */
+  .dp-day.in.today:not(.selected) { box-shadow: inset 0 0 0 1.5px #005abe; color: #005abe; }
+  /* selected: filled solid-blue circle */
+  .dp-day.selected { background: #005abe; color: #ffffff; font-weight: 600; }
+
+  /* ---------- Footer ---------- */
+  .dp-footer {
+    border-top: 1px solid #dcdcdc;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .dp-selinfo { display: flex; flex-direction: column; justify-content: center; gap: 1px; min-width: 0; height: 38px; }
+  .dp-sel-label { font-size: 12px; color: #000000; }
+  .dp-sel-value { font-size: 14px; color: #1f2328; }
+  .dp-sel-empty { font-size: 12px; color: #7b7b7b; }
+  .dp-actions { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+  .dp-action {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: #005abe;
+    transition: background 0.12s ease;
+  }
+  .dp-action:disabled { color: #b0b0b0; cursor: default; }
+  .dp-action:not(:disabled):hover { background: #f0f4fa; }
+  .dp-action:focus-visible { outline: 2px solid #005abe; outline-offset: 1px; }
+
+  /* ---------- Popover (year / month pickers) ---------- */
+  .dp-pop {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    background: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    padding: 8px;
+    z-index: 10;
+    display: none;
+  }
+  .dp-pop.open { display: block; }
+  /* anchor each popover just beneath its trigger control */
+  #yearPop { top: 48px; }   /* below the blue header */
+  #monthPop { top: 92px; }  /* below the month bar */
+  .dp-pop-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+  .dp-pop-item {
+    background: transparent;
+    border: none;
+    font-size: 13px;
+    color: #1f2328;
+    padding: 8px 0;
+    border-radius: 4px;
+    transition: background 0.12s ease;
+  }
+  .dp-pop-item:hover { background: #f0f4fa; }
+  .dp-pop-item:focus-visible { outline: 2px solid #005abe; outline-offset: -2px; }
+  .dp-pop-item.active {
+    color: #005abe;
+    font-weight: 600;
+    background: #eaf0f8;
+  }
+
+  /* Mouse-as-touch indicator: the cursor becomes a finger-tap circle inside the phone */
+  .phone, .phone * { cursor: none; }
+  .touch-dot {
+    position: absolute;
+    top: 0; left: 0;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: rgba(80, 84, 92, 0.30);
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.12s ease, transform 0.08s ease, background 0.08s ease;
+    z-index: 999;
+  }
+  .touch-dot.press { background: rgba(80, 84, 92, 0.5); transform: translate(-50%, -50%) scale(0.82); }
+</style>
+</head>
+<body>
+  <div class="phone">
+
+    <!-- STATUS BAR -->
+    <div class="ph-status">
+      <span class="ph-time">9:41</span>
+      <span class="ph-glyphs">
+        <!-- signal -->
+        <svg width="17" height="11" viewBox="0 0 17 11" fill="none" aria-hidden="true">
+          <rect x="0" y="7" width="3" height="4" rx="1" fill="#fff"/>
+          <rect x="4.5" y="5" width="3" height="6" rx="1" fill="#fff"/>
+          <rect x="9" y="2.5" width="3" height="8.5" rx="1" fill="#fff"/>
+          <rect x="13.5" y="0" width="3" height="11" rx="1" fill="#fff"/>
+        </svg>
+        <!-- wifi -->
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="none" aria-hidden="true">
+          <path d="M8 9.5l1.7-1.9a2.3 2.3 0 0 0-3.4 0L8 9.5z" fill="#fff"/>
+          <path d="M3.6 5.1a6.4 6.4 0 0 1 8.8 0" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+          <path d="M1.2 2.7a9.8 9.8 0 0 1 13.6 0" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        </svg>
+        <!-- battery -->
+        <svg width="25" height="12" viewBox="0 0 25 12" fill="none" aria-hidden="true">
+          <rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="#fff" opacity="0.5"/>
+          <rect x="2" y="2" width="16" height="8" rx="1.5" fill="#fff"/>
+          <rect x="23" y="3.5" width="1.5" height="5" rx="0.75" fill="#fff" opacity="0.5"/>
+        </svg>
+      </span>
+    </div>
+
+    <!-- APP HEADER -->
+    <div class="ph-header">
+      <div class="ph-wordmark">rezio</div>
+      <div class="ph-actions">
+        <button class="ph-ico" type="button" aria-label="Help">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="7.3" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8.1 7.7a1.9 1.9 0 0 1 3.8.2c0 1.3-1.9 1.5-1.9 2.9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="10" cy="13.7" r="0.95" fill="currentColor"/>
+          </svg>
+        </button>
+        <button class="ph-ico" type="button" aria-label="Announcements">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M4.5 5.5h11a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-5l-3.2 2.6V13.5H4.5a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M10 7.3v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="10" cy="11.7" r="0.8" fill="currentColor"/>
+          </svg>
+        </button>
+        <button class="ph-ico" type="button" aria-label="Notifications">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M10 3.2a3.8 3.8 0 0 0-3.8 3.8v2.8l-1.25 2.05a.5.5 0 0 0 .43.75h9.24a.5.5 0 0 0 .43-.75L13.8 9.8V7A3.8 3.8 0 0 0 10 3.2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M8.4 14.4a1.7 1.7 0 0 0 3.2 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <span class="ph-badge">99+</span>
+        </button>
+        <button class="ph-ico" type="button" aria-label="Menu">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M3.5 6h13M3.5 10h13M3.5 14h13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="ph-content">
+      <div class="ph-field-label">Booking date</div>
+      <div class="ph-input" id="bookingField">
+        <svg class="ph-cal-glyph" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <rect x="1.5" y="3" width="15" height="13" rx="2" stroke="#005abe" stroke-width="1.4"/>
+          <path d="M1.5 6.5h15" stroke="#005abe" stroke-width="1.4"/>
+          <path d="M5.5 1.5v3M12.5 1.5v3" stroke="#005abe" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <span class="ph-input-text" id="bookingFieldText">Select a date</span>
+      </div>
+
+      <!-- VERBATIM calendar markup, now inside a dimmed modal overlay -->
+      <div class="dp-overlay open" id="dpOverlay">
+        <div class="dp-card" role="application" aria-label="Date picker">
+
+          <div class="dp-header">
+            <button class="dp-hbtn dp-close" type="button" aria-label="Close date picker">&times;</button>
+            <div class="dp-header-center">
+              <button class="dp-hbtn dp-chev" id="prevYear" type="button" aria-label="Previous year">&lsaquo;</button>
+              <button class="dp-year-btn" id="yearBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="yearPop" aria-label="Select year">
+                <span id="yearLabel">2026</span><span class="dp-caret" aria-hidden="true">&#9662;</span>
+              </button>
+              <button class="dp-hbtn dp-chev" id="nextYear" type="button" aria-label="Next year">&rsaquo;</button>
+            </div>
+            <button class="dp-today" id="todayBtn" type="button">Today</button>
+          </div>
+
+          <div class="dp-monthbar">
+            <button class="dp-mchev" id="prevMonth" type="button" aria-label="Previous month">&lsaquo;</button>
+            <div class="dp-month-center">
+              <button class="dp-month-btn" id="monthBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="monthPop" aria-label="Select month">
+                <span id="monthLabel">October</span><span class="dp-caret" aria-hidden="true">&#9662;</span>
+              </button>
+            </div>
+            <button class="dp-mchev" id="nextMonth" type="button" aria-label="Next month">&rsaquo;</button>
+          </div>
+
+          <div class="dp-week" role="row">
+            <span class="dp-wk" role="columnheader" aria-label="Monday">Mon</span>
+            <span class="dp-wk" role="columnheader" aria-label="Tuesday">Tue</span>
+            <span class="dp-wk" role="columnheader" aria-label="Wednesday">Wed</span>
+            <span class="dp-wk" role="columnheader" aria-label="Thursday">Thu</span>
+            <span class="dp-wk" role="columnheader" aria-label="Friday">Fri</span>
+            <span class="dp-wk" role="columnheader" aria-label="Saturday">Sat</span>
+            <span class="dp-wk" role="columnheader" aria-label="Sunday">Sun</span>
+          </div>
+
+          <div class="dp-grid" id="grid" role="grid" aria-label="Calendar dates"></div>
+
+          <div class="dp-footer">
+            <div class="dp-selinfo" id="selInfo"></div>
+            <div class="dp-actions">
+              <button class="dp-action" id="clearBtn" type="button" disabled>Clear</button>
+              <button class="dp-action" id="confirmBtn" type="button" disabled>Confirm</button>
+            </div>
+          </div>
+
+          <div class="dp-pop" id="yearPop" role="dialog" aria-label="Year picker" aria-modal="false">
+            <div class="dp-pop-grid" id="yearGrid"></div>
+          </div>
+          <div class="dp-pop" id="monthPop" role="dialog" aria-label="Month picker" aria-modal="false">
+            <div class="dp-pop-grid" id="monthGrid"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM TAB BAR -->
+    <div class="ph-tabs">
+      <button class="ph-tab active" type="button">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7" rx="1.5" fill="currentColor"/>
+          <rect x="12" y="3" width="7" height="7" rx="1.5" fill="currentColor"/>
+          <rect x="3" y="12" width="7" height="7" rx="1.5" fill="currentColor"/>
+          <rect x="12" y="12" width="7" height="7" rx="1.5" fill="currentColor"/>
+        </svg>
+        <span>Home</span>
+      </button>
+      <button class="ph-tab" type="button">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <rect x="3.5" y="4.5" width="15" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M3.5 8.5h15" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M7 2.5v3M15 2.5v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <rect x="9.3" y="11" width="3.4" height="3.4" rx="0.6" fill="currentColor"/>
+        </svg>
+        <span>Stock</span>
+      </button>
+      <button class="ph-tab" type="button">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <path d="M6 3h6l4 4v11a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M12 3v4h4" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M8 12.5h6M8 15.5h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+        <span>Orders</span>
+      </button>
+      <button class="ph-tab" type="button">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <path d="M3 7V5a2 2 0 0 1 2-2h2M15 3h2a2 2 0 0 1 2 2v2M19 15v2a2 2 0 0 1-2 2h-2M7 19H5a2 2 0 0 1-2-2v-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+        <span>Redeem</span>
+      </button>
+    </div>
+
+    <div class="touch-dot" id="touchDot"></div>
+
+  </div>
+
+<script>
+(function () {
+  "use strict";
+  var phone = document.querySelector(".phone");
+  var dot = document.getElementById("touchDot");
+  if (!phone || !dot) return;
+  phone.addEventListener("mousemove", function (e) {
+    var r = phone.getBoundingClientRect();
+    dot.style.left = (e.clientX - r.left) + "px";
+    dot.style.top = (e.clientY - r.top) + "px";
+    dot.style.opacity = "1";
+  });
+  phone.addEventListener("mouseleave", function () { dot.style.opacity = "0"; });
+  phone.addEventListener("mousedown", function () { dot.classList.add("press"); });
+  document.addEventListener("mouseup", function () { dot.classList.remove("press"); });
+})();
+</script>
+<script>
+/* ===========================================================
+   VERBATIM calendar IIFE from date-picker-prototype.html
+   =========================================================== */
+(function () {
+  "use strict";
+
+  var MONTHS = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
+
+  var now = new Date();
+  var todayY = now.getFullYear();
+  var todayM = now.getMonth();
+  var todayD = now.getDate();
+
+  var viewY = todayY;
+  var viewM = todayM;
+
+  var selY = null, selM = null, selD = null;
+  var confirmTimer = null;
+
+  // Index (0..41) of the date cell that currently holds roving focus.
+  var activeCell = null;
+
+  var el = {
+    card: document.querySelector(".dp-card"),
+    yearLabel: document.getElementById("yearLabel"),
+    monthLabel: document.getElementById("monthLabel"),
+    grid: document.getElementById("grid"),
+    selInfo: document.getElementById("selInfo"),
+    clearBtn: document.getElementById("clearBtn"),
+    confirmBtn: document.getElementById("confirmBtn"),
+    yearBtn: document.getElementById("yearBtn"),
+    monthBtn: document.getElementById("monthBtn"),
+    yearPop: document.getElementById("yearPop"),
+    monthPop: document.getElementById("monthPop"),
+    yearGrid: document.getElementById("yearGrid"),
+    monthGrid: document.getElementById("monthGrid")
+  };
+
+  function daysInMonth(y, m) { return new Date(y, m + 1, 0).getDate(); }
+
+  // Monday-first index (0 = Mon ... 6 = Sun) of the 1st of the month
+  function firstWeekdayMon(y, m) {
+    var js = new Date(y, m, 1).getDay(); // 0 = Sun ... 6 = Sat
+    return (js + 6) % 7;
+  }
+
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+
+  function isSelected(y, m, d) { return selY === y && selM === m && selD === d; }
+  function isToday(y, m, d) { return y === todayY && m === todayM && d === todayD; }
+
+  function renderHeader() {
+    el.yearLabel.textContent = viewY;
+    el.monthLabel.textContent = MONTHS[viewM];
+  }
+
+  // Build the 42-cell model for the current view.
+  function buildCells() {
+    var lead = firstWeekdayMon(viewY, viewM);
+    var dim = daysInMonth(viewY, viewM);
+    var prevM = viewM === 0 ? 11 : viewM - 1;
+    var prevY = viewM === 0 ? viewY - 1 : viewY;
+    var dimPrev = daysInMonth(prevY, prevM);
+
+    var cells = [];
+    for (var i = lead - 1; i >= 0; i--) {
+      cells.push({ y: prevY, m: prevM, d: dimPrev - i, inMonth: false });
+    }
+    for (var d = 1; d <= dim; d++) {
+      cells.push({ y: viewY, m: viewM, d: d, inMonth: true });
+    }
+    var nextM = viewM === 11 ? 0 : viewM + 1;
+    var nextY = viewM === 11 ? viewY + 1 : viewY;
+    var nd = 1;
+    while (cells.length < 42) {
+      cells.push({ y: nextY, m: nextM, d: nd++, inMonth: false });
+    }
+    return cells;
+  }
+
+  // Decide which in-month cell should be tabbable (roving tabindex = 0).
+  // Priority: previously active cell if still in-month, else selected, else today, else day 1.
+  function computeActiveCell(cells) {
+    if (activeCell !== null && cells[activeCell] && cells[activeCell].inMonth) {
+      return activeCell;
+    }
+    var firstIn = -1, selIdx = -1, todayIdx = -1;
+    for (var i = 0; i < cells.length; i++) {
+      var c = cells[i];
+      if (!c.inMonth) continue;
+      if (firstIn === -1) firstIn = i;
+      if (isSelected(c.y, c.m, c.d)) selIdx = i;
+      if (isToday(c.y, c.m, c.d)) todayIdx = i;
+    }
+    if (selIdx !== -1) return selIdx;
+    if (todayIdx !== -1) return todayIdx;
+    return firstIn;
+  }
+
+  function renderGrid() {
+    el.grid.innerHTML = "";
+    var cells = buildCells();
+    activeCell = computeActiveCell(cells);
+
+    cells.forEach(function (c, idx) {
+      var cell = document.createElement("div");
+      cell.className = "dp-cell";
+      cell.setAttribute("role", "gridcell");
+
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = c.d;
+      btn.dataset.idx = idx;
+
+      if (c.inMonth) {
+        btn.className = "dp-day in";
+        if (isToday(c.y, c.m, c.d)) btn.classList.add("today");
+        if (isSelected(c.y, c.m, c.d)) {
+          btn.classList.add("selected");
+          btn.setAttribute("aria-selected", "true");
+          btn.setAttribute("aria-current", "date");
+        } else {
+          btn.setAttribute("aria-selected", "false");
+        }
+        btn.setAttribute("aria-label", MONTHS[c.m] + " " + c.d + ", " + c.y +
+          (isToday(c.y, c.m, c.d) ? " (today)" : ""));
+        // Roving tabindex: only the active cell is in the tab order.
+        btn.tabIndex = (idx === activeCell) ? 0 : -1;
+        btn.addEventListener("click", function () {
+          activeCell = idx;
+          selectDate(c.y, c.m, c.d);
+        });
+      } else {
+        btn.className = "dp-day out";
+        btn.disabled = true;
+        btn.setAttribute("aria-hidden", "true");
+        btn.tabIndex = -1;
+      }
+
+      cell.appendChild(btn);
+      el.grid.appendChild(cell);
+    });
+  }
+
+  function focusActiveCell() {
+    var node = el.grid.querySelector('.dp-day[data-idx="' + activeCell + '"]');
+    if (node) node.focus();
+  }
+
+  // Move roving focus by a delta of cells, navigating across months as needed.
+  function moveFocus(delta) {
+    if (activeCell === null) return;
+    var target = activeCell + delta;
+    // Stay within in-month range; if we walk off into out-of-month territory,
+    // flip the view to the adjacent month and land on the equivalent day.
+    var cells = buildCells();
+    if (target >= 0 && target < 42 && cells[target] && cells[target].inMonth) {
+      activeCell = target;
+      // reflect tabindex without full re-render
+      el.grid.querySelectorAll(".dp-day.in").forEach(function (n) {
+        n.tabIndex = (parseInt(n.dataset.idx, 10) === activeCell) ? 0 : -1;
+      });
+      focusActiveCell();
+      return;
+    }
+    // Crossed a month boundary: figure out the real target date and re-render there.
+    var base = cells[activeCell];
+    var dt = new Date(base.y, base.m, base.d);
+    dt.setDate(dt.getDate() + delta);
+    viewY = dt.getFullYear();
+    viewM = dt.getMonth();
+    activeCell = null;
+    renderHeader();
+    // locate the in-month cell matching the landed date, then pin focus to it
+    var all = buildCells();
+    for (var i = 0; i < all.length; i++) {
+      if (all[i].inMonth && all[i].y === dt.getFullYear() &&
+          all[i].m === dt.getMonth() && all[i].d === dt.getDate()) {
+        activeCell = i; break;
+      }
+    }
+    renderGrid();
+    focusActiveCell();
+  }
+
+  function renderFooter() {
+    el.selInfo.innerHTML = "";
+    var hasSel = selY !== null;
+    if (hasSel) {
+      var label = document.createElement("span");
+      label.className = "dp-sel-label";
+      label.textContent = "Selected";
+      var value = document.createElement("span");
+      value.className = "dp-sel-value";
+      value.textContent = selY + "/" + pad(selM + 1) + "/" + pad(selD);
+      el.selInfo.appendChild(label);
+      el.selInfo.appendChild(value);
+    } else {
+      var empty = document.createElement("span");
+      empty.className = "dp-sel-empty";
+      empty.textContent = "Please select a date";
+      el.selInfo.appendChild(empty);
+    }
+    el.clearBtn.disabled = !hasSel;
+    el.confirmBtn.disabled = !hasSel;
+  }
+
+  function renderAll() {
+    renderHeader();
+    renderGrid();
+    renderFooter();
+  }
+
+  function selectDate(y, m, d) {
+    selY = y; selM = m; selD = d;
+    // reset confirm feedback if a new pick is made
+    if (confirmTimer) { clearTimeout(confirmTimer); confirmTimer = null; el.confirmBtn.textContent = "Confirm"; }
+    renderGrid();
+    renderFooter();
+  }
+
+  /* ---------- Popovers ---------- */
+  var lastTrigger = null;
+
+  function closePops(restoreFocus) {
+    var wasOpen = el.yearPop.classList.contains("open") || el.monthPop.classList.contains("open");
+    el.yearPop.classList.remove("open");
+    el.monthPop.classList.remove("open");
+    el.yearBtn.setAttribute("aria-expanded", "false");
+    el.monthBtn.setAttribute("aria-expanded", "false");
+    if (wasOpen && restoreFocus && lastTrigger) lastTrigger.focus();
+    lastTrigger = null;
+  }
+
+  function buildYearGrid() {
+    el.yearGrid.innerHTML = "";
+    // 12 years, current view year balanced near the centre (5 before, 6 after).
+    var start = viewY - 5;
+    for (var i = 0; i < 12; i++) {
+      (function (yr) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "dp-pop-item" + (yr === viewY ? " active" : "");
+        b.textContent = yr;
+        if (yr === viewY) b.setAttribute("aria-current", "true");
+        b.addEventListener("click", function () {
+          viewY = yr;
+          activeCell = null;
+          closePops(false);
+          renderAll();
+          el.yearBtn.focus();
+        });
+        el.yearGrid.appendChild(b);
+      })(start + i);
+    }
+  }
+
+  function buildMonthGrid() {
+    el.monthGrid.innerHTML = "";
+    MONTHS.forEach(function (name, idx) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "dp-pop-item" + (idx === viewM ? " active" : "");
+      b.textContent = name; // full month name for fidelity consistency
+      b.setAttribute("aria-label", name);
+      if (idx === viewM) b.setAttribute("aria-current", "true");
+      b.addEventListener("click", function () {
+        viewM = idx;
+        activeCell = null;
+        closePops(false);
+        renderAll();
+        el.monthBtn.focus();
+      });
+      el.monthGrid.appendChild(b);
+    });
+  }
+
+  function openYearPop() {
+    closePops(false);
+    buildYearGrid();
+    el.yearPop.classList.add("open");
+    el.yearBtn.setAttribute("aria-expanded", "true");
+    lastTrigger = el.yearBtn;
+    var active = el.yearGrid.querySelector(".dp-pop-item.active") || el.yearGrid.firstChild;
+    if (active) active.focus();
+  }
+  function openMonthPop() {
+    closePops(false);
+    buildMonthGrid();
+    el.monthPop.classList.add("open");
+    el.monthBtn.setAttribute("aria-expanded", "true");
+    lastTrigger = el.monthBtn;
+    var active = el.monthGrid.querySelector(".dp-pop-item.active") || el.monthGrid.firstChild;
+    if (active) active.focus();
+  }
+
+  /* ---------- Navigation handlers ---------- */
+  document.getElementById("prevYear").addEventListener("click", function () {
+    viewY -= 1; activeCell = null; closePops(false); renderAll();
+  });
+  document.getElementById("nextYear").addEventListener("click", function () {
+    viewY += 1; activeCell = null; closePops(false); renderAll();
+  });
+  document.getElementById("prevMonth").addEventListener("click", function () {
+    if (viewM === 0) { viewM = 11; viewY -= 1; } else { viewM -= 1; }
+    activeCell = null; closePops(false); renderAll();
+  });
+  document.getElementById("nextMonth").addEventListener("click", function () {
+    if (viewM === 11) { viewM = 0; viewY += 1; } else { viewM += 1; }
+    activeCell = null; closePops(false); renderAll();
+  });
+
+  document.getElementById("todayBtn").addEventListener("click", function () {
+    viewY = todayY; viewM = todayM; activeCell = null; closePops(false); renderAll();
+    selectDate(todayY, todayM, todayD);
+  });
+
+  el.yearBtn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    if (el.yearPop.classList.contains("open")) { closePops(true); }
+    else { openYearPop(); }
+  });
+  el.monthBtn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    if (el.monthPop.classList.contains("open")) { closePops(true); }
+    else { openMonthPop(); }
+  });
+
+  el.clearBtn.addEventListener("click", function () {
+    if (el.clearBtn.disabled) return;
+    selY = selM = selD = null;
+    renderGrid();
+    renderFooter();
+    el.confirmBtn.textContent = "Confirm";
+    if (confirmTimer) { clearTimeout(confirmTimer); confirmTimer = null; }
+  });
+
+  el.confirmBtn.addEventListener("click", function () {
+    if (el.confirmBtn.disabled) return;
+    var v = (document.querySelector(".dp-sel-value") || {}).textContent;
+    var ft = document.getElementById("bookingFieldText");
+    if (v && ft) { ft.textContent = v.trim(); ft.classList.add("filled"); }
+    var ov = document.getElementById("dpOverlay");
+    if (ov) ov.classList.remove("open");
+    closePops(false);
+  });
+
+  document.querySelector(".dp-close").addEventListener("click", function () {
+    closePops(false);
+    var ov = document.getElementById("dpOverlay");
+    if (ov) ov.classList.remove("open");
+  });
+
+  /* ---------- Keyboard: roving grid navigation ---------- */
+  el.grid.addEventListener("keydown", function (e) {
+    var k = e.key;
+    var handled = true;
+    switch (k) {
+      case "ArrowLeft":  moveFocus(-1); break;
+      case "ArrowRight": moveFocus(1);  break;
+      case "ArrowUp":    moveFocus(-7); break;
+      case "ArrowDown":  moveFocus(7);  break;
+      case "Home": {
+        // start of current week row
+        var col = activeCell % 7;
+        moveFocus(-col);
+        break;
+      }
+      case "End": {
+        var col2 = activeCell % 7;
+        moveFocus(6 - col2);
+        break;
+      }
+      case "PageUp": {
+        // previous month, same column position preserved by recompute
+        if (viewM === 0) { viewM = 11; viewY -= 1; } else { viewM -= 1; }
+        activeCell = null; renderAll();
+        focusActiveCell();
+        break;
+      }
+      case "PageDown": {
+        if (viewM === 11) { viewM = 0; viewY += 1; } else { viewM += 1; }
+        activeCell = null; renderAll();
+        focusActiveCell();
+        break;
+      }
+      case "Enter":
+      case " ": {
+        var cells = buildCells();
+        var c = cells[activeCell];
+        if (c && c.inMonth) selectDate(c.y, c.m, c.d);
+        focusActiveCell();
+        break;
+      }
+      default: handled = false;
+    }
+    if (handled) e.preventDefault();
+  });
+
+  /* ---------- Popover keyboard: arrow roaming + Home/End ---------- */
+  function popKeyHandler(gridEl, cols) {
+    return function (e) {
+      var items = Array.prototype.slice.call(gridEl.querySelectorAll(".dp-pop-item"));
+      var idx = items.indexOf(document.activeElement);
+      if (idx === -1) return;
+      var next = idx, handled = true;
+      switch (e.key) {
+        case "ArrowLeft":  next = Math.max(0, idx - 1); break;
+        case "ArrowRight": next = Math.min(items.length - 1, idx + 1); break;
+        case "ArrowUp":    next = Math.max(0, idx - cols); break;
+        case "ArrowDown":  next = Math.min(items.length - 1, idx + cols); break;
+        case "Home":       next = 0; break;
+        case "End":        next = items.length - 1; break;
+        default: handled = false;
+      }
+      if (handled) { e.preventDefault(); items[next].focus(); }
+    };
+  }
+  el.yearGrid.addEventListener("keydown", popKeyHandler(el.yearGrid, 3));
+  el.monthGrid.addEventListener("keydown", popKeyHandler(el.monthGrid, 3));
+
+  // Close popovers when clicking elsewhere
+  document.addEventListener("click", function (e) {
+    if (!el.yearPop.contains(e.target) && !el.monthPop.contains(e.target) &&
+        e.target.id !== "yearBtn" && e.target.id !== "monthBtn" &&
+        !e.target.closest("#yearBtn") && !e.target.closest("#monthBtn")) {
+      closePops(false);
+    }
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closePops(true);
+  });
+
+  renderAll();
+})();
+
+/* ===========================================================
+   Modal flow: the "Booking date" field opens the calendar in a
+   dimmed overlay; Confirm fills the field and closes; X / backdrop
+   / Esc cancel. The field updates ONLY on Confirm.
+   =========================================================== */
+(function () {
+  "use strict";
+  var input = document.getElementById("bookingField");
+  var overlay = document.getElementById("dpOverlay");
+  if (!input || !overlay) return;
+  function close() { overlay.classList.remove("open"); }
+  input.addEventListener("click", function () { overlay.classList.add("open"); });
+  overlay.addEventListener("click", function (e) { if (e.target === overlay) close(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+})();
+</script>
+</body>
+</html>

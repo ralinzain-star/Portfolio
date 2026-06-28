@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Embedded Threads · Wren AI · Iris Hsieh</title>
+  <link rel="icon" type="image/png" sizes="64x64" href="../Logo.png?v=3" />
+  <link rel="shortcut icon" type="image/png" href="../Logo.png?v=3" />
+  <link rel="apple-touch-icon" href="../Logo.png?v=3" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/embedded-threads.css?v=14">
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wet0o913zw");
+  </script>
+</head>
+<body>
+
+<!-- ── NAV ────────────────────────────────────────── -->
+<nav class="nav">
+  <a class="nav-back" href="../index.html#intro"><span>← Iris Hsieh</span></a>
+  <div class="nav-anchors">
+    <a class="nav-anchor" href="#intro" data-i18n="nav.intro">.Intro</a>
+    <a class="nav-anchor" href="#s01" data-i18n="nav.s01">01.Challenge &amp; Strategy</a>
+    <a class="nav-anchor" href="#s03" data-i18n="nav.s03">02.Two Modes</a>
+    <a class="nav-anchor" href="#s04" data-i18n="nav.s04">03.Design Challenge</a>
+    <a class="nav-anchor" href="#s05" data-i18n="nav.s05">04.Conclusion</a>
+  </div>
+  <select class="nav-lang" id="nav-lang-select">
+    <option value="en">EN</option>
+    <option value="ja">JA</option>
+    <option value="zh-tw">繁</option>
+    <option value="zh-cn">简</option>
+  </select>
+</nav>
+
+<!-- ── TITLE BAR ──────────────────────────────────── -->
+<div class="title-bar">
+  <div class="title-bar-inner">
+    <div class="title-big" data-i18n="title.big">Embedded Threads: One Conversational AI, Every Business Surface</div>
+    <div class="title-sub" data-i18n="title.sub">A drop-in chat assistant that adapts into Slack channels, support inboxes, dashboards, and 393px phones, carrying Wren AI's full voice into every context.</div>
+  </div>
+</div>
+
+<!-- ── INTRO ──────────────────────────────────────── -->
+<div id="intro" class="sec cream" style="padding-top:0;padding-bottom:48px;">
+  <div class="sec-inner" style="max-width:1220px;padding:0;">
+    <div class="intro-card">
+      <div class="intro-photo">
+        <img src="../assets/embedded-threads/cover.png" alt="Wren AI Embedded Threads, mobile interface on a phone at the airport" />
+      </div>
+      <div class="intro-copy">
+        <div class="text-block">
+          <p class="h3" data-i18n="intro.overview.label">Project Overview</p>
+          <p class="body" data-i18n="intro.overview.body">While building Wren AI as a conversational BI product, what customers kept asking for wasn't another tab to open. It was a way to talk to their data right inside the tools they already lived in: a Slack channel, a support inbox, a corner of an analytics dashboard, a phone on the move. <b>Embedded Threads</b> is the answer the team and I designed, one assistant that drops into any of those business surfaces as a chat, carrying Wren AI's core value all the way down to a 393px screen.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3" data-i18n="intro.role.label">My Role</p>
+          <p class="body" data-i18n="intro.role.body">As the <span class="stat-hi">sole designer</span>, I owned the planning of this embedded experience end to end, covering configuration logic, device adaptability, error guidance, and the operational details once it's integrated into another product, making sure it performs well in every context.</p>
+        </div>
+        <div class="text-block">
+          <p class="h3" data-i18n="intro.time.label">Company &amp; Timeframe</p>
+          <p class="body" data-i18n="intro.time.body">Wren AI · Dec 2025 – Jan 2026 · 3 weeks</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 01. PRODUCT BET + MARKET STRATEGY (merged) ─── -->
+<div id="s01" class="sec white" style="padding-top:32px;padding-bottom:60px;">
+  <div class="sec-inner">
+    <div class="sec-head reveal">
+      <span class="sec-num">01.</span>
+      <span class="sec-title" data-i18n="s01.title">Product Challenge &amp; Market Strategy</span>
+    </div>
+    <p class="lede reveal" data-i18n="s01.lede">In BI, there's a real threshold: <span class="stat-hi">a tool you have to jump to a separate tab to use is destined to be forgotten</span>.</p>
+    <div class="text-block reveal">
+      <p class="body" data-i18n="s01.body">We found that most of Wren AI's core users are in a "multitasking or on-the-move" state: reading Slack on a commute, swiping through a dashboard on their phone during a meeting. For them, <b>an embedded experience isn't a bonus</b>, it's what decides whether the product gets into the decision-making moment, or doesn't survive there at all.</p>
+    </div>
+    <div class="text-block reveal">
+      <p class="body" data-i18n="s01.body2">To reach users fast, we avoided reinventing the wheel and instead studied industry benchmarks like Metabase and Tableau closely, sorting out which features should follow industry standards to lower the learning curve, and which deserved aggressive simplification.</p>
+    </div>
+    <div class="text-block reveal">
+      <p class="body" data-i18n="s01.body3">In the end, we committed to a <b>plug-and-play install model</b>, a clean snippet customers drop in for fast deployment, deliberately walking away from a heavyweight SDK framework. Because we knew what users actually want is to <span class="stat-hi">weave data conversations seamlessly into their workflow</span>, not to maintain another integration project.</p>
+    </div>
+
+    <figure class="case-figure reveal">
+      <img src="../assets/embedded-threads/embedded-threads-config.png?v=2" alt="Wren AI admin: Embedded threads configuration page with appearance, usage limits, and live preview" />
+    </figure>
+  </div>
+</div>
+
+<!-- ── 03. NAMING THE ARCHITECTURE ────────────────── -->
+<div id="s03" class="sec cream" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head reveal">
+      <span class="sec-num">02.</span>
+      <span class="sec-title" data-i18n="s03.title">Naming the Architecture: Two Modes, Zero Decision Ambiguity</span>
+    </div>
+    <p class="lede reveal" data-i18n="s03.lede">To keep product logic unambiguous, the team and I split the embed architecture into two distinct behavior modes: <b>Public Embed</b> and <b>Identity Verification</b>.</p>
+    <div class="text-block reveal">
+      <p class="body" data-i18n="s03.body">Once the architecture has a clean name, the harder questions further down, permissions, refresh policy, empty states, start answering themselves. The underlying philosophy: <span class="stat-hi">"shared information in a Slack channel" and "personalized data inside an internal system" are fundamentally different product scenarios</span>. Try to cover both with one mode and you make both worse.</p>
+    </div>
+
+    <ul class="bull-list reveal">
+      <li data-i18n="s03.m1.body"><b>Public Embed</b>, built for Slack channels, Tableau panels, and public-facing info pages. A <span class="stat-hi">"shared conversation"</span> model where every visitor reads and contributes in the same context, with a one-minute deploy.</li>
+      <li data-i18n="s03.m2.body"><b>Identity Verification Embed</b>, built for internal systems and apps with real account systems. <span class="stat-hi">Integrates with the host product's auth</span> so identity flows through and each person sees only their own conversation history, full capability, full privacy boundary.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── 04. EMBEDDED EVERYWHERE (interactive demo) ─── -->
+<div id="s04" class="sec white" style="padding-top:32px;padding-bottom:32px;">
+  <div class="sec-inner">
+    <div class="sec-head reveal">
+      <span class="sec-num">03.</span>
+      <span class="sec-title" data-i18n="s04.title">One Assistant, Every Business Surface</span>
+    </div>
+    <p class="lede reveal" data-i18n="s04.lede">The real test wasn't a single screen. It was <span class="stat-hi">keeping one assistant coherent across radically different host products</span>: a Slack channel, a support inbox, an analytics dashboard, without rebuilding it for each.</p>
+    <div class="text-block reveal">
+      <p class="body" data-i18n="s04.body">So I designed inside-out, anchoring at the tightest constraint, <span class="stat-hi">393px phone width</span>, instead of starting from desktop and shrinking. The assistant shows up the same way everywhere: a quiet launcher in the corner of whatever app the user is already in. Open it and the full data conversation unfolds in place. If it works in the narrowest slot, it works in every wider one. An embedded product that only survives on a roomy desktop doesn't belong in the way modern teams actually work.</p>
+    </div>
+
+    <div class="text-block reveal">
+      <p class="h3" data-i18n="s04.rwd2.label">Responsive prototype, drag the corner to resize</p>
+      <p class="body" data-i18n="s04.rwd2.body">The same Wren embed at 1024, 768, and 393. Drag the handle or pick a preset and watch the sidebar collapse into a drawer, the chat restack to phone rhythm.</p>
+    </div>
+      <div class="rwd-demo reveal">
+        <div class="rwd-controls">
+          <div class="rwd-presets" role="tablist" aria-label="RWD preset sizes">
+            <button type="button" class="rwd-btn" data-w="393" data-h="852" data-i18n="s04.rwd.preset.mobile">Mobile · 393</button>
+            <button type="button" class="rwd-btn" data-w="768" data-h="640" data-i18n="s04.rwd.preset.tablet">Tablet · 768</button>
+            <button type="button" class="rwd-btn active" data-w="1024" data-h="640" data-i18n="s04.rwd.preset.desktop">Desktop · 1024</button>
+          </div>
+          <div class="rwd-meta">
+            <span class="rwd-size" id="rwd-size">1024 × 640</span>
+            <span class="rwd-hint" data-i18n="s04.rwd.hint">↘ drag corner</span>
+          </div>
+        </div>
+        <div class="rwd-stage">
+          <div class="rwd-frame" id="rwd-frame" style="width:1024px;height:640px;">
+            <div class="rwd-mock">
+              <!-- iPhone chrome (visible only at mobile preset) -->
+              <span class="rwd-mock-notch" aria-hidden="true"></span>
+              <span class="rwd-mock-home-bar" aria-hidden="true"></span>
+              <!-- Sidebar -->
+              <aside class="rwd-mock-side">
+                <div class="rwd-mock-side-head">
+                  <img class="rwd-mock-logo-img" src="../assets/embedded-threads/wrenai-logo.png" alt="WrenAI" />
+                  <button type="button" class="rwd-mock-side-toggle" aria-label="Collapse sidebar"><img src="../assets/embedded-threads/icon-burger.svg" alt="" /></button>
+                </div>
+                <div class="rwd-mock-side-body">
+                  <div class="rwd-mock-side-row">
+                    <span class="rwd-mock-side-label"><img class="icon-16" src="../assets/embedded-threads/icon-threads.svg" alt="" /><span data-i18n="s04.rwd.mock.threads">Threads (2)</span></span>
+                    <button type="button" class="rwd-mock-new-btn"><img class="icon-14" src="../assets/embedded-threads/icon-plus.svg" alt="" /><span data-i18n="s04.rwd.mock.new">New</span></button>
+                  </div>
+                  <div class="rwd-mock-thread-row active">
+                    <span class="rwd-mock-thread-title" data-i18n="s04.rwd.mock.t1">Which are the top 3 cities with the highest number of orders?</span>
+                    <span class="rwd-mock-thread-kebab"><img class="icon-14" src="../assets/embedded-threads/icon-kebab.svg" alt="" /></span>
+                  </div>
+                </div>
+                <div class="rwd-mock-side-foot">
+                  <span class="rwd-mock-powered" data-i18n="s04.rwd.mock.powered">Powered by Wren AI</span>
+                </div>
+              </aside>
+
+              <!-- Main panel -->
+              <div class="rwd-mock-main">
+                <div class="rwd-mock-top">
+                  <button type="button" class="rwd-mock-burger" aria-label="Open menu"><img src="../assets/embedded-threads/icon-burger.svg" alt="" /></button>
+                  <span class="rwd-mock-q-title" data-i18n="s04.rwd.mock.q">Which are the top 3 cities with the highest number of orders?</span>
+                  <div class="rwd-mock-top-actions">
+                    <button type="button" class="rwd-mock-more" aria-label="More"><img src="../assets/embedded-threads/icon-more.svg" alt="" class="rwd-mock-more-sm" /><img src="../assets/embedded-threads/icon-more-lg.svg" alt="" class="rwd-mock-more-lg" /></button>
+                    <button type="button" class="rwd-mock-plus" aria-label="New thread"><img src="../assets/embedded-threads/icon-plus-circle.svg" alt="" /></button>
+                  </div>
+                </div>
+
+                <div class="rwd-mock-chat" data-view="thread">
+                  <!-- Empty state (shown after pressing +) -->
+                  <div class="rwd-mock-empty" hidden>
+                    <img src="../assets/embedded-threads/icon-empty-mascot.svg" alt="" style="width:48px;height:48px;" />
+                    <div class="rwd-mock-empty-title" data-i18n="s04.rwd.empty.title">Know more about your data</div>
+                    <div class="rwd-mock-empty-sub" data-i18n="s04.rwd.empty.sub">Try asking...</div>
+                    <div class="rwd-mock-empty-cards">
+                      <div class="rwd-mock-empty-card">
+                        <span class="rwd-mock-empty-tag" data-i18n="s04.rwd.empty.tag1">Descriptive Questions</span>
+                        <p class="rwd-mock-empty-q" data-i18n="s04.rwd.empty.q1">What is the cost per unit of production volumes for each supplier?</p>
+                      </div>
+                      <div class="rwd-mock-empty-card">
+                        <span class="rwd-mock-empty-tag" data-i18n="s04.rwd.empty.tag2">Data Quality and Cons…</span>
+                        <p class="rwd-mock-empty-q" data-i18n="s04.rwd.empty.q2">How does the average Defect rates of products that passed their Inspection result…</p>
+                      </div>
+                      <div class="rwd-mock-empty-card">
+                        <span class="rwd-mock-empty-tag" data-i18n="s04.rwd.empty.tag3">Comparative Questions</span>
+                        <p class="rwd-mock-empty-q" data-i18n="s04.rwd.empty.q3">Which Transportation modes have a lower average Shipping costs on Route A compared …</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="rwd-mock-chat-inner">
+                    <!-- user question bubble -->
+                    <div class="rwd-mock-qbox">
+                      <p data-i18n="s04.rwd.mock.userq">How many products?</p>
+                    </div>
+
+                    <!-- assistant "patience" message -->
+                    <div class="rwd-mock-asst">
+                      <img class="rwd-mock-mascot" src="../assets/embedded-threads/icon-wren-mascot.png" alt="" />
+                      <p data-i18n="s04.rwd.mock.patience">Appreciate your patience, working on your request!</p>
+                    </div>
+
+                    <!-- show thinking steps expander -->
+                    <div class="rwd-mock-show">
+                      <img class="rwd-mock-mascot" src="../assets/embedded-threads/icon-wren-mascot.png" alt="" />
+                      <span class="rwd-mock-show-label" data-i18n="s04.rwd.mock.show">Show thinking steps</span>
+                      <img class="rwd-mock-down" src="../assets/embedded-threads/icon-down.svg" alt="" />
+                    </div>
+
+                    <!-- thinking steps list (indented 40px, dashed connector) -->
+                    <div class="rwd-mock-steps">
+                      <div class="rwd-mock-step-row">
+                        <img src="../assets/embedded-threads/icon-check.svg" alt="" />
+                        <span class="rwd-mock-step-text" data-i18n="s04.rwd.mock.step1">No related Question-SQL pairs found</span>
+                      </div>
+                      <div class="rwd-mock-step-divider"><span></span></div>
+                      <div class="rwd-mock-step-row">
+                        <img src="../assets/embedded-threads/icon-check.svg" alt="" />
+                        <span class="rwd-mock-step-text" data-i18n="s04.rwd.mock.step2">No related SQL queries instructions found</span>
+                      </div>
+                      <div class="rwd-mock-step-divider"><span></span></div>
+                      <div class="rwd-mock-step-row">
+                        <img src="../assets/embedded-threads/icon-check.svg" alt="" />
+                        <span class="rwd-mock-step-text" data-i18n="s04.rwd.mock.step3">User intent recognized</span>
+                      </div>
+                      <div class="rwd-mock-step-divider"><span></span></div>
+                      <div class="rwd-mock-step-row">
+                        <img src="../assets/embedded-threads/icon-check.svg" alt="" />
+                        <span class="rwd-mock-step-text" data-i18n="s04.rwd.mock.step4">Found 9 candidate models</span>
+                      </div>
+                      <div class="rwd-mock-step-divider"><span></span></div>
+                      <div class="rwd-mock-step-row">
+                        <img src="../assets/embedded-threads/icon-check.svg" alt="" />
+                        <span class="rwd-mock-step-text"><span data-i18n="s04.rwd.mock.step5a">Thought for</span><span class="rwd-mock-step-time">3.77s</span></span>
+                      </div>
+                      <div class="rwd-mock-step-divider"><span></span></div>
+                      <div class="rwd-mock-step-row">
+                        <img src="../assets/embedded-threads/icon-check.svg" alt="" />
+                        <span class="rwd-mock-step-text"><span data-i18n="s04.rwd.mock.step6a">SQL statement generated for</span><span class="rwd-mock-step-time">9.47s</span></span>
+                      </div>
+                      <div class="rwd-mock-step-divider"><span></span></div>
+                      <div class="rwd-mock-step-row">
+                        <img src="../assets/embedded-threads/icon-check.svg" alt="" />
+                        <span class="rwd-mock-step-text"><span data-i18n="s04.rwd.mock.step7a">Fetched up to 500 data rows for</span><span class="rwd-mock-step-time">4.19s</span></span>
+                      </div>
+                    </div>
+
+                    <!-- Data preview card -->
+                    <div class="rwd-mock-dp-wrap">
+                      <div class="rwd-mock-dp">
+                        <div class="rwd-mock-dp-body">
+                          <div class="rwd-mock-dp-title">
+                            <img src="../assets/embedded-threads/icon-profile.svg" alt="" />
+                            <span data-i18n="s04.rwd.mock.dp">Data preview</span>
+                          </div>
+                          <div class="rwd-mock-dp-q" data-i18n="s04.rwd.mock.dpq">How many products are there in the products dataset?</div>
+                        </div>
+                        <button type="button" class="rwd-mock-view" id="rwd-view-btn">
+                          <img src="../assets/embedded-threads/icon-eye.svg" alt="" />
+                          <span data-i18n="s04.rwd.mock.view">View data</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Chart -->
+                    <div class="rwd-mock-chart">
+                      <div class="rwd-mock-chart-title" data-i18n="s04.rwd.mock.chart">Orders by city · top 6</div>
+                      <div class="rwd-mock-bars">
+                        <div class="rwd-mock-bar" style="height:92%" data-label="SP"></div>
+                        <div class="rwd-mock-bar" style="height:68%" data-label="RJ"></div>
+                        <div class="rwd-mock-bar" style="height:55%" data-label="BH"></div>
+                        <div class="rwd-mock-bar" style="height:42%" data-label="CWB"></div>
+                        <div class="rwd-mock-bar" style="height:32%" data-label="POA"></div>
+                        <div class="rwd-mock-bar" style="height:24%" data-label="FOR"></div>
+                      </div>
+                    </div>
+
+                    <!-- Final answer -->
+                    <div class="rwd-mock-asst">
+                      <img class="rwd-mock-mascot" src="../assets/embedded-threads/icon-wren-mascot.png" alt="" />
+                      <p data-i18n="s04.rwd.mock.answer">There are a total of 32,951 products in the product catalog.</p>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- Input -->
+                <div class="rwd-mock-input-wrap">
+                  <div class="rwd-mock-input-card">
+                    <div class="rwd-mock-input-inner">
+                      <div class="rwd-mock-textarea" data-i18n="s04.rwd.mock.ask">Ask to explore your data</div>
+                      <div class="rwd-mock-send-wrap">
+                        <button type="button" class="rwd-mock-send" aria-label="Send"><img src="../assets/embedded-threads/icon-arrow-up.svg" alt="" /></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- View data panel (desktop: right-side split; mobile: full-screen modal) -->
+              <div class="rwd-mock-data-panel" id="rwd-data-panel" hidden>
+                <div class="rwd-mock-dm-header">
+                  <span class="rwd-mock-dm-title" data-i18n="s04.rwd.dm.title">Add labels to the bar chart</span>
+                  <button type="button" class="rwd-mock-dm-close" id="rwd-data-close" aria-label="Close"><img src="../assets/embedded-threads/icon-close.svg" alt="" /></button>
+                </div>
+                <div class="rwd-mock-dm-body">
+                  <div class="rwd-mock-tabs">
+                    <button type="button" class="rwd-mock-tab active" data-tab="table">
+                      <img src="../assets/embedded-threads/icon-tab-sheet.svg" alt="" />
+                      <span data-i18n="s04.rwd.dm.tab1">Data Preview</span>
+                    </button>
+                    <button type="button" class="rwd-mock-tab" data-tab="chart">
+                      <img src="../assets/embedded-threads/icon-tab-chart.svg" alt="" />
+                      <span data-i18n="s04.rwd.dm.tab2">Chart</span>
+                    </button>
+                  </div>
+                  <div class="rwd-mock-table" data-view="table">
+                    <div class="rwd-mock-tr rwd-mock-th">
+                      <div class="rwd-mock-td rwd-mock-td-idx"></div>
+                      <div class="rwd-mock-td"><img src="../assets/embedded-threads/icon-sort-az.svg" alt="" /><span data-i18n="s04.rwd.dm.c1">City</span></div>
+                      <div class="rwd-mock-td"><img src="../assets/embedded-threads/icon-sort-123.svg" alt="" /><span data-i18n="s04.rwd.dm.c2">Number of Orders</span></div>
+                      <div class="rwd-mock-td"><img src="../assets/embedded-threads/icon-sort-123.svg" alt="" /><span data-i18n="s04.rwd.dm.c3">Rank</span></div>
+                    </div>
+                    <div class="rwd-mock-tr">
+                      <div class="rwd-mock-td rwd-mock-td-idx">1</div>
+                      <div class="rwd-mock-td">sao paulo</div>
+                      <div class="rwd-mock-td rwd-mock-num">15540</div>
+                      <div class="rwd-mock-td rwd-mock-num">1</div>
+                    </div>
+                    <div class="rwd-mock-tr">
+                      <div class="rwd-mock-td rwd-mock-td-idx">2</div>
+                      <div class="rwd-mock-td">rio de janeiro</div>
+                      <div class="rwd-mock-td rwd-mock-num">6882</div>
+                      <div class="rwd-mock-td rwd-mock-num">2</div>
+                    </div>
+                    <div class="rwd-mock-tr">
+                      <div class="rwd-mock-td rwd-mock-td-idx">3</div>
+                      <div class="rwd-mock-td">belo horizonte</div>
+                      <div class="rwd-mock-td rwd-mock-num">2773</div>
+                      <div class="rwd-mock-td rwd-mock-num">3</div>
+                    </div>
+                  </div>
+                  <div class="rwd-mock-chart-view" data-view="chart" hidden>
+                    <div class="rwd-mock-chart-title" data-i18n="s04.rwd.dm.chart">Orders by city</div>
+                    <div class="rwd-mock-chart-bars">
+                      <div class="rwd-mock-bar-row"><span class="rwd-mock-bar-label">sao paulo</span><div class="rwd-mock-bar-track"><div class="rwd-mock-bar-fill" style="width:100%"></div></div><span class="rwd-mock-bar-value">15,540</span></div>
+                      <div class="rwd-mock-bar-row"><span class="rwd-mock-bar-label">rio de janeiro</span><div class="rwd-mock-bar-track"><div class="rwd-mock-bar-fill" style="width:44%"></div></div><span class="rwd-mock-bar-value">6,882</span></div>
+                      <div class="rwd-mock-bar-row"><span class="rwd-mock-bar-label">belo horizonte</span><div class="rwd-mock-bar-track"><div class="rwd-mock-bar-fill" style="width:18%"></div></div><span class="rwd-mock-bar-value">2,773</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mobile drawer (burger menu) -->
+              <div class="rwd-mock-drawer" id="rwd-drawer" hidden>
+                <div class="rwd-mock-drawer-backdrop" id="rwd-drawer-backdrop"></div>
+                <aside class="rwd-mock-drawer-panel">
+                  <div class="rwd-mock-side-head">
+                    <img class="rwd-mock-logo-img" src="../assets/embedded-threads/wrenai-logo.png" alt="WrenAI" />
+                    <button type="button" class="rwd-mock-drawer-close" id="rwd-drawer-close" aria-label="Close menu"><img src="../assets/embedded-threads/icon-burger.svg" alt="" /></button>
+                  </div>
+                  <div class="rwd-mock-drawer-body">
+                    <div class="rwd-mock-side-row">
+                      <span class="rwd-mock-side-label"><img class="icon-16" src="../assets/embedded-threads/icon-threads.svg" alt="" /><span data-i18n="s04.rwd.mock.threads">Threads (2)</span></span>
+                    </div>
+                    <div class="rwd-mock-thread-row">
+                      <span class="rwd-mock-thread-title" data-i18n="s04.rwd.drawer.t1">Sample E</span>
+                      <span class="rwd-mock-thread-kebab"><img class="icon-14" src="../assets/embedded-threads/icon-kebab.svg" alt="" /></span>
+                    </div>
+                    <div class="rwd-mock-thread-row active">
+                      <span class="rwd-mock-thread-title" data-i18n="s04.rwd.drawer.t2">Sample H</span>
+                      <span class="rwd-mock-thread-kebab"><img class="icon-14" src="../assets/embedded-threads/icon-kebab.svg" alt="" /></span>
+                    </div>
+                    <div class="rwd-mock-drawer-new">
+                      <button type="button" class="rwd-mock-drawer-new-btn"><img class="icon-14" src="../assets/embedded-threads/icon-plus.svg" alt="" /><span data-i18n="s04.rwd.mock.new">New</span></button>
+                    </div>
+                  </div>
+                </aside>
+              </div>
+            </div>
+            <div class="rwd-handle rwd-handle-r" data-dir="r" aria-hidden="true"></div>
+            <div class="rwd-handle rwd-handle-b" data-dir="b" aria-hidden="true"></div>
+            <div class="rwd-handle rwd-handle-br" data-dir="br" aria-label="Resize handle" role="button" tabindex="0"></div>
+          </div>
+        </div>
+      </div>
+    <div class="text-block reveal">
+      <p class="h3" data-i18n="s04.rwd.label">Live demo, one assistant embedding four different ways</p>
+      <p class="body" data-i18n="s04.rwd.body">Switch the host. In an analytics dashboard the assistant rides in a corner bubble; in Slack it answers as a bot in the channel; in a support helpdesk it docks as a side panel; on a phone it slides up as a bottom-sheet. Same Wren, same data, a different embed shape for each surface.</p>
+    </div>
+
+                    <!-- Embedded-everywhere interactive demo, one assistant, four host patterns -->
+    <div class="et-demo reveal">
+      <div class="et-controls">
+        <div class="et-scenes" role="tablist" aria-label="Host scenario">
+          <button type="button" class="et-scene-btn active" data-scene="dashboard" data-i18n="s04.host.dashboard">Analytics dashboard</button>
+          <button type="button" class="et-scene-btn" data-scene="slack" data-i18n="s04.host.slack">Slack</button>
+          <button type="button" class="et-scene-btn" data-scene="helpdesk" data-i18n="s04.host.helpdesk">Support helpdesk</button>
+          <button type="button" class="et-scene-btn" data-scene="mobile" data-i18n="s04.host.mobile">Mobile app</button>
+        </div>
+        <button type="button" class="et-play-btn" id="et-play" aria-label="Play the demo journey"><span class="et-play-ico" aria-hidden="true">▶</span><span data-i18n="s04.play">Play</span></button>
+        <span class="et-pattern" id="et-pattern" data-i18n="s04.pattern.dashboard">Embed pattern: floating bubble</span>
+      </div>
+
+      <div class="et-stage" id="et-stage" data-scene="dashboard">
+        <div class="et-cursor" id="et-cursor" hidden aria-hidden="true">
+          <span class="et-cursor-ring"></span>
+          <span class="et-cursor-dot"></span>
+          <svg class="et-cursor-arrow" viewBox="0 0 24 24" width="22" height="22"><path d="M4 2 L4 18 L8.5 13.5 L11.5 20 L14 19 L11 12.5 L17 12.5 Z" fill="#fff" stroke="#1c1c1e" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </div>
+
+        <!-- ════ DASHBOARD · floating bubble (e-commerce) ════ -->
+        <div class="et-bg et-bg-dashboard" aria-hidden="true">
+          <div class="etd-top"><span class="etd-host-title">Commerce overview</span><div class="etd-toolbar"><span class="et-pill"></span><span class="et-pill"></span><span class="etd-cta">Last 30 days</span></div></div>
+          <div class="etd-cards">
+            <div class="etd-card"><span class="etd-card-label">Revenue</span><span class="etd-card-value">$1.24M</span><span class="etd-delta up">↑ 8.2%</span></div>
+            <div class="etd-card"><span class="etd-card-label">Orders</span><span class="etd-card-value">24,318</span><span class="etd-delta up">↑ 5.1%</span></div>
+            <div class="etd-card"><span class="etd-card-label">Conversion</span><span class="etd-card-value">2.8%</span><span class="etd-delta down">↓ 0.3%</span></div>
+            <div class="etd-card"><span class="etd-card-label">Avg order value</span><span class="etd-card-value">$137</span><span class="etd-delta up">↑ 3.4%</span></div>
+          </div>
+          <div class="etd-row">
+            <div class="etd-chart">
+              <div class="etd-chart-head"><span class="etd-chart-title">Revenue by month</span><span class="etd-chart-meta">USD · 2025</span></div>
+              <div class="etd-bars"><i style="height:48%"></i><i style="height:62%"></i><i style="height:55%"></i><i style="height:78%"></i><i style="height:70%"></i><i style="height:88%"></i><i style="height:96%"></i></div>
+              <div class="etd-axis"><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span></div>
+            </div>
+            <div class="etd-side">
+              <span class="etd-side-title">Sales by category</span>
+              <div class="etd-donut"></div>
+              <div class="etd-legend"><span class="etd-dot one"></span><span class="etd-leg-label">Electronics</span><span class="etd-leg-val">42%</span></div>
+              <div class="etd-legend"><span class="etd-dot two"></span><span class="etd-leg-label">Home</span><span class="etd-leg-val">28%</span></div>
+              <div class="etd-legend"><span class="etd-dot three"></span><span class="etd-leg-label">Other</span><span class="etd-leg-val">30%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ════ SLACK · bot reply (SaaS / product) ════ -->
+        <div class="et-bg et-bg-slack" aria-hidden="true">
+          <div class="ets-rail">
+            <div class="ets-ws"><span class="ets-ws-mark"></span><span class="ets-ws-name">Acme Analytics</span></div>
+            <div class="ets-grp"><span class="ets-grp-label">Channels</span></div>
+            <div class="ets-ch"><span class="ets-hash">#</span><span class="ets-ch-name">general</span></div>
+            <div class="ets-ch active"><span class="ets-hash">#</span><span class="ets-ch-name on">growth</span></div>
+            <div class="ets-ch"><span class="ets-hash">#</span><span class="ets-ch-name">product</span></div>
+            <div class="ets-ch"><span class="ets-hash">#</span><span class="ets-ch-name">data-eng</span></div>
+          </div>
+          <div class="ets-main">
+            <div class="ets-head"><span class="ets-hash dark">#</span><span class="ets-head-name">growth</span></div>
+            <div class="ets-msgs">
+              <div class="ets-msg"><span class="et-av"></span><div class="ets-body"><span class="et-bar" style="width:88px"></span><span class="et-bar et-bar-sm" style="width:230px"></span></div></div>
+              <div class="ets-msg"><span class="et-av"></span><div class="ets-body"><span class="et-bar" style="width:72px"></span><span class="et-bar et-bar-sm" style="width:180px"></span></div></div>
+              <div class="ets-msg"><span class="et-av"></span><div class="ets-body"><span class="ets-name" data-i18n="s04.slack.you">You</span><p class="ets-text" data-i18n="s04.slack.q">@Wren which features drove the most retention last quarter?</p></div></div>
+              <div class="ets-msg ets-bot">
+                <span class="ets-bot-av"><img src="../assets/embedded-threads/icon-wren-mascot.png" alt="" /></span>
+                <div class="ets-body">
+                  <div class="ets-bot-name"><span>Wren AI</span><span class="ets-app">APP</span></div>
+                  <p class="ets-text" data-i18n="s04.slack.a">Saved Views, Alerts, and Shared Dashboards led. Saved Views alone lifted 30-day retention by 18%.</p>
+                  <div class="ets-attach">
+                    <div class="rwd-mock-chart">
+                      <div class="rwd-mock-chart-title" data-i18n="s04.slack.chart">Retention lift by feature</div>
+                      <div class="rwd-mock-bars">
+                        <div class="rwd-mock-bar" style="height:95%" data-label="Views"></div>
+                        <div class="rwd-mock-bar" style="height:76%" data-label="Alerts"></div>
+                        <div class="rwd-mock-bar" style="height:60%" data-label="Dash"></div>
+                        <div class="rwd-mock-bar" style="height:46%" data-label="Export"></div>
+                        <div class="rwd-mock-bar" style="height:36%" data-label="API"></div>
+                        <div class="rwd-mock-bar" style="height:28%" data-label="Mobile"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ets-compose"><span class="et-bar et-bar-sm" style="width:120px"></span></div>
+          </div>
+        </div>
+
+        <!-- ════ HELPDESK · docked side panel (support) ════ -->
+        <div class="et-bg et-bg-inbox" aria-hidden="true">
+          <div class="eti-rail">
+            <div class="eti-railhead"><span class="eti-rail-title">Inbox</span><span class="eti-badge">7</span></div>
+            <div class="eti-conv active"><span class="et-av on"></span><div class="eti-cv"><span class="eti-cv-row"><span class="eti-name">Marina Costa</span><span class="eti-time">2m</span></span><span class="eti-snippet">Refund still hasn't arrived</span></div></div>
+            <div class="eti-conv"><span class="et-av"></span><div class="eti-cv"><span class="eti-cv-row"><span class="eti-name">Lucas Almeida</span><span class="eti-unread"></span></span><span class="eti-snippet">Where is my order #10482?</span></div></div>
+            <div class="eti-conv"><span class="et-av on"></span><div class="eti-cv"><span class="eti-cv-row"><span class="eti-name">Sofia Ribeiro</span><span class="eti-time">1h</span></span><span class="eti-snippet">Wrong item shipped</span></div></div>
+          </div>
+          <div class="eti-main">
+            <div class="eti-head"><span class="et-av lg on"></span><div class="eti-headcv"><span class="eti-name">Marina Costa</span><span class="eti-meta">Premium · 14 tickets</span></div></div>
+            <div class="eti-thread">
+              <div class="eti-msg"><span class="et-av"></span><div class="eti-bubble"><p class="eti-text">Hi, my refund still hasn't shown up after 10 days.</p></div></div>
+              <div class="eti-msg eti-me"><div class="eti-bubble"><p class="eti-text">Let me pull up your account and check on that.</p></div></div>
+            </div>
+            <div class="eti-reply"><span class="eti-reply-ph">Reply to Marina…</span><span class="eti-send"></span></div>
+          </div>
+        </div>
+        <aside class="et-dock">
+          <div class="et-dock-head">
+            <span class="et-panel-brand"><img src="../assets/embedded-threads/icon-wren-mascot.png" alt="" /><span data-i18n="s04.widget.title">Wren AI</span></span>
+            <span class="et-dock-scope" data-i18n="s04.dock.scope">This account</span>
+          </div>
+          <div class="et-chat">
+            <div class="et-chat-inner">
+                <div class="et-threads" hidden>
+                  <div class="et-threads-head"><span data-i18n="s04.rwd.mock.threads">Threads (2)</span><span class="et-threads-new" data-i18n="s04.rwd.mock.new">New</span></div>
+                  <div class="et-thread-row"><img class="et-thread-ic" src="../assets/embedded-threads/icon-threads.svg" alt="" /><span class="et-thread-bar" style="width:58%"></span></div>
+                  <div class="et-thread-row et-thread-target"><img class="et-thread-ic" src="../assets/embedded-threads/icon-threads.svg" alt="" /><span class="et-thread-title" data-i18n="s04.help.q">How many disputes has this account filed in the last 6 months?</span></div>
+                  <div class="et-thread-row"><img class="et-thread-ic" src="../assets/embedded-threads/icon-threads.svg" alt="" /><span class="et-thread-bar" style="width:44%"></span></div>
+                </div>
+                <div class="rwd-mock-empty et-empty" hidden>
+                  <img src="../assets/embedded-threads/icon-empty-mascot.svg" alt="" style="width:44px;height:44px;" />
+                  <div class="rwd-mock-empty-title" data-i18n="s04.rwd.empty.title">Know more about your data</div>
+                  <div class="rwd-mock-empty-sub" data-i18n="s04.rwd.empty.sub">Try asking...</div>
+                  <div class="rwd-mock-empty-cards">
+                    <div class="rwd-mock-empty-card et-suggest-target"><span class="rwd-mock-empty-tag" data-i18n="s04.rwd.empty.tag1">Descriptive Questions</span><p class="rwd-mock-empty-q" data-i18n="s04.rwd.empty.q1">What is the cost per unit of production volumes for each supplier?</p></div>
+                    <div class="rwd-mock-empty-card"><span class="rwd-mock-empty-tag" data-i18n="s04.rwd.empty.tag2">Data Quality and Cons…</span><p class="rwd-mock-empty-q" data-i18n="s04.rwd.empty.q2">How does the average Defect rates of products that passed their Inspection result…</p></div>
+                    <div class="rwd-mock-empty-card"><span class="rwd-mock-empty-tag" data-i18n="s04.rwd.empty.tag3">Comparative Questions</span><p class="rwd-mock-empty-q" data-i18n="s04.rwd.empty.q3">Which Transportation modes have a lower average Shipping costs on Route A compared …</p></div>
+                  </div>
+                </div>
+              <div class="rwd-mock-qbox"><p data-i18n="s04.help.q">How many disputes has this account filed in the last 6 months?</p></div>
+              <div class="rwd-mock-asst"><img class="rwd-mock-mascot" src="../assets/embedded-threads/icon-wren-mascot.png" alt="" /><p data-i18n="s04.rwd.mock.patience">Appreciate your patience, working on your request!</p></div>
+              <div class="rwd-mock-show"><img class="rwd-mock-mascot" src="../assets/embedded-threads/icon-wren-mascot.png" alt="" /><span class="rwd-mock-show-label" data-i18n="s04.rwd.mock.show">Show thinking steps</span><img class="rwd-mock-down" src="../assets/embedded-threads/icon-down.svg" alt="" /></div>
+              <div class="rwd-mock-steps">
+                <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text" data-i18n="s04.rwd.mock.step1">No related Question-SQL pairs found</span></div>
+                <div class="rwd-mock-step-divider"><span></span></div>
+                <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text" data-i18n="s04.rwd.mock.step2">No related SQL queries instructions found</span></div>
+                <div class="rwd-mock-step-divider"><span></span></div>
+                <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text" data-i18n="s04.rwd.mock.step3">User intent recognized</span></div>
+                <div class="rwd-mock-step-divider"><span></span></div>
+                <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text" data-i18n="s04.rwd.mock.step4">Found 9 candidate models</span></div>
+                <div class="rwd-mock-step-divider"><span></span></div>
+                <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text"><span data-i18n="s04.rwd.mock.step5a">Thought for</span><span class="rwd-mock-step-time">3.77s</span></span></div>
+                <div class="rwd-mock-step-divider"><span></span></div>
+                <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text"><span data-i18n="s04.rwd.mock.step6a">SQL statement generated for</span><span class="rwd-mock-step-time">9.47s</span></span></div>
+                <div class="rwd-mock-step-divider"><span></span></div>
+                <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text"><span data-i18n="s04.rwd.mock.step7a">Fetched up to 500 data rows for</span><span class="rwd-mock-step-time">4.19s</span></span></div>
+              </div>
+              <div class="rwd-mock-dp-wrap">
+                <div class="rwd-mock-dp">
+                  <div class="rwd-mock-dp-body">
+                    <div class="rwd-mock-dp-title"><img src="../assets/embedded-threads/icon-profile.svg" alt="" /><span data-i18n="s04.rwd.mock.dp">Data preview</span></div>
+                    <div class="rwd-mock-dp-q" data-i18n="s04.help.q">How many disputes has this account filed in the last 6 months?</div>
+                  </div>
+                  <button type="button" class="rwd-mock-view"><img src="../assets/embedded-threads/icon-eye.svg" alt="" /><span data-i18n="s04.rwd.mock.view">View data</span></button>
+                </div>
+              </div>
+              <div class="rwd-mock-chart">
+                <div class="rwd-mock-chart-title" data-i18n="s04.help.chart">Disputes by month</div>
+                <div class="rwd-mock-bars">
+                  <div class="rwd-mock-bar" style="height:52%" data-label="Jan"></div>
+                  <div class="rwd-mock-bar" style="height:64%" data-label="Feb"></div>
+                  <div class="rwd-mock-bar" style="height:95%" data-label="Mar"></div>
+                  <div class="rwd-mock-bar" style="height:70%" data-label="Apr"></div>
+                  <div class="rwd-mock-bar" style="height:48%" data-label="May"></div>
+                  <div class="rwd-mock-bar" style="height:40%" data-label="Jun"></div>
+                </div>
+              </div>
+              <div class="rwd-mock-asst"><img class="rwd-mock-mascot" src="../assets/embedded-threads/icon-wren-mascot.png" alt="" /><p data-i18n="s04.help.a">This account filed 8 disputes in six months, peaking in March, with 90% resolved within SLA.</p></div>
+            </div>
+          </div>
+          <div class="rwd-mock-input-wrap">
+            <div class="rwd-mock-input-card"><div class="rwd-mock-input-inner"><div class="rwd-mock-textarea" data-i18n="s04.rwd.mock.ask">Ask to explore your data</div><div class="rwd-mock-send-wrap"><button type="button" class="rwd-mock-send" aria-label="Send"><img src="../assets/embedded-threads/icon-arrow-up.svg" alt="" /></button></div></div></div>
+          </div>
+        </aside>
+
+        <!-- ════ MOBILE · bottom-sheet (founder / exec) ════ -->
+        <div class="et-phone-stage">
+          <div class="et-phone-device">
+            <span class="rwd-mock-notch" aria-hidden="true" style="z-index:30"></span>
+            <span class="rwd-mock-home-bar" aria-hidden="true" style="z-index:30"></span>
+            <!-- Phone home (shown first); tap the Wren bubble to open the assistant -->
+            <div class="et-phone-host">
+              <div class="eph-top">
+                <div class="eph-head"><span class="eph-greet">Acme Commerce</span><span class="eph-sub">Sales overview · this week</span></div>
+                <span class="et-av"></span>
+              </div>
+              <div class="eph-card eph-hero">
+                <span class="eph-label">Revenue this week</span>
+                <span class="eph-value">$284K</span>
+                <span class="eph-delta up">↑ 12% vs last week</span>
+                <div class="eph-spark"><i style="height:42%"></i><i style="height:50%"></i><i style="height:46%"></i><i style="height:64%"></i><i style="height:80%"></i><i style="height:96%"></i></div>
+              </div>
+              <div class="eph-tiles">
+                <div class="eph-card eph-tile"><span class="eph-label">Orders today</span><span class="eph-value sm">1,204</span><span class="eph-delta up">↑ 6%</span></div>
+                <div class="eph-card eph-tile"><span class="eph-label">Conversion</span><span class="eph-value sm">3.1%</span><span class="eph-delta down">↓ 0.2%</span></div>
+              </div>
+              <div class="eph-card eph-list">
+                <div class="eph-list-head"><span class="eph-list-title">Recent orders</span><span class="eph-list-link">See all</span></div>
+                <div class="eph-li"><span class="et-av sm2"></span><div class="eph-li-cv"><span class="eph-li-name">Marina Costa</span><span class="eph-li-sub">#10482 · 2 items</span></div><span class="eph-li-amt">$248</span></div>
+                <div class="eph-li"><span class="et-av sm2"></span><div class="eph-li-cv"><span class="eph-li-name">Lucas Almeida</span><span class="eph-li-sub">#10481 · 1 item</span></div><span class="eph-li-amt">$72</span></div>
+                <div class="eph-li"><span class="et-av sm2"></span><div class="eph-li-cv"><span class="eph-li-name">Sofia Ribeiro</span><span class="eph-li-sub">#10479 · 3 items</span></div><span class="eph-li-amt">$391</span></div>
+              </div>
+            </div>
+            <button type="button" class="et-phone-launcher" id="et-phone-launcher" aria-label="Open Wren AI assistant">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#fff" d="M12 3C6.9 3 3 6.4 3 10.6c0 2.3 1.2 4.4 3.1 5.8.2.6-.4 2.2-1 3.1-.2.3.1.7.5.6 1.7-.4 3.2-1.1 3.9-1.6 1.1.3 2.3.5 3.5.5 5.1 0 9-3.4 9-7.6S17.1 3 12 3Z"/><circle cx="8.5" cy="10.6" r="1.15" fill="#2f54eb"/><circle cx="12" cy="10.6" r="1.15" fill="#2f54eb"/><circle cx="15.5" cy="10.6" r="1.15" fill="#2f54eb"/></svg>
+            </button>
+            <div class="rwd-mock et-phone-mock" hidden>
+              <div class="rwd-mock-main">
+                <div class="rwd-mock-top">
+                  <button type="button" class="rwd-mock-burger et-phone-burger" aria-label="Open menu"><img src="../assets/embedded-threads/icon-burger.svg" alt="" /></button>
+                  <span class="rwd-mock-q-title" data-i18n="s04.mob.q">How's revenue tracking this week vs last?</span>
+                  <div class="rwd-mock-top-actions">
+                    <button type="button" class="rwd-mock-plus" aria-label="New thread"><img src="../assets/embedded-threads/icon-plus-circle.svg" alt="" /></button>
+                    <button type="button" class="et-phone-close" id="et-phone-close" aria-label="Close"><img src="../assets/embedded-threads/icon-close.svg" alt="" /></button>
+                  </div>
+                </div>
+                <div class="rwd-mock-chat" data-view="thread">
+                  <div class="rwd-mock-chat-inner">
+                  <div class="rwd-mock-qbox"><p data-i18n="s04.mob.q">How's revenue tracking this week vs last?</p></div>
+                  <div class="rwd-mock-asst"><img class="rwd-mock-mascot" src="../assets/embedded-threads/icon-wren-mascot.png" alt="" /><p data-i18n="s04.rwd.mock.patience">Appreciate your patience, working on your request!</p></div>
+                  <div class="rwd-mock-show"><img class="rwd-mock-mascot" src="../assets/embedded-threads/icon-wren-mascot.png" alt="" /><span class="rwd-mock-show-label" data-i18n="s04.rwd.mock.show">Show thinking steps</span><img class="rwd-mock-down" src="../assets/embedded-threads/icon-down.svg" alt="" /></div>
+                  <div class="rwd-mock-steps">
+                    <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text" data-i18n="s04.rwd.mock.step1">No related Question-SQL pairs found</span></div>
+                    <div class="rwd-mock-step-divider"><span></span></div>
+                    <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text" data-i18n="s04.rwd.mock.step2">No related SQL queries instructions found</span></div>
+                    <div class="rwd-mock-step-divider"><span></span></div>
+                    <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text" data-i18n="s04.rwd.mock.step3">User intent recognized</span></div>
+                    <div class="rwd-mock-step-divider"><span></span></div>
+                    <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text" data-i18n="s04.rwd.mock.step4">Found 9 candidate models</span></div>
+                    <div class="rwd-mock-step-divider"><span></span></div>
+                    <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text"><span data-i18n="s04.rwd.mock.step5a">Thought for</span><span class="rwd-mock-step-time">3.77s</span></span></div>
+                    <div class="rwd-mock-step-divider"><span></span></div>
+                    <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text"><span data-i18n="s04.rwd.mock.step6a">SQL statement generated for</span><span class="rwd-mock-step-time">9.47s</span></span></div>
+                    <div class="rwd-mock-step-divider"><span></span></div>
+                    <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text"><span data-i18n="s04.rwd.mock.step7a">Fetched up to 500 data rows for</span><span class="rwd-mock-step-time">4.19s</span></span></div>
+                  </div>
+                  <div class="rwd-mock-dp-wrap">
+                    <div class="rwd-mock-dp">
+                      <div class="rwd-mock-dp-body">
+                        <div class="rwd-mock-dp-title"><img src="../assets/embedded-threads/icon-profile.svg" alt="" /><span data-i18n="s04.rwd.mock.dp">Data preview</span></div>
+                        <div class="rwd-mock-dp-q" data-i18n="s04.mob.q">How's revenue tracking this week vs last?</div>
+                      </div>
+                      <button type="button" class="rwd-mock-view"><img src="../assets/embedded-threads/icon-eye.svg" alt="" /><span data-i18n="s04.rwd.mock.view">View data</span></button>
+                    </div>
+                  </div>
+                  <div class="rwd-mock-chart">
+                    <div class="rwd-mock-chart-title" data-i18n="s04.mob.chart">Revenue, last 6 weeks</div>
+                    <div class="rwd-mock-bars">
+                      <div class="rwd-mock-bar" style="height:48%" data-label="W1"></div>
+                      <div class="rwd-mock-bar" style="height:58%" data-label="W2"></div>
+                      <div class="rwd-mock-bar" style="height:53%" data-label="W3"></div>
+                      <div class="rwd-mock-bar" style="height:70%" data-label="W4"></div>
+                      <div class="rwd-mock-bar" style="height:82%" data-label="W5"></div>
+                      <div class="rwd-mock-bar" style="height:94%" data-label="W6"></div>
+                    </div>
+                  </div>
+                  <div class="rwd-mock-asst"><img class="rwd-mock-mascot" src="../assets/embedded-threads/icon-wren-mascot.png" alt="" /><p data-i18n="s04.mob.a">Revenue is up 12% week over week, on track to beat the monthly target.</p></div>
+                  </div>
+                </div>
+              </div>
+              <div class="rwd-mock-input-wrap">
+                <div class="rwd-mock-input-card"><div class="rwd-mock-input-inner"><div class="rwd-mock-textarea" data-i18n="s04.rwd.mock.ask">Ask to explore your data</div><div class="rwd-mock-send-wrap"><button type="button" class="rwd-mock-send" aria-label="Send"><img src="../assets/embedded-threads/icon-arrow-up.svg" alt="" /></button></div></div></div>
+              </div>
+              <!-- Threads list drawer (burger menu), mirrors the top prototype's narrow form -->
+              <div class="rwd-mock-drawer et-phone-drawer" hidden>
+                <div class="rwd-mock-drawer-backdrop"></div>
+                <aside class="rwd-mock-drawer-panel">
+                  <div class="rwd-mock-side-head">
+                    <img class="rwd-mock-logo-img" src="../assets/embedded-threads/wrenai-logo.png" alt="WrenAI" />
+                    <button type="button" class="rwd-mock-drawer-close" aria-label="Close menu"><img src="../assets/embedded-threads/icon-burger.svg" alt="" /></button>
+                  </div>
+                  <div class="rwd-mock-drawer-body">
+                    <div class="rwd-mock-side-row"><span class="rwd-mock-side-label"><img class="icon-16" src="../assets/embedded-threads/icon-threads.svg" alt="" /><span data-i18n="s04.rwd.mock.threads">Threads (2)</span></span></div>
+                    <div class="rwd-mock-thread-row active"><span class="rwd-mock-thread-title" data-i18n="s04.mob.q">How's revenue tracking this week vs last?</span><span class="rwd-mock-thread-kebab"><img class="icon-14" src="../assets/embedded-threads/icon-kebab.svg" alt="" /></span></div>
+                    <div class="rwd-mock-thread-row"><span class="rwd-mock-thread-title" data-i18n="s04.rwd.drawer.t1">Sample E</span><span class="rwd-mock-thread-kebab"><img class="icon-14" src="../assets/embedded-threads/icon-kebab.svg" alt="" /></span></div>
+                    <div class="rwd-mock-drawer-new"><button type="button" class="rwd-mock-drawer-new-btn"><img class="icon-14" src="../assets/embedded-threads/icon-plus.svg" alt="" /><span data-i18n="s04.rwd.mock.new">New</span></button></div>
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ════ DASHBOARD floating Wren widget (e-commerce, multi-turn) ════ -->
+        <div class="et-widget">
+          <div class="et-panel" id="et-panel" hidden>
+            <div class="et-panel-head">
+              <span class="et-panel-brand"><img src="../assets/embedded-threads/icon-wren-mascot.png" alt="" /><span data-i18n="s04.widget.title">Wren AI</span></span>
+              <button type="button" class="et-panel-close" id="et-panel-close" aria-label="Close"><img src="../assets/embedded-threads/icon-close.svg" alt="" /></button>
+            </div>
+            <div class="et-chat">
+              <div class="et-chat-inner">
+                <div class="et-threads" hidden>
+                  <div class="et-threads-head"><span data-i18n="s04.rwd.mock.threads">Threads (2)</span><span class="et-threads-new" data-i18n="s04.rwd.mock.new">New</span></div>
+                  <div class="et-thread-row"><img class="et-thread-ic" src="../assets/embedded-threads/icon-threads.svg" alt="" /><span class="et-thread-bar" style="width:58%"></span></div>
+                  <div class="et-thread-row et-thread-target"><img class="et-thread-ic" src="../assets/embedded-threads/icon-threads.svg" alt="" /><span class="et-thread-title" data-i18n="s04.rwd.mock.userq">How many products?</span></div>
+                  <div class="et-thread-row"><img class="et-thread-ic" src="../assets/embedded-threads/icon-threads.svg" alt="" /><span class="et-thread-bar" style="width:44%"></span></div>
+                </div>
+                <div class="rwd-mock-empty et-empty" hidden>
+                  <img src="../assets/embedded-threads/icon-empty-mascot.svg" alt="" style="width:44px;height:44px;" />
+                  <div class="rwd-mock-empty-title" data-i18n="s04.rwd.empty.title">Know more about your data</div>
+                  <div class="rwd-mock-empty-sub" data-i18n="s04.rwd.empty.sub">Try asking...</div>
+                  <div class="rwd-mock-empty-cards">
+                    <div class="rwd-mock-empty-card et-suggest-target"><span class="rwd-mock-empty-tag" data-i18n="s04.rwd.empty.tag1">Descriptive Questions</span><p class="rwd-mock-empty-q" data-i18n="s04.rwd.empty.q1">What is the cost per unit of production volumes for each supplier?</p></div>
+                    <div class="rwd-mock-empty-card"><span class="rwd-mock-empty-tag" data-i18n="s04.rwd.empty.tag2">Data Quality and Cons…</span><p class="rwd-mock-empty-q" data-i18n="s04.rwd.empty.q2">How does the average Defect rates of products that passed their Inspection result…</p></div>
+                    <div class="rwd-mock-empty-card"><span class="rwd-mock-empty-tag" data-i18n="s04.rwd.empty.tag3">Comparative Questions</span><p class="rwd-mock-empty-q" data-i18n="s04.rwd.empty.q3">Which Transportation modes have a lower average Shipping costs on Route A compared …</p></div>
+                  </div>
+                </div>
+                <div class="rwd-mock-qbox"><p data-i18n="s04.rwd.mock.userq">How many products?</p></div>
+                <div class="rwd-mock-asst"><img class="rwd-mock-mascot" src="../assets/embedded-threads/icon-wren-mascot.png" alt="" /><p data-i18n="s04.rwd.mock.patience">Appreciate your patience, working on your request!</p></div>
+                <div class="rwd-mock-show" id="et-show"><img class="rwd-mock-mascot" src="../assets/embedded-threads/icon-wren-mascot.png" alt="" /><span class="rwd-mock-show-label" data-i18n="s04.rwd.mock.show">Show thinking steps</span><img class="rwd-mock-down" src="../assets/embedded-threads/icon-down.svg" alt="" /></div>
+                <div class="rwd-mock-steps" id="et-steps">
+                  <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text" data-i18n="s04.rwd.mock.step1">No related Question-SQL pairs found</span></div>
+                  <div class="rwd-mock-step-divider"><span></span></div>
+                  <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text" data-i18n="s04.rwd.mock.step2">No related SQL queries instructions found</span></div>
+                  <div class="rwd-mock-step-divider"><span></span></div>
+                  <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text" data-i18n="s04.rwd.mock.step3">User intent recognized</span></div>
+                  <div class="rwd-mock-step-divider"><span></span></div>
+                  <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text" data-i18n="s04.rwd.mock.step4">Found 9 candidate models</span></div>
+                  <div class="rwd-mock-step-divider"><span></span></div>
+                  <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text"><span data-i18n="s04.rwd.mock.step5a">Thought for</span><span class="rwd-mock-step-time">3.77s</span></span></div>
+                  <div class="rwd-mock-step-divider"><span></span></div>
+                  <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text"><span data-i18n="s04.rwd.mock.step6a">SQL statement generated for</span><span class="rwd-mock-step-time">9.47s</span></span></div>
+                  <div class="rwd-mock-step-divider"><span></span></div>
+                  <div class="rwd-mock-step-row"><img src="../assets/embedded-threads/icon-check.svg" alt="" /><span class="rwd-mock-step-text"><span data-i18n="s04.rwd.mock.step7a">Fetched up to 500 data rows for</span><span class="rwd-mock-step-time">4.19s</span></span></div>
+                </div>
+                <div class="rwd-mock-dp-wrap">
+                  <div class="rwd-mock-dp">
+                    <div class="rwd-mock-dp-body">
+                      <div class="rwd-mock-dp-title"><img src="../assets/embedded-threads/icon-profile.svg" alt="" /><span data-i18n="s04.rwd.mock.dp">Data preview</span></div>
+                      <div class="rwd-mock-dp-q" data-i18n="s04.rwd.mock.dpq">How many products are there in the products dataset?</div>
+                    </div>
+                    <button type="button" class="rwd-mock-view"><img src="../assets/embedded-threads/icon-eye.svg" alt="" /><span data-i18n="s04.rwd.mock.view">View data</span></button>
+                  </div>
+                </div>
+                <div class="rwd-mock-chart">
+                  <div class="rwd-mock-chart-title" data-i18n="s04.rwd.mock.chart">Orders by city · top 6</div>
+                  <div class="rwd-mock-bars">
+                    <div class="rwd-mock-bar" style="height:92%" data-label="SP"></div>
+                    <div class="rwd-mock-bar" style="height:68%" data-label="RJ"></div>
+                    <div class="rwd-mock-bar" style="height:55%" data-label="BH"></div>
+                    <div class="rwd-mock-bar" style="height:42%" data-label="CWB"></div>
+                    <div class="rwd-mock-bar" style="height:32%" data-label="POA"></div>
+                    <div class="rwd-mock-bar" style="height:24%" data-label="FOR"></div>
+                  </div>
+                </div>
+                <div class="rwd-mock-asst"><img class="rwd-mock-mascot" src="../assets/embedded-threads/icon-wren-mascot.png" alt="" /><p data-i18n="s04.rwd.mock.answer">There are a total of 32,951 products in the product catalog.</p></div>
+              </div>
+            </div>
+            <div class="rwd-mock-input-wrap">
+              <div class="rwd-mock-input-card"><div class="rwd-mock-input-inner"><div class="rwd-mock-textarea" data-i18n="s04.rwd.mock.ask">Ask to explore your data</div><div class="rwd-mock-send-wrap"><button type="button" class="rwd-mock-send" aria-label="Send"><img src="../assets/embedded-threads/icon-arrow-up.svg" alt="" /></button></div></div></div>
+            </div>
+          </div>
+          <button type="button" class="et-launcher" id="et-launcher" aria-label="Open Wren AI assistant">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#fff" d="M12 3C6.9 3 3 6.4 3 10.6c0 2.3 1.2 4.4 3.1 5.8.2.6-.4 2.2-1 3.1-.2.3.1.7.5.6 1.7-.4 3.2-1.1 3.9-1.6 1.1.3 2.3.5 3.5.5 5.1 0 9-3.4 9-7.6S17.1 3 12 3Z"/><circle cx="8.5" cy="10.6" r="1.15" fill="#2f54eb"/><circle cx="12" cy="10.6" r="1.15" fill="#2f54eb"/><circle cx="15.5" cy="10.6" r="1.15" fill="#2f54eb"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 05. WHERE PEOPLE ARE ───────────────────────── -->
+<div id="s05" class="sec cream" style="padding-top:32px;padding-bottom:60px;">
+  <div class="sec-inner">
+    <div class="sec-head reveal">
+      <span class="sec-num">04.</span>
+      <span class="sec-title" data-i18n="s05.title">Design Is Navigation Anchored to the Human</span>
+    </div>
+    <div class="text-block reveal">
+      <p class="body" data-i18n="s05.body">This Wren AI build felt more like an experiment about boundaries. We let go of our attachment to data models and moved the design's anchor into a subtler territory, <span class="stat-hi">the human scenario</span>. The moment we started asking "where is the user, what screen are they looking at, how much attention can they spare or spend," what had been rigid UI decisions began to settle into a kind of self-organizing order.</p>
+    </div>
+    <div class="text-block reveal">
+      <p class="body" data-i18n="s05.body2">It made us reconsider what data really is. Maybe it shouldn't be a destination passively waiting to be reached, but a flowing state that ripples with context and can be summoned at any moment. Through this work, we found that when design aligns precisely with the slice of life the user is in, data stops being a burden and becomes a reliable companion ready to act alongside them. <span class="stat-hi">The best design doesn't create a new world; it slips quietly into the user's own</span>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<div class="footer">
+  <div class="footer-contact">
+    <div class="footer-item"><span>WeChat: ralinzain</span></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.instagram.com/ralinzain" target="_blank" rel="noreferrer">Instagram</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://www.linkedin.com/in/ming-hsi-h-b59182158/" target="_blank" rel="noreferrer">LinkedIn</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="https://wa.me/886975573947">WhatsApp: +886 975 573 947</a></div>
+    <div class="footer-sep"></div>
+    <div class="footer-item"><a href="mailto:ralinzain@gmail.com">ralinzain@gmail.com</a></div>
+  </div>
+</div>
+
+  <script src="js/embedded-threads.js?v=27"></script>
+
+</body>
+</html>
