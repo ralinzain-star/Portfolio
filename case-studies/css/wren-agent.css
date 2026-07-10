@@ -390,7 +390,31 @@ html { scroll-padding-top: 80px; }
     }
     .journey-frame iframe {
       width: 100%; flex: 1; min-height: 0; border: 0; display: block;
+      /* demos are watch-only: no direct interaction inside the prototype */
+      pointer-events: none;
     }
+
+    /* Click-to-play overlay: the flow runs only after the user hits Play */
+    .journey-frame { position: relative; }
+    .journey-play {
+      position: absolute; top: 32px; left: 0; right: 0; bottom: 0;
+      z-index: 2; border: 0; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(250, 250, 250, 0.55);
+      -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+    }
+    .journey-play-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 9999px;
+      background: var(--text); color: #fff;
+      font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      transition: transform 0.15s;
+    }
+    .journey-play:hover .journey-play-pill { transform: scale(1.04); }
+    .journey-play-pill svg { width: 10px; height: 10px; flex-shrink: 0; }
+    .journey-frame.is-playing .journey-play { display: none; }
     .journey-frame-head {
       flex-shrink: 0;
       height: 32px; background: #f4f2ee;
@@ -402,7 +426,8 @@ html { scroll-padding-top: 80px; }
     .journey-frame-dot:nth-child(2) { background: #febc2e; }
     .journey-frame-dot:nth-child(3) { background: #28c840; }
     .journey-frame-spacer { flex: 1; }
-    .journey-frame-replay {
+    .journey-frame-replay,
+    .journey-frame-pause {
       appearance: none; border: 1px solid #d9d4c9; background: #fffefb;
       border-radius: 6px; padding: 3px 10px 3px 7px; cursor: pointer;
       display: inline-flex; align-items: center; gap: 5px;
@@ -410,8 +435,21 @@ html { scroll-padding-top: 80px; }
       letter-spacing: 0.1em; text-transform: uppercase; color: #8c8079;
       transition: color 0.15s, border-color 0.15s, background 0.15s;
     }
-    .journey-frame-replay:hover { color: var(--text); border-color: var(--muted); background: #fff; }
-    .journey-frame-replay svg { width: 12px; height: 12px; flex-shrink: 0; }
+    .journey-frame-replay:hover,
+    .journey-frame-pause:hover { color: var(--text); border-color: var(--muted); background: #fff; }
+    .journey-frame-replay svg,
+    .journey-frame-pause svg { width: 12px; height: 12px; flex-shrink: 0; }
+    /* frames with a play overlay: replay/pause only make sense while playing */
+    .journey-frame-pause { display: none; }
+    .journey-frame.is-playing .journey-frame-pause { display: inline-flex; }
+    .journey-frame:has(.journey-play):not(.is-playing) .journey-frame-replay { display: none; }
+    /* pause button swaps label + icon between Pause and Resume states */
+    .journey-frame-pause .lbl-resume,
+    .journey-frame-pause .ico-resume { display: none; }
+    .journey-frame.is-paused .journey-frame-pause .lbl-pause,
+    .journey-frame.is-paused .journey-frame-pause .ico-pause { display: none; }
+    .journey-frame.is-paused .journey-frame-pause .lbl-resume { display: inline; }
+    .journey-frame.is-paused .journey-frame-pause .ico-resume { display: inline-block; }
     .journey-caption {
       font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted);
       letter-spacing: 0.06em; margin-top: 10px;

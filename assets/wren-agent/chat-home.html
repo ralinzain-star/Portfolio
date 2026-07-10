@@ -7,6 +7,60 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>Chat Home</title>
+<script>
+// Pausable timer layer: the case-study page pauses/resumes the demo flow
+// via postMessage({type:'demo_pause'|'demo_resume'}). All setTimeout-driven
+// animation below runs through this wrapper so it can be frozen mid-flight.
+(function () {
+  var origSet = window.setTimeout.bind(window);
+  var origClear = window.clearTimeout.bind(window);
+  var paused = false;
+  var timers = new Map();
+  var nextId = 1;
+  function schedule(t) {
+    t.start = Date.now();
+    t.realId = origSet(function () { timers.delete(t.id); t.fn.apply(null, t.args); }, t.remaining);
+  }
+  window.setTimeout = function (fn, delay) {
+    if (typeof fn !== 'function') return origSet(fn, delay);
+    var args = Array.prototype.slice.call(arguments, 2);
+    var t = { id: nextId++, fn: fn, args: args, remaining: delay || 0, realId: null };
+    timers.set(t.id, t);
+    if (!paused) schedule(t);
+    return t.id;
+  };
+  window.clearTimeout = function (id) {
+    var t = timers.get(id);
+    if (t) { if (t.realId != null) origClear(t.realId); timers.delete(id); }
+    else origClear(id);
+  };
+  window.addEventListener('message', function (e) {
+    var d = e.data;
+    if (!d || typeof d !== 'object') return;
+    if (d.type === 'demo_pause' && !paused) {
+      paused = true;
+      var now = Date.now();
+      timers.forEach(function (t) {
+        if (t.realId != null) {
+          origClear(t.realId);
+          t.remaining = Math.max(0, t.remaining - (now - t.start));
+          t.realId = null;
+        }
+      });
+      document.documentElement.classList.add('demo-paused');
+    } else if (d.type === 'demo_resume' && paused) {
+      paused = false;
+      timers.forEach(function (t) { if (t.realId == null) schedule(t); });
+      document.documentElement.classList.remove('demo-paused');
+    }
+  });
+})();
+</script>
+<style>
+  .demo-paused *, .demo-paused *::before, .demo-paused *::after {
+    animation-play-state: paused !important;
+  }
+</style>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1433,6 +1487,7 @@
       });
     }
     selectPanel.classList.add('active'); scrollBottom();
+    maybeAutoAdvance();
   }
 
   function getSelectedText() {
@@ -1479,15 +1534,15 @@
       enterLoadingState();
       setTimeout(() => {
         const loadEl = addAiLoading([
-          'No related Question-SQL pairs found',
-          'No related SQL queries instructions found',
-          'Analyzing user intent...'
+          'Reading skill analyze-data.md',
+          'Loading data model for manufacturing_OF_manpower_mask',
+          'Executing tool Ask User Question'
         ]);
         animateThinkingSteps(loadEl, () => {
           setTimeout(() => {
             completeLoading(loadEl);
             setTimeout(() => {
-              appendToAiMsg(loadEl, `<p>What type of analysis would you like to do?</p><p>What is your goal for "exploring the data"? The current data table only contains manufacturing_OF_manpower_mask (fields: col_year_month, col_item, col_manpower, col_area). Please select the exploration method you would like me to start with:</p>`);
+              appendToAiMsg(loadEl, `<p>The <strong>analyze-data</strong> skill is running. Before I explore, what is your goal? The current data table is manufacturing_OF_manpower_mask (fields: col_year_month, col_item, col_manpower, col_area). Pick where you'd like me to start:</p>`);
               setTimeout(() => {
                 exitLoadingState();
                 showSelectPanel('Please select an analysis', [
@@ -1515,7 +1570,7 @@
           setTimeout(() => {
             completeLoading(loadEl);
             setTimeout(() => {
-              appendToAiMsg(loadEl, `<p>Received: You want to look at "login + transaction" behaviour, with indicators including transaction success rate and number of transactions/total amount, and compare:</p><ul style="padding-left:21px;font-size:14px;line-height:22px;color:#262626;margin:8px 0;"><li>Foodies vs Non-foodies (col_foodies)</li><li>Discount-sensitive vs Non-discount-sensitive (col_discount_sensitive)</li></ul><p>Before I start running SQL, there are still 3 key settings to configure:</p><ul style="padding-left:21px;font-size:14px;line-height:22px;color:#262626;margin:8px 0;"><li>Time range (required)</li><li>Definition of transaction success rate</li><li>Segmentation method</li></ul>`);
+              appendToAiMsg(loadEl, `<p>Got it: an <strong>overview and quality check</strong> of production, compared by item and area. Before I run the SQL, one setting left to confirm:</p><ul style="padding-left:21px;font-size:14px;line-height:22px;color:#262626;margin:8px 0;"><li>Time range (required)</li></ul>`);
               setTimeout(() => {
                 exitLoadingState();
                 showSelectPanel('Please select a time range:', [
@@ -1771,7 +1826,7 @@ You can download the full report as Markdown/CSV below, or click on any chart to
     selectPanel.classList.remove('active'); questionBox.style.display = '';
     exitLoadingState(); hasSent = false; updateModeUI();
     triggerBar.classList.add('hidden');
-    textareaInput.value = 'What is the cost per unit of production volumes for each supplier?';
+    textareaInput.value = '/analyze-data Explore the manufacturing data';
     doSend();
   });
   document.getElementById('triggerB').addEventListener('click', () => {
@@ -1812,6 +1867,22 @@ You can download the full report as Markdown/CSV below, or click on any chart to
 
   // Init
   updateModeUI();
+
+  // Auto mode: checkpoints normally wait for a human click. Inside the
+  // case-study iframe the demo is watch-only, so pick the first option and
+  // submit automatically (via setTimeout, so Pause freezes this too).
+  function maybeAutoAdvance() {
+    const isAuto = new URLSearchParams(location.search).has('auto');
+    if (!isAuto) return;
+    setTimeout(() => {
+      if (!selectPanel.classList.contains('active')) return;
+      const first = selectPanel.querySelector('.select-option, .checkbox-option');
+      if (first) first.click();
+      setTimeout(() => {
+        if (selectPanel.classList.contains('active')) document.getElementById('btnSubmit').click();
+      }, 1000);
+    }, 2000);
+  }
 
   // ===== Embedded-iframe auto-play (?auto=a|b)
   // In iframe mode we skip the home landing and the trigger buttons, and
