@@ -52,7 +52,7 @@ html { scroll-padding-top: 80px; }
    appearance: none; -webkit-appearance: none;
    background: transparent; border: 1px solid rgba(43,37,32,0.2);
    border-radius: 6px; padding: 3px 22px 3px 8px;
-   font-size: 11px; font-weight: 600; font-family: 'Barlow', sans-serif;
+   font-size: 12px; font-weight: 600; font-family: 'Barlow', sans-serif;
    color: var(--muted); cursor: pointer;
    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
    background-repeat: no-repeat; background-position: right 6px center;
@@ -60,7 +60,7 @@ html { scroll-padding-top: 80px; }
   }
   .nav-lang:hover { border-color: rgba(43,37,32,0.45); color: var(--text); }
   .nav-anchor {
-   font-size: 11px; font-weight: 500; letter-spacing: 0.01em;
+   font-size: 12px; font-weight: 500; letter-spacing: 0.01em;
    color: var(--muted); padding: 4px 9px; border-radius: 6px;
    white-space: nowrap; font-family: 'IBM Plex Mono', monospace;
    transition: color 0.15s, background 0.15s;
@@ -76,6 +76,15 @@ html { scroll-padding-top: 80px; }
   .sec.white { background: var(--bg-card); }
   .sec.cream { background: var(--bg); }
   .sec-inner { width: 100%; max-width: 1220px; display: flex; flex-direction: column; gap: 32px; }
+    /* ── SPACING RHYTHM ───────────────────────────
+       32px base between sibling blocks (.sec-inner gap).
+       A heading owns the block beneath it, so pull that pair to 20px.
+       A new sub-topic adds margin-top:24px inline for a 56px break. */
+    .sec-inner > .sec-head + .lede,
+    .sec-inner > .sec-head + .body,
+    .sec-inner > .sec-head + .text-block,
+    .sec-inner > .h3 + *:not(.sec-head) { margin-top: -12px; }
+
 
   /* ── SECTION HEADING ──────────────────────────── */
   .sec-head {
@@ -87,7 +96,7 @@ html { scroll-padding-top: 80px; }
   .sec-title { flex: 1; }
 
   /* ── TYPE SCALE ───────────────────────────────── */
-  .h3 { font-size: 11px; font-weight: 700; line-height: 1.4; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Barlow', sans-serif; }
+  .h3 { font-size: 14px; font-weight: 700; line-height: 1.4; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Barlow', sans-serif; }
   .body { font-size: 14px; font-weight: 400; line-height: 1.75; font-family: 'Noto Sans', 'Barlow', sans-serif; }
   .body-med { font-size: 14px; font-weight: 600; line-height: 1.5; font-family: 'Noto Sans', sans-serif; }
   .text-block { display: flex; flex-direction: column; gap: 8px; }
@@ -136,7 +145,7 @@ html { scroll-padding-top: 80px; }
   .md-example {
    margin-top: 12px; padding: 16px 20px; border-radius: 10px;
    background: rgba(219,212,201,0.18); overflow-x: auto;
-   font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; line-height: 1.7;
+   font-family: 'IBM Plex Mono', monospace; font-size: 12px; line-height: 1.7;
    color: var(--text); white-space: pre; border: none;
   }
   .md-example code { font-family: inherit; font-size: inherit; background: none; padding: 0; }
@@ -197,7 +206,7 @@ html { scroll-padding-top: 80px; }
    font-family: 'Barlow', sans-serif; letter-spacing: 0.3px;
   }
   .phone-sublabel {
-   margin-top: 2px; font-size: 11px; color: var(--muted);
+   margin-top: 2px; font-size: 12px; color: var(--muted);
    font-family: 'IBM Plex Mono', monospace; line-height: 1.5;
   }
 

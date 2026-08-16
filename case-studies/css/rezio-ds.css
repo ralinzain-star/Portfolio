@@ -48,7 +48,7 @@ html { scroll-padding-top: 80px; }
     }
     .nav-anchors::-webkit-scrollbar { display: none; }
     .nav-anchor {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.01em;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.01em;
       color: var(--muted); padding: 4px 9px; border-radius: 6px;
       white-space: nowrap; font-family: 'IBM Plex Mono', monospace;
       transition: color 0.15s, background 0.15s;
@@ -60,7 +60,7 @@ html { scroll-padding-top: 80px; }
       appearance: none; -webkit-appearance: none;
       background: transparent; border: 1px solid rgba(43,37,32,0.2);
       border-radius: 6px; padding: 3px 22px 3px 8px;
-      font-size: 11px; font-weight: 600; font-family: 'Barlow', sans-serif;
+      font-size: 12px; font-weight: 600; font-family: 'Barlow', sans-serif;
       color: var(--muted); cursor: pointer;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: right 6px center;
@@ -79,6 +79,15 @@ html { scroll-padding-top: 80px; }
       width: 100%; max-width: 1220px;
       display: flex; flex-direction: column; gap: 32px;
     }
+    /* ── SPACING RHYTHM ───────────────────────────
+       32px base between sibling blocks (.sec-inner gap).
+       A heading owns the block beneath it, so pull that pair to 20px.
+       A new sub-topic adds margin-top:24px inline for a 56px break. */
+    .sec-inner > .sec-head + .lede,
+    .sec-inner > .sec-head + .body,
+    .sec-inner > .sec-head + .text-block,
+    .sec-inner > .h3 + *:not(.sec-head) { margin-top: -12px; }
+
 
     /* ── SECTION HEADING ──────────────────────────── */
     .sec-head {
@@ -91,7 +100,7 @@ html { scroll-padding-top: 80px; }
 
     /* ── TYPE SCALE ───────────────────────────────── */
     .h3 {
-      font-size: 11px; font-weight: 700; line-height: 1.4;
+      font-size: 14px; font-weight: 700; line-height: 1.4;
       letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Barlow', sans-serif;
     }
     .label-lg {
@@ -101,7 +110,7 @@ html { scroll-padding-top: 80px; }
     .body { font-size: 14px; font-weight: 400; line-height: 1.75; font-family: 'Noto Sans', 'Barlow', sans-serif; }
     .body-med { font-size: 14px; font-weight: 600; line-height: 1.5; font-family: 'Noto Sans', sans-serif; }
     .body-sm { font-size: 14px; font-weight: 400; line-height: 1.75; font-family: 'Noto Sans', sans-serif; }
-    .caption { font-size: 11px; font-weight: 500; line-height: 1.4; letter-spacing: 0.04em; font-family: 'IBM Plex Mono', monospace; }
+    .caption { font-size: 12px; font-weight: 500; line-height: 1.4; letter-spacing: 0.04em; font-family: 'IBM Plex Mono', monospace; }
     .text-block { display: flex; flex-direction: column; gap: 8px; }
 
     /* ── TITLE BAR ────────────────────────────────── */
@@ -232,7 +241,7 @@ html { scroll-padding-top: 80px; }
       flex-direction: column;
     }
     .color-palette-label {
-      font-size: 9px; font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px; font-family: 'IBM Plex Mono', monospace;
       color: #fff; line-height: 1; text-align: center;
     }
     .token-btn-preview {
@@ -311,7 +320,7 @@ html { scroll-padding-top: 80px; }
     .btn-eg.secondary { border: 1px solid #005abe; color: #005abe; background: transparent; }
     .btn-eg.ghost { color: var(--text); background: transparent; }
     .btn-eg.critical { background: #c80a28; color: #fff; }
-    .btn-eg.sm { padding: 3px 10px; font-size: 11px; }
+    .btn-eg.sm { padding: 3px 10px; font-size: 12px; }
     .btn-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
 
     /* ── FULL-WIDTH IMAGE ─────────────────────────── */
@@ -340,7 +349,7 @@ html { scroll-padding-top: 80px; }
     }
     .footer-item { display: flex; align-items: center; gap: 0; }
     .footer-item a, .footer-item span {
-      font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.45);
+      font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.45);
       letter-spacing: 0.02em; font-family: 'IBM Plex Mono', monospace;
       transition: color 0.15s; white-space: nowrap; padding: 0 14px;
     }
@@ -365,7 +374,7 @@ html { scroll-padding-top: 80px; }
       .guideline-row { flex-direction: column; }
       .guideline-rule { border-right: none; }
       .sec-head { font-size: 20px; }
-      .token-hier-label { width: 60px; font-size: 11px; }
+      .token-hier-label { width: 60px; font-size: 12px; }
       .state-table th:first-child { width: 40px; }
       .state-table th:nth-child(2) { width: 100px; }
     }

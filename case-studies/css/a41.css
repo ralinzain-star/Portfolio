@@ -55,7 +55,7 @@ html { scroll-padding-top: 80px; }
       appearance: none; -webkit-appearance: none;
       background: transparent; border: 1px solid rgba(43,37,32,0.2);
       border-radius: 6px; padding: 3px 22px 3px 8px;
-      font-size: 11px; font-weight: 600; font-family: 'Barlow', sans-serif;
+      font-size: 12px; font-weight: 600; font-family: 'Barlow', sans-serif;
       color: var(--muted); cursor: pointer;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: right 6px center;
@@ -63,7 +63,7 @@ html { scroll-padding-top: 80px; }
     }
     .nav-lang:hover { border-color: rgba(43,37,32,0.45); color: var(--text); }
     .nav-anchor {
-      font-size: 11px; font-weight: 500;
+      font-size: 12px; font-weight: 500;
       letter-spacing: 0.01em;
       color: var(--muted);
       padding: 4px 9px;
@@ -90,8 +90,17 @@ html { scroll-padding-top: 80px; }
     .sec.cream { background: var(--bg); }
     .sec-inner {
       width: 100%; max-width: 1220px;
-      display: flex; flex-direction: column; gap: 48px;
+      display: flex; flex-direction: column; gap: 32px;
     }
+    /* ── SPACING RHYTHM ───────────────────────────
+       32px base between sibling blocks (.sec-inner gap).
+       A heading owns the block beneath it, so pull that pair to 20px.
+       A new sub-topic adds margin-top:24px inline for a 56px break. */
+    .sec-inner > .sec-head + .lede,
+    .sec-inner > .sec-head + .body,
+    .sec-inner > .sec-head + .text-block,
+    .sec-inner > .h3 + *:not(.sec-head) { margin-top: -12px; }
+
 
     /* ── SECTION HEADING ──────────────────────────── */
     .sec-head {
@@ -104,7 +113,7 @@ html { scroll-padding-top: 80px; }
 
     /* ── TYPE SCALE ───────────────────────────────── */
     .h3 {
-      font-size: 11px; font-weight: 700; line-height: 1.4;
+      font-size: 14px; font-weight: 700; line-height: 1.4;
       letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Barlow', sans-serif;
     }
     .body {
@@ -116,7 +125,7 @@ html { scroll-padding-top: 80px; }
       font-family: 'Noto Sans', sans-serif;
     }
     .caption {
-      font-size: 11px; font-weight: 500; line-height: 1.4;
+      font-size: 12px; font-weight: 500; line-height: 1.4;
       letter-spacing: 0.04em; font-family: 'IBM Plex Mono', monospace;
     }
     .text-block { display: flex; flex-direction: column; gap: 8px; }
@@ -227,7 +236,7 @@ html { scroll-padding-top: 80px; }
     .phone-frame-placeholder {
       width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 10px; color: var(--muted);
+      font-size: 12px; color: var(--muted);
       font-family: 'IBM Plex Mono', monospace;
       text-align: center; padding: 12px;
     }
@@ -262,8 +271,8 @@ html { scroll-padding-top: 80px; }
     /* ── RESPONSIVE ───────────────────────────────── */
     @media (max-width: 900px) {
       .nav { padding: 12px 20px; }
-      .nav-back { white-space: nowrap; flex-shrink: 0; font-size: 11px; }
-      .nav-anchor { font-size: 10px; padding: 3px 7px; }
+      .nav-back { white-space: nowrap; flex-shrink: 0; font-size: 12px; }
+      .nav-anchor { font-size: 12px; padding: 3px 7px; }
       .title-bar { padding: 28px 20px 20px; }
       .sec { padding: 60px 20px; }
       .sec-head { font-size: 20px; }

@@ -64,7 +64,7 @@
         </div>
         <div class="text-block">
           <p class="h3" data-i18n="intro.h3.role">My Role:</p>
-          <p class="body" data-i18n="intro.role.body">As the lead interaction designer, I redesigned the end-to-end product listing experience by restructuring the information architecture, rebuilding the design system, and aligning teams around research findings. The redesign reduced setup time by <span class="stat-hi">38% (45 → 28 min)</span>, achieved a <span class="stat-hi">SUS score of 80.3</span>, and drove a <span class="stat-hi">30%</span> reduction in support ticket volume.</p>
+          <p class="body" data-i18n="intro.role.body">As the lead interaction designer, I redesigned the end-to-end product listing experience by restructuring the information architecture, rebuilding the design system, and aligning teams around research findings. The redesign reduced setup time by <span class="stat-hi">38% (45 → 28 min)</span>, achieved a <span class="stat-hi">SUS score of 80.3</span>, and drove an estimated <span class="stat-hi">~30%</span> reduction in support ticket volume.</p>
         </div>
         <div class="text-block">
           <p class="h3" data-i18n="intro.h3.time">Timeline</p>
@@ -99,7 +99,7 @@
           <ol class="num-list">
             <li data-i18n="s01.product.li1">Reduced setup time by <span class="stat-hi">38% (45 → 28 min)</span>, enabling more independent onboarding without support intervention</li>
             <li data-i18n="s01.product.li2">Achieved a <span class="stat-hi">SUS score of 80.3</span>, indicating a significantly clearer and more learnable setup flow</li>
-            <li data-i18n="s01.product.li3">Reduced support ticket volume by <span class="stat-hi">30%</span> without adding headcount</li>
+            <li data-i18n="s01.product.li3">Cut support ticket volume by an estimated <span class="stat-hi">~30%</span> without adding headcount</li>
           </ol>
         </div>
         <div class="text-block">
@@ -693,7 +693,7 @@
           <div class="ofs-screenshot"><img src="../assets/rezio/rzio-step4.png" alt="Rezio – Bound Rules table"></div>
           <div class="ofs-pain">
             <span class="ofs-pain-tag" data-i18n="s03b.pain4.tag">Pain Point</span>
-            <p data-i18n="s03b.pain4.body">Any differential pricing · by day of week, season, or identity type · multiplies the number of rules exponentially: N packages × M price tiers × T time windows = N×M×T bound rules to create, configure, and verify individually. There is no grouped editing, no bulk action, and no indication of this complexity before the merchant begins. This is the single most operationally damaging friction point in the legacy flow.</p>
+            <p data-i18n="s03b.pain4.body">Any differential pricing · by day of week, season, or identity type · multiplies the number of rules: N packages × T time windows = N×T bound rules to create, configure, and verify individually, each carrying its own price. There is no grouped editing, no bulk action, and no indication of this complexity before the merchant begins. This is the single most operationally damaging friction point in the legacy flow.</p>
           </div>
         </div>
       </div>
@@ -705,7 +705,7 @@
     <div class="text-block">
       <p class="h3" data-i18n="s04.h3.gaps">Why It Feels So Counter-Intuitive</p>
       <p class="body" data-i18n="s04.gaps.body">The four steps above expose a system built around internal data relationships rather than user intent. Merchants think in a natural sequence: what am I selling, when, and at what price. The system, however, treats these as independent entities · packages, pricing rules, and time bindings · that must be configured separately and connected through an abstract relational model that is never explained to the user.<br><br>The result is a flow that constantly demands decisions before the user has the context to make them: committing to a price before knowing the schedule, configuring a package while being silently rerouted to product-level settings, and constructing "bound rules" with no indication of how many are needed or how they relate to each other.</p>
-      <p class="body" data-i18n="s04.gaps.example">Say the Silver Clay Ring Workshop wants to run weekday and weekend pricing · that's <span class="stat-hi">2 packages × 2 price tiers × 2 time windows = 4 bound rules</span> to create manually, one for every combination. There is no batch apply, no shortcut, and no indication this multiplication is even required.</p>
+      <p class="body" data-i18n="s04.gaps.example">Say the Silver Clay Ring Workshop wants to run weekday and weekend pricing · that's <span class="stat-hi">2 packages × 2 time windows = 4 bound rules</span> to create manually, one for every combination, each carrying its own price. There is no batch apply, no shortcut, and no indication this multiplication is even required.</p>
     </div>
 
     <!-- Bound-rules multiplication diagram -->
@@ -719,20 +719,12 @@
           <div class="bound-factor-item">Package B · Paired (10% off)</div>
         </div>
         <div class="bound-op">×</div>
-        <!-- Factor 2: Price tiers -->
+        <!-- Factor 2: Time windows, each carrying its own price -->
         <div class="bound-factor">
-          <div class="bound-factor-head">Price tier</div>
+          <div class="bound-factor-head">Time window · price</div>
           <div class="bound-factor-n">2</div>
-          <div class="bound-factor-item">Weekday · NT$2,050</div>
-          <div class="bound-factor-item">Weekend · NT$2,300</div>
-        </div>
-        <div class="bound-op">×</div>
-        <!-- Factor 3: Time windows -->
-        <div class="bound-factor">
-          <div class="bound-factor-head">Time window</div>
-          <div class="bound-factor-n">2</div>
-          <div class="bound-factor-item">Mon – Fri · 10:00 – 12:00</div>
-          <div class="bound-factor-item">Sat – Sun · 10:00 – 12:00</div>
+          <div class="bound-factor-item">Mon – Fri · 10:00 – 12:00 · NT$2,050</div>
+          <div class="bound-factor-item">Sat – Sun · 10:00 – 12:00 · NT$2,300</div>
         </div>
         <div class="bound-op">=</div>
         <!-- Result -->
@@ -820,6 +812,7 @@
         <li data-i18n="s04.finding.f3">Internal jargon · Labels reflected engineering concepts rather than user vocabulary, creating consistent misunderstanding at critical setup steps.</li>
         <li data-i18n="s04.finding.f4">Inconsistent interaction patterns · Without a unified design language, users couldn't build reliable expectations as they moved through the interface.</li>
         <li data-i18n="s04.finding.f5">Cross-tab edit dependencies · Changing a package name, price, or schedule requires edits across multiple disconnected tabs with no linking guidance, making updates error-prone and time-consuming.</li>
+        <li data-i18n="s04.finding.f6">Combinatorial rule explosion · Any differential pricing multiplies bound rules (packages × time windows), each created and verified by hand, with conflicts surfaced only as a date list the merchant must debug rule by rule.</li>
       </ol>
     </div>
 
@@ -832,8 +825,8 @@
     <!-- UI Mockups + Prototyping -->
     <div style="display:flex;flex-direction:column;gap:16px;">
       <div class="text-block">
-        <p class="h3" data-i18n="s04.h3.ui">UI Mockups and Prototyping</p>
-        <p class="body" data-i18n="s04.ui.body">At each design review, we built prototypes · using AI generation or Figma · to test specific hypotheses before committing to development. The interactive prototype below covers the pricing flow: follow the green cursor to explore the interaction model.</p>
+        <p class="h3" data-i18n="s04.h3.ui">How We Prototyped</p>
+        <p class="body" data-i18n="s04.ui.body">At each design review, we built prototypes · using AI generation or Figma · to test specific hypotheses before committing to development. The pricing flow went through the most iterations: each round tested whether merchants could predict what a rule would do before saving it.</p>
       </div>
     </div>
 
@@ -932,7 +925,7 @@
         </div>
         <div class="ofs-body">
           <div class="ofs-chapter-title" data-i18n="s05.new.step6.title">Price Settings</div>
-          <p class="ofs-chapter-story" data-i18n="s05.new.story6">Assign prices directly to time slots · with support for multiple price tiers (e.g. Default Price, Weekend Price). The <span class="stat-hi">color-coded</span> calendar grid updates in real time, letting merchants verify exactly which price rule applies to each session before publishing · eliminating the old "Bound Rules" model where N×M×T combinations had to be created and verified individually.</p>
+          <p class="ofs-chapter-story" data-i18n="s05.new.story6">Assign prices directly to time slots · with support for multiple price tiers (e.g. Default Price, Weekend Price). The <span class="stat-hi">color-coded</span> calendar grid updates in real time, letting merchants verify exactly which price rule applies to each session before publishing · eliminating the old "Bound Rules" model where every package × time-window combination had to be created and verified individually.</p>
           <div class="ofs-screenshot"><img src="../assets/rezio/New-5.png" alt="New flow – Price Settings"></div>
         </div>
       </div>
@@ -1006,7 +999,7 @@
         src="../assets/rezio/IMG_6164 3.png"
         alt="KKday team photo" />
       <div class="results-copy">
-        <p class="body" data-i18n="s06.body1">The redesign delivered measurable progress against all three goals: setup time dropped from <span class="stat-hi">45 to 28 minutes (–38%)</span>, <span class="stat-hi">SUS reached 80.3</span>, and support ticket volume dropped by <span class="stat-hi">30%</span> without additional headcount.</p>
+        <p class="body" data-i18n="s06.body1">The redesign delivered measurable progress against all three goals: setup time dropped from <span class="stat-hi">45 to 28 minutes (–38%)</span>, <span class="stat-hi">SUS reached 80.3</span>, and support ticket volume dropped by an estimated <span class="stat-hi">~30%</span> without additional headcount.</p>
         <p class="body" data-i18n="s06.body2">AI-assisted prototyping shortened the iteration cycle, while the <span class="stat-hi">shared design system</span> reduced recurring handoff friction between design and engineering · improvements that continued beyond the project itself.</p>
         <p class="body" data-i18n="s06.body3">With more time, I would involve users earlier in stakeholder alignment so evidence could shape consensus sooner and reduce rework. Even so, one of the strongest outcomes was the team capability built through the process itself.</p>
       </div>

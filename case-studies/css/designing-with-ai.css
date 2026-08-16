@@ -27,7 +27,7 @@
     img { display: block; }
 
     .h3 {
-      font-size: 11px; font-weight: 700; line-height: 1.4;
+      font-size: 14px; font-weight: 700; line-height: 1.4;
       letter-spacing: 0.1em; text-transform: uppercase;
       font-family: 'Barlow', sans-serif;
     }
@@ -40,7 +40,7 @@
       font-family: 'Noto Sans', sans-serif;
     }
     .caption {
-      font-size: 11px; font-weight: 500; line-height: 1.4;
+      font-size: 12px; font-weight: 500; line-height: 1.4;
       letter-spacing: 0.04em;
       font-family: 'IBM Plex Mono', monospace;
     }
@@ -69,7 +69,7 @@
     }
     .nav-anchors::-webkit-scrollbar { display: none; }
     .nav-anchor {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.01em;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.01em;
       color: var(--muted); padding: 4px 9px; border-radius: 6px;
       white-space: nowrap; font-family: 'IBM Plex Mono', monospace;
       transition: color 0.15s, background 0.15s;
@@ -81,7 +81,7 @@
       appearance: none; -webkit-appearance: none;
       background: transparent; border: 1px solid rgba(43,37,32,0.2);
       border-radius: 6px; padding: 3px 22px 3px 8px;
-      font-size: 11px; font-weight: 600; font-family: 'Barlow', sans-serif;
+      font-size: 12px; font-weight: 600; font-family: 'Barlow', sans-serif;
       color: var(--muted); cursor: pointer;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: right 6px center;
@@ -109,8 +109,17 @@
     .sec.cream { background: var(--bg); }
     .sec-inner {
       width: 100%; max-width: 1220px;
-      display: flex; flex-direction: column; gap: 20px;
+      display: flex; flex-direction: column; gap: 32px;
     }
+    /* ── SPACING RHYTHM ───────────────────────────
+       32px base between sibling blocks (.sec-inner gap).
+       A heading owns the block beneath it, so pull that pair to 20px.
+       A new sub-topic adds margin-top:24px inline for a 56px break. */
+    .sec-inner > .sec-head + .lede,
+    .sec-inner > .sec-head + .body,
+    .sec-inner > .sec-head + .text-block,
+    .sec-inner > .h3 + *:not(.sec-head) { margin-top: -12px; }
+
     .sec-head {
       display: flex; gap: 28px; align-items: flex-start;
       font-size: 24px; font-weight: 800;
@@ -175,7 +184,7 @@
     }
     .metric-card .m-label {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px; letter-spacing: 0.14em;
+      font-size: 12px; letter-spacing: 0.14em;
       color: var(--muted); text-transform: uppercase;
     }
     .metric-card .m-value {
@@ -298,11 +307,11 @@
       letter-spacing: 0.04em;
     }
     .step-kv-key {
-      font-size: 9px; font-weight: 500;
+      font-size: 12px; font-weight: 500;
       letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase;
     }
     .step-kv-val {
-      font-size: 11px; color: var(--muted); line-height: 1.4; font-weight: 500;
+      font-size: 12px; color: var(--muted); line-height: 1.4; font-weight: 500;
     }
 
     /* Media image rendered inside ofs-body (after skill-arch) */
@@ -326,7 +335,7 @@
       border-bottom: 1px dashed var(--border);
     }
     .skill-arch-tag {
-      font-family: 'IBM Plex Mono', monospace; font-size: 9px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 12px;
       letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600;
       background: var(--accent-soft); color: var(--accent);
       padding: 2px 6px; border-radius: 3px;
@@ -336,7 +345,7 @@
       color: var(--text); font-weight: 600;
     }
     .skill-arch-sub {
-      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 12px;
       color: var(--muted); letter-spacing: 0.06em;
       margin-left: auto; text-transform: uppercase;
     }
@@ -348,14 +357,14 @@
     }
     .skill-arch-steps li:last-child { border-bottom: none; }
     .skill-arch-no {
-      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 12px;
       color: var(--muted); letter-spacing: 0.06em;
     }
     .skill-arch-ph { color: var(--text); font-size: 12px; line-height: 1.5; }
     .skill-arch-foot {
       margin-top: 8px; padding-top: 8px;
       border-top: 1px dashed var(--border);
-      font-size: 11px; color: var(--muted); line-height: 1.5;
+      font-size: 12px; color: var(--muted); line-height: 1.5;
     }
 
     /* Headcount table (04) */
@@ -368,7 +377,7 @@
     .hc-table thead td {
       padding: 14px 14px; border-bottom: 1.5px solid var(--text);
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--muted); font-weight: 600;
     }
     .hc-table tbody td {
@@ -379,7 +388,7 @@
     .hc-table tbody tr:last-child td { border-bottom: none; }
     .hc-table .hc-step {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px; color: var(--muted);
+      font-size: 12px; color: var(--muted);
       width: 48px; font-weight: 600;
     }
     .hc-table .hc-role { font-weight: 600; width: 28%; }
@@ -423,7 +432,7 @@
       font-family: 'Barlow', sans-serif;
     }
     .week-seg .ws-label {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.06em; opacity: 0.88;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.06em; opacity: 0.88;
       text-transform: uppercase;
     }
     .week-seg .ws-hrs {
@@ -435,7 +444,7 @@
     .week-legend {
       display: flex; gap: 18px; flex-wrap: wrap;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px; color: var(--muted);
+      font-size: 12px; color: var(--muted);
     }
     .week-legend-item { display: flex; align-items: center; gap: 7px; }
     .week-legend-dot {
@@ -475,7 +484,7 @@
     }
     .proj-hrs {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px; color: var(--muted);
+      font-size: 12px; color: var(--muted);
       text-align: right;
     }
 
@@ -498,7 +507,7 @@
     }
     .tool-card-role {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+      font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
       color: var(--accent); font-weight: 600;
     }
     .tool-card-desc {
@@ -518,7 +527,7 @@
     .principle-row:last-child { border-bottom: none; }
     .principle-num {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px; font-weight: 600; color: var(--muted);
+      font-size: 12px; font-weight: 600; color: var(--muted);
       letter-spacing: 0.1em; padding-top: 3px;
     }
     .principle-content { display: flex; flex-direction: column; gap: 6px; }
@@ -544,7 +553,7 @@
     }
     .pull-quote-attr {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--muted); margin-top: 10px; font-weight: 500;
       display: block;
     }
@@ -562,7 +571,7 @@
     }
     .reflect-tag {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px; font-weight: 600;
+      font-size: 12px; font-weight: 600;
       letter-spacing: 0.14em; text-transform: uppercase;
     }
     .reflect-tag.can { color: #5a9a7a; }
@@ -593,7 +602,7 @@
     .footer-contact { display: flex; align-items: center; gap: 0; flex-wrap: wrap; justify-content: center; }
     .footer-item { display: flex; align-items: center; gap: 0; }
     .footer-item a, .footer-item span {
-      font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.45);
+      font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.45);
       letter-spacing: 0.02em; font-family: 'IBM Plex Mono', monospace;
       transition: color 0.15s; white-space: nowrap; padding: 0 14px;
     }
@@ -630,8 +639,8 @@
 
     @media (max-width: 640px) {
       .nav { padding: 12px 16px; }
-      .nav-back { white-space: nowrap; flex-shrink: 0; font-size: 11px; }
-      .nav-anchor { font-size: 10px; padding: 3px 7px; }
+      .nav-back { white-space: nowrap; flex-shrink: 0; font-size: 12px; }
+      .nav-anchor { font-size: 12px; padding: 3px 7px; }
       .title-bar { padding: 28px 20px 20px; }
       .sec { padding: 20px 20px; }
       .sec-head { font-size: 20px; }
@@ -641,11 +650,11 @@
       .proj-row { grid-template-columns: 80px 1fr 60px; gap: 10px; }
       .hc-table .hc-step { width: 36px; }
       .hc-table tbody td { padding: 10px 8px; font-size: 12px; }
-      .hc-table thead td { padding: 10px 8px; font-size: 9px; }
+      .hc-table thead td { padding: 10px 8px; font-size: 12px; }
       .metric-li { padding: 16px 18px; gap: 4px; }
       .metric-li-head { gap: 10px; row-gap: 4px; align-items: baseline; }
       .metric-li-value { font-size: 30px; }
-      .metric-li-unit { font-size: 10px; margin-left: 4px; }
-      .metric-li-label { font-size: 10px; letter-spacing: 0.08em; }
+      .metric-li-unit { font-size: 12px; margin-left: 4px; }
+      .metric-li-label { font-size: 12px; letter-spacing: 0.08em; }
       .metric-li-note { font-size: 13px; line-height: 1.7; }
     }

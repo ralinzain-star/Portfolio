@@ -78,7 +78,16 @@ html { scroll-padding-top: 80px; }
     }
     .sec.white { background: var(--bg-card); }
     .sec.cream { background: var(--bg); }
-    .sec-inner { width: 100%; max-width: 1220px; display: flex; flex-direction: column; gap: 48px; }
+    .sec-inner { width: 100%; max-width: 1220px; display: flex; flex-direction: column; gap: 32px; }
+    /* ── SPACING RHYTHM ───────────────────────────
+       32px base between sibling blocks (.sec-inner gap).
+       A heading owns the block beneath it, so pull that pair to 20px.
+       A new sub-topic adds margin-top:24px inline for a 56px break. */
+    .sec-inner > .sec-head + .lede,
+    .sec-inner > .sec-head + .body,
+    .sec-inner > .sec-head + .text-block,
+    .sec-inner > .h3 + *:not(.sec-head) { margin-top: -12px; }
+
 
     /* ── SECTION HEADING ──────────────────────────── */
     .sec-head {
@@ -90,7 +99,7 @@ html { scroll-padding-top: 80px; }
     .sec-title { flex: 1; }
 
     /* ── TYPE SCALE ───────────────────────────────── */
-    .h3 { font-size: 12px; font-weight: 700; line-height: 1.4; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Barlow', sans-serif; }
+    .h3 { font-size: 14px; font-weight: 700; line-height: 1.4; letter-spacing: 0.1em; text-transform: uppercase; font-family: 'Barlow', sans-serif; }
     .label-lg { font-size: 18px; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; font-family: 'Barlow', sans-serif; color: var(--text); }
     .body { font-size: 14px; font-weight: 400; line-height: 1.75; font-family: 'Noto Sans', 'Barlow', sans-serif; }
     .body-lg { font-size: 16px; font-weight: 400; line-height: 1.7; font-family: 'Noto Sans', sans-serif; }
@@ -116,7 +125,7 @@ html { scroll-padding-top: 80px; }
     }
 
     .stat-hi { background: var(--yellow); padding: 1px 4px; border-radius: 4px; font-weight: 600; }
-    .stat-hi-blue { background: var(--yellow); padding: 1px 6px; border-radius: 4px; font-weight: 600; }
+    .stat-hi-blue { background: var(--yellow); padding: 1px 4px; border-radius: 4px; font-weight: 600; }
 
     /* ── BULL LIST / NUM LIST ─────────────────────── */
     .bull-list { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
@@ -142,7 +151,23 @@ html { scroll-padding-top: 80px; }
     .stat-card .stat-foot { font-size: 12px; line-height: 1.5; color: var(--muted); }
 
     /* ── TWO / THREE COL TEXT ─────────────────────── */
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    /* Everything reads as one vertical column: comparisons stack rather than
+       sitting side by side at half width. */
+    .two-col { display: grid; grid-template-columns: 1fr; gap: 32px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+
+    /* ── TEACH-FLOW MEDIA FIGURES (s03) ───────────── */
+    .tflow-fig { margin: 0; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+    .tflow-fig video, .tflow-fig img { width: 100%; display: block; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-card); }
+    .tflow-cap { font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.75; color: var(--muted); letter-spacing: 0.01em; }
+    .tflow-cap b { color: var(--text); font-weight: 500; }
+    /* The four shipped moments read as a sequence, so they stack full-width
+       rather than sitting in a 2x2 grid where each frame is half size. */
+    .two-col.tflow-row { grid-template-columns: 1fr; gap: 48px; align-items: start; }
+    @media (max-width: 768px) { .two-col.tflow-row { gap: 32px; } }
 
     /* ── COMPARISON TABLE (hero visual) ───────────── */
     .cmp-wrap { border-radius: 18px; overflow: hidden; border: 1px solid var(--border); background: var(--bg-card); }
@@ -513,7 +538,7 @@ html { scroll-padding-top: 80px; }
     }
 
     /* ── Paid-rate-by-behavior bar chart (s03) ── */
-    .kbars { margin: 8px 0 0; display: flex; flex-direction: column; gap: 14px; }
+    .kbars { margin: 0; display: flex; flex-direction: column; gap: 14px; }
     .kbars-cap, .kbars-note { font: 400 12px/1.5 'IBM Plex Mono', monospace; letter-spacing: 0.02em; color: var(--muted); }
     .kbars-list { display: flex; flex-direction: column; gap: 14px; }
     .kbar-row { display: grid; grid-template-columns: minmax(150px, 230px) 1fr 92px; gap: 16px; align-items: center; }
