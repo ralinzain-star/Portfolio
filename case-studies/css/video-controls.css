@@ -1,0 +1,86 @@
+/* ---------------------------------------------------------------------------
+   Demo video controls
+   Shared by every case study that embeds a product demo recording. Opt a video
+   in by adding data-vc to it; video-controls.js wraps it and injects the bar.
+   The clips stay autoplay/loop/muted, so this only adds a way to stop one and
+   a way to send it back to the start.
+   --------------------------------------------------------------------------- */
+
+.vc-wrap {
+  position: relative;
+  display: block;
+  width: 100%;
+  line-height: 0; /* kills the descender gap under the video */
+}
+
+.vc-wrap > video {
+  display: block;
+  width: 100%;
+}
+
+.vc-bar {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  display: flex;
+  gap: 6px;
+  opacity: 0.65;
+  transition: opacity 0.25s ease;
+  line-height: normal;
+  z-index: 2;
+}
+
+/* Full strength while the reader is actually looking at this clip. */
+.vc-wrap:hover .vc-bar,
+.vc-wrap:focus-within .vc-bar {
+  opacity: 1;
+}
+
+.vc-btn {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 8px;
+  background: rgba(43, 37, 32, 0.62); /* --text, translucent */
+  color: #f4f0e9;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: background 0.2s ease, transform 0.12s ease;
+}
+
+.vc-btn:hover  { background: rgba(43, 37, 32, 0.88); }
+.vc-btn:active { transform: scale(0.92); }
+
+.vc-btn:focus-visible {
+  outline: 2px solid var(--accent, #005abe);
+  outline-offset: 2px;
+}
+
+.vc-btn svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+  fill: currentColor;
+}
+
+/* Only one of the two toggle glyphs is ever shown. */
+.vc-btn .vc-ico-pause { display: none; }
+.vc-wrap.is-playing .vc-toggle .vc-ico-play  { display: none; }
+.vc-wrap.is-playing .vc-toggle .vc-ico-pause { display: block; }
+
+/* Touch devices never hover, so the bar has to stand on its own. */
+@media (hover: none) {
+  .vc-bar { opacity: 1; }
+  .vc-btn { width: 34px; height: 34px; } /* comfortable tap target */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vc-bar, .vc-btn { transition: none; }
+}
