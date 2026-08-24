@@ -152,11 +152,21 @@ page as a smarter form」那個 rejected design 升格成本節的第 1 段。
 最現成的角度：Evidence 02 埋了一個沒被回答的問題。使用者會直接打「what can I ask?」，
 當按鈕全部消失、所有能力都收進輸入框之後，這個問題不會消失，反而更尖銳。
 
-**這裡需要 Iris 決定實際情況**，我不知道答案：
-- (a) 有做對應設計嗎？例如 Agent 主動提示能力、slash 指令、空狀態引導。
-- (b) 還是這仍是開放問題，目前靠 onboarding 或客戶成功團隊補？
-- (c) 或者妳想收在別的取捨上，例如對話式介面的可預測性低於按鈕、
-  稽核介面反而變得更重要。
+**已解決（2026-08-24，Iris 提供）。** 產品一開始就有引導，而且做法與整個架構一致：
+發現能力這件事也被搬進對話裡，不是把選單加回去。首次使用會開一個名為
+「Explore workflow-boosting features」的對話，Agent 主動列出四張能力卡片
+（GenBI Apps、Agent skills、Knowledge、Generate reports），每張可展開成預覽，
+「Try it out」直接在對話裡把流程跑起來，而不是打開設定頁。
+
+素材來源：`assets/wren-agent/sources/Knowledge.mov` 的 2 至 20 秒。這段原本沒有
+被任何剪輯用到，內容正好是引導面板、展開 Knowledge、送出請求，接著就銜接到
+33 秒開始的 teach-clarify。已剪成 `assets/wren-agent/onboarding.mp4`。
+
+Figma 來源：Main Feature Home，node 9161-34853。
+
+因此 06 節的收尾改為「讓什麼變難了，以及我們怎麼處理」，先講問題與解法，放影片，
+再收在仍然開放的部分：精選卡片回答得了抵達當天的問題，但 Skill 架構的用意就是
+能力會持續長大、而且自訂 Skill 把作者權交給使用者，一份固定的歡迎清單追不上。
 
 ---
 
