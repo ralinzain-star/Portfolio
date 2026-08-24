@@ -6,3 +6,8 @@ exclude:
   - notification-framework-case-study.md
   - .claude
   - .github
+  # Master recordings are kept in the repo so clips can be re-cut, but they are
+  # never served: only the exported mp4s next to them are.
+  - assets/rezio/sources
+  - assets/thread-tracing/sources
+  - assets/wren-agent/sources
