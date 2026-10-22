@@ -339,7 +339,7 @@
         'article1.tag': 'Claude Code Skill',
         'article1.desc': 'A conversational AI tool that turns travel research into interactive HTML guides.',
         'gate.status': 'Gate Open',
-        'gate.info': 'Turning 29 in',
+        'gate.info': 'Turning 30 in',
       },
       'zh-tw': {
         'sidebar.subtitle': '作品集',
@@ -410,7 +410,7 @@
         'article1.tag': 'Claude Code Skill',
         'article1.desc': '一個對話式 AI 工具，把旅行研究轉為互動式 HTML 指南。',
         'gate.status': '登機口開放',
-        'gate.info': '距離 29 歲還有',
+        'gate.info': '距離 30 歲還有',
       },
       'zh-cn': {
         'sidebar.subtitle': '作品集',
@@ -481,7 +481,7 @@
         'article1.tag': 'Claude Code Skill',
         'article1.desc': '一个对话式 AI 工具，把旅行研究转为互动式 HTML 指南。',
         'gate.status': '登机口开放',
-        'gate.info': '距离 29 岁还有',
+        'gate.info': '距离 30 岁还有',
       },
       ja: {
         'sidebar.subtitle': 'ポートフォリオ',
@@ -552,7 +552,7 @@
         'article1.tag': 'Claude Code Skill',
         'article1.desc': '旅行リサーチをインタラクティブな HTML ガイドへと変える、対話型 AI ツール。',
         'gate.status': 'ゲートオープン',
-        'gate.info': '29歳まであと',
+        'gate.info': '30歳まであと',
       }
     };
 
@@ -790,7 +790,7 @@
       });
     })();
 
-    // Gate card: days until 29th birthday (born 1997-10-12)
+    // Gate card: days until 30th birthday (born 1997-10-12)
     (() => {
       const el = document.getElementById('gate-days');
       if (!el) return;
