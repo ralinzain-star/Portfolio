@@ -537,27 +537,44 @@ html { scroll-padding-top: 80px; }
       .fail-row { grid-template-columns: 110px 1fr 60px; }
     }
 
-    /* ── Paid-rate-by-behavior bar chart (s03) ── */
-    .kbars { margin: 0; display: flex; flex-direction: column; gap: 14px; }
-    .kbars-cap, .kbars-note { font: 400 13px/1.75 'IBM Plex Mono', monospace; letter-spacing: 0.01em; color: var(--muted); }
-    .kbars-list { display: flex; flex-direction: column; gap: 14px; }
-    .kbar-row { display: grid; grid-template-columns: minmax(150px, 230px) 1fr 92px; gap: 16px; align-items: center; }
-    .kbar-label { font: 600 14px/1.5 'Noto Sans', sans-serif; color: var(--text); }
-    .kbar-track { height: 26px; background: var(--bg); border-radius: 7px; overflow: hidden; }
-    .kbar-fill { height: 100%; min-width: 2px; background: var(--border); border-radius: 7px; transition: width 1s cubic-bezier(.22,1,.36,1); }
-    .kbar-row.hero .kbar-fill { background: var(--yellow); }
-    .kbar-num { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; white-space: nowrap; }
-    .kbar-val { font: 800 22px/1 'Barlow', sans-serif; letter-spacing: -0.02em; color: var(--text); font-variant-numeric: tabular-nums; }
-    .kbar-row:not(.hero):last-child .kbar-val { color: var(--muted); }
-    .kbar-row.hero .kbar-val { font-size: 26px; }
-    .kbar-tag { font: 600 12px/1.4 'Noto Sans', sans-serif; color: var(--text); background: var(--yellow); padding: 1px 4px; border-radius: 4px; }
-    @media (max-width: 900px) {
-      .kbar-row { grid-template-columns: 1fr auto; grid-template-areas: "label num" "track track"; gap: 6px 12px; }
-      .kbar-label { grid-area: label; }
-      .kbar-num { grid-area: num; }
-      .kbar-track { grid-area: track; height: 20px; }
-      .kbar-val { font-size: 18px; }
-      .kbar-row.hero .kbar-val { font-size: 20px; }
+    /* ── Paid-rate-by-behavior bar chart (s01) ──
+       Mirrors the Rezio "Setup Completion Rate" funnel (.wws-*): card, mono head,
+       thin 8px bars, mono values, stat row under a border. */
+    .kbars {
+      margin: 0; max-width: 640px; background: var(--bg-card);
+      padding: 28px 0; display: flex; flex-direction: column; gap: 20px;
+    }
+    .kbars-cap {
+      font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+    }
+    .kbars-list { display: flex; flex-direction: column; gap: 13px; }
+    .kbar-row { display: flex; align-items: center; gap: 10px; }
+    .kbar-label {
+      font-size: 12px; font-family: 'IBM Plex Mono', monospace;
+      color: var(--muted); width: 128px; flex-shrink: 0; text-align: right; white-space: nowrap;
+    }
+    .kbar-track {
+      flex: 1; height: 8px; background: rgba(43,37,32,0.07);
+      border-radius: 4px; overflow: hidden;
+    }
+    .kbar-fill {
+      height: 100%; min-width: 2px; border-radius: 4px; background: var(--muted);
+      transition: width 1s cubic-bezier(.22,1,.36,1);
+    }
+    .kbar-row.hero .kbar-fill { background: var(--accent); }
+    .kbar-val {
+      font-size: 12px; font-family: 'IBM Plex Mono', monospace;
+      color: var(--text); width: 34px; font-variant-numeric: tabular-nums;
+    }
+    .kbars-foot {
+      padding-top: 16px; margin-top: 6px; border-top: 1px solid var(--border);
+      display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 24px;
+    }
+    .kbar-tag { font-family: 'IBM Plex Mono', monospace; color: var(--text); font-weight: 600; font-size: 14px; white-space: nowrap; }
+    .kbars-note {
+      flex: 1; min-width: 220px; font-size: 12px; font-family: 'IBM Plex Mono', monospace;
+      color: var(--muted); letter-spacing: 0.04em;
     }
 
     /* ── Knowledge rule lifecycle (section 02) ──
