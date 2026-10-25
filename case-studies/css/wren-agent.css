@@ -159,15 +159,32 @@ html { scroll-padding-top: 80px; }
       .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
     }
 
-    /* ── TEACH-FLOW MEDIA FIGURES (s03) ───────────── */
-    .tflow-fig { margin: 0; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
-    .tflow-fig video, .tflow-fig img { width: 100%; display: block; border-radius: 14px; border: 1px solid var(--border); background: var(--bg-card); }
-    .tflow-cap { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; line-height: 1.4; color: var(--muted); letter-spacing: 0.04em; }
-    .tflow-cap b { color: var(--text); font-weight: 500; }
-    /* The four shipped moments read as a sequence, so they stack full-width
-       rather than sitting in a 2x2 grid where each frame is half size. */
-    .two-col.tflow-row { grid-template-columns: 1fr; gap: 48px; align-items: start; }
-    @media (max-width: 768px) { .two-col.tflow-row { gap: 32px; } }
+    /* ── STORY SPINE (from rezio.css .ofs-*) ──────────
+       Numbered chapters: badge + connector line on the left,
+       title, body copy and screenshot on the right. */
+    .ofs-story { display: flex; flex-direction: column; }
+    .ofs-chapter { display: grid; grid-template-columns: 40px 1fr; gap: 0 20px; }
+    .ofs-spine { display: flex; flex-direction: column; align-items: center; }
+    .ofs-badge {
+      width: 32px; height: 32px; flex-shrink: 0;
+      background: #f8d08c; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; font-family: 'Barlow', sans-serif;
+      color: var(--text); z-index: 1;
+    }
+    .ofs-spine-line { width: 1.5px; flex: 1; min-height: 20px; background: var(--border); margin: 4px 0 0; }
+    .ofs-body { padding-bottom: 36px; min-width: 0; }
+    .ofs-chapter-title {
+      font-family: 'Barlow', sans-serif; font-size: 18px; font-weight: 700; color: var(--text);
+      letter-spacing: -0.01em; line-height: 1.3; padding-top: 6px; margin-bottom: 10px;
+    }
+    .ofs-chapter-story {
+      font-family: 'Noto Sans', 'Barlow', sans-serif;
+      font-size: 14px; font-weight: 400; color: var(--text); line-height: 1.75;
+      margin-bottom: 12px;
+    }
+    .ofs-screenshot { width: 100%; margin-bottom: 14px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+    .ofs-screenshot img, .ofs-screenshot video { width: 100%; display: block; }
 
     /* ── COMPARISON TABLE (hero visual) ───────────── */
     .cmp-wrap { border-radius: 18px; overflow: hidden; border: 1px solid var(--border); background: var(--bg-card); }
@@ -539,7 +556,7 @@ html { scroll-padding-top: 80px; }
 
     /* ── Knowledge rule lifecycle (section 02) ──
        Page palette only: every step is a card like the figures, labels follow
-       .tflow-cap, step text is body size with a tighter line-height for short lines. */
+       the 12px mono caption spec, step text is body size with a tighter line-height for short lines. */
     .loop { display: flex; flex-direction: column; }
     .loop-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
     .loop-step { position: relative; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
