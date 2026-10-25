@@ -540,14 +540,12 @@ html { scroll-padding-top: 80px; }
     /* ── Knowledge rule lifecycle (section 02) ──
        Page palette only: every step is a card like the figures, labels follow
        .tflow-cap, step text is body size with a tighter line-height for short lines. */
-    .loop { display: flex; flex-direction: column; gap: 14px; }
+    .loop { display: flex; flex-direction: column; }
     .loop-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
     .loop-step { position: relative; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
     .loop-step:not(:last-child)::after { content: "→"; position: absolute; right: -19px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 14px; }
     .loop-tag { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; line-height: 1.4; letter-spacing: 0.04em; color: var(--muted); }
     .loop-text { font-family: 'Noto Sans', 'Barlow', sans-serif; font-size: 14px; line-height: 1.5; color: var(--text); }
-    .loop-return { margin: 0; display: flex; align-items: center; gap: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; line-height: 1.4; letter-spacing: 0.04em; color: var(--muted); }
-    .loop-return-icon { width: 16px; height: 16px; flex-shrink: 0; }
     @media (max-width: 900px) {
       .loop-steps { grid-template-columns: 1fr; gap: 20px; }
       .loop-step:not(:last-child)::after { content: "↓"; right: auto; left: 18px; top: auto; bottom: -19px; transform: none; }
