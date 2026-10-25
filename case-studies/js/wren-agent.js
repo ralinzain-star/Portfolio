@@ -32,41 +32,6 @@
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // Count-up numbers + grow bars for the paid-rate chart (s03).
-    // The HTML keeps final values/widths as a no-JS fallback; JS resets them
-    // off-screen and animates on scroll-in.
-    const countupEls = document.querySelectorAll('[data-countup]');
-    const fillEls = document.querySelectorAll('[data-fill]');
-    const runOnView = (els, fn) => {
-      if (!els.length) return;
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) { fn(e.target); io.unobserve(e.target); } });
-      }, { threshold: 0.4 });
-      els.forEach(el => io.observe(el));
-    };
-    const countUp = (el) => {
-      const target = parseFloat(el.getAttribute('data-countup')) || 0;
-      const dec = parseInt(el.getAttribute('data-decimals') || '0', 10);
-      const suffix = el.getAttribute('data-suffix') || '';
-      const dur = 1100; let start = null;
-      const step = (ts) => {
-        if (start === null) start = ts;
-        const p = Math.min(1, (ts - start) / dur);
-        const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = (target * eased).toFixed(dec) + suffix;
-        if (p < 1) requestAnimationFrame(step);
-        else el.textContent = target.toFixed(dec) + suffix;
-      };
-      requestAnimationFrame(step);
-    };
-    countupEls.forEach(el => {
-      const dec = parseInt(el.getAttribute('data-decimals') || '0', 10);
-      el.textContent = (0).toFixed(dec) + (el.getAttribute('data-suffix') || '');
-    });
-    fillEls.forEach(el => { el.style.width = '0'; });
-    runOnView(countupEls, countUp);
-    runOnView(fillEls, el => { el.style.width = el.getAttribute('data-fill'); });
-
     // Replay buttons for journey iframes
     document.querySelectorAll('.journey-frame-replay').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -150,11 +115,6 @@
       's01.f2.body': 'Knowledge を一度でも作ったチームは約 <span class="stat-hi">10%</span> にとどまり、年間を通じて下がり続けました。そこへ辿り着くには、ルールを一つずつ入力する手動の設定ページを通る必要があり、多くのチームが途中で諦めていました。',
       's01.f3.label': 'だから POC のたびに、私たちが手作業で作っていた',
       's01.f3.body': '顧客が自力で作り切ることはほとんどなかったため、POC は私たちの負担になりました。営業が間に入って顧客ごとの定義を集め、私たちがプロダクトに書き込み、修正のたびに同じ経路をもう一度たどります。Knowledge だけで 1 回の POC に<span class="stat-hi">2〜3 週間</span>のやり取りがかかり、数件を超えると回らなくなりました。',
-      's01.chart.cap': '課金率（ユーザー単位 · Knowledge を作った人とそれ以外）',
-      's01.chart.r1': 'Knowledge を作った',
-      's01.chart.tag': '約 7 倍',
-      's01.chart.r2': '作らなかった',
-      's01.chart.note': '相関であり、課金サンプルは小さく、32 件のインタビューで検証中です。',
       's02.title': '誰も Knowledge ページに辿り着かず、作り直すこともできなかった',
       's02.lede': '最も分かりやすい解決策は設定ページを良くすることだったので、まずそこから始めました。テンプレート、一括インポート、より親切な空状態。実装に入る前に、チームがどこで離脱しているのかを確かめるため、90 日分のプロダクトデータを引きました。そこに見えたのは、私が探していなかったものでした。',
       's02.f1.label': 'インタラクションの 91% がひとつの入力ボックスで起きる',
@@ -278,20 +238,15 @@
       's01.f2.body': '只有大約 <span class="stat-hi">10%</span> 的團隊建立過任何一條，而且整年一路下滑。要用到它，得先走完一個一次只能填一條規則的手動設定頁，很多團隊做到一半就放棄了。',
       's01.f3.label': '所以每一次 POC，都是我們替客戶手動建',
       's01.f3.body': '因為客戶很少自己做完，POC 就回到我們身上。業務得介入，向每個客戶收集他們的定義，再由我們寫進產品；每一次修正，都要沿著同一條路再走一遍。光是 Knowledge，一次 POC 就要來回<span class="stat-hi">兩到三週</span>，這樣的做法撐不了幾個案子。',
-      's01.chart.cap': '付費率（以人計 · 有建立 Knowledge 與其餘）',
-      's01.chart.r1': '有建立 Knowledge',
-      's01.chart.tag': '約 7 倍',
-      's01.chart.r2': '沒有建立',
-      's01.chart.note': '此為相關性、付費樣本偏小，仍在 32 場訪談中驗證。',
-      's02.title': '沒有人走到 Knowledge 頁面，而我們也無法重做',
+      's02.title': '用戶根本不會打開 Knowledge 頁面，而我們也沒辦法重做',
       's02.lede': '最直覺的解法是把設定頁做得更好，所以我一開始就是從這裡著手：範本、批次匯入、更友善的空狀態。真正動工之前，我拉了 90 天的產品數據，想確認團隊是在哪一步掉的。結果它給我看的，是我原本沒有在找的東西。',
-      's02.f1.label': '91% 的互動發生在同一個輸入框',
+      's02.f1.label': '91% 的互動都發生在對話框裡',
       's02.f1.body': '產品擁有十幾個功能入口，但在近 18,500 次的互動中，所有入口的使用率合計不到<span class="stat-hi">一成</span>，其餘全數發生在對話框裡。',
       's02.f2.label': '72% 的用戶從未碰過任何功能入口',
       's02.f2.body': '在 582 位活躍用戶中，多數人從頭到尾只待在對話框裡；即便是最熱門的功能入口，也只有 <span class="stat-hi">14%</span> 的人用過。',
       's02.f3.label': '20 段用戶錄影裡，有 13 段在選單間折返迷航',
       's02.f3.body': '觀察真實的操作錄影，用戶尋找功能的典型路徑並非直線直達，而是「點進去、退出、再換個選單試試看」。',
-      's02.close': '這些數字描述的都不是「一個難用的頁面」，而是「一個沒有人會走到的頁面」。不管我在那裡做什麼，教 AI 都不可能從那裡開始。',
+      's02.close': '這些數字描述的都不是「一個難用的頁面」，而是「一個根本沒人會打開的頁面」。不管我在那裡做什麼，教 AI 都不可能從那裡開始。',
       's02.limit.label': '而且，打掉重來不在選項裡',
       's02.limit.body': '同一時間，產品本身也已經往前走了。工程以 code-first 的方式重寫了介面，靠 AI 輔助寫程式快速出貨，快到研究跟不上。我畫的改版方案沒有得到支持，工程也沒有餘力把同一塊介面再重做一次。於是問題變了。不再是「理想的 Knowledge 體驗是什麼？」，而是<span class="stat-hi-blue">如果不能重來，設計還能從哪裡推動數字？</span>',
       's02.trade.label': '我放棄了什麼，又堅持了什麼',
@@ -299,7 +254,7 @@
       's02.gave.label': '我放棄的',
       's02.gave.b1': '<b>全面改版。</b>介面大致維持工程做出來的樣子。',
       's02.gave.b2': '<b>一次到位的視覺翻新。</b>新風格跟著一張一張 ticket 上線，ticket 碰到哪裡，就換到哪裡。',
-      's02.gave.b3': '<b>讓頁面當入口。</b>沒有人會走到那裡，所以教 AI 從對話開始，頁面的工作收斂成審核與修正。',
+      's02.gave.b3': '<b>讓頁面當入口。</b>沒有人會打開它，所以教 AI 從對話開始，頁面的工作收斂成審核與修正。',
       's02.kept.label': '我不放的',
       's02.kept.b1': '<b>團隊能不能把 AI 教完。</b>這是跟營收綁在一起的數字。',
       's02.kept.b2': '<b>壞掉的互動不能上線。</b>再快，也得能用。',
@@ -406,20 +361,15 @@
       's01.f2.body': '只有大约 <span class="stat-hi">10%</span> 的团队建立过任何一条，而且整年一路下滑。要用到它，得先走完一个一次只能填一条规则的手动设置页，很多团队做到一半就放弃了。',
       's01.f3.label': '所以每一次 POC，都是我们替客户手动建',
       's01.f3.body': '因为客户很少自己做完，POC 就回到我们身上。销售得介入，向每个客户收集他们的定义，再由我们写进产品；每一次修正，都要沿着同一条路再走一遍。光是 Knowledge，一次 POC 就要来回<span class="stat-hi">两到三周</span>，这样的做法撑不了几个案子。',
-      's01.chart.cap': '付费率（以人计 · 有建立 Knowledge 与其余）',
-      's01.chart.r1': '有建立 Knowledge',
-      's01.chart.tag': '约 7 倍',
-      's01.chart.r2': '没有建立',
-      's01.chart.note': '此为相关性、付费样本偏小，仍在 32 场访谈中验证。',
-      's02.title': '没有人走到 Knowledge 页面，而我们也无法重做',
+      's02.title': '用户根本不会打开 Knowledge 页面，而我们也没办法重做',
       's02.lede': '最直觉的解法是把设置页做得更好，所以我一开始就是从这里着手：模板、批量导入、更友善的空状态。真正动工之前，我拉了 90 天的产品数据，想确认团队是在哪一步掉的。结果它给我看的，是我原本没有在找的东西。',
-      's02.f1.label': '91% 的交互发生在同一个输入框',
+      's02.f1.label': '91% 的交互都发生在对话框里',
       's02.f1.body': '产品拥有十几个功能入口，但在近 18,500 次的交互中，所有入口的使用率合计不到<span class="stat-hi">一成</span>，其余全数发生在对话框里。',
       's02.f2.label': '72% 的用户从未碰过任何功能入口',
       's02.f2.body': '在 582 位活跃用户中，多数人从头到尾只待在对话框里；即便是最热门的功能入口，也只有 <span class="stat-hi">14%</span> 的人用过。',
       's02.f3.label': '20 段用户录像里，有 13 段在菜单间折返迷航',
       's02.f3.body': '观察真实的操作录像，用户寻找功能的典型路径并非直线直达，而是「点进去、退出、再换个菜单试试看」。',
-      's02.close': '这些数字描述的都不是「一个难用的页面」，而是「一个没有人会走到的页面」。不管我在那里做什么，教 AI 都不可能从那里开始。',
+      's02.close': '这些数字描述的都不是「一个难用的页面」，而是「一个根本没人会打开的页面」。不管我在那里做什么，教 AI 都不可能从那里开始。',
       's02.limit.label': '而且，推倒重来不在选项里',
       's02.limit.body': '同一时间，产品本身也已经往前走了。工程以 code-first 的方式重写了界面，靠 AI 辅助写代码快速发布，快到研究跟不上。我画的改版方案没有得到支持，工程也没有余力把同一块界面再重做一次。于是问题变了。不再是「理想的 Knowledge 体验是什么？」，而是<span class="stat-hi-blue">如果不能重来，设计还能从哪里推动数字？</span>',
       's02.trade.label': '我放弃了什么，又坚持了什么',
@@ -427,7 +377,7 @@
       's02.gave.label': '我放弃的',
       's02.gave.b1': '<b>全面改版。</b>界面大致维持工程做出来的样子。',
       's02.gave.b2': '<b>一次到位的视觉翻新。</b>新风格跟着一张一张 ticket 上线，ticket 碰到哪里，就换到哪里。',
-      's02.gave.b3': '<b>让页面当入口。</b>没有人会走到那里，所以教 AI 从对话开始，页面的工作收敛成审核与修正。',
+      's02.gave.b3': '<b>让页面当入口。</b>没有人会打开它，所以教 AI 从对话开始，页面的工作收敛成审核与修正。',
       's02.kept.label': '我不放的',
       's02.kept.b1': '<b>团队能不能把 AI 教完。</b>这是跟营收绑在一起的数字。',
       's02.kept.b2': '<b>坏掉的交互不能上线。</b>再快，也得能用。',
