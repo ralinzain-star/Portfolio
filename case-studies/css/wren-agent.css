@@ -565,12 +565,10 @@ html { scroll-padding-top: 80px; }
     .loop-step:not(:last-child)::after { content: "→"; position: absolute; right: -19px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 14px; }
     .loop-tag { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 500; line-height: 1.4; letter-spacing: 0.04em; color: var(--muted); }
     .loop-text { font-family: 'Noto Sans', 'Barlow', sans-serif; font-size: 14px; line-height: 1.5; color: var(--text); }
-    /* Old path from the chat box to Knowledge (s02): the loop cards, four wide, each with a thumbnail. */
-    .loop-steps.path-steps { grid-template-columns: repeat(4, 1fr); }
-    .path-img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 8px; }
+    /* Old path from the chat box to Knowledge (s02): a caption over the walkthrough video. */
+    .path-demo { display: flex; flex-direction: column; gap: 12px; }
     .num-copy .num-shot { max-width: 640px; margin: 8px 0 0; }
     @media (max-width: 900px) {
       .loop-steps { grid-template-columns: 1fr; gap: 20px; }
-      .loop-steps.path-steps { grid-template-columns: 1fr; }
       .loop-step:not(:last-child)::after { content: "↓"; right: auto; left: 18px; top: auto; bottom: -19px; transform: none; }
     }
