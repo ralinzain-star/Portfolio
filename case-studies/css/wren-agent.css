@@ -87,6 +87,8 @@ html { scroll-padding-top: 80px; }
     .sec-inner > .sec-head + .body,
     .sec-inner > .sec-head + .text-block,
     .sec-inner > .h3 + *:not(.sec-head) { margin-top: -12px; }
+    /* Consecutive paragraphs on one topic sit 12px apart, as in rezio.css. */
+    .sec-inner > p.body + p.body { margin-top: -20px; }
 
 
     /* ── SECTION HEADING ──────────────────────────── */
