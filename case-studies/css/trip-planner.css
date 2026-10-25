@@ -88,7 +88,7 @@ html { scroll-padding-top: 80px; }
 
   /* ── SECTION HEADING ──────────────────────────── */
   .sec-head {
-   display: flex; gap: 28px; align-items: flex-start;
+   display: flex; gap: 16px; align-items: flex-start;
    font-size: 24px; font-weight: 800; font-family: 'Barlow', sans-serif;
    line-height: 1.15; letter-spacing: -0.02em; text-transform: uppercase;
   }
