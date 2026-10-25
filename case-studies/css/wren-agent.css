@@ -539,21 +539,21 @@ html { scroll-padding-top: 80px; }
 
     /* ── Paid-rate-by-behavior bar chart (s03) ── */
     .kbars { margin: 0; display: flex; flex-direction: column; gap: 14px; }
-    .kbars-cap, .kbars-note { font: 400 12px/1.5 'IBM Plex Mono', monospace; letter-spacing: 0.02em; color: var(--muted); }
+    .kbars-cap, .kbars-note { font: 400 13px/1.75 'IBM Plex Mono', monospace; letter-spacing: 0.01em; color: var(--muted); }
     .kbars-list { display: flex; flex-direction: column; gap: 14px; }
     .kbar-row { display: grid; grid-template-columns: minmax(150px, 230px) 1fr 92px; gap: 16px; align-items: center; }
-    .kbar-label { font: 600 13px/1.35 'Noto Sans', sans-serif; color: var(--text); }
-    .kbar-track { height: 26px; background: rgba(43,37,32,0.05); border-radius: 7px; overflow: hidden; }
-    .kbar-fill { height: 100%; min-width: 2px; background: rgba(43,37,32,0.20); border-radius: 7px; transition: width 1s cubic-bezier(.22,1,.36,1); }
-    .kbar-row.hero .kbar-fill { background: #ffe033; }
-    .kbar-num { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; white-space: nowrap; }
+    .kbar-label { font: 600 14px/1.5 'Noto Sans', sans-serif; color: var(--text); }
+    .kbar-track { height: 26px; background: var(--bg); border-radius: 7px; overflow: hidden; }
+    .kbar-fill { height: 100%; min-width: 2px; background: var(--border); border-radius: 7px; transition: width 1s cubic-bezier(.22,1,.36,1); }
+    .kbar-row.hero .kbar-fill { background: var(--yellow); }
+    .kbar-num { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; white-space: nowrap; }
     .kbar-val { font: 800 22px/1 'Barlow', sans-serif; letter-spacing: -0.02em; color: var(--text); font-variant-numeric: tabular-nums; }
     .kbar-row:not(.hero):last-child .kbar-val { color: var(--muted); }
     .kbar-row.hero .kbar-val { font-size: 26px; }
-    .kbar-tag { font: 600 12px/1 'IBM Plex Mono', monospace; color: #6b5d00; }
+    .kbar-tag { font: 600 12px/1.4 'Noto Sans', sans-serif; color: var(--text); background: var(--yellow); padding: 1px 4px; border-radius: 4px; }
     @media (max-width: 900px) {
       .kbar-row { grid-template-columns: 1fr auto; grid-template-areas: "label num" "track track"; gap: 6px 12px; }
-      .kbar-label { grid-area: label; font-size: 12px; }
+      .kbar-label { grid-area: label; }
       .kbar-num { grid-area: num; }
       .kbar-track { grid-area: track; height: 20px; }
       .kbar-val { font-size: 18px; }
