@@ -537,27 +537,53 @@ html { scroll-padding-top: 80px; }
       .fail-row { grid-template-columns: 110px 1fr 60px; }
     }
 
-    /* ── Paid-rate-by-behavior bar chart (s03) ── */
-    .kbars { margin: 0; display: flex; flex-direction: column; gap: 14px; }
-    .kbars-cap, .kbars-note { font: 400 13px/1.75 'IBM Plex Mono', monospace; letter-spacing: 0.01em; color: var(--muted); }
-    .kbars-list { display: flex; flex-direction: column; gap: 14px; }
-    .kbar-row { display: grid; grid-template-columns: minmax(150px, 230px) 1fr 92px; gap: 16px; align-items: center; }
-    .kbar-label { font: 600 14px/1.5 'Noto Sans', sans-serif; color: var(--text); }
-    .kbar-track { height: 26px; background: var(--bg); border-radius: 7px; overflow: hidden; }
-    .kbar-fill { height: 100%; min-width: 2px; background: var(--border); border-radius: 7px; transition: width 1s cubic-bezier(.22,1,.36,1); }
-    .kbar-row.hero .kbar-fill { background: var(--yellow); }
-    .kbar-num { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; white-space: nowrap; }
-    .kbar-val { font: 800 22px/1 'Barlow', sans-serif; letter-spacing: -0.02em; color: var(--text); font-variant-numeric: tabular-nums; }
-    .kbar-row:not(.hero):last-child .kbar-val { color: var(--muted); }
-    .kbar-row.hero .kbar-val { font-size: 26px; }
-    .kbar-tag { font: 600 12px/1.4 'Noto Sans', sans-serif; color: var(--text); background: var(--yellow); padding: 1px 4px; border-radius: 4px; }
+    /* ── Paid-rate-by-behavior bar chart (s01) ──
+       Mirrors Rezio's "Setup Completion Rate" funnel (rezio.css .wws-*):
+       340px chart column beside the copy, mono head/labels/values, 8px bars
+       in #575c87 on a 7% ink track, and a border-top note row. */
+    .kbars-split { display: flex; gap: 40px; align-items: flex-start; }
+    .kbars-split > .num-list { flex: 1; min-width: 0; }
+    .kbars-split > .kbars { order: -1; }
+    .kbars {
+      flex-shrink: 0; width: 340px; min-height: 220px;
+      margin: 0; background: var(--bg-card); border-radius: 16px;
+      padding: 28px 24px;
+      display: flex; flex-direction: column; justify-content: center; gap: 20px;
+    }
+    .kbars-cap {
+      font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+    }
+    .kbars-list { display: flex; flex-direction: column; gap: 13px; }
+    .kbar-row { display: flex; align-items: center; gap: 10px; }
+    .kbar-label {
+      font-size: 12px; font-family: 'IBM Plex Mono', monospace;
+      color: var(--muted); width: 120px; flex-shrink: 0; text-align: right;
+    }
+    .kbar-track {
+      flex: 1; height: 8px; background: rgba(43,37,32,0.07);
+      border-radius: 4px; overflow: hidden;
+    }
+    .kbar-fill { height: 100%; border-radius: 4px; background: #575c87; transition: width 0.7s ease; }
+    .kbar-val {
+      font-size: 12px; font-family: 'IBM Plex Mono', monospace;
+      color: var(--text); width: 34px; flex-shrink: 0; font-variant-numeric: tabular-nums;
+    }
+    .kbars-foot {
+      padding-top: 16px; margin-top: 6px; border-top: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .kbar-tag { font-family: 'IBM Plex Mono', monospace; color: var(--text); font-weight: 600; font-size: 14px; white-space: nowrap; }
+    .kbars-note {
+      font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+      line-height: 1.5; color: var(--muted); letter-spacing: 0.04em;
+    }
+    /* Stack with the page's other two-column blocks (.two-col at 900px); the
+       card is invisible on the white section, so drop its inset to align
+       the chart with the copy edge. */
     @media (max-width: 900px) {
-      .kbar-row { grid-template-columns: 1fr auto; grid-template-areas: "label num" "track track"; gap: 6px 12px; }
-      .kbar-label { grid-area: label; }
-      .kbar-num { grid-area: num; }
-      .kbar-track { grid-area: track; height: 20px; }
-      .kbar-val { font-size: 18px; }
-      .kbar-row.hero .kbar-val { font-size: 20px; }
+      .kbars-split { flex-direction: column; align-items: stretch; gap: 24px; }
+      .kbars { width: 100%; min-height: 0; padding: 0; }
     }
 
     /* ── Knowledge rule lifecycle (section 02) ──
