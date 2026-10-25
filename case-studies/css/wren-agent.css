@@ -173,6 +173,8 @@ html { scroll-padding-top: 80px; }
       color: var(--text); z-index: 1;
     }
     .ofs-spine-line { width: 1.5px; flex: 1; min-height: 20px; background: var(--border); margin: 4px 0 0; }
+    /* The last chapter's line ends in a dot, so each story reads as finished. */
+    .ofs-chapter:last-child .ofs-spine::after { content: ""; width: 10px; height: 10px; flex-shrink: 0; border-radius: 50%; background: var(--border); }
     .ofs-body { padding-bottom: 36px; min-width: 0; }
     .ofs-chapter-title {
       font-family: 'Barlow', sans-serif; font-size: 18px; font-weight: 700; color: var(--text);
