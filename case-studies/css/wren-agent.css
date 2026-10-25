@@ -501,6 +501,8 @@ html { scroll-padding-top: 80px; }
       letter-spacing: 0.06em; margin-top: 10px;
     }
     .journey-caption a { color: var(--accent); text-decoration: underline; }
+    /* In-text links (e.g. to another case study) use the same treatment. */
+    .body a, .ofs-chapter-story a { color: var(--accent); text-decoration: underline; }
 
     /* ── ANATOMY CALLOUT ──────────────────────────── */
     .anatomy-row { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
